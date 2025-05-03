@@ -71,4 +71,20 @@ describe("GithubService Integration Tests", () => {
 			expect(item).toHaveProperty("url");
 		}
 	});
+
+	it("should fetch the top N repositories by stars including organization repositories", async () => {
+		const top5: RepoSummary[] = await repo.getTopReposIncludingOrgs(
+			TEST_USER,
+			5,
+		);
+		console.log(`getTopReposIncludingOrgs(${TEST_USER}, 5) = `, top5);
+
+		expect(Array.isArray(top5)).toBe(true);
+		expect(top5).toHaveLength(5);
+
+		for (const r of top5) {
+			expect(r.name).toBeTruthy();
+			expect(typeof r.stars).toBe("number");
+		}
+	});
 });
