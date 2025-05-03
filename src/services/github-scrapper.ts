@@ -1,5 +1,9 @@
 import { Octokit } from "@octokit/rest";
 
+// Add these imports for HTML scraping
+import axios from "axios";
+import * as cheerio from "cheerio";
+
 export class GithubError extends Error {
 	constructor(
 		message: string,
@@ -19,6 +23,7 @@ export interface UserProfile {
 	followers: number;
 	following: number;
 	starsCount: number;
+	contributionCount: number;
 }
 
 export interface RepoSummary {
@@ -26,6 +31,9 @@ export interface RepoSummary {
 	fullName: string;
 	htmlUrl: string;
 	stars: number;
+	owner: {
+		login: string;
+	};
 }
 
 export interface RepoDetails {
@@ -43,6 +51,11 @@ export class GithubService {
 		try {
 			const { data } = await this.octokit.users.getByUsername({ username });
 			const starsCount = await this.getTotalStars(username);
+
+			// Use direct scraping instead of API calls for contribution data
+			const contributionCount =
+				await this.getContributionCountFromPage(username);
+
 			return {
 				login: data.login,
 				name: data.name,
@@ -52,6 +65,7 @@ export class GithubService {
 				followers: data.followers,
 				following: data.following,
 				starsCount,
+				contributionCount,
 			};
 		} catch (err) {
 			throw new GithubError(
@@ -81,40 +95,6 @@ export class GithubService {
 			throw new GithubError(
 				`Failed to calculate stars for ${username}`,
 				"STAR_COUNT_ERROR",
-			);
-		}
-	}
-
-	/** Fetch top N repos by stars */
-	async getTopRepos(username: string, topN: number): Promise<RepoSummary[]> {
-		try {
-			let page = 1;
-			// biome-ignore lint/suspicious/noExplicitAny: TODO: change to proper type
-			const allRepos: Array<any> = [];
-			while (allRepos.length < topN) {
-				const { data } = await this.octokit.repos.listForUser({
-					username,
-					per_page: 100,
-					page,
-					sort: "pushed",
-				});
-				if (data.length === 0) break;
-				allRepos.push(...data);
-				page++;
-			}
-			return allRepos
-				.sort((a, b) => b.stargazers_count - a.stargazers_count)
-				.slice(0, topN)
-				.map((repo) => ({
-					name: repo.name,
-					fullName: repo.full_name,
-					htmlUrl: repo.html_url,
-					stars: repo.stargazers_count,
-				}));
-		} catch (err) {
-			throw new GithubError(
-				`Failed to fetch top repos for ${username}`,
-				"TOP_REPOS_ERROR",
 			);
 		}
 	}
@@ -369,6 +349,7 @@ export class GithubService {
 		try {
 			// collect user's own repos
 			const userRepos = await this.collectUserRepos(username);
+			console.log(userRepos[0]);
 
 			// fetch organizations
 			const { data: orgs } = await this.octokit.orgs.listForUser({
@@ -382,6 +363,8 @@ export class GithubService {
 			);
 			const orgReposArrays = await Promise.all(orgRepoPromises);
 			const orgRepos = orgReposArrays.flat();
+
+			console.log(orgRepos[0]);
 
 			// combine and sort
 			const combined = [...userRepos, ...orgRepos];
@@ -444,6 +427,40 @@ export class GithubService {
 				fullName: repo.full_name,
 				htmlUrl: repo.html_url,
 				stars: repo.stargazers_count ?? 0,
+				owner: {
+					login: repo.owner?.login || "",
+				},
 			}));
+	}
+
+	/**
+	 * Scrape contribution data directly from GitHub profile pages
+	 */
+	private async getContributionCountFromPage(
+		username: string,
+	): Promise<UserProfile["contributionCount"]> {
+		try {
+			// Get current year
+			const currentYear = new Date().getFullYear();
+
+			// Use contribution calendar URL format
+			const contributionUrl = `https://github.com/users/${username}/contributions?from=${currentYear}-01-01&to=${currentYear}-12-31`;
+
+			const response = await axios.get(contributionUrl);
+			const $ = cheerio.load(response.data);
+
+			// Extract total contribution count from heading
+			const headerText = $("h2").first().text().trim();
+			const totalCountMatch = headerText.match(/(\d+(?:,\d+)*) contributions/);
+			const totalCount = totalCountMatch
+				? Number.parseInt(totalCountMatch[1].replace(/,/g, ""), 10)
+				: 0;
+
+			return totalCount;
+		} catch (err) {
+			console.error(`Failed to get contribution data for ${username}:`, err);
+			// Return default empty values if scraping fails
+			return 0;
+		}
 	}
 }

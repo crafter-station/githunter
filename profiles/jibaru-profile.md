@@ -5,13 +5,25 @@
 - **Public Repositories**: 109
 - **Followers**: 36
 - **Following**: 48
-- **Total Stars Earned**: 397 (including organization repositories)
+- **Total Stars Earned**: 399 (including organization repositories)
+- **Total Commits**: 2849
+- **Pull Requests**: 61
+- **Issues**: 68
+- **Contributions (Last Year)**: 1047
+
+## Contribution Metrics
+
+```
+Commits: ▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇ 2849
+PRs:     ▇▇▇▇▇▇▇ 61
+Issues:  ▇▇▇▇▇▇▇ 68
+```
 
 ## Top Repositories (Including Organizations)
 
 | Repository | Stars | URL |
 |------------|-------|-----|
-| text0 | 284 | [View](https://github.com/crafter-station/text0) |
+| text0 | 286 | [View](https://github.com/crafter-station/text0) |
 | gobeats | 38 | [View](https://github.com/Jibaru/gobeats) |
 | gostore | 24 | [View](https://github.com/Jibaru/gostore) |
 | drive-music-player | 7 | [View](https://github.com/Jibaru/drive-music-player) |

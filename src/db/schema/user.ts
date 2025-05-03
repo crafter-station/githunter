@@ -22,6 +22,8 @@ export const user = pgTable("user", {
 	stars: integer("stars").notNull().default(0),
 	followers: integer("followers").notNull().default(0),
 	following: integer("following").notNull().default(0),
+	repositories: integer("repositories").notNull().default(0),
+	contributions: integer("contributions").notNull().default(0),
 
 	country: text("country"),
 	city: text("city"),

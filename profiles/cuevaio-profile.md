@@ -4,15 +4,15 @@
 - **Bio**: human software engineer
 - **Location**: Lima
 - **Public Repositories**: 73
-- **Followers**: 28
+- **Followers**: 29
 - **Following**: 33
-- **Total Stars Earned**: 317 (including organization repositories)
-
+- **Total Stars Earned**: 319 (including organization repositories)
+- **Total Contributions 2025**: 0
 ## Top Repositories (Including Organizations)
 
 | Repository | Stars | URL |
 |------------|-------|-----|
-| text0 | 284 | [View](https://github.com/crafter-station/text0) |
+| text0 | 286 | [View](https://github.com/crafter-station/text0) |
 | utec-classrooms | 6 | [View](https://github.com/cuevaio/utec-classrooms) |
 | compy-ai | 3 | [View](https://github.com/cuevaio/compy-ai) |
 | gradual | 3 | [View](https://github.com/crafter-station/gradual) |
@@ -43,6 +43,7 @@
 │   ├── (auth)/
 │   │   └── sign-in/
 │   │       └── [[...sign-in]]/
+│   │           └── page.tsx
 │   ├── (protected)/
 │   │   ├── components/
 │   │   │   ├── data-table.tsx
@@ -51,6 +52,17 @@
 │   │   │   └── table-columns.tsx
 │   │   ├── docs/
 │   │   │   └── [doc_id]/
+│   │   │       ├── text-editor/
+│   │   │       │   ├── ai-chat-sidebar.tsx
+│   │   │       │   ├── ai-chat-trigger.tsx
+│   │   │       │   ├── index.tsx
+│   │   │       │   ├── model-selector.tsx
+│   │   │       │   ├── reference-selector.tsx
+│   │   │       │   ├── text-to-speech.tsx
+│   │   │       │   └── voice-transcription.tsx
+│   │   │       ├── loading.tsx
+│   │   │       ├── page.tsx
+│   │   │       └── tour.tsx
 │   │   ├── home/
 │   │   │   ├── new-doc.tsx
 │   │   │   ├── page.tsx
@@ -58,9 +70,13 @@
 │   │   │   └── tour.tsx
 │   │   ├── integrations/
 │   │   │   ├── discord/
+│   │   │   │   └── page.tsx
 │   │   │   ├── github/
+│   │   │   │   └── page.tsx
 │   │   │   ├── linear/
+│   │   │   │   └── page.tsx
 │   │   │   ├── notion/
+│   │   │   │   └── page.tsx
 │   │   │   └── page.tsx
 │   │   ├── references/
 │   │   │   └── page.tsx
@@ -75,18 +91,26 @@
 │   │   │   └── route.ts
 │   │   ├── discord/
 │   │   │   └── data/
+│   │   │       └── route.ts
 │   │   ├── docs/
 │   │   │   └── [doc_id]/
+│   │   │       └── route.ts
 │   │   ├── github/
 │   │   │   ├── data/
+│   │   │   │   └── route.ts
 │   │   │   └── sync/
+│   │   │       └── route.ts
 │   │   ├── linear/
 │   │   │   ├── data/
+│   │   │   │   └── route.ts
 │   │   │   ├── sync/
+│   │   │   │   └── route.ts
 │   │   │   └── sync.ts
 │   │   ├── notion/
 │   │   │   ├── data/
+│   │   │   │   └── route.ts
 │   │   │   └── sync/
+│   │   │       └── route.ts
 │   │   ├── references/
 │   │   │   └── route.ts
 │   │   ├── text-modification/
@@ -249,7 +273,12 @@
 │   ├── lib/
 │   │   ├── components/
 │   │   │   ├── day/
+│   │   │   │   ├── DayNavigationPrimary.svelte
+│   │   │   │   └── DayNavigationSecondary.svelte
 │   │   │   ├── ui/
+│   │   │   │   └── button/
+│   │   │   │       ├── button.svelte
+│   │   │   │       └── index.ts
 │   │   │   ├── Layout.svelte
 │   │   │   ├── TheFirstClone.svelte
 │   │   │   └── TypographyLink.svelte
@@ -267,11 +296,16 @@
 │   ├── routes/
 │   │   ├── [date]/
 │   │   │   ├── [classroom]/
+│   │   │   │   ├── +page.server.js
+│   │   │   │   ├── +page.svelte
+│   │   │   │   └── get-data.js
 │   │   │   ├── +page.server.js
 │   │   │   └── +page.svelte
 │   │   ├── api/
 │   │   │   ├── refresh/
+│   │   │   │   └── +server.js
 │   │   │   └── robot/
+│   │   │       └── +server.js
 │   │   ├── sponsors/
 │   │   │   └── +page.svelte
 │   │   ├── the-first-clone/
@@ -346,6 +380,7 @@
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── chat/
+│   │   │       └── route.ts
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -417,9 +452,113 @@
 │   ├── app/
 │   │   ├── [locale]/
 │   │   │   ├── (app)/
+│   │   │   │   ├── achievements/
+│   │   │   │   │   └── [achievementId]/
+│   │   │   │   │       └── metadata.ts
+│   │   │   │   ├── home/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── learn/
+│   │   │   │   │   └── courses/
+│   │   │   │   │       ├── [course_id]/
+│   │   │   │   │       │   ├── (course)/
+│   │   │   │   │       │   │   ├── components/
+│   │   │   │   │       │   │   ├── students/
+│   │   │   │   │       │   │   ├── syllabus/
+│   │   │   │   │       │   │   ├── tasks/
+│   │   │   │   │       │   │   ├── layout.tsx
+│   │   │   │   │       │   │   ├── metadata.ts
+│   │   │   │   │       │   │   └── page.tsx
+│   │   │   │   │       │   └── tasks/
+│   │   │   │   │       │       └── [task_id]/
+│   │   │   │   │       ├── new/
+│   │   │   │   │       │   ├── create-course.action.ts
+│   │   │   │   │       │   ├── form.tsx
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       └── page.tsx
+│   │   │   │   ├── profile/
+│   │   │   │   │   └── [userId]/
+│   │   │   │   │       └── metadata.ts
+│   │   │   │   └── layout.tsx
 │   │   │   ├── (debug)/
+│   │   │   │   ├── book-card-showcase/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── debug/
+│   │   │   │   │   ├── metadata.ts
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── design/
+│   │   │   │   │   └── steps/
+│   │   │   │   │       ├── analogy/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── binary/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── definition/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── fill_in_the_blank/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── fun_fact/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── introduction/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── multiple_choice/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── question/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── quote/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── solved_exercise/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── tutorial/
+│   │   │   │   │       │   └── page.tsx
+│   │   │   │   │       ├── helpers.ts
+│   │   │   │   │       ├── layout.tsx
+│   │   │   │   │       ├── loading.tsx
+│   │   │   │   │       ├── page.tsx
+│   │   │   │   │       └── step-button.tsx
+│   │   │   │   └── layout.tsx
 │   │   │   ├── (landing)/
+│   │   │   │   ├── about/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── blog/
+│   │   │   │   │   ├── [slug]/
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── placeholder.tsx
+│   │   │   │   ├── careers/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── changelog/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── docs/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── features/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── methodology/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── our-vision/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── pricing/
+│   │   │   │   │   ├── metadata.ts
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── roadmap/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── success-stories/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── tutorials/
+│   │   │   │   │   ├── [slug]/
+│   │   │   │   │   │   └── page.tsx
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── waitlist/
+│   │   │   │   │   ├── empty-state.tsx
+│   │   │   │   │   ├── helpers.ts
+│   │   │   │   │   ├── page-title.tsx
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   ├── update-user.action.ts
+│   │   │   │   │   ├── user-card.tsx
+│   │   │   │   │   └── waitlist-actions.tsx
+│   │   │   │   ├── layout.tsx
+│   │   │   │   └── page.tsx
 │   │   │   ├── sign-in/
+│   │   │   │   └── [[...sign-in]]/
+│   │   │   │       └── page.tsx
 │   │   │   ├── action.ts
 │   │   │   ├── favicon.ico
 │   │   │   ├── flexoki.css
@@ -429,8 +568,12 @@
 │   │   │   └── shadcn.css
 │   │   ├── api/
 │   │   │   ├── og/
+│   │   │   │   └── route.tsx
 │   │   │   ├── uploadthing/
+│   │   │   │   ├── core.ts
+│   │   │   │   └── route.ts
 │   │   │   └── webhooks/
+│   │   │       └── route.ts
 │   │   └── icon.svg
 │   ├── components/
 │   │   ├── sidebar/
@@ -532,7 +675,21 @@
 │   ├── db/
 │   │   ├── schema/
 │   │   │   ├── alternative-step/
+│   │   │   │   └── index.ts
 │   │   │   ├── step/
+│   │   │   │   ├── analogy.ts
+│   │   │   │   ├── binary.ts
+│   │   │   │   ├── definition.ts
+│   │   │   │   ├── fill-in-the-blank.ts
+│   │   │   │   ├── fun-fact.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── introduction.ts
+│   │   │   │   ├── multiple-choice.ts
+│   │   │   │   ├── progress-state.ts
+│   │   │   │   ├── question.ts
+│   │   │   │   ├── quote.ts
+│   │   │   │   ├── solved-exercise.ts
+│   │   │   │   └── tutorial.ts
 │   │   │   ├── chunk.ts
 │   │   │   ├── course.ts
 │   │   │   ├── enrollment.ts
@@ -630,7 +787,25 @@
 │   │   │   └── vercel.svg
 │   │   ├── src/
 │   │   │   ├── app/
+│   │   │   │   ├── api/
+│   │   │   │   │   ├── hi/
+│   │   │   │   │   │   └── route.ts
+│   │   │   │   │   └── retest/
+│   │   │   │   │       └── [action]/
+│   │   │   │   │           └── route.ts
+│   │   │   │   ├── client-page/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── test/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── favicon.ico
+│   │   │   │   ├── globals.css
+│   │   │   │   ├── layout.tsx
+│   │   │   │   └── page.tsx
 │   │   │   ├── lib/
+│   │   │   │   └── retest/
+│   │   │   │       ├── client.ts
+│   │   │   │       ├── index.ts
+│   │   │   │       └── server.ts
 │   │   │   └── middleware.ts
 │   │   ├── .env.example
 │   │   ├── .eslintrc.js
@@ -644,6 +819,7 @@
 │   └── web/
 │       ├── .xata/
 │       │   └── version/
+│       │       └── compatibility.json
 │       ├── public/
 │       │   ├── circles.svg
 │       │   ├── next.svg
@@ -651,10 +827,86 @@
 │       │   └── vercel.svg
 │       ├── src/
 │       │   ├── app/
+│       │   │   ├── api/
+│       │   │   │   ├── auth/
+│       │   │   │   │   └── [...nextauth]/
+│       │   │   │   │       └── route.ts
+│       │   │   │   ├── trpc/
+│       │   │   │   │   └── [trpc]/
+│       │   │   │   │       └── route.ts
+│       │   │   │   └── v0/
+│       │   │   │       ├── experiment-variants/
+│       │   │   │       │   └── route.ts
+│       │   │   │       ├── getVariant/
+│       │   │   │       │   └── route.ts
+│       │   │   │       └── getVariantsForCompletedExperiments/
+│       │   │   │           └── route.ts
+│       │   │   ├── app/
+│       │   │   │   ├── [workspace]/
+│       │   │   │   │   ├── experiments/
+│       │   │   │   │   │   ├── [experimentId]/
+│       │   │   │   │   │   │   ├── events/
+│       │   │   │   │   │   │   ├── varitants/
+│       │   │   │   │   │   │   ├── delete-form.tsx
+│       │   │   │   │   │   │   └── page.tsx
+│       │   │   │   │   │   ├── create/
+│       │   │   │   │   │   │   ├── duration-input.tsx
+│       │   │   │   │   │   │   ├── page.tsx
+│       │   │   │   │   │   │   └── sample-size-input.tsx
+│       │   │   │   │   │   ├── experiment-card.tsx
+│       │   │   │   │   │   └── page.tsx
+│       │   │   │   │   ├── members/
+│       │   │   │   │   │   ├── invitations.tsx
+│       │   │   │   │   │   └── page.tsx
+│       │   │   │   │   ├── settings/
+│       │   │   │   │   │   └── page.tsx
+│       │   │   │   │   ├── setup/
+│       │   │   │   │   │   ├── page.tsx
+│       │   │   │   │   │   └── theme.json
+│       │   │   │   │   ├── layout.tsx
+│       │   │   │   │   ├── nav-buttons.tsx
+│       │   │   │   │   └── page.tsx
+│       │   │   │   ├── settings/
+│       │   │   │   │   └── page.tsx
+│       │   │   │   ├── create-workspace.tsx
+│       │   │   │   ├── layout.tsx
+│       │   │   │   ├── page.tsx
+│       │   │   │   ├── workspace-invites.tsx
+│       │   │   │   └── workspace-list.tsx
+│       │   │   ├── providers/
+│       │   │   │   ├── index.tsx
+│       │   │   │   ├── next-auth.tsx
+│       │   │   │   ├── theme-provider.tsx
+│       │   │   │   └── trpc-react-query-provider.tsx
+│       │   │   ├── .page.tsx.swp
+│       │   │   ├── favicon.ico
+│       │   │   ├── globals.css
+│       │   │   ├── layout.tsx
+│       │   │   └── page.tsx
 │       │   ├── components/
+│       │   │   ├── auth-buttons.tsx
+│       │   │   ├── header.tsx
+│       │   │   ├── input-hint.tsx
+│       │   │   ├── title.tsx
+│       │   │   └── user-button.tsx
 │       │   ├── hooks/
+│       │   │   └── use-user.ts
 │       │   ├── lib/
+│       │   │   ├── resend.ts
+│       │   │   ├── trpc.ts
+│       │   │   ├── xata-nextauth-adapter.ts
+│       │   │   └── xata.ts
 │       │   ├── server/
+│       │   │   ├── routes/
+│       │   │   │   ├── events.ts
+│       │   │   │   ├── experiments.ts
+│       │   │   │   ├── users.ts
+│       │   │   │   ├── utils.ts
+│       │   │   │   ├── variants.ts
+│       │   │   │   └── workspaces.ts
+│       │   │   ├── context.ts
+│       │   │   ├── index.ts
+│       │   │   └── trpc.ts
 │       │   ├── auth.ts
 │       │   └── newFile.ts
 │       ├── .env.example
@@ -678,21 +930,38 @@
 │   ├── nextjs/
 │   │   ├── src/
 │   │   │   ├── api/
+│   │   │   │   └── index.ts
 │   │   │   ├── get-client-data-edge/
+│   │   │   │   └── index.ts
 │   │   │   ├── get-experiments-from-retest-cookies/
+│   │   │   │   └── index.ts
 │   │   │   ├── get-variant-client/
+│   │   │   │   └── index.tsx
 │   │   │   ├── get-variant-server/
+│   │   │   │   └── index.tsx
 │   │   │   ├── get-variant-server-edge/
+│   │   │   │   └── index.tsx
 │   │   │   ├── get-variants-server/
+│   │   │   │   └── index.ts
 │   │   │   ├── get-variants-server-edge/
+│   │   │   │   └── index.ts
 │   │   │   ├── middleware/
+│   │   │   │   └── index.ts
 │   │   │   ├── retest-block-client/
+│   │   │   │   └── index.tsx
 │   │   │   ├── retest-block-server/
+│   │   │   │   └── index.tsx
 │   │   │   ├── types/
+│   │   │   │   └── experiment.d.ts
 │   │   │   ├── use-experiments/
+│   │   │   │   └── index.ts
 │   │   │   ├── use-retest-client/
+│   │   │   │   └── index.tsx
 │   │   │   ├── use-retest-server/
+│   │   │   │   └── index.ts
 │   │   │   ├── utils/
+│   │   │   │   ├── fetcher.ts
+│   │   │   │   └── get-retest-api-url.ts
 │   │   │   ├── client.ts
 │   │   │   └── server.ts
 │   │   ├── .eslintrc.js
@@ -711,6 +980,9 @@
 │   ├── ui/
 │   │   ├── src/
 │   │   │   ├── time-picker/
+│   │   │   │   ├── index.tsx
+│   │   │   │   ├── input.tsx
+│   │   │   │   └── utils.ts
 │   │   │   ├── accordion.tsx
 │   │   │   ├── avatar.tsx
 │   │   │   ├── badge.tsx
@@ -805,19 +1077,23 @@
 │   ├── (app)/
 │   │   ├── catalog/
 │   │   │   ├── [pageIndex]/
+│   │   │   │   └── page.tsx
 │   │   │   ├── actions/
+│   │   │   │   └── generate-creature.ts
 │   │   │   ├── page.tsx
 │   │   │   └── pagination.tsx
 │   │   ├── mine/
 │   │   │   └── page.tsx
 │   │   ├── pic/
 │   │   │   └── [id]/
+│   │   │       └── page.tsx
 │   │   ├── layout.tsx
 │   │   ├── new-pic.tsx
 │   │   └── upload-image.action.ts
 │   ├── api/
 │   │   └── og/
 │   │       ├── [id]/
+│   │       │   └── route.tsx
 │   │       └── route.tsx
 │   ├── fonts/
 │   │   ├── GeistMonoVF.woff
@@ -949,6 +1225,7 @@
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── hello/
+│   │   │       └── route.ts
 │   │   ├── cal/
 │   │   │   └── page.tsx
 │   │   ├── calendar/
@@ -969,6 +1246,10 @@
 │   ├── components/
 │   │   ├── icons/
 │   │   │   └── ui/
+│   │   │       ├── github.tsx
+│   │   │       ├── index.ts
+│   │   │       ├── linkedin.tsx
+│   │   │       └── x.tsx
 │   │   ├── slides/
 │   │   │   ├── contact.tsx
 │   │   │   ├── hero.tsx
@@ -1031,7 +1312,10 @@
 │   ├── app/
 │   │   ├── api/
 │   │   │   ├── chat/
+│   │   │   │   ├── fitia.ts
+│   │   │   │   └── route.ts
 │   │   │   └── webhooks/
+│   │   │       └── route.ts
 │   │   ├── chat/
 │   │   │   └── page.tsx
 │   │   ├── favicon.ico

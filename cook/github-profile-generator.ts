@@ -114,7 +114,8 @@ function createMarkdown(
 	markdown += `- **Public Repositories**: ${user.publicRepos}\n`;
 	markdown += `- **Followers**: ${user.followers}\n`;
 	markdown += `- **Following**: ${user.following}\n`;
-	markdown += `- **Total Stars Earned**: ${user.starsCount} (including organization repositories)\n\n`;
+	markdown += `- **Total Stars Earned**: ${user.starsCount} (including organization repositories)\n`;
+	markdown += `- **Total Contributions 2025**: ${user.contributionCount}\n`;
 
 	// Add repositories section
 	markdown += "## Top Repositories (Including Organizations)\n\n";
@@ -170,3 +171,35 @@ function createMarkdown(
 // generator.generateUserMarkdown('octocat', './output/github-profile.md', 10)
 //   .then(markdown => console.log('Generated markdown successfully'))
 //   .catch(error => console.error('Error:', error));
+
+// Commented code above is for reference. Here's a runnable example:
+
+// Example usage using HTML scraping approach
+if (require.main === module) {
+	(async () => {
+		try {
+			// Replace with a GitHub username you want to analyze
+			const username = "Jibaru";
+			const outputPath = "./output/github-profile.md";
+
+			console.log(
+				`Generating GitHub profile for ${username} using HTML scraping...`,
+			);
+			const markdown = await generateGithubProfileMarkdown(
+				username,
+				outputPath,
+			);
+
+			console.log("Profile generation successful!");
+			console.log(`Output written to: ${outputPath}`);
+
+			// Print a small preview
+			const preview = markdown.split("\n").slice(0, 20).join("\n");
+			console.log("\nPreview of the generated profile:\n");
+			console.log(preview);
+			console.log("\n... (truncated)");
+		} catch (error) {
+			console.error("Error testing GitHub profile generator:", error);
+		}
+	})();
+}
