@@ -7,7 +7,7 @@ import {
 	type RepoDetails,
 	type RepoSummary,
 	type UserProfile,
-} from "../src/services/github";
+} from "../src/services/github-scrapper";
 
 describe("GithubService Integration Tests", () => {
 	const repo = new GithubService();
@@ -62,14 +62,8 @@ describe("GithubService Integration Tests", () => {
 
 		expect(typeof details.readme).toBe("string");
 		expect(Array.isArray(details.languages)).toBe(true);
-		expect(Array.isArray(details.tree)).toBe(true);
-		// Ensure tree items have required props
-		if (details.tree.length > 0) {
-			const item = details.tree[0];
-			expect(item).toHaveProperty("path");
-			expect(item).toHaveProperty("type");
-			expect(item).toHaveProperty("url");
-		}
+		expect(typeof details.tree).toBe("string");
+		expect(details.tree.length).toBeGreaterThan(0);
 	});
 
 	it("should fetch the top N repositories by stars including organization repositories", async () => {
