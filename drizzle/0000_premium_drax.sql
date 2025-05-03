@@ -1,0 +1,22 @@
+CREATE TABLE "user" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"clerk_id" varchar,
+	"username" varchar NOT NULL,
+	"fullname" varchar NOT NULL,
+	"email" varchar,
+	"avatar_url" text NOT NULL,
+	"stars" integer DEFAULT 0 NOT NULL,
+	"followers" integer DEFAULT 0 NOT NULL,
+	"following" integer DEFAULT 0 NOT NULL,
+	"country" text,
+	"city" text,
+	"website" text,
+	"twitter" text,
+	"linkedin" text,
+	"about" text,
+	"stack" text[] DEFAULT '{}',
+	"potential_roles" text[] DEFAULT '{}',
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "user_clerk_id_unique" UNIQUE("clerk_id")
+);
