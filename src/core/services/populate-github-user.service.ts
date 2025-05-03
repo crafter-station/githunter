@@ -1,13 +1,12 @@
-// scripts/populateGithubUser.ts
 import { nanoid } from "nanoid";
-import { db } from "../src/db";
-import { user as userTable } from "../src/db/schema";
-import { GithubService } from "../src/services/github-scrapper";
+import { db } from "../../db";
+import { user as userTable } from "../../db/schema";
+import { GithubService } from "../../services/github-scrapper";
 import type {
 	RepoDetails,
 	RepoSummary,
 	UserProfile,
-} from "../src/services/github-scrapper";
+} from "../../services/github-scrapper";
 
 export async function populateGithubUser(
 	username: string,
@@ -25,7 +24,7 @@ export async function populateGithubUser(
 	);
 	const allRepos: RepoSummary[] = await github.getTopReposIncludingOrgs(
 		username,
-		200,
+		5,
 	);
 
 	// 3) Get detailed languages
@@ -82,51 +81,5 @@ export async function populateGithubUser(
 	};
 
 	// 6) Upsert
-	await db
-		.insert(userTable)
-		.values(record)
-		.onConflictDoUpdate({
-			target: userTable.username,
-			set: {
-				fullname: record.fullname,
-				email: record.email,
-				avatarUrl: record.avatarUrl,
-				stars: record.stars,
-				followers: record.followers,
-				following: record.following,
-				repositories: record.repositories,
-				contributions: record.contributions,
-				country: record.country,
-				city: record.city,
-				website: record.website,
-				twitter: record.twitter,
-				linkedin: record.linkedin,
-				about: record.about,
-				stack: record.stack,
-				updatedAt: new Date(),
-			},
-		});
-
-	console.log(`✅ Populated/updated user '${username}'`);
-}
-
-// If run as a script
-if (require.main === module) {
-	(async () => {
-		const username = process.argv[2];
-		const count = Number.parseInt(process.argv[3], 10) || 10;
-		if (!username) {
-			console.error(
-				"Usage: ts-node populateGithubUser.ts <username> [repoCount]",
-			);
-			process.exit(1);
-		}
-		try {
-			await populateGithubUser(username, count);
-			console.log("Done.");
-		} catch (err) {
-			console.error("Error populating user:", err);
-			process.exit(1);
-		}
-	})();
+	await db.insert(userTable).values(record).execute();
 }

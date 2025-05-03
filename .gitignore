@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.trigger/
 
 # debug
 npm-debug.log*
@@ -40,3 +41,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data fetch
+/github-cache
