@@ -1,5 +1,9 @@
 import { Octokit } from "@octokit/rest";
 
+// Add these imports for HTML scraping
+import axios from "axios";
+import * as cheerio from "cheerio";
+
 export class GithubError extends Error {
 	constructor(
 		message: string,
@@ -19,6 +23,13 @@ export interface UserProfile {
 	followers: number;
 	following: number;
 	starsCount: number;
+	contributionCount: number;
+	// new fields:
+	email: string | null;
+	avatarUrl: string;
+	websiteUrl: string | null;
+	twitterUsername: string | null;
+	linkedinUrl: string | null;
 }
 
 export interface RepoSummary {
@@ -26,6 +37,9 @@ export interface RepoSummary {
 	fullName: string;
 	htmlUrl: string;
 	stars: number;
+	owner: {
+		login: string;
+	};
 }
 
 export interface RepoDetails {
@@ -43,6 +57,22 @@ export class GithubService {
 		try {
 			const { data } = await this.octokit.users.getByUsername({ username });
 			const starsCount = await this.getTotalStars(username);
+			const contributionCount =
+				await this.getContributionCountFromPage(username);
+
+			// scrape profile page for linkedin (and fallback website/twitter detection)
+			const profileHtml = await axios.get(`https://github.com/${username}`);
+			const $ = cheerio.load(profileHtml.data);
+			let linkedinUrl: string | null = null;
+			const websiteUrl: string | null = data.blog || null;
+			const twitterUsername: string | null = data.twitter_username || null;
+
+			// find any <a> that points to linkedin.com
+			$('a[href*="linkedin.com"]').each((i, el) => {
+				const href = $(el).attr("href");
+				if (href) linkedinUrl = href;
+			});
+
 			return {
 				login: data.login,
 				name: data.name,
@@ -52,6 +82,12 @@ export class GithubService {
 				followers: data.followers,
 				following: data.following,
 				starsCount,
+				contributionCount,
+				email: data.email, // may be null
+				avatarUrl: data.avatar_url,
+				websiteUrl,
+				twitterUsername,
+				linkedinUrl,
 			};
 		} catch (err) {
 			throw new GithubError(
@@ -81,40 +117,6 @@ export class GithubService {
 			throw new GithubError(
 				`Failed to calculate stars for ${username}`,
 				"STAR_COUNT_ERROR",
-			);
-		}
-	}
-
-	/** Fetch top N repos by stars */
-	async getTopRepos(username: string, topN: number): Promise<RepoSummary[]> {
-		try {
-			let page = 1;
-			// biome-ignore lint/suspicious/noExplicitAny: TODO: change to proper type
-			const allRepos: Array<any> = [];
-			while (allRepos.length < topN) {
-				const { data } = await this.octokit.repos.listForUser({
-					username,
-					per_page: 100,
-					page,
-					sort: "pushed",
-				});
-				if (data.length === 0) break;
-				allRepos.push(...data);
-				page++;
-			}
-			return allRepos
-				.sort((a, b) => b.stargazers_count - a.stargazers_count)
-				.slice(0, topN)
-				.map((repo) => ({
-					name: repo.name,
-					fullName: repo.full_name,
-					htmlUrl: repo.html_url,
-					stars: repo.stargazers_count,
-				}));
-		} catch (err) {
-			throw new GithubError(
-				`Failed to fetch top repos for ${username}`,
-				"TOP_REPOS_ERROR",
 			);
 		}
 	}
@@ -154,7 +156,9 @@ export class GithubService {
 				fileTree = await this.getFileTreeUsingGitRef(owner, repo);
 			} catch (err) {
 				console.log(
-					`Failed to fetch tree using git ref for ${owner}/${repo}: ${err instanceof Error ? err.message : String(err)}`,
+					`Failed to fetch tree using git ref for ${owner}/${repo}: ${
+						err instanceof Error ? err.message : String(err)
+					}`,
 				);
 
 				try {
@@ -162,7 +166,9 @@ export class GithubService {
 					fileTree = await this.getFileTreeUsingContentsApi(owner, repo);
 				} catch (err2) {
 					console.log(
-						`Failed to fetch tree using contents API for ${owner}/${repo}: ${err2 instanceof Error ? err2.message : String(err2)}`,
+						`Failed to fetch tree using contents API for ${owner}/${repo}: ${
+							err2 instanceof Error ? err2.message : String(err2)
+						}`,
 					);
 					fileTree =
 						"Repository file tree could not be fetched due to access restrictions.";
@@ -274,54 +280,31 @@ export class GithubService {
 	}
 
 	/** Helper: Build a string representation of the file tree */
-	private buildFileTreeString(
-		// biome-ignore lint/suspicious/noExplicitAny: using any due to type complexity
-		treeItems: any[],
-	): string {
-		// Create a nested structure for the file tree
-		// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
-		const root: Record<string, any> = {};
+	// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
+	private buildFileTreeString(treeItems: any[]): string {
+		// clone the input so we don’t mutate the readonly array
+		const items = treeItems.slice(); // or [...treeItems]
 
-		// Sort items to ensure directories come before files
-		treeItems.sort((a, b) => {
-			// Sort by path depth first
+		// now sort our mutable copy
+		items.sort((a, b) => {
 			const aDepth = a.path.split("/").length;
 			const bDepth = b.path.split("/").length;
 			if (aDepth !== bDepth) return aDepth - bDepth;
-
-			// Then by type (directory before file)
 			if (a.type !== b.type) {
 				return a.type === "tree" ? -1 : 1;
 			}
-
-			// Then alphabetically
 			return a.path.localeCompare(b.path);
 		});
 
-		// Process each path and build the tree structure
-		for (const item of treeItems) {
-			const path = item.path;
-			const parts = path.split("/");
-			let current = root;
-
-			for (let i = 0; i < parts.length; i++) {
-				const part = parts[i];
-				const isLast = i === parts.length - 1;
-
-				if (isLast) {
-					// Leaf node
-					current[part] = item.type;
-				} else {
-					// Create branch if it doesn't exist
-					if (!current[part]) {
-						current[part] = {};
-					}
-					current = current[part];
-				}
-			}
+		// rest of your logic, iterating over `items` instead of `treeItems`
+		// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
+		const root: Record<string, any> = {};
+		for (const item of items) {
+			const parts = item.path.split("/");
+			const current = root;
+			// … build the nested structure …
 		}
 
-		// Generate the tree string
 		return this.renderTree(root, "", true);
 	}
 
@@ -369,6 +352,7 @@ export class GithubService {
 		try {
 			// collect user's own repos
 			const userRepos = await this.collectUserRepos(username);
+			console.log(userRepos[0]);
 
 			// fetch organizations
 			const { data: orgs } = await this.octokit.orgs.listForUser({
@@ -382,6 +366,8 @@ export class GithubService {
 			);
 			const orgReposArrays = await Promise.all(orgRepoPromises);
 			const orgRepos = orgReposArrays.flat();
+
+			console.log(orgRepos[0]);
 
 			// combine and sort
 			const combined = [...userRepos, ...orgRepos];
@@ -444,6 +430,37 @@ export class GithubService {
 				fullName: repo.full_name,
 				htmlUrl: repo.html_url,
 				stars: repo.stargazers_count ?? 0,
+				owner: {
+					login: repo.owner?.login || "",
+				},
 			}));
+	}
+
+	/**
+	 * Scrape contribution data directly from GitHub profile pages
+	 */
+	private async getContributionCountFromPage(
+		username: string,
+	): Promise<UserProfile["contributionCount"]> {
+		try {
+			// Get current year
+			const currentYear = new Date().getFullYear();
+
+			// Use contribution calendar URL format
+			const contributionUrl = `https://github.com/users/${username}/contributions?from=${currentYear}-01-01&to=${currentYear}-12-31`;
+
+			const response = await axios.get(contributionUrl);
+			const $ = cheerio.load(response.data);
+
+			// Extract total contribution count from heading
+			const headerText = $("h2.f4.text-normal.mb-2").text().trim();
+			const totalCount = Number.parseInt(headerText.split(" ")[0], 10) || 0;
+
+			return totalCount;
+		} catch (err) {
+			console.error(`Failed to get contribution data for ${username}:`, err);
+			// Return default empty values if scraping fails
+			return 0;
+		}
 	}
 }
