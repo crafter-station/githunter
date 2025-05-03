@@ -450,11 +450,8 @@ export class GithubService {
 			const $ = cheerio.load(response.data);
 
 			// Extract total contribution count from heading
-			const headerText = $("h2").first().text().trim();
-			const totalCountMatch = headerText.match(/(\d+(?:,\d+)*) contributions/);
-			const totalCount = totalCountMatch
-				? Number.parseInt(totalCountMatch[1].replace(/,/g, ""), 10)
-				: 0;
+			const headerText = $("h2.f4.text-normal.mb-2").text().trim();
+			const totalCount = Number.parseInt(headerText.split(" ")[0], 10) || 0;
 
 			return totalCount;
 		} catch (err) {

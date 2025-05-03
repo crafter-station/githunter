@@ -116,6 +116,7 @@ function createMarkdown(
 	markdown += `- **Following**: ${user.following}\n`;
 	markdown += `- **Total Stars Earned**: ${user.starsCount} (including organization repositories)\n`;
 	markdown += `- **Total Contributions 2025**: ${user.contributionCount}\n`;
+	markdown += "\n";
 
 	// Add repositories section
 	markdown += "## Top Repositories (Including Organizations)\n\n";

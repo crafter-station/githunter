@@ -7,7 +7,8 @@
 - **Followers**: 29
 - **Following**: 33
 - **Total Stars Earned**: 319 (including organization repositories)
-- **Total Contributions 2025**: 0
+- **Total Contributions 2025**: 322
+
 ## Top Repositories (Including Organizations)
 
 | Repository | Stars | URL |
