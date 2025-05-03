@@ -30,6 +30,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@tailwindcss/postcss": "^4",
+		"@types/cheerio": "^0.22.35",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",

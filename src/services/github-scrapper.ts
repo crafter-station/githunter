@@ -24,6 +24,12 @@ export interface UserProfile {
 	following: number;
 	starsCount: number;
 	contributionCount: number;
+	// new fields:
+	email: string | null;
+	avatarUrl: string;
+	websiteUrl: string | null;
+	twitterUsername: string | null;
+	linkedinUrl: string | null;
 }
 
 export interface RepoSummary {
@@ -51,10 +57,21 @@ export class GithubService {
 		try {
 			const { data } = await this.octokit.users.getByUsername({ username });
 			const starsCount = await this.getTotalStars(username);
-
-			// Use direct scraping instead of API calls for contribution data
 			const contributionCount =
 				await this.getContributionCountFromPage(username);
+
+			// scrape profile page for linkedin (and fallback website/twitter detection)
+			const profileHtml = await axios.get(`https://github.com/${username}`);
+			const $ = cheerio.load(profileHtml.data);
+			let linkedinUrl: string | null = null;
+			const websiteUrl: string | null = data.blog || null;
+			const twitterUsername: string | null = data.twitter_username || null;
+
+			// find any <a> that points to linkedin.com
+			$('a[href*="linkedin.com"]').each((i, el) => {
+				const href = $(el).attr("href");
+				if (href) linkedinUrl = href;
+			});
 
 			return {
 				login: data.login,
@@ -66,6 +83,13 @@ export class GithubService {
 				following: data.following,
 				starsCount,
 				contributionCount,
+
+				// new:
+				email: data.email, // may be null
+				avatarUrl: data.avatar_url,
+				websiteUrl,
+				twitterUsername,
+				linkedinUrl,
 			};
 		} catch (err) {
 			throw new GithubError(
@@ -134,7 +158,9 @@ export class GithubService {
 				fileTree = await this.getFileTreeUsingGitRef(owner, repo);
 			} catch (err) {
 				console.log(
-					`Failed to fetch tree using git ref for ${owner}/${repo}: ${err instanceof Error ? err.message : String(err)}`,
+					`Failed to fetch tree using git ref for ${owner}/${repo}: ${
+						err instanceof Error ? err.message : String(err)
+					}`,
 				);
 
 				try {
@@ -142,7 +168,9 @@ export class GithubService {
 					fileTree = await this.getFileTreeUsingContentsApi(owner, repo);
 				} catch (err2) {
 					console.log(
-						`Failed to fetch tree using contents API for ${owner}/${repo}: ${err2 instanceof Error ? err2.message : String(err2)}`,
+						`Failed to fetch tree using contents API for ${owner}/${repo}: ${
+							err2 instanceof Error ? err2.message : String(err2)
+						}`,
 					);
 					fileTree =
 						"Repository file tree could not be fetched due to access restrictions.";
