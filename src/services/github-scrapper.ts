@@ -148,19 +148,24 @@ export class GithubService {
 
 			// File tree - Try multiple approaches to handle both personal and org repos
 			let fileTree = "";
-			
+
 			try {
 				// Approach 1: Using git reference
 				fileTree = await this.getFileTreeUsingGitRef(owner, repo);
 			} catch (err) {
-				console.log(`Failed to fetch tree using git ref for ${owner}/${repo}: ${err instanceof Error ? err.message : String(err)}`);
-				
+				console.log(
+					`Failed to fetch tree using git ref for ${owner}/${repo}: ${err instanceof Error ? err.message : String(err)}`,
+				);
+
 				try {
 					// Approach 2: Using contents API (alternative for some repos)
 					fileTree = await this.getFileTreeUsingContentsApi(owner, repo);
 				} catch (err2) {
-					console.log(`Failed to fetch tree using contents API for ${owner}/${repo}: ${err2 instanceof Error ? err2.message : String(err2)}`);
-					fileTree = "Repository file tree could not be fetched due to access restrictions.";
+					console.log(
+						`Failed to fetch tree using contents API for ${owner}/${repo}: ${err2 instanceof Error ? err2.message : String(err2)}`,
+					);
+					fileTree =
+						"Repository file tree could not be fetched due to access restrictions.";
 				}
 			}
 
@@ -174,18 +179,21 @@ export class GithubService {
 	}
 
 	/** Get file tree using Git Reference API - works for most repos */
-	private async getFileTreeUsingGitRef(owner: string, repo: string): Promise<string> {
+	private async getFileTreeUsingGitRef(
+		owner: string,
+		repo: string,
+	): Promise<string> {
 		// Get default branch
 		const { data: repoData } = await this.octokit.repos.get({ owner, repo });
 		const defaultBranch = repoData.default_branch;
-		
+
 		// Get reference
 		const { data: refData } = await this.octokit.git.getRef({
 			owner,
 			repo,
 			ref: `heads/${defaultBranch}`,
 		});
-		
+
 		// Get tree
 		const { data: treeData } = await this.octokit.git.getTree({
 			owner,
@@ -193,46 +201,49 @@ export class GithubService {
 			tree_sha: refData.object.sha,
 			recursive: "true",
 		});
-		
+
 		// Convert tree to string representation
 		return this.buildFileTreeString(treeData.tree);
 	}
 
 	/** Get file tree using Contents API - alternative approach for some repos */
-	private async getFileTreeUsingContentsApi(owner: string, repo: string): Promise<string> {
+	private async getFileTreeUsingContentsApi(
+		owner: string,
+		repo: string,
+	): Promise<string> {
 		// Structure to build tree
 		interface TreeNode {
 			[key: string]: TreeNode | string;
 		}
-		
+
 		const root: TreeNode = {};
-		
+
 		// Start with the root directory
 		await this.fetchContentsRecursively(owner, repo, "", root, 0);
-		
+
 		// Convert structure to string representation
 		return this.renderTree(root, "", true);
 	}
 
 	/** Recursively fetch contents of directories */
 	private async fetchContentsRecursively(
-		owner: string, 
-		repo: string, 
-		path: string, 
+		owner: string,
+		repo: string,
+		path: string,
 		target: Record<string, Record<string, unknown> | string>,
 		depth: number,
-		maxDepth = 8
+		maxDepth = 8,
 	): Promise<void> {
 		// Limit recursion depth to avoid rate limits
 		if (depth > maxDepth) return;
-		
+
 		try {
 			const { data: contents } = await this.octokit.repos.getContent({
 				owner,
 				repo,
 				path: path || ".",
 			});
-			
+
 			// Handle array response (directory contents)
 			if (Array.isArray(contents)) {
 				for (const item of contents) {
@@ -241,14 +252,17 @@ export class GithubService {
 					} else if (item.type === "dir" && item.name && item.path) {
 						target[item.name] = {};
 						// Recursively fetch contents of this directory
-						const itemPath = typeof item.path === 'string' ? item.path : '';
+						const itemPath = typeof item.path === "string" ? item.path : "";
 						await this.fetchContentsRecursively(
-							owner, 
-							repo, 
-							itemPath, 
-							target[item.name] as Record<string, Record<string, unknown> | string>,
+							owner,
+							repo,
+							itemPath,
+							target[item.name] as Record<
+								string,
+								Record<string, unknown> | string
+							>,
 							depth + 1,
-							maxDepth
+							maxDepth,
 						);
 					}
 				}
@@ -262,38 +276,38 @@ export class GithubService {
 	/** Helper: Build a string representation of the file tree */
 	private buildFileTreeString(
 		// biome-ignore lint/suspicious/noExplicitAny: using any due to type complexity
-		treeItems: any[]
+		treeItems: any[],
 	): string {
 		// Create a nested structure for the file tree
 		// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
 		const root: Record<string, any> = {};
-		
+
 		// Sort items to ensure directories come before files
 		treeItems.sort((a, b) => {
 			// Sort by path depth first
-			const aDepth = a.path.split('/').length;
-			const bDepth = b.path.split('/').length;
+			const aDepth = a.path.split("/").length;
+			const bDepth = b.path.split("/").length;
 			if (aDepth !== bDepth) return aDepth - bDepth;
-			
+
 			// Then by type (directory before file)
 			if (a.type !== b.type) {
-				return a.type === 'tree' ? -1 : 1;
+				return a.type === "tree" ? -1 : 1;
 			}
-			
+
 			// Then alphabetically
 			return a.path.localeCompare(b.path);
 		});
-		
+
 		// Process each path and build the tree structure
 		for (const item of treeItems) {
 			const path = item.path;
-			const parts = path.split('/');
+			const parts = path.split("/");
 			let current = root;
-			
+
 			for (let i = 0; i < parts.length; i++) {
 				const part = parts[i];
 				const isLast = i === parts.length - 1;
-				
+
 				if (isLast) {
 					// Leaf node
 					current[part] = item.type;
@@ -306,9 +320,9 @@ export class GithubService {
 				}
 			}
 		}
-		
+
 		// Generate the tree string
-		return this.renderTree(root, '', true);
+		return this.renderTree(root, "", true);
 	}
 
 	/** Helper: Render the tree structure as a string */
@@ -316,34 +330,34 @@ export class GithubService {
 		// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
 		node: Record<string, any>,
 		prefix: string,
-		isRoot: boolean
+		isRoot: boolean,
 	): string {
-		let result = isRoot ? '' : '\n';
+		let result = isRoot ? "" : "\n";
 		const keys = Object.keys(node).sort((a, b) => {
 			// Directories first, then files
-			const aIsDir = typeof node[a] === 'object';
-			const bIsDir = typeof node[b] === 'object';
+			const aIsDir = typeof node[a] === "object";
+			const bIsDir = typeof node[b] === "object";
 			if (aIsDir !== bIsDir) return aIsDir ? -1 : 1;
 			return a.localeCompare(b);
 		});
-		
+
 		keys.forEach((key, index) => {
 			const isLast = index === keys.length - 1;
 			const value = node[key];
-			const isDir = typeof value === 'object';
-			
+			const isDir = typeof value === "object";
+
 			// Current line
-			result += `${prefix}${isLast ? '└── ' : '├── '}${key}${isDir ? '/' : ''}`;
-			
+			result += `${prefix}${isLast ? "└── " : "├── "}${key}${isDir ? "/" : ""}`;
+
 			// Process children if it's a directory
 			if (isDir) {
-				const newPrefix = prefix + (isLast ? '    ' : '│   ');
+				const newPrefix = prefix + (isLast ? "    " : "│   ");
 				result += this.renderTree(value, newPrefix, false);
 			} else {
-				result += '\n';
+				result += "\n";
 			}
 		});
-		
+
 		return result;
 	}
 

@@ -1,7 +1,11 @@
-import { GithubService } from "../src/services/github-scrapper";
-import type { UserProfile, RepoSummary, RepoDetails } from "../src/services/github-scrapper";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { GithubService } from "../src/services/github-scrapper";
+import type {
+	RepoDetails,
+	RepoSummary,
+	UserProfile,
+} from "../src/services/github-scrapper";
 
 /**
  * Generates a markdown file with user profile and repositories information
@@ -38,22 +42,27 @@ export async function generateGithubProfileMarkdown(
 		// Create a modified profile with updated star count
 		const profileWithOrgStars = {
 			...userProfile,
-			starsCount: totalStars
+			starsCount: totalStars,
 		};
 
 		// Fetch repository details including file trees
 		const repoDetails: Record<string, RepoDetails> = {};
 		for (const repo of topRepos) {
 			try {
-				const [owner, repoName] = repo.fullName.split('/');
-				repoDetails[repo.fullName] = await githubService.getRepoDetails(owner, repoName);
+				const [owner, repoName] = repo.fullName.split("/");
+				repoDetails[repo.fullName] = await githubService.getRepoDetails(
+					owner,
+					repoName,
+				);
 			} catch (error) {
-				console.log(`Could not fetch details for ${repo.fullName}: ${error instanceof Error ? error.message : String(error)}`);
+				console.log(
+					`Could not fetch details for ${repo.fullName}: ${error instanceof Error ? error.message : String(error)}`,
+				);
 				// Create a placeholder for repos that can't be accessed
 				repoDetails[repo.fullName] = {
 					readme: "",
 					languages: [],
-					tree: "Repository details not available (may be private or inaccessible)"
+					tree: "Repository details not available (may be private or inaccessible)",
 				};
 			}
 		}
@@ -85,9 +94,9 @@ export async function generateGithubProfileMarkdown(
  * Creates a markdown string from user profile and repository data
  */
 function createMarkdown(
-	user: UserProfile, 
-	repos: RepoSummary[], 
-	repoDetails: Record<string, RepoDetails>
+	user: UserProfile,
+	repos: RepoSummary[],
+	repoDetails: Record<string, RepoDetails>,
 ): string {
 	// Start with user profile
 	let markdown = `# ${user.name || user.login}'s GitHub Profile\n\n`;
@@ -125,24 +134,25 @@ function createMarkdown(
 
 	// Add repository file trees section
 	markdown += "## Repository File Trees\n\n";
-	
+
 	for (const repo of repos) {
 		const details = repoDetails[repo.fullName];
 		if (details) {
 			markdown += `### ${repo.name}\n\n`;
-			
+
 			// Add languages list
 			if (details.languages.length > 0) {
-				markdown += `**Languages**: ${details.languages.join(', ')}\n\n`;
+				markdown += `**Languages**: ${details.languages.join(", ")}\n\n`;
 			}
-			
+
 			// Add file tree
 			markdown += "**File Tree**:\n\n";
 			markdown += "```\n";
 			if (details.tree) {
 				markdown += details.tree;
 			} else {
-				markdown += "Repository details not available (may be private or inaccessible)";
+				markdown +=
+					"Repository details not available (may be private or inaccessible)";
 			}
 			markdown += "```\n\n";
 		}
