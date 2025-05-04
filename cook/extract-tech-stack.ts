@@ -231,7 +231,7 @@ const repo1 = "crafter-station/text0";
 const extractor = new TechStackExtractor();
 
 extractor.extract(repo1, "main", filetree1).then((techStack) => {
-  console.log(techStack);
+	console.log(techStack);
 });
 
 const filetree2 = `
@@ -313,5 +313,5 @@ const filetree2 = `
 const repo2 = "Jibaru/gostore";
 
 extractor.extract(repo2, "main", filetree2).then((techStack) => {
-  console.log(techStack);
+	console.log(techStack);
 });

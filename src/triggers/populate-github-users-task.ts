@@ -3,14 +3,14 @@ import { z } from "zod";
 import { PopulateGithubUser } from "../core/services/populate-github-user.service";
 
 export const populateGithubUsersTaks = schemaTask({
-  id: "populate-github-users",
-  schema: z.array(z.string()),
-  maxDuration: 60,
-  run: async (usernames) => {
-    const populateGithubUser = new PopulateGithubUser();
+	id: "populate-github-users",
+	schema: z.array(z.string()),
+	maxDuration: 60,
+	run: async (usernames) => {
+		const populateGithubUser = new PopulateGithubUser();
 
-    for (const username of usernames) {
-      await populateGithubUser.exec(username, 10);
-    }
-  },
+		for (const username of usernames) {
+			await populateGithubUser.exec(username, 10);
+		}
+	},
 });
