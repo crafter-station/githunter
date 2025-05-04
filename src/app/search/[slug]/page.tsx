@@ -12,6 +12,8 @@ type SearchParams = {
 	techStack: string[];
 	country: string | null;
 	city: string | null;
+	minStars: number | null;
+	minRepos: number | null;
 };
 const pgDialect = new PgDialect();
 
@@ -30,8 +32,10 @@ export default async function SearchPage({
 			schema: z.object({
 				roles: z.array(z.string()),
 				techStack: z.array(z.string()),
-				country: z.string(),
-				city: z.string(),
+				country: z.string().nullable(),
+				city: z.string().nullable(),
+				minStars: z.number().nullable(),
+				minRepos: z.number().nullable(),
 			}),
 			prompt: `You are a search engine. You need to return parameters for a search query. 
      Provide multiple roles that might be relevant to the query. Consider developer and engineering roles.
@@ -39,6 +43,13 @@ export default async function SearchPage({
      Return a list of relevant tech stack that might be relevant to the query. 
      Always return the roles in english. Also the tech stack should be in english. And the country and city should be in english too.
      If asked for nextjs, return "nextjs" and "react" and "typescript" and other tech stack that might be relevant.
+     
+     If the query mentions a minimum number of stars, repositories, or other numeric criteria, extract and provide these values.
+     Examples:
+     - "developers with at least 100 stars" should return minStars: 100
+     - "engineers with more than 50 repos" should return minRepos: 50
+     - "devs with 200+ stars and 20+ repositories" should return minStars: 200 and minRepos: 20
+     
      The query is: ${slug}`,
 		});
 
@@ -55,6 +66,8 @@ export default async function SearchPage({
 				!results.object.city || results.object.city === "null"
 					? null
 					: results.object.city,
+			minStars: results.object.minStars ? results.object.minStars : null,
+			minRepos: results.object.minRepos ? results.object.minRepos : null,
 		};
 		await redis.hset(`search:${slug}`, searchParams);
 	}
@@ -116,6 +129,16 @@ export default async function SearchPage({
 			query.append(sql`]`);
 		}
 
+		// Add stars filter if provided
+		if (searchParams.minStars) {
+			query.append(sql` AND ${user.stars} >= ${searchParams.minStars}`);
+		}
+
+		// Add repositories filter if provided
+		if (searchParams.minRepos) {
+			query.append(sql` AND ${user.repositories} >= ${searchParams.minRepos}`);
+		}
+
 		// Add ordering
 		query.append(sql` ORDER BY ${user.contributions} DESC`);
 
@@ -167,6 +190,7 @@ export default async function SearchPage({
 							stars: u.stars,
 							followers: u.followers,
 							contributions: u.contributions,
+							repositories: u.repositories,
 						})),
 						null,
 						2,
