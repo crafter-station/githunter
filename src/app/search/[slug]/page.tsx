@@ -17,6 +17,8 @@ type SearchParams = {
 };
 const pgDialect = new PgDialect();
 
+export const revalidate = 300;
+
 export default async function SearchPage({
 	params,
 }: {
