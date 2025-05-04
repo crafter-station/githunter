@@ -205,6 +205,14 @@ export class GithubService {
 			recursive: "true",
 		});
 
+		// 2. Filtras por profundidad ≤ 2
+		const limitedTree = treeData.tree.filter((entry) => {
+			if (!entry.path) return false;
+			// un path sin slash es nivel 1, con un slash es nivel 2, etc.
+			const depth = entry.path.split("/").length;
+			return depth <= 2;
+		});
+
 		// Convert tree to string representation
 		return this.buildFileTreeString(treeData.tree);
 	}
@@ -235,7 +243,7 @@ export class GithubService {
 		path: string,
 		target: Record<string, Record<string, unknown> | string>,
 		depth: number,
-		maxDepth = 8,
+		maxDepth = 3,
 	): Promise<void> {
 		// Limit recursion depth to avoid rate limits
 		if (depth > maxDepth) return;

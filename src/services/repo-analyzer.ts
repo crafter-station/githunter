@@ -11,75 +11,95 @@ export class RepoAnalyzer {
 	public async analyze(
 		repo: string,
 		branch: string,
-		filetree: string,
+		fileTree: string,
 	): Promise<RepoAnalysisResult> {
-		const response = await generateText({
-			system: this.systemText(),
-			model: openai("gpt-4o-mini"),
-			tools: {
-				readFile: tool({
-					description: "Read a file from github repository",
-					parameters: z.object({
-						path: z.string(),
+		try {
+			// if the file tree is huge, prune it to avoid context‐length errors:
+			const prunedFileTree = this.pruneFileTree(fileTree, 1000);
+
+			const response = await generateText({
+				system: this.systemText(),
+				model: openai("gpt-4o-mini"),
+				tools: {
+					readFile: tool({
+						description: "Read a file from github repository",
+						parameters: z.object({
+							path: z.string(),
+						}),
+						execute: async ({ path }) => {
+							const content = await fetch(
+								`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/${path}`,
+							);
+							const text = await content.text();
+							return text;
+						},
 					}),
-					execute: async ({ path }) => {
-						const content = await fetch(
-							`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/${path}`,
-						);
-						const text = await content.text();
-						return text;
-					},
-				}),
-			},
-			maxSteps: 10,
-			prompt: `Analyze the following filetree and extract both the tech stack and a brief description of what this repository is for:
-${filetree}`,
-		});
-
-		let techStackArray: string[] = [];
-		let description = "";
-
-		// Extract tech stack
-		if (response.text.includes("<tech-stack>")) {
-			const techStack = response.text
-				.split("<tech-stack>")[1]
-				.split("</tech-stack>")[0];
-			const _techStackArray = techStack
-				.split(",")
-				.map((tech) => tech.trim())
-				.filter((tech) => tech !== "");
-			techStackArray = _techStackArray;
-		} else {
-			// Fallback to LLM for tech stack
-			const { object } = await generateObject({
-				model: openai("gpt-4o-mini"),
-				schema: z.object({
-					techStack: z.array(z.string()),
-				}),
-				prompt: `Extract the tech stack of a repo given this text: ${response.text}.`,
+				},
+				maxSteps: 10,
+				prompt: `Analyze the following filetree and extract both the tech stack and a brief description of what this repository is for:
+${prunedFileTree}`,
 			});
-			techStackArray = object.techStack;
-		}
 
-		// Extract description
-		if (response.text.includes("<description>")) {
-			description = response.text
-				.split("<description>")[1]
-				.split("</description>")[0]
-				.trim();
-		} else {
-			// Fallback to LLM for description
-			const descriptionResponse = await generateText({
-				model: openai("gpt-4o-mini"),
-				prompt: `Generate a concise description of what this repository is for based on this analysis: ${response.text}`,
-			});
-			description = descriptionResponse.text;
-		}
+			let techStackArray: string[] = [];
+			let description = "";
 
-		return {
-			techStack: techStackArray.map((tech) => tech.toLowerCase()),
-			description,
-		};
+			// Extract tech stack
+			if (response.text.includes("<tech-stack>")) {
+				const techStack = response.text
+					.split("<tech-stack>")[1]
+					.split("</tech-stack>")[0];
+				const _techStackArray = techStack
+					.split(",")
+					.map((tech) => tech.trim())
+					.filter((tech) => tech !== "");
+				techStackArray = _techStackArray;
+			} else {
+				// Fallback to LLM for tech stack
+				const { object } = await generateObject({
+					model: openai("gpt-4o-mini"),
+					schema: z.object({
+						techStack: z.array(z.string()),
+					}),
+					prompt: `Extract the tech stack of a repo given this text: ${response.text}.`,
+				});
+				techStackArray = object.techStack;
+			}
+
+			// Extract description
+			if (response.text.includes("<description>")) {
+				description = response.text
+					.split("<description>")[1]
+					.split("</description>")[0]
+					.trim();
+			} else {
+				// Fallback to LLM for description
+				const descriptionResponse = await generateText({
+					model: openai("gpt-4o-mini"),
+					prompt: `Generate a concise description of what this repository is for based on this analysis: ${response.text}`,
+				});
+				description = descriptionResponse.text;
+			}
+
+			return {
+				techStack: techStackArray.map((tech) => tech.toLowerCase()),
+				description,
+			};
+		} catch (error) {
+			if (error instanceof Error) {
+				throw new Error(error.message);
+			}
+			throw new Error("repo analyzer failed");
+		}
+	}
+
+	private pruneFileTree(tree: string, maxLines: number): string {
+		const lines = tree.split("\n");
+		if (lines.length <= maxLines) return tree;
+		const kept = lines.slice(0, maxLines);
+		kept.push(
+			`… (filetree truncated, ${lines.length - maxLines} lines omitted)`,
+		);
+		return kept.join("\n");
 	}
 
 	private systemText(): string {
