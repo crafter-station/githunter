@@ -19,7 +19,7 @@ export const pupulateGithubUserTask = schemaTask({
 		logger.info(`Starting GitHub profile generation for ${username}`);
 
 		// Add metadata for tracking this task
-		await metadata.set("username", username);
+		metadata.set("username", username);
 
 		const { userInfo, topRepos } = await getUserInfoWithTopRepos();
 		const repos = await getUserReposDetails(topRepos);
@@ -35,11 +35,11 @@ export const pupulateGithubUserTask = schemaTask({
 			techStackSet,
 		);
 
-		await metadata.set("progress", "saving_to_database");
-		await insertUserToDbTask.trigger(userRecord);
+		metadata.set("progress", "saving_to_database");
+		insertUserToDbTask.trigger(userRecord);
 
 		// Final progress update
-		await metadata.set("progress", "completed");
+		metadata.set("progress", "completed");
 
 		return {
 			username,
@@ -48,7 +48,7 @@ export const pupulateGithubUserTask = schemaTask({
 		};
 
 		async function extractMetadata() {
-			await metadata.set("progress", "generating_user_metadata");
+			metadata.set("progress", "generating_user_metadata");
 
 			const metadataResult = await getUserMetadata.triggerAndWait({
 				username,
@@ -79,7 +79,7 @@ export const pupulateGithubUserTask = schemaTask({
 			]);
 
 			// Update task progress status
-			await metadata.set("progress", "initial_data_collected");
+			metadata.set("progress", "initial_data_collected");
 
 			let userInfo: UserProfile | null = null;
 			let topRepos: RepoSummary[] | null = null;
