@@ -14,7 +14,8 @@ export const populateGithubUsersTaks = schemaTask({
 
 		await runConcurrently(
 			usernames,
-			async (username) => await populateGithubUser.exec(username, repoCount),
+			async (username) =>
+				await populateGithubUser.exec(username, null, null, repoCount),
 			totalConcurrent,
 		);
 	},
