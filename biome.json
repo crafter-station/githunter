@@ -17,8 +17,7 @@
 		"ignore": ["node_modules", ".next"],
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 2,
-		"lineEnding": "lf"
+		"indentWidth": 2
 	},
 	"linter": {
 		"ignore": ["node_modules", ".next"],
