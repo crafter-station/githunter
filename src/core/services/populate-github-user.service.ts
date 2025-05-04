@@ -1,112 +1,97 @@
 import { RepoAnalyzer } from "@/services/repo-analyzer";
-import type { RepoAnalysisResult } from "@/services/repo-analyzer";
-import { nanoid } from "nanoid";
-import { db } from "../../db";
-import { user as userTable } from "../../db/schema";
+import { UserMetadataExtractor } from "@/services/user-metadata-extractor";
 import { GithubService } from "../../services/github-scrapper";
-import type { RepoSummary, UserProfile } from "../../services/github-scrapper";
+import type { RepoSummary } from "../../services/github-scrapper";
+import { mapTechStackFromRepos, mapUser } from "../models/mappers";
+import type { RepoOfUser } from "../models/user";
+import { UserRepository } from "../repositories/user-repository";
 
 export class PopulateGithubUser {
 	private githubService: GithubService;
 	private repoAnalyzer: RepoAnalyzer;
+	private userRepository: UserRepository;
+	private userMetadataExtractor: UserMetadataExtractor;
 
 	constructor() {
 		this.githubService = new GithubService();
 		this.repoAnalyzer = new RepoAnalyzer();
+		this.userRepository = new UserRepository();
+		this.userMetadataExtractor = new UserMetadataExtractor();
 	}
 
-	public async exec(username: string, repoCount = 10): Promise<void> {
-		const userProfile: UserProfile =
-			await this.githubService.getUserInfo(username);
+	public async exec(username: string, repoCount = 20): Promise<void> {
+		const userProfile = await this.githubService.getUserInfo(username);
 		const topRepos = await this.githubService.getTopReposIncludingOrgs(
 			username,
 			repoCount,
 		);
-		const repoDetails = await this.extractRepoDetails(topRepos);
-		const techStack = await this.extractTechStack(topRepos, repoDetails);
+		const userRepos = await this.extractRepoDetails(topRepos);
 
-		const userRecord = this.mapToRecord(userProfile, techStack);
+		const metadata = await this.userMetadataExtractor.extract(
+			username,
+			userRepos,
+		);
 
-		await db.insert(userTable).values(userRecord).execute();
+		const techStackSet = mapTechStackFromRepos(userRepos);
+
+		const userRecord = mapUser(
+			username,
+			userProfile,
+			userRepos,
+			metadata,
+			techStackSet,
+		);
+
+		const existingUser = await this.userRepository.findByUsername(username);
+		if (existingUser) {
+			userRecord.id = existingUser.id;
+			await this.userRepository.update(userRecord);
+		} else {
+			await this.userRepository.insert(userRecord);
+		}
 	}
 
 	private async extractRepoDetails(
-		allRepos: RepoSummary[],
-	): Promise<Record<string, string>> {
-		const detailPromises = allRepos.map(async (repo) => {
-			try {
-				const details = await this.githubService.getRepoFileTree(repo.fullName);
-				return { key: repo.fullName, details };
-			} catch {
-				return {
-					key: repo.fullName,
-					details: "",
-				};
-			}
-		});
-
-		const settled = await Promise.allSettled(detailPromises);
-
-		const repoDetails: Record<string, string> = {};
-		for (const result of settled) {
-			if (result.status === "fulfilled") {
-				const { key, details } = result.value;
-				repoDetails[key] = details;
-			} else {
-				console.warn("Promise rejected unexpectedly", result.reason);
-			}
-		}
-
-		return repoDetails;
-	}
-
-	private async extractTechStack(
 		topRepos: RepoSummary[],
-		repoDetails: Record<string, string>,
-	): Promise<Set<string>> {
-		const extractPromises: Promise<RepoAnalysisResult>[] = topRepos.map(
-			(repo) => {
-				const { name, defaultBranch, fullName } = repo;
-				const tree = repoDetails[fullName];
-				return this.repoAnalyzer.analyze(name, defaultBranch, tree);
-			},
-		);
+	): Promise<RepoOfUser[]> {
+		const topReposDetails = new Map<
+			string,
+			{ fullName: string; techStack: string[]; description: string }
+		>();
 
-		const stacks: RepoAnalysisResult[] = await Promise.all(extractPromises);
+		for (const repo of topRepos) {
+			const fileTree = await this.githubService.getRepoFileTree(repo.fullName);
+			const { techStack, description } = await this.repoAnalyzer.analyze(
+				repo.fullName,
+				repo.defaultBranch,
+				fileTree,
+			);
 
-		const techStack = new Set<string>();
-		for (const stack of stacks) {
-			for (const tech of stack.techStack) {
-				techStack.add(tech);
+			topReposDetails.set(repo.fullName, {
+				fullName: repo.fullName,
+				techStack,
+				description,
+			});
+		}
+		const userRepos: RepoOfUser[] = [];
+
+		for (const repo of topRepos) {
+			if (topReposDetails.has(repo.fullName)) {
+				const detail = topReposDetails.get(repo.fullName);
+
+				if (!detail) {
+					continue;
+				}
+
+				userRepos.push({
+					fullName: repo.fullName,
+					description: detail.description,
+					stars: repo.stars,
+					techStack: detail.techStack,
+				});
 			}
 		}
 
-		return techStack;
-	}
-
-	private mapToRecord(userProfile: UserProfile, techStack: Set<string>) {
-		return {
-			id: nanoid(),
-			clerkId: null,
-			username: userProfile.login,
-			fullname: userProfile.name || userProfile.login,
-			email: userProfile.email,
-			avatarUrl: userProfile.avatarUrl,
-			stars: userProfile.starsCount,
-			followers: userProfile.followers,
-			following: userProfile.following,
-			repositories: userProfile.publicRepos,
-			contributions: userProfile.contributionCount,
-			country: userProfile.country,
-			city: userProfile.city,
-			website: userProfile.websiteUrl,
-			twitter: userProfile.twitterUsername
-				? `https://twitter.com/${userProfile.twitterUsername}`
-				: null,
-			linkedin: userProfile.linkedinUrl,
-			about: userProfile.bio,
-			stack: Array.from(techStack),
-			potentialRoles: [], // TODO: add potential roles still empty
-		};
+		return userRepos;
 	}
 }
