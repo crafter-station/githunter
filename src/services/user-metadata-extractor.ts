@@ -18,6 +18,9 @@ export class UserMetadataExtractor {
       - Software Engineer
       - Full Stack Developer
       - Frontend Developer
+			- Design Engineer
+			- Web Developer
+			- Web UI Developer
       - Backend Developer
       - DevOps Engineer
       - Data Engineer
@@ -26,6 +29,8 @@ export class UserMetadataExtractor {
       - AI Engineer
       - Machine Learning Engineer
       - DevOps Engineer
+			- Game Developer
+			- Mobile Developer
       - DevOps Engineer
 
       These are some examples of roles, you may decide to use some of them or create your own.
@@ -49,7 +54,10 @@ export class UserMetadataExtractor {
 			throw new Error("Failed to get user metadata");
 		}
 
-		return response.object;
+		return {
+			roles: response.object.roles.map((role) => role.trim().toLowerCase()),
+			about: response.object.about,
+		};
 	}
 
 	formatRepos(repos: RepoOfUser[]) {
