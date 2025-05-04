@@ -19,7 +19,12 @@ export class PopulateGithubUser {
 		this.userMetadataExtractor = new UserMetadataExtractor();
 	}
 
-	public async exec(username: string, repoCount = 20): Promise<void> {
+	public async exec(
+		username: string,
+		defaultCountry: string | null,
+		defaultTwitter: string | null,
+		repoCount = 20,
+	): Promise<void> {
 		const userProfile = await this.githubService.getUserInfo(username);
 		const topRepos = await this.githubService.getTopReposIncludingOrgs(
 			username,
@@ -33,6 +38,14 @@ export class PopulateGithubUser {
 		);
 
 		const techStackSet = mapTechStackFromRepos(userRepos);
+
+		if (defaultCountry) {
+			userProfile.country = defaultCountry;
+		}
+
+		if (defaultTwitter) {
+			userProfile.twitterUsername = defaultTwitter;
+		}
 
 		const userRecord = mapUser(
 			username,
