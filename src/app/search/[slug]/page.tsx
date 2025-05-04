@@ -1,7 +1,27 @@
+import { redis } from "@/redis";
 import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
 
 export const revalidate = 300;
+export const dynamic = "force-static";
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+	// Use scan with a pattern match to get all search keys
+	const searchKeys = [];
+	let cursor = "0";
+
+	do {
+		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
+		cursor = nextCursor;
+		searchKeys.push(...keys);
+	} while (cursor !== "0");
+
+	// Extract the slug from each key (remove the "search:" prefix)
+	return searchKeys.map((key) => ({
+		slug: key.replace("search:", ""),
+	}));
+}
 
 export default async function SearchPage({
 	params,
@@ -24,6 +44,8 @@ export default async function SearchPage({
 	}
 
 	const usersSorted = await queryUsers(searchParams);
+
+	console.log("generated again!");
 
 	return (
 		<div>
