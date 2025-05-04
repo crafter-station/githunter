@@ -3,83 +3,128 @@ import { db } from "../../db";
 import { user as userTable } from "../../db/schema";
 import { GithubService } from "../../services/github-scrapper";
 import type {
-	RepoDetails,
-	RepoSummary,
-	UserProfile,
+  RepoDetails,
+  RepoSummary,
+  UserProfile,
 } from "../../services/github-scrapper";
+import { TechStackExtractor } from "@/services/tech-stack-extractor";
 
-export async function populateGithubUser(
-	username: string,
-	repoCount = 10,
-): Promise<void> {
-	const github = new GithubService();
+export class PopulateGithubUser {
+  private githubService: GithubService;
+  private techStackExtractor: TechStackExtractor;
 
-	// 1) Fetch enriched profile
-	const userProfile: UserProfile = await github.getUserInfo(username);
+  constructor() {
+    this.githubService = new GithubService();
+    this.techStackExtractor = new TechStackExtractor();
+  }
 
-	// 2) Fetch repos (top & all for languages)
-	const topRepos: RepoSummary[] = await github.getTopReposIncludingOrgs(
-		username,
-		repoCount,
-	);
-	const allRepos: RepoSummary[] = await github.getTopReposIncludingOrgs(
-		username,
-		5,
-	);
+  public async exec(username: string, repoCount = 10): Promise<void> {
+    const userProfile: UserProfile = await this.githubService.getUserInfo(
+      username
+    );
+    const topRepos = await this.githubService.getTopReposIncludingOrgs(
+      username,
+      repoCount
+    );
+    const allRepos = await this.githubService.getTopReposIncludingOrgs(
+      username,
+      5
+    );
+    const repoDetails = await this.extractRepoDetails(allRepos);
+    const techStack = await this.extractTechStack(topRepos, repoDetails);
+    const { city, country } = this.extractCityAndCountry(userProfile);
 
-	// 3) Get detailed languages
-	const repoDetails: Record<string, RepoDetails> = {};
-	for (const repo of allRepos) {
-		try {
-			const [owner, name] = repo.fullName.split("/");
-			repoDetails[repo.fullName] = await github.getRepoDetails(owner, name);
-		} catch {
-			repoDetails[repo.fullName] = { readme: "", languages: [], tree: "" };
-		}
-	}
-	const stack = Array.from(
-		new Set(allRepos.flatMap((r) => repoDetails[r.fullName]?.languages || [])),
-	);
+    const userRecord = this.mapToRecord(userProfile, techStack, city, country);
 
-	// 4) Parse location
-	let city: string | null = null;
-	let country: string | null = null;
-	if (userProfile.location) {
-		const parts = userProfile.location.split(",").map((p) => p.trim());
-		if (parts.length > 1) {
-			// biome-ignore lint/style/noNonNullAssertion: TODO: check if this is correct
-			country = parts.pop()!;
-			city = parts.join(", ");
-		} else {
-			city = parts[0];
-		}
-	}
+    await db.insert(userTable).values(userRecord).execute();
+  }
 
-	// 5) Build record
-	const record = {
-		id: nanoid(),
-		clerkId: null,
-		username: userProfile.login,
-		fullname: userProfile.name || userProfile.login,
-		email: userProfile.email,
-		avatarUrl: userProfile.avatarUrl,
-		stars: userProfile.starsCount,
-		followers: userProfile.followers,
-		following: userProfile.following,
-		repositories: userProfile.publicRepos,
-		contributions: userProfile.contributionCount,
-		country,
-		city,
-		website: userProfile.websiteUrl,
-		twitter: userProfile.twitterUsername
-			? `https://twitter.com/${userProfile.twitterUsername}`
-			: null,
-		linkedin: userProfile.linkedinUrl,
-		about: userProfile.bio,
-		stack,
-		potentialRoles: [], // TODO: add potential roles still empty
-	};
+  private async extractRepoDetails(
+    allRepos: RepoSummary[]
+  ): Promise<Record<string, RepoDetails>> {
+    const repoDetails: Record<string, RepoDetails> = {};
+    for (const repo of allRepos) {
+      try {
+        const [owner, name] = repo.fullName.split("/");
+        repoDetails[repo.fullName] = await this.githubService.getRepoDetails(
+          owner,
+          name
+        );
+      } catch {
+        repoDetails[repo.fullName] = { readme: "", languages: [], tree: "" };
+      }
+    }
+    return repoDetails;
+  }
 
-	// 6) Upsert
-	await db.insert(userTable).values(record).execute();
+  private async extractTechStack(
+    topRepos: RepoSummary[],
+    repoDetails: Record<string, RepoDetails>
+  ): Promise<Set<string>> {
+    const techStack = new Set<string>();
+    for (const repo of topRepos) {
+      const repoDetail = repoDetails[repo.fullName];
+      const stack = await this.techStackExtractor.extract(
+        repo.name,
+        "main",
+        repoDetail.tree
+      );
+
+      for (const tech of stack) {
+        techStack.add(tech);
+      }
+    }
+    return techStack;
+  }
+
+  private extractCityAndCountry(userProfile: UserProfile): {
+    city: string | null;
+    country: string | null;
+  } {
+    let city: string | null = null;
+    let country: string | null = null;
+    if (userProfile.location) {
+      const parts = userProfile.location.split(",").map((p) => p.trim());
+      if (parts.length > 1) {
+        // biome-ignore lint/style/noNonNullAssertion: TODO: check if this is correct
+        country = parts.pop()!;
+        city = parts.join(", ");
+      } else {
+        city = parts[0];
+      }
+    }
+
+    return { city, country };
+  }
+
+  private mapToRecord(
+    userProfile: UserProfile,
+    techStack: Set<string>,
+    city: string | null,
+    country: string | null
+  ) {
+    return {
+      id: nanoid(),
+      clerkId: null,
+      username: userProfile.login,
+      fullname: userProfile.name || userProfile.login,
+      email: userProfile.email,
+      avatarUrl: userProfile.avatarUrl,
+      stars: userProfile.starsCount,
+      followers: userProfile.followers,
+      following: userProfile.following,
+      repositories: userProfile.publicRepos,
+      contributions: userProfile.contributionCount,
+      country,
+      city,
+      website: userProfile.websiteUrl,
+      twitter: userProfile.twitterUsername
+        ? `https://twitter.com/${userProfile.twitterUsername}`
+        : null,
+      linkedin: userProfile.linkedinUrl,
+      about: userProfile.bio,
+      stack: Array.from(techStack),
+      potentialRoles: [], // TODO: add potential roles still empty
+    };
+  }
 }
