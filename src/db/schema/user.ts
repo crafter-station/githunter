@@ -63,7 +63,7 @@ export const user = pgTable(
 		createdAt: timestamp("created_at").notNull().defaultNow(),
 		updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
-		repos: jsonb("repos").array().default([]).$type<Repo[]>(),
+		repos: jsonb("repos").array().notNull().default([]).$type<Repo[]>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns
