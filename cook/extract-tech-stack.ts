@@ -1,4 +1,4 @@
-import { TechStackExtractor } from "@/services/tech-stack-extractor";
+import { TechStackExtractor } from "@/services/repo-analyzer";
 
 const filetree1 = `
 ├── .husky/

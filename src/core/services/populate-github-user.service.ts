@@ -1,21 +1,18 @@
-import { TechStackExtractor } from "@/services/tech-stack-extractor";
+import { RepoAnalyzer } from "@/services/repo-analyzer";
+import type { RepoAnalysisResult } from "@/services/repo-analyzer";
 import { nanoid } from "nanoid";
 import { db } from "../../db";
 import { user as userTable } from "../../db/schema";
 import { GithubService } from "../../services/github-scrapper";
-import type {
-	RepoDetails,
-	RepoSummary,
-	UserProfile,
-} from "../../services/github-scrapper";
+import type { RepoSummary, UserProfile } from "../../services/github-scrapper";
 
 export class PopulateGithubUser {
 	private githubService: GithubService;
-	private techStackExtractor: TechStackExtractor;
+	private repoAnalyzer: RepoAnalyzer;
 
 	constructor() {
 		this.githubService = new GithubService();
-		this.techStackExtractor = new TechStackExtractor();
+		this.repoAnalyzer = new RepoAnalyzer();
 	}
 
 	public async exec(username: string, repoCount = 10): Promise<void> {
@@ -27,32 +24,30 @@ export class PopulateGithubUser {
 		);
 		const repoDetails = await this.extractRepoDetails(topRepos);
 		const techStack = await this.extractTechStack(topRepos, repoDetails);
-		const { city, country } = this.extractCityAndCountry(userProfile);
 
-		const userRecord = this.mapToRecord(userProfile, techStack, city, country);
+		const userRecord = this.mapToRecord(userProfile, techStack);
 
 		await db.insert(userTable).values(userRecord).execute();
 	}
 
 	private async extractRepoDetails(
 		allRepos: RepoSummary[],
-	): Promise<Record<string, RepoDetails>> {
+	): Promise<Record<string, string>> {
 		const detailPromises = allRepos.map(async (repo) => {
-			const [owner, name] = repo.fullName.split("/");
 			try {
-				const details = await this.githubService.getRepoDetails(owner, name);
+				const details = await this.githubService.getRepoFileTree(repo.fullName);
 				return { key: repo.fullName, details };
 			} catch {
 				return {
 					key: repo.fullName,
-					details: { readme: "", languages: [], tree: "" },
+					details: "",
 				};
 			}
 		});
 
 		const settled = await Promise.allSettled(detailPromises);
 
-		const repoDetails: Record<string, RepoDetails> = {};
+		const repoDetails: Record<string, string> = {};
 		for (const result of settled) {
 			if (result.status === "fulfilled") {
 				const { key, details } = result.value;
@@ -67,19 +62,21 @@ export class PopulateGithubUser {
 
 	private async extractTechStack(
 		topRepos: RepoSummary[],
-		repoDetails: Record<string, RepoDetails>,
+		repoDetails: Record<string, string>,
 	): Promise<Set<string>> {
-		const extractPromises: Promise<string[]>[] = topRepos.map((repo) => {
-			const { name, defaultBranch, fullName } = repo;
-			const tree = repoDetails[fullName].tree;
-			return this.techStackExtractor.extract(name, defaultBranch, tree);
-		});
+		const extractPromises: Promise<RepoAnalysisResult>[] = topRepos.map(
+			(repo) => {
+				const { name, defaultBranch, fullName } = repo;
+				const tree = repoDetails[fullName];
+				return this.repoAnalyzer.analyze(name, defaultBranch, tree);
+			},
+		);
 
-		const stacks: string[][] = await Promise.all(extractPromises);
+		const stacks: RepoAnalysisResult[] = await Promise.all(extractPromises);
 
 		const techStack = new Set<string>();
 		for (const stack of stacks) {
-			for (const tech of stack) {
+			for (const tech of stack.techStack) {
 				techStack.add(tech);
 			}
 		}
@@ -87,32 +84,7 @@ export class PopulateGithubUser {
 		return techStack;
 	}
 
-	private extractCityAndCountry(userProfile: UserProfile): {
-		city: string | null;
-		country: string | null;
-	} {
-		let city: string | null = null;
-		let country: string | null = null;
-		if (userProfile.location) {
-			const parts = userProfile.location.split(",").map((p) => p.trim());
-			if (parts.length > 1) {
-				// biome-ignore lint/style/noNonNullAssertion: TODO: check if this is correct
-				country = parts.pop()!;
-				city = parts.join(", ");
-			} else {
-				city = parts[0];
-			}
-		}
-
-		return { city, country };
-	}
-
-	private mapToRecord(
-		userProfile: UserProfile,
-		techStack: Set<string>,
-		city: string | null,
-		country: string | null,
-	) {
+	private mapToRecord(userProfile: UserProfile, techStack: Set<string>) {
 		return {
 			id: nanoid(),
 			clerkId: null,
@@ -125,8 +97,8 @@ export class PopulateGithubUser {
 			following: userProfile.following,
 			repositories: userProfile.publicRepos,
 			contributions: userProfile.contributionCount,
-			country,
-			city,
+			country: userProfile.country,
+			city: userProfile.city,
 			website: userProfile.websiteUrl,
 			twitter: userProfile.twitterUsername
 				? `https://twitter.com/${userProfile.twitterUsername}`
