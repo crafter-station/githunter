@@ -1,15 +1,15 @@
 import { RunProgress } from "@/components/RunProgress";
 import { TriggerProvider } from "@/components/TriggerProvider";
 
-export default function UserProfilePage({
+export default async function UserProfilePage({
 	params,
 	searchParams,
 }: {
-	params: { username: string };
-	searchParams: { runId: string; token: string };
+	params: Promise<{ username: string }>;
+	searchParams: Promise<{ runId: string; token: string }>;
 }) {
-	const { username } = params;
-	const { runId, token } = searchParams;
+	const { username } = await params;
+	const { runId, token } = await searchParams;
 
 	if (!runId || !token) {
 		return (

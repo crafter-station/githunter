@@ -1,4 +1,4 @@
-import { TechStackExtractor } from "@/services/repo-analyzer";
+import { RepoAnalyzer } from "@/services/repo-analyzer";
 
 const filetree1 = `
 ├── .husky/
@@ -228,11 +228,10 @@ const filetree1 = `
 
 const repo1 = "crafter-station/text0";
 
-const extractor = new TechStackExtractor();
+const analyzer = new RepoAnalyzer();
+const techStack = analyzer.analyze(repo1, "main", filetree1);
 
-extractor.extract(repo1, "main", filetree1).then((techStack) => {
-	console.log(techStack);
-});
+console.log(techStack);
 
 const filetree2 = `
 ├── .idea/
@@ -312,6 +311,6 @@ const filetree2 = `
 `;
 const repo2 = "Jibaru/gostore";
 
-extractor.extract(repo2, "main", filetree2).then((techStack) => {
-	console.log(techStack);
-});
+const techStack2 = analyzer.analyze(repo2, "main", filetree2);
+
+console.log(techStack2);

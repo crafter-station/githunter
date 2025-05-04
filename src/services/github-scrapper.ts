@@ -175,7 +175,7 @@ export class GithubService {
 			return fileTree;
 		} catch (err) {
 			throw new GithubError(
-				`Failed to fetch repo details for ${owner}/${repo}`,
+				`Failed to fetch repo details for ${fullName}`,
 				"REPO_DETAILS_ERROR",
 			);
 		}
