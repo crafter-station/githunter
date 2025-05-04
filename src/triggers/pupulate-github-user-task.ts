@@ -1,4 +1,5 @@
-import type { Repo } from "@/db/schema";
+import { mapTechStackFromRepos, mapUser } from "@/core/models/mappers";
+import type { RepoOfUser } from "@/core/models/user";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 import type { RepoSummary, UserProfile } from "../services/github-scrapper";
@@ -20,46 +21,97 @@ export const pupulateGithubUserTask = schemaTask({
 		// Add metadata for tracking this task
 		await metadata.set("username", username);
 
-		const results = await batch.triggerAndWait<
-			typeof getUserInfoTask | typeof getTopReposTask
-		>([
-			{
-				id: "get-user-info",
-				payload: {
-					username,
+		const { userInfo, topRepos } = await getUserInfoWithTopRepos();
+		const repos = await getUserReposDetails(topRepos);
+		const userMetadata = await extractMetadata();
+		const techStackSet = mapTechStackFromRepos(repos);
+		logger.info(`Stack: ${Array.from(techStackSet)}`);
+
+		const userRecord = mapUser(
+			username,
+			userInfo,
+			repos,
+			userMetadata,
+			techStackSet,
+		);
+
+		await metadata.set("progress", "saving_to_database");
+		await insertUserToDbTask.trigger(userRecord);
+
+		// Final progress update
+		await metadata.set("progress", "completed");
+
+		return {
+			username,
+			status: "completed",
+			message: "GitHub profile generated successfully",
+		};
+
+		async function extractMetadata() {
+			await metadata.set("progress", "generating_user_metadata");
+
+			const metadataResult = await getUserMetadata.triggerAndWait({
+				username,
+				repos,
+			});
+
+			if (!metadataResult.ok) {
+				throw new Error("Failed to get user metadata");
+			}
+
+			return metadataResult.output;
+		}
+
+		async function getUserInfoWithTopRepos() {
+			const results = await batch.triggerAndWait<
+				typeof getUserInfoTask | typeof getTopReposTask
+			>([
+				{
+					id: "get-user-info",
+					payload: {
+						username,
+					},
 				},
-			},
-			{
-				id: "get-top-repos",
-				payload: { username },
-			},
-		]);
+				{
+					id: "get-top-repos",
+					payload: { username },
+				},
+			]);
 
-		// Update task progress status
-		await metadata.set("progress", "initial_data_collected");
+			// Update task progress status
+			await metadata.set("progress", "initial_data_collected");
 
-		let userInfo: UserProfile | null = null;
-		let topRepos: RepoSummary[] | null = null;
+			let userInfo: UserProfile | null = null;
+			let topRepos: RepoSummary[] | null = null;
 
-		for (const result of results.runs) {
-			if (result.ok) {
-				if (result.taskIdentifier === "get-user-info") {
-					userInfo = result.output;
-				} else if (result.taskIdentifier === "get-top-repos") {
-					topRepos = result.output;
+			for (const result of results.runs) {
+				if (result.ok) {
+					if (result.taskIdentifier === "get-user-info") {
+						userInfo = result.output;
+					} else if (result.taskIdentifier === "get-top-repos") {
+						topRepos = result.output;
+					}
 				}
 			}
+
+			if (userInfo === null) {
+				throw new Error("User info not found");
+			}
+
+			return {
+				userInfo,
+				topRepos,
+			};
 		}
 
-		if (userInfo === null) {
-			throw new Error("User info not found");
-		}
-		const repos: Repo[] = [];
+		async function getUserReposDetails(topRepos: RepoSummary[] | null) {
+			const repos: RepoOfUser[] = [];
 
-		if (topRepos) {
-			// Update task progress status
+			if (!topRepos) {
+				return repos;
+			}
+
 			await metadata.set("progress", "fetching_repo_details");
-
 			const repoDetails = await batch.triggerAndWait<typeof getRepoDetailsTask>(
 				topRepos.map((repo) => ({
 					id: "get-repo-details",
@@ -88,67 +140,7 @@ export const pupulateGithubUserTask = schemaTask({
 					}
 				}
 			}
+			return repos;
 		}
-
-		// Update task progress status
-		await metadata.set("progress", "generating_user_metadata");
-
-		const metadata_result = await getUserMetadata.triggerAndWait({
-			username,
-			repos,
-		});
-
-		if (!metadata_result.ok) {
-			throw new Error("Failed to get user metadata");
-		}
-
-		const techStackSet = new Set<string>();
-
-		for (const repo of repos) {
-			for (const tech of repo.techStack) {
-				techStackSet.add(tech);
-			}
-		}
-
-		const stack = Array.from(techStackSet);
-		logger.info(`Stack: ${stack}`);
-
-		// Update task progress status
-		await metadata.set("progress", "saving_to_database");
-
-		await insertUserToDbTask.trigger({
-			username,
-			fullname: userInfo.name ?? "",
-			avatarUrl: userInfo.avatarUrl,
-
-			stars: repos.reduce((acc, repo) => acc + repo.stars, 0),
-			followers: userInfo.followers,
-			following: userInfo.following,
-			repositories: userInfo.publicRepos,
-			contributions: userInfo.contributionCount,
-
-			country: userInfo.country ?? undefined,
-			city: userInfo.city ?? undefined,
-
-			website: userInfo.websiteUrl ?? undefined,
-			twitter: userInfo.twitterUsername ?? undefined,
-			linkedin: userInfo.linkedinUrl ?? undefined,
-
-			about: metadata_result.output.about,
-
-			stack,
-			potentialRoles: metadata_result.output.roles,
-
-			repos,
-		});
-
-		// Final progress update
-		await metadata.set("progress", "completed");
-
-		return {
-			username,
-			status: "completed",
-			message: "GitHub profile generated successfully",
-		};
 	},
 });
