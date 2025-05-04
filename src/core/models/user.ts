@@ -34,10 +34,9 @@ export const UserSchema = z.object({
 
 	about: z.string().optional().nullable(),
 
-	stack: z.array(z.string()).nullable(),
-	potentialRoles: z.array(z.string()).nullable(),
-
-	repos: z.array(RepoOfUserSchema).nullable(),
+	stack: z.array(z.string()),
+	potentialRoles: z.array(z.string()),
+	repos: z.array(RepoOfUserSchema),
 });
 
 export type User = z.infer<typeof UserSchema>;
