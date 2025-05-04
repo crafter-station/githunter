@@ -40,6 +40,7 @@ export interface RepoSummary {
 	owner: {
 		login: string;
 	};
+	defaultBranch: string;
 }
 
 export interface RepoDetails {
@@ -154,6 +155,9 @@ export class GithubService {
 			try {
 				// Approach 1: Using git reference
 				fileTree = await this.getFileTreeUsingGitRef(owner, repo);
+				if (fileTree === "") {
+					throw new Error("File tree is empty");
+				}
 			} catch (err) {
 				console.log(
 					`Failed to fetch tree using git ref for ${owner}/${repo}: ${
@@ -282,30 +286,49 @@ export class GithubService {
 	/** Helper: Build a string representation of the file tree */
 	// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
 	private buildFileTreeString(treeItems: any[]): string {
-		// clone the input so we don’t mutate the readonly array
-		const items = treeItems.slice(); // or [...treeItems]
+		// 1) Build a nested structure
+		interface Node {
+			__children: Record<string, Node>;
+		}
+		const root: Record<string, Node> = {};
 
-		// now sort our mutable copy
-		items.sort((a, b) => {
-			const aDepth = a.path.split("/").length;
-			const bDepth = b.path.split("/").length;
-			if (aDepth !== bDepth) return aDepth - bDepth;
-			if (a.type !== b.type) {
-				return a.type === "tree" ? -1 : 1;
-			}
-			return a.path.localeCompare(b.path);
-		});
-
-		// rest of your logic, iterating over `items` instead of `treeItems`
-		// biome-ignore lint/suspicious/noExplicitAny: using any due to nested structure complexity
-		const root: Record<string, any> = {};
-		for (const item of items) {
+		for (const item of treeItems) {
 			const parts = item.path.split("/");
-			const current = root;
-			// … build the nested structure …
+			let current = root;
+			for (const part of parts) {
+				if (!current[part]) {
+					current[part] = { __children: {} };
+				}
+				current = current[part].__children;
+			}
 		}
 
-		return this.renderTree(root, "", true);
+		// 2) Render the tree
+		const lines: string[] = [];
+		function render(
+			node: Record<string, Node>,
+			prefix: string,
+			isLast: boolean,
+		) {
+			const entries = Object.keys(node).sort();
+			entries.forEach((name, idx) => {
+				const last = idx === entries.length - 1;
+				const branch = prefix + (isLast ? "└── " : "├── ");
+				lines.push(branch + name);
+
+				const children = node[name].__children;
+				if (Object.keys(children).length > 0) {
+					// extend prefix: if we're the last sibling, pad with spaces, otherwise with a vertical bar
+					const childPrefix = prefix + (isLast ? "    " : "│   ");
+					render(children, childPrefix, last);
+				}
+			});
+		}
+
+		// kick it off from root; root itself is considered “last”
+		render(root, "", true);
+
+		return lines.join("\n");
 	}
 
 	/** Helper: Render the tree structure as a string */
@@ -352,7 +375,6 @@ export class GithubService {
 		try {
 			// collect user's own repos
 			const userRepos = await this.collectUserRepos(username);
-			console.log(userRepos[0]);
 
 			// fetch organizations
 			const { data: orgs } = await this.octokit.orgs.listForUser({
@@ -366,8 +388,6 @@ export class GithubService {
 			);
 			const orgReposArrays = await Promise.all(orgRepoPromises);
 			const orgRepos = orgReposArrays.flat();
-
-			console.log(orgRepos[0]);
 
 			// combine and sort
 			const combined = [...userRepos, ...orgRepos];
@@ -433,6 +453,7 @@ export class GithubService {
 				owner: {
 					login: repo.owner?.login || "",
 				},
+				defaultBranch: repo.default_branch,
 			}));
 	}
 

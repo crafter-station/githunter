@@ -25,11 +25,7 @@ export class PopulateGithubUser {
 			username,
 			repoCount,
 		);
-		const allRepos = await this.githubService.getTopReposIncludingOrgs(
-			username,
-			5,
-		);
-		const repoDetails = await this.extractRepoDetails(allRepos);
+		const repoDetails = await this.extractRepoDetails(topRepos);
 		const techStack = await this.extractTechStack(topRepos, repoDetails);
 		const { city, country } = this.extractCityAndCountry(userProfile);
 
@@ -41,18 +37,31 @@ export class PopulateGithubUser {
 	private async extractRepoDetails(
 		allRepos: RepoSummary[],
 	): Promise<Record<string, RepoDetails>> {
-		const repoDetails: Record<string, RepoDetails> = {};
-		for (const repo of allRepos) {
+		const detailPromises = allRepos.map(async (repo) => {
+			const [owner, name] = repo.fullName.split("/");
 			try {
-				const [owner, name] = repo.fullName.split("/");
-				repoDetails[repo.fullName] = await this.githubService.getRepoDetails(
-					owner,
-					name,
-				);
+				const details = await this.githubService.getRepoDetails(owner, name);
+				return { key: repo.fullName, details };
 			} catch {
-				repoDetails[repo.fullName] = { readme: "", languages: [], tree: "" };
+				return {
+					key: repo.fullName,
+					details: { readme: "", languages: [], tree: "" },
+				};
+			}
+		});
+
+		const settled = await Promise.allSettled(detailPromises);
+
+		const repoDetails: Record<string, RepoDetails> = {};
+		for (const result of settled) {
+			if (result.status === "fulfilled") {
+				const { key, details } = result.value;
+				repoDetails[key] = details;
+			} else {
+				console.warn("Promise rejected unexpectedly", result.reason);
 			}
 		}
+
 		return repoDetails;
 	}
 
@@ -60,19 +69,21 @@ export class PopulateGithubUser {
 		topRepos: RepoSummary[],
 		repoDetails: Record<string, RepoDetails>,
 	): Promise<Set<string>> {
-		const techStack = new Set<string>();
-		for (const repo of topRepos) {
-			const repoDetail = repoDetails[repo.fullName];
-			const stack = await this.techStackExtractor.extract(
-				repo.name,
-				"main",
-				repoDetail.tree,
-			);
+		const extractPromises: Promise<string[]>[] = topRepos.map((repo) => {
+			const { name, defaultBranch, fullName } = repo;
+			const tree = repoDetails[fullName].tree;
+			return this.techStackExtractor.extract(name, defaultBranch, tree);
+		});
 
+		const stacks: string[][] = await Promise.all(extractPromises);
+
+		const techStack = new Set<string>();
+		for (const stack of stacks) {
 			for (const tech of stack) {
 				techStack.add(tech);
 			}
 		}
+
 		return techStack;
 	}
 
