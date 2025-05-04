@@ -1,3 +1,4 @@
+import { UserRepository } from "@/core/repositories/user-repository";
 import { PopulateGithubUser } from "@/core/services/populate-github-user.service";
 
 if (require.main === module) {
@@ -19,6 +20,13 @@ if (require.main === module) {
 
 			if (args.length > 2) {
 				twitterUsername = args[2];
+			}
+
+			const userRepository = new UserRepository();
+			const existingUser = await userRepository.findByUsername(username);
+			if (existingUser) {
+				console.log(`github username ${username} already processed, skipping`);
+				return;
 			}
 
 			const service = new PopulateGithubUser();
