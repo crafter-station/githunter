@@ -2,6 +2,7 @@
 import GitHunterLogo from "@/components/githunter-logo";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function Header() {
@@ -18,8 +19,8 @@ export function Header() {
 					<Button variant="ghost" className="text-sm">
 						About
 					</Button>
-					<Button variant="ghost" className="text-sm">
-						Features
+					<Button variant="ghost" className="text-sm" asChild>
+						<Link href="/new">Index Profile</Link>
 					</Button>
 					<SignedIn>
 						<UserButton />
