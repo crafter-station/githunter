@@ -1,10 +1,21 @@
 import {
 	integer,
+	jsonb,
 	pgTable,
 	text,
 	timestamp,
 	varchar,
 } from "drizzle-orm/pg-core";
+import { z } from "zod";
+
+export const repoSchema = z.object({
+	fullName: z.string(),
+	description: z.string(),
+	stars: z.number(),
+	techStack: z.array(z.string()),
+});
+
+export type Repo = z.infer<typeof repoSchema>;
 
 export const user = pgTable("user", {
 	// custom alphabet nanoid
@@ -44,4 +55,6 @@ export const user = pgTable("user", {
 
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
+
+	repos: jsonb("repos").array().default([]).$type<Repo[]>(),
 });

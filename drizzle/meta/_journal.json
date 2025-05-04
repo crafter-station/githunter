@@ -15,6 +15,13 @@
 			"when": 1746303351888,
 			"tag": "0001_flaky_stellaris",
 			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "7",
+			"when": 1746338175804,
+			"tag": "0002_common_cyclops",
+			"breakpoints": true
 		}
 	]
 }

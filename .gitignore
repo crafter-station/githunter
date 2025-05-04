@@ -44,3 +44,6 @@ next-env.d.ts
 
 # data fetch
 /github-cache
+
+# clerk configuration (can include secrets)
+/.clerk/

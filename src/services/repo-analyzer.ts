@@ -2,12 +2,17 @@ import { openai } from "@ai-sdk/openai";
 import { generateObject, generateText, tool } from "ai";
 import { z } from "zod";
 
-export class TechStackExtractor {
-	public async extract(
+export interface RepoAnalysisResult {
+	techStack: string[];
+	description: string;
+}
+
+export class RepoAnalyzer {
+	public async analyze(
 		repo: string,
 		branch: string,
 		filetree: string,
-	): Promise<string[]> {
+	): Promise<RepoAnalysisResult> {
 		const response = await generateText({
 			system: this.systemText(),
 			model: openai("gpt-4o-mini"),
@@ -27,11 +32,14 @@ export class TechStackExtractor {
 				}),
 			},
 			maxSteps: 10,
-			prompt: `Extract the tech stack from the following filetree:
-${filetree}. Return just the array of consolidated technologies used in the project.`,
+			prompt: `Analyze the following filetree and extract both the tech stack and a brief description of what this repository is for:
+${filetree}`,
 		});
 
 		let techStackArray: string[] = [];
+		let description = "";
+
+		// Extract tech stack
 		if (response.text.includes("<tech-stack>")) {
 			const techStack = response.text
 				.split("<tech-stack>")[1]
@@ -42,6 +50,7 @@ ${filetree}. Return just the array of consolidated technologies used in the proj
 				.filter((tech) => tech !== "");
 			techStackArray = _techStackArray;
 		} else {
+			// Fallback to LLM for tech stack
 			const { object } = await generateObject({
 				model: openai("gpt-4o-mini"),
 				schema: z.object({
@@ -52,12 +61,32 @@ ${filetree}. Return just the array of consolidated technologies used in the proj
 			techStackArray = object.techStack;
 		}
 
-		return techStackArray.map((tech) => tech.toLowerCase());
+		// Extract description
+		if (response.text.includes("<description>")) {
+			description = response.text
+				.split("<description>")[1]
+				.split("</description>")[0]
+				.trim();
+		} else {
+			// Fallback to LLM for description
+			const descriptionResponse = await generateText({
+				model: openai("gpt-4o-mini"),
+				prompt: `Generate a concise description of what this repository is for based on this analysis: ${response.text}`,
+			});
+			description = descriptionResponse.text;
+		}
+
+		return {
+			techStack: techStackArray.map((tech) => tech.toLowerCase()),
+			description,
+		};
 	}
 
 	private systemText(): string {
-		return `You are a helpful assistant that extracts the tech stack from a filetree. 
+		return `You are a helpful assistant that analyzes GitHub repositories to extract both the tech stack and a concise description of what the repository is for.
       Use the readFile tool to read special files like package.json for node projects or the equivalent for other languages.
+      
+      For the tech stack:
       Detail as much as possible about the tech stack, but consolidate related technologies under their parent names.
       
       Consolidation rules:
@@ -72,22 +101,34 @@ ${filetree}. Return just the array of consolidated technologies used in the proj
       Return an array of consolidated technologies used in the project. Separate each technology with a comma.
       The array should be wrapped in <tech-stack>...</tech-stack> tags.
   
+      For the description:
+      Provide a concise but informative description of what the repository is for based on the files you see.
+      The description should explain the purpose of the project, its main features, and its potential use cases.
+      The description should be wrapped in <description>...</description> tags.
+      
       Examples:
       <tech-stack>
       node, react, tailwindcss, shadcn, typescript, vite, vercel, supabase, prisma, nextjs, radix-ui
       </tech-stack>
+      <description>
+      A modern web application for managing and tracking personal finances with support for budget planning, expense tracking, and financial goal setting.
+      </description>
   
       or
   
       <tech-stack>
       python, flask, sqlite, django, kubernetes, docker, aws, terraform
       </tech-stack>
+      <description>
+      A backend API service for processing and analyzing large datasets with machine learning algorithms, deployed on AWS infrastructure.
+      </description>
       
       Hints: 
       - If the project has a components.json file at the root, it is using shadcn.
       - Look for configuration files (.config.js, pyproject.toml, Gemfile, etc.) to identify core technologies.
       - For Java projects, look at pom.xml or build.gradle.
       - For .NET projects, look at .csproj or .sln files.
-      - For Python projects, look at requirements.txt, setup.py, or pyproject.toml.`;
+      - For Python projects, look at requirements.txt, setup.py, or pyproject.toml.
+      - Look at README.md files for project descriptions and purpose.`;
 	}
 }

@@ -17,7 +17,6 @@ export class GithubError extends Error {
 export interface UserProfile {
 	login: string;
 	name: string | null;
-	location: string | null;
 	bio: string | null;
 	publicRepos: number;
 	followers: number;
@@ -30,6 +29,8 @@ export interface UserProfile {
 	websiteUrl: string | null;
 	twitterUsername: string | null;
 	linkedinUrl: string | null;
+	city: string | null;
+	country: string | null;
 }
 
 export interface RepoSummary {
@@ -74,10 +75,24 @@ export class GithubService {
 				if (href) linkedinUrl = href;
 			});
 
+			let city: string | null = null;
+			let country: string | null = null;
+			if (data.location) {
+				const parts = data.location.split(",").map((p) => p.trim());
+				if (parts.length > 1) {
+					// biome-ignore lint/style/noNonNullAssertion: TODO: check if this is correct
+					country = parts.pop()!;
+					city = parts.join(", ");
+				} else {
+					city = parts[0];
+				}
+			}
+
 			return {
 				login: data.login,
 				name: data.name,
-				location: data.location,
+				city,
+				country,
 				bio: data.bio,
 				publicRepos: data.public_repos,
 				followers: data.followers,
@@ -123,31 +138,9 @@ export class GithubService {
 	}
 
 	/** Fetch detailed repo info */
-	async getRepoDetails(owner: string, repo: string): Promise<RepoDetails> {
+	async getRepoFileTree(fullName: string): Promise<string> {
 		try {
-			// README
-			let readme = "";
-			try {
-				const { data: readmeData } = await this.octokit.repos.getReadme({
-					owner,
-					repo,
-				});
-				readme = Buffer.from(readmeData.content, "base64").toString("utf-8");
-			} catch {
-				console.log(`No README found for ${owner}/${repo}`);
-			}
-
-			// Languages
-			let languages: string[] = [];
-			try {
-				const { data: langs } = await this.octokit.repos.listLanguages({
-					owner,
-					repo,
-				});
-				languages = Object.keys(langs);
-			} catch (err) {
-				console.log(`Failed to fetch languages for ${owner}/${repo}`);
-			}
+			const [owner, repo] = fullName.split("/");
 
 			// File tree - Try multiple approaches to handle both personal and org repos
 			let fileTree = "";
@@ -179,10 +172,10 @@ export class GithubService {
 				}
 			}
 
-			return { readme, languages, tree: fileTree };
+			return fileTree;
 		} catch (err) {
 			throw new GithubError(
-				`Failed to fetch repo details for ${owner}/${repo}`,
+				`Failed to fetch repo details for ${fullName}`,
 				"REPO_DETAILS_ERROR",
 			);
 		}
