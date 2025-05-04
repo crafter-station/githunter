@@ -9,7 +9,7 @@ export function Header() {
 	const router = useRouter();
 
 	return (
-		<header className="sticky top-0 z-30 border-border border-b border-dashed">
+		<header className="sticky top-0 z-30 border-border border-b border-dashed bg-background">
 			<div className="container mx-auto flex h-16 items-center justify-between px-4">
 				<div className="flex items-center gap-2">
 					<GitHunterLogo className="h-6 w-6" />

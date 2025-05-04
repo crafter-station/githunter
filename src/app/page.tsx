@@ -38,15 +38,12 @@ export default function Home() {
 
 					{/* Search - v0 style */}
 					<div className="w-full max-w-3xl rounded-lg border border-border bg-background shadow-sm">
-						<div className="relative flex items-end p-2">
-							<div className="pointer-events-none absolute top-3 left-4 text-muted-foreground">
-								<Search className="h-5 w-5" />
-							</div>
+						<div className="relative flex items-end bg-input/30 p-2">
 							<Textarea
 								placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
-								className="min-h-[52px] resize-none border-0 py-2 pr-24 pl-10 shadow-none [field-sizing:content] focus-visible:ring-0"
+								className="!bg-transparent min-h-[52px] resize-none border-0 p-2 pb-10 shadow-none [field-sizing:content] focus-visible:ring-0"
 							/>
-							<div className="absolute right-2 bottom-3 flex items-center gap-1.5">
+							<div className="absolute right-4 bottom-2 flex items-center gap-1.5">
 								<Button
 									variant="ghost"
 									size="icon"
@@ -58,7 +55,7 @@ export default function Home() {
 								<Button
 									variant="ghost"
 									size="icon"
-									className="mr-2 h-8 w-8 rounded-full text-muted-foreground hover:text-primary"
+									className="mr-1 h-8 w-8 rounded-full text-muted-foreground hover:text-primary"
 								>
 									<Sparkles className="h-4 w-4" />
 									<span className="sr-only">Enhance prompt</span>
