@@ -22,6 +22,20 @@
 			"when": 1746338175804,
 			"tag": "0002_common_cyclops",
 			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "7",
+			"when": 1746378960369,
+			"tag": "0003_magenta_tusk",
+			"breakpoints": true
+		},
+		{
+			"idx": 4,
+			"version": "7",
+			"when": 1746385119495,
+			"tag": "0004_conscious_valkyrie",
+			"breakpoints": true
 		}
 	]
 }
