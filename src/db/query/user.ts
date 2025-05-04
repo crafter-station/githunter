@@ -1,9 +1,17 @@
 import { db } from "@/db";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import { user } from "../schema/user";
 
-export async function getFeaturedUsers(limit = 3) {
+export async function getFeaturedUsers(limit = 3, userIds?: string[]) {
 	try {
+		if (userIds && userIds.length > 0) {
+			const users = await db.query.user.findMany({
+				where: inArray(user.id, userIds),
+				orderBy: [desc(user.stars)],
+			});
+			return users;
+		}
+
 		const users = await db.query.user.findMany({
 			orderBy: [desc(user.stars)],
 			limit,

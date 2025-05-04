@@ -50,7 +50,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 						userButtonTrigger:
 							"!p-0 !w-full flex !justify-start group-data-[collapsible=icon]:hover:!bg-transparent group-data-[collapsible=icon]:!px-0 group-data-[collapsible=icon]:!bg-transparent group-data-[collapsible=icon]:!border-none transition-colors",
 						userButtonBox:
-							"!text-foreground !flex-row-reverse !gap-2 items-center",
+							"!text-foreground !flex-row-reverse !gap-0 items-center",
 						userButtonOuterIdentifier:
 							"text-sm font-medium truncate group-data-[collapsible=icon]:!hidden",
 						userButtonPopoverMain: "!bg-card !text-card-foreground",

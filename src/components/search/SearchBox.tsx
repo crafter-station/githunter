@@ -9,7 +9,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { ArrowUp, Mic, Search, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type SuggestedQuery = {
 	id: string;
@@ -18,25 +18,63 @@ type SuggestedQuery = {
 
 export function SearchBox() {
 	const [open, setOpen] = useState(false);
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const triggerRef = useRef<HTMLDivElement>(null);
 
 	const suggestedQueries: SuggestedQuery[] = [
-		{ id: "query-1", text: "nextjs developers in Lima with >100 stars" },
-		{ id: "query-2", text: "python devs who contribute to tensorflow" },
+		{
+			id: "query-1",
+			text: "Elon Musk's Starbase, Texas becomes an official city",
+		},
+		{
+			id: "query-2",
+			text: "Houthi missile hits Ben Gurion Airport disrupting flights",
+		},
 		{
 			id: "query-3",
-			text: "golang engineers in Argentina with >10 public repos",
+			text: "Voters overwhelmingly approve creation of SpaceX's Starbase city in Texas",
 		},
 		{
 			id: "query-4",
-			text: "frontend devs open to work with shadcn experience",
+			text: "Musk denies Nazi comparisons in new interview amid criticism and protests",
 		},
-		{ id: "query-5", text: "typescript devs building devtools" },
+		{
+			id: "query-5",
+			text: "Small plane crashes into Simi Valley homes pilot killed",
+		},
 		{
 			id: "query-6",
-			text: "react developers with +50 contributions this year",
+			text: "Derelict ferry Queen of Sidney catches fire in Mission BC",
 		},
-		{ id: "query-7", text: "devs contributing to bun or deno" },
+		{
+			id: "query-7",
+			text: "India recalls IMF Executive Director Krishnamurthy Subramanian",
+		},
 	];
+
+	// Efecto para establecer el foco cuando el popover se abre
+	useEffect(() => {
+		if (open) {
+			setTimeout(() => {
+				textareaRef.current?.focus();
+			}, 0);
+		}
+	}, [open]);
+
+	const handleTriggerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		// Evitar que los clics en los botones disparen el manejador del trigger
+		if (e.target instanceof HTMLButtonElement) {
+			e.stopPropagation();
+			return;
+		}
+		setOpen(true);
+	};
+
+	const handleTextareaClick = (e: React.MouseEvent<HTMLTextAreaElement>) => {
+		// Evitar que el clic en el textarea dispare el manejador del trigger
+		e.stopPropagation();
+		setOpen(true);
+	};
 
 	return (
 		<div
@@ -48,20 +86,31 @@ export function SearchBox() {
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger asChild>
 					<div
+						ref={triggerRef}
 						className={cn(
 							"relative flex items-end rounded-lg border border-border bg-input/30 p-2 shadow-sm",
 							open && "rounded-b-none",
 						)}
+						onClick={handleTriggerClick}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								e.preventDefault();
+								setOpen(true);
+							}
+						}}
 					>
 						<Textarea
+							ref={textareaRef}
 							placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
-							className="!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 [field-sizing:content] focus-visible:ring-0"
+							className="!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 text-sm [field-sizing:content] focus-visible:ring-0 md:text-base"
+							onClick={handleTextareaClick}
 						/>
 						<div className="absolute right-4 bottom-2 flex items-center gap-1.5">
 							<Button
 								variant="ghost"
 								size="icon"
 								className="h-8 w-8 rounded-full text-muted-foreground"
+								onClick={(e) => e.stopPropagation()} // Evitar que el clic en el botón dispare el trigger
 							>
 								<Mic className="h-4 w-4" />
 								<span className="sr-only">Voice search</span>
@@ -70,6 +119,7 @@ export function SearchBox() {
 								variant="ghost"
 								size="icon"
 								className="mr-1 h-8 w-8 rounded-full text-muted-foreground hover:text-primary"
+								onClick={(e) => e.stopPropagation()} // Evitar que el clic en el botón dispare el trigger
 							>
 								<Sparkles className="h-4 w-4" />
 								<span className="sr-only">Enhance prompt</span>
@@ -77,6 +127,7 @@ export function SearchBox() {
 							<Button
 								size="icon"
 								className="h-8 w-8 rounded-full bg-primary text-primary-foreground"
+								onClick={(e) => e.stopPropagation()} // Evitar que el clic en el botón dispare el trigger
 							>
 								<ArrowUp className="h-4 w-4" />
 								<span className="sr-only">Search</span>
