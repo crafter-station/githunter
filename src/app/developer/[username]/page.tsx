@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { user } from "@/db/schema/user";
+import { getCountryCode } from "@/lib/country-codes";
 import { eq } from "drizzle-orm";
 import {
 	ArrowLeft,
@@ -68,24 +69,6 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 		url: string;
 		icon: React.ReactNode;
 	}>;
-
-	// Country code mapping (simple approach)
-	const getCountryCode = (country: string | null) => {
-		if (!country) return null;
-
-		const countryMap: Record<string, string> = {
-			Peru: "PE",
-			"United States": "US",
-			Germany: "DE",
-			"United Kingdom": "GB",
-			Canada: "CA",
-			Australia: "AU",
-			Spain: "ES",
-			// Add more as needed
-		};
-
-		return countryMap[country] || "US"; // Default to US if not found
-	};
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
@@ -153,7 +136,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 										<span className="flex items-center gap-1.5">
 											{getCountryCode(userData.country) && (
 												<CountryFlag
-													countryCode={getCountryCode(userData.country) || "US"}
+													countryCode={getCountryCode(userData.country) || "us"}
 												/>
 											)}
 											{userData.city && userData.country

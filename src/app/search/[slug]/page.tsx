@@ -1,26 +1,27 @@
 import { EmptyState } from "@/components/EmptyState";
+import { Footer } from "@/components/footer";
+import GitHunterLogo from "@/components/githunter-logo";
 import { Header } from "@/components/header";
 import {
 	EmptyRepositoryIcon,
 	GitHubSadFaceIcon,
 } from "@/components/icons/EmptyStateIcons";
+import { SearchBox } from "@/components/search";
 import { CountryFlag } from "@/components/ui/CountryFlag";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { UserButton } from "@/components/user-button";
+import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
 import {
 	ArrowLeft,
-	ArrowUpRight,
 	BarChart,
-	ChevronRight,
-	Filter,
-	Github,
+	Code2,
+	ExternalLink,
+	GitFork,
 	MapPin,
 	Sparkles,
 	Star,
 	Users,
 	Wrench,
-	Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { getQueryParams } from "./get-query-params";
@@ -92,235 +93,273 @@ export default async function SearchPage({
 			: searchParams.city || searchParams.country || null;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-background">
-			<Header />
+		<div className="min-h-screen bg-white dark:bg-[#121212]">
+			{/* Search bar - Similar to search engines */}
+			<div className="sticky top-0 z-10 border-b border-dashed bg-background py-3">
+				<div className="flex items-center justify-between px-4 md:mx-3">
+					<div className="flex w-full items-center gap-2 md:gap-12">
+						<Link href="/" className="flex items-center gap-2">
+							<div className="rounded-sm border border-border p-1.5">
+								<GitHunterLogo className="size-4 " />
+							</div>
+							<span className="hidden font-medium text-lg tracking-tight md:block">
+								GitHunter
+							</span>
+						</Link>
 
-			<main className="container mx-auto flex-1 px-4 py-8">
-				<div className="mx-auto w-full max-w-5xl">
-					{/* Search Header */}
-					<div className="mb-8">
-						<div className="mb-2 flex items-center gap-2">
-							<Link
-								href="/"
-								className="text-muted-foreground hover:text-foreground"
-							>
-								<ArrowLeft className="size-4" />
-							</Link>
-							<h1 className="font-medium text-2xl capitalize">
-								{formattedQuery}
-							</h1>
-						</div>
-
-						{/* Search Metadata */}
-						<div className="mt-4 flex flex-wrap items-center gap-3">
-							{locationText && (
-								<Badge
-									variant="outline"
-									className="flex items-center gap-1.5 px-2 py-1"
-								>
-									<MapPin className="size-3" />
-									{locationText}
-								</Badge>
-							)}
-
-							{searchParams.techStack.length > 0 && (
-								<div className="flex flex-wrap gap-2">
-									{searchParams.techStack.map((tech) => (
-										<Badge key={tech} variant="secondary" className="px-2 py-1">
-											{tech}
-										</Badge>
-									))}
-								</div>
-							)}
-
-							{searchParams.roles.length > 0 && (
-								<Badge
-									variant="outline"
-									className="flex items-center gap-1.5 px-2 py-1"
-								>
-									<Sparkles className="size-3" />
-									{searchParams.roles[0]}
-									{searchParams.roles.length > 1 &&
-										` +${searchParams.roles.length - 1}`}
-								</Badge>
-							)}
+						<div className="relative max-w-2xl flex-1">
+							<SearchBox initialQuery={formattedQuery} variant="compact" />
 						</div>
 					</div>
 
-					{/* Results Count */}
-					<div className="mb-6 flex items-center justify-between">
-						<h2 className="text-muted-foreground text-sm">
-							Found{" "}
-							<span className="font-medium text-foreground">
-								{usersSorted.length}
-							</span>{" "}
-							developers
-						</h2>
-
-						<Button variant="outline" size="sm" className="gap-1.5">
-							<Filter className="size-3.5" />
-							Filters
-						</Button>
-					</div>
-
-					{/* Results Grid */}
-					{usersSorted.length > 0 ? (
-						<div className="flex flex-col space-y-2">
-							{usersSorted.map((user) => (
-								<div
-									key={user.id}
-									className="group flex items-center rounded-md border border-border bg-card p-3 transition-colors hover:border-border/80 hover:bg-card/80"
-								>
-									<div className="flex flex-1 items-center gap-3">
-										{/* Avatar */}
-										<div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-full">
-											<img
-												src={user.avatarUrl}
-												alt={`${user.username}'s avatar`}
-												className="h-full w-full object-cover"
-											/>
-										</div>
-
-										{/* Basic Info */}
-										<div className="min-w-0 flex-1">
-											<div className="flex items-center gap-1.5">
-												<h3 className="truncate font-medium">
-													{user.fullname || user.username}
-												</h3>
-												{user.country && (
-													<span className="flex items-center gap-1 text-muted-foreground text-xs">
-														<CountryFlag
-															countryCode={
-																user.country === "Peru" ? "PE" : "US"
-															}
-														/>
-														{user.country}
-													</span>
-												)}
-											</div>
-											<div className="flex items-center gap-2 text-muted-foreground text-xs">
-												{user.username && (
-													<span className="flex items-center gap-1 truncate">
-														<Github className="h-3 w-3" />
-														{user.username}
-													</span>
-												)}
-												{user.stack && user.stack.length > 0 && (
-													<span className="flex items-center gap-1">
-														<Wrench className="h-3 w-3" />
-														<span className="truncate">
-															{user.stack.slice(0, 3).join(", ")}
-														</span>
-														{user.stack.length > 3 && (
-															<span>+{user.stack.length - 3}</span>
-														)}
-													</span>
-												)}
-											</div>
-										</div>
-									</div>
-
-									{/* Stats */}
-									<div className="flex items-center gap-4 text-sm">
-										{user.stars > 0 && (
-											<div className="flex items-center gap-1">
-												<Star className="h-4 w-4 fill-amber-500 text-amber-500" />
-												<span>
-													{user.stars > 1000
-														? `${(user.stars / 1000).toFixed(1)}k`
-														: user.stars}
-												</span>
-											</div>
-										)}
-										{user.followers > 0 && (
-											<div className="flex items-center gap-1 text-muted-foreground">
-												<Users className="h-4 w-4" />
-												<span>
-													{user.followers > 1000
-														? `${(user.followers / 1000).toFixed(1)}k`
-														: user.followers}
-												</span>
-											</div>
-										)}
-										{user.contributions > 0 && (
-											<div className="hidden items-center gap-1 text-muted-foreground md:flex">
-												<BarChart className="h-4 w-4" />
-												<span>
-													{user.contributions > 1000
-														? `${(user.contributions / 1000).toFixed(1)}k`
-														: user.contributions}
-												</span>
-											</div>
-										)}
-										<div className="hidden items-center gap-1 text-emerald-600 md:flex">
-											<Zap className="h-4 w-4" />
-											<span>{Math.floor(70 + Math.random() * 30)}</span>
-										</div>
-									</div>
-
-									{/* Actions */}
-									<div className="ml-4 flex items-center gap-2">
-										<Button
-											variant="ghost"
-											size="icon"
-											className="h-8 w-8 text-muted-foreground hover:text-foreground"
-											asChild
-										>
-											<Link href={`/developer/${user.username}`}>
-												<ChevronRight className="h-4 w-4" />
-												<span className="sr-only">View local profile</span>
-											</Link>
-										</Button>
-										<Button
-											variant="outline"
-											size="icon"
-											className="h-8 w-8"
-											asChild
-										>
-											<Link
-												href={`https://github.com/${user.username}`}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<ArrowUpRight className="h-4 w-4" />
-												<span className="sr-only">View GitHub profile</span>
-											</Link>
-										</Button>
-									</div>
-								</div>
-							))}
-						</div>
-					) : (
-						<div className="rounded-md border border-dashed p-8">
-							<EmptyState
-								title="No developers found"
-								description="Looks like these developers are hiding their code too well."
-								titleSize="xl"
-								icon={<EmptyRepositoryIcon />}
-								codeSnippet={{
-									command: "git clone developers/with-different-skills",
-								}}
-								actionButton={{
-									label: "Try with different search",
-									href: "/",
-									icon: <ArrowLeft className="size-3.5" />,
-									variant: "outline",
-									size: "sm",
-								}}
-							/>
-						</div>
-					)}
+					<UserButton />
 				</div>
+			</div>
+
+			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
+				{/* Search metadata/filters */}
+				<div className="mb-4 border-b pb-3 text-muted-foreground text-sm">
+					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+						<div className="flex items-center">
+							<span className="mr-2 font-medium text-foreground">
+								{usersSorted.length} results
+							</span>
+							<span>for developers</span>
+						</div>
+
+						{locationText && (
+							<div className="flex items-center gap-1.5">
+								<MapPin className="size-3.5" />
+								{locationText}
+							</div>
+						)}
+
+						{searchParams.techStack.length > 0 && (
+							<div className="flex items-center gap-1.5">
+								<Wrench className="size-3.5" />
+								{searchParams.techStack.slice(0, 2).join(", ")}
+								{searchParams.techStack.length > 2 &&
+									` +${searchParams.techStack.length - 2}`}
+							</div>
+						)}
+
+						{searchParams.roles.length > 0 && (
+							<div className="flex items-center gap-1.5">
+								<Sparkles className="size-3.5" />
+								{searchParams.roles[0]}
+								{searchParams.roles.length > 1 &&
+									` +${searchParams.roles.length - 1}`}
+							</div>
+						)}
+					</div>
+				</div>
+
+				{/* Results List */}
+				{usersSorted.length > 0 ? (
+					<div className="space-y-6">
+						{usersSorted.map((user) => (
+							<div
+								key={user.id}
+								className="group border-border/40 border-b pb-6"
+							>
+								<div className="grid grid-cols-1 gap-6 md:grid-cols-4">
+									{/* Main content (3/4 width on md+ screens) */}
+									<div className="md:col-span-3">
+										<div className="flex items-start gap-3">
+											{/* Avatar */}
+											<Link
+												href={`/developer/${user.username}`}
+												className="flex-shrink-0"
+											>
+												<div className="h-10 w-10 overflow-hidden rounded-full border border-border">
+													<img
+														src={user.avatarUrl}
+														alt={`${user.username}'s avatar`}
+														className="h-full w-full object-cover"
+													/>
+												</div>
+											</Link>
+
+											{/* Content */}
+											<div className="min-w-0 flex-1">
+												{/* Title row with name & country */}
+												<div className="mb-1 flex items-center gap-2">
+													<Link
+														href={`/developer/${user.username}`}
+														className="font-medium text-[#2300A7] text-xl hover:underline dark:text-[#75A9FF]"
+													>
+														{user.fullname || user.username}
+													</Link>
+													{user.country && (
+														<span className="flex items-center">
+															<CountryFlag
+																countryCode={
+																	getCountryCode(user.country) || "us"
+																}
+																size="sm"
+															/>
+														</span>
+													)}
+												</div>
+
+												{/* GitHub username */}
+												<div className="mb-1 text-[#008080] text-sm dark:text-[#98FEE3]">
+													<Link
+														href={`https://github.com/${user.username}`}
+														target="_blank"
+														rel="noopener noreferrer"
+														className="block flex max-w-max items-center gap-1 font-medium hover:underline"
+													>
+														github.com/{user.username}
+														<ExternalLink className="h-3 w-3 text-muted-foreground" />
+													</Link>
+												</div>
+
+												{/* About section instead of tech stack */}
+												{user.about && (
+													<p className="mb-2 line-clamp-2 overflow-hidden text-ellipsis text-foreground text-sm">
+														{user.about}
+													</p>
+												)}
+
+												{/* Tech stack as small pills */}
+												{user.stack && user.stack.length > 0 && (
+													<div className="mb-2 flex flex-wrap gap-1">
+														{user.stack.slice(0, 4).map((tech) => (
+															<span
+																key={tech}
+																className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300"
+															>
+																{tech}
+															</span>
+														))}
+														{user.stack.length > 4 && (
+															<span className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300">
+																+{user.stack.length - 4}
+															</span>
+														)}
+													</div>
+												)}
+
+												{/* Stats row */}
+												<div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
+													{user.stars > 0 && (
+														<div className="flex items-center gap-1">
+															<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
+															<span>{user.stars.toLocaleString()} stars</span>
+														</div>
+													)}
+													{user.followers > 0 && (
+														<div className="flex items-center gap-1">
+															<Users className="h-3.5 w-3.5" />
+															<span>
+																{user.followers.toLocaleString()} followers
+															</span>
+														</div>
+													)}
+													{user.contributions > 0 && (
+														<div className="flex items-center gap-1">
+															<BarChart className="h-3.5 w-3.5" />
+															<span>
+																{user.contributions.toLocaleString()}{" "}
+																contributions
+															</span>
+														</div>
+													)}
+												</div>
+											</div>
+										</div>
+									</div>
+
+									{/* Repository column (1/4 width on md+ screens) */}
+									<div className="flex flex-col md:col-span-1">
+										{user.repos && user.repos.length > 0 ? (
+											<div className="space-y-2">
+												<h3 className="mb-1 font-medium text-muted-foreground text-xs uppercase">
+													Top Repository
+												</h3>
+												{user.repos.slice(0, 1).map((repo) => (
+													<div
+														key={repo.fullName}
+														className="rounded-md border bg-muted/10 p-3 transition-colors hover:bg-muted/20"
+													>
+														<h4 className="truncate font-medium text-sm">
+															<Link
+																href={`https://github.com/${repo.fullName}`}
+																target="_blank"
+																rel="noopener noreferrer"
+																className="flex items-center gap-1.5 text-[#2300A7] hover:underline dark:text-[#75A9FF]"
+															>
+																<Code2 className="h-3.5 w-3.5" />
+																{repo.fullName.split("/")[1]}
+															</Link>
+														</h4>
+														{repo.description && (
+															<p className="mt-1 line-clamp-2 text-muted-foreground text-xs">
+																{repo.description}
+															</p>
+														)}
+														<div className="mt-2 flex items-center gap-3 text-muted-foreground text-xs">
+															<div className="flex items-center gap-1">
+																<Star className="h-3 w-3 text-[#E87701] dark:text-[#FFC799]" />
+																<span>{repo.stars}</span>
+															</div>
+															<div className="flex items-center gap-1">
+																<GitFork className="h-3 w-3" />
+																<span>{Math.floor(repo.stars * 0.4)}</span>
+															</div>
+														</div>
+														{repo.techStack && repo.techStack.length > 0 && (
+															<div className="mt-2 flex flex-wrap gap-1">
+																{repo.techStack.slice(0, 2).map((tech) => (
+																	<span
+																		key={tech}
+																		className="inline-flex rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+																	>
+																		{tech}
+																	</span>
+																))}
+															</div>
+														)}
+													</div>
+												))}
+											</div>
+										) : (
+											<div className="flex h-full flex-col items-center justify-center rounded-md border bg-muted/10 p-3 text-center">
+												<p className="text-muted-foreground text-xs">
+													No repository data available
+												</p>
+											</div>
+										)}
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				) : (
+					<div className="mx-auto max-w-[660px] rounded-lg border border-dashed p-8">
+						<EmptyState
+							title="No developers found"
+							description="Try adjusting your search criteria to find more developers."
+							titleSize="xl"
+							icon={<EmptyRepositoryIcon />}
+							codeSnippet={{
+								command: "git clone developers/with-different-skills",
+							}}
+							actionButton={{
+								label: "New search",
+								href: "/",
+								icon: <ArrowLeft className="size-3.5" />,
+								variant: "outline",
+								size: "sm",
+							}}
+						/>
+					</div>
+				)}
 			</main>
 
 			{/* Footer */}
-			<footer className="mt-auto border-t border-dashed py-4">
-				<div className="container mx-auto px-4">
-					<p className="text-center text-muted-foreground text-xs">
-						© {new Date().getFullYear()} GitHunter · Find top GitHub talent
-					</p>
-				</div>
-			</footer>
+			<Footer />
 		</div>
 	);
 }
