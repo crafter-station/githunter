@@ -1,4 +1,7 @@
+import { openai } from "@ai-sdk/openai";
 import { Octokit } from "@octokit/rest";
+import { generateObject } from "ai";
+import { z } from "zod";
 
 // Add these imports for HTML scraping
 import axios from "axios";
@@ -78,14 +81,16 @@ export class GithubService {
 			let city: string | null = null;
 			let country: string | null = null;
 			if (data.location) {
-				const parts = data.location.split(",").map((p) => p.trim());
-				if (parts.length > 1) {
-					// biome-ignore lint/style/noNonNullAssertion: TODO: check if this is correct
-					country = parts.pop()!;
-					city = parts.join(", ");
-				} else {
-					city = parts[0];
-				}
+				const response = await generateObject({
+					model: openai("gpt-4o"),
+					schema: z.object({
+						city: z.string(),
+						country: z.string(),
+					}),
+					prompt: `Extract the city and country from the following location: ${data.location}`,
+				});
+				city = response.object.city;
+				country = response.object.country;
 			}
 
 			return {
@@ -106,6 +111,8 @@ export class GithubService {
 				linkedinUrl,
 			};
 		} catch (err) {
+			console.error(`Failed to fetch user info for ${username}`);
+			console.error(err);
 			throw new GithubError(
 				`Failed to fetch user info for ${username}`,
 				"USER_INFO_ERROR",
