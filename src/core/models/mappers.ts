@@ -75,7 +75,7 @@ export function mapReposOfUser(
 			const detail = reposDetails.get(repo.fullName);
 			const contribution = reposContributions.get(repo.fullName);
 
-			if (!detail || !contribution) {
+			if (!(!!detail && !!contribution)) {
 				continue;
 			}
 
