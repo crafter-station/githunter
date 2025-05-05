@@ -39,11 +39,7 @@ export interface UserProfile {
 export interface RepoSummary {
 	name: string;
 	fullName: string;
-	htmlUrl: string;
 	stars: number;
-	owner: {
-		login: string;
-	};
 	defaultBranch: string;
 }
 
@@ -51,6 +47,12 @@ export interface RepoDetails {
 	readme: string;
 	languages: string[];
 	tree: string;
+}
+
+export interface RepoContribution {
+	pullRequestsCount: number;
+	commitsCount: number;
+	issuesCount: number;
 }
 
 export class GithubService {
@@ -142,6 +144,118 @@ export class GithubService {
 				"STAR_COUNT_ERROR",
 			);
 		}
+	}
+
+	async getRepoContributionsInLastMonth(
+		repoFullName: string,
+		username: string,
+	): Promise<RepoContribution> {
+		const [owner, repo] = repoFullName.split("/");
+		const sinceDate = new Date();
+		sinceDate.setMonth(sinceDate.getMonth() - 1);
+		const since = sinceDate.toISOString();
+
+		const prQuery = `type:pr repo:${owner}/${repo} author:${username} created:>=${since}`;
+		const { data: prList } = await this.octokit.search.issuesAndPullRequests({
+			q: prQuery,
+		});
+
+		const issueQuery = `type:issue repo:${owner}/${repo} author:${username} created:>=${since}`;
+		const { data: issueList } = await this.octokit.search.issuesAndPullRequests(
+			{
+				q: issueQuery,
+			},
+		);
+
+		let totalCommits = 0;
+		let page = 1;
+		while (true) {
+			const { data: commitList } = await this.octokit.repos.listCommits({
+				owner,
+				repo,
+				author: username,
+				since,
+				per_page: 100,
+				page,
+			});
+			if (!commitList.length) break;
+			totalCommits += commitList.length;
+			page++;
+			if (page > 10) break;
+		}
+
+		return {
+			pullRequestsCount: prList.total_count,
+			issuesCount: issueList.total_count,
+			commitsCount: totalCommits,
+		};
+	}
+
+	async getContributedReposInLastMonth(
+		username: string,
+	): Promise<RepoSummary[]> {
+		const now = new Date();
+		const since = new Date(now);
+		since.setMonth(since.getMonth() - 1);
+
+		const query = `
+		  query($login: String!, $from: DateTime!, $to: DateTime!) {
+			user(login: $login) {
+			  contributionsCollection(from: $from, to: $to) {
+				commitContributionsByRepository {
+				  repository { nameWithOwner }
+				}
+				pullRequestContributionsByRepository {
+				  repository { nameWithOwner }
+				}
+				issueContributionsByRepository {
+				  repository { nameWithOwner }
+				}
+			  }
+			}
+		  }
+		`;
+
+		const variables = {
+			login: username,
+			from: since.toISOString(),
+			to: now.toISOString(),
+		};
+
+		const resp = await this.octokit.graphql<{
+			// biome-ignore lint/suspicious/noExplicitAny: avoid complex type
+			user: { contributionsCollection: any };
+		}>(query, variables);
+
+		const repos = new Set<string>();
+		const c = resp.user.contributionsCollection;
+
+		for (const group of [
+			c.commitContributionsByRepository,
+			c.pullRequestContributionsByRepository,
+			c.issueContributionsByRepository,
+		]) {
+			for (const bucket of group) {
+				repos.add(bucket.repository.nameWithOwner);
+			}
+		}
+
+		const summaries: RepoSummary[] = [];
+		for (const name of repos) {
+			summaries.push(await this.getRepoSummary(name));
+		}
+		return summaries;
+	}
+
+	async getRepoSummary(fullName: string): Promise<RepoSummary> {
+		const [owner, repo] = fullName.split("/");
+		const { data } = await this.octokit.repos.get({ owner, repo });
+		return {
+			name: data.name,
+			fullName: data.full_name,
+			stars: data.stargazers_count,
+			defaultBranch: data.default_branch,
+		};
 	}
 
 	/** Fetch detailed repo info */
@@ -456,11 +570,7 @@ export class GithubService {
 			.map((repo) => ({
 				name: repo.name,
 				fullName: repo.full_name,
-				htmlUrl: repo.html_url,
 				stars: repo.stargazers_count ?? 0,
-				owner: {
-					login: repo.owner?.login || "",
-				},
 				defaultBranch: repo.default_branch,
 			}));
 	}

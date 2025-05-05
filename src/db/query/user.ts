@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { desc, eq, inArray } from "drizzle-orm";
+import { desc, eq, ilike, inArray } from "drizzle-orm";
 import { user } from "../schema/user";
 
 export async function getFeaturedUsers(limit = 3, userIds?: string[]) {
@@ -79,5 +79,22 @@ export async function getUsersByLocation(location: string, limit = 10) {
 	} catch (error) {
 		console.error("Error fetching users by location:", error);
 		return [];
+	}
+}
+
+export async function getUserByUsername(username?: string | null) {
+	try {
+		if (!username) {
+			return null;
+		}
+
+		const result = await db.query.user.findFirst({
+			where: ilike(user.username, username),
+		});
+
+		return result;
+	} catch (error) {
+		console.error("Error fetching user by username:", error);
+		return null;
 	}
 }
