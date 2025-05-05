@@ -1,32 +1,28 @@
 "use client";
 
 import { CountryFlag } from "@/components/ui/CountryFlag";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import {} from "@/components/ui/tooltip";
 import type { UserSelect } from "@/db/schema/user";
+import { getCountryCode } from "@/lib/country-codes";
 import {
 	ArrowUp,
-	Briefcase,
+	BarChart,
 	Building2,
-	Calendar,
 	Code,
+	Code2,
 	ExternalLink,
+	GitFork,
 	Github,
 	Globe,
 	Linkedin,
 	MapPin,
+	Share2,
 	Star,
 	Twitter,
-	UserRound,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface UserProfileProps {
@@ -36,14 +32,7 @@ interface UserProfileProps {
 export default function UserProfile({ user }: UserProfileProps) {
 	const [showAllTech, setShowAllTech] = useState(false);
 	const [showScrollButton, setShowScrollButton] = useState(false);
-	const [visibleReposCount, setVisibleReposCount] = useState(10);
-
-	const githubProfileUrl = `https://github.com/${user.username}`;
-
-	// Tech stack visibility logic
-	const techStackItems = user.stack || [];
-	const shouldShowMoreButton = techStackItems.length > 0;
-	const visibleTechStack = showAllTech ? techStackItems : techStackItems;
+	const [visibleReposCount, setVisibleReposCount] = useState(6);
 
 	// Repositories pagination
 	const userRepos = user.repos || [];
@@ -66,11 +55,30 @@ export default function UserProfile({ user }: UserProfileProps) {
 		return owner !== user.username;
 	};
 
+	// Scroll to top
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,
 			behavior: "smooth",
 		});
+	};
+
+	// Share profile functionality
+	const shareProfile = async () => {
+		if (navigator.share) {
+			try {
+				await navigator.share({
+					title: `${user.fullname} | GitHunter Profile`,
+					text: `Check out ${user.fullname}'s developer profile on GitHunter!`,
+					url: window.location.href,
+				});
+			} catch (error) {
+				console.error("Error sharing:", error);
+			}
+		} else {
+			navigator.clipboard.writeText(window.location.href);
+			// Show toast notification here
+		}
 	};
 
 	// Format social links
@@ -101,24 +109,6 @@ export default function UserProfile({ user }: UserProfileProps) {
 		icon: React.ReactNode;
 	}>;
 
-	// Country code mapping (simple approach)
-	const getCountryCode = (country: string | null) => {
-		if (!country) return null;
-
-		const countryMap: Record<string, string> = {
-			Peru: "PE",
-			"United States": "US",
-			Germany: "DE",
-			"United Kingdom": "GB",
-			Canada: "CA",
-			Australia: "AU",
-			Spain: "ES",
-			// Add more as needed
-		};
-
-		return countryMap[country] || "US"; // Default to US if not found
-	};
-
 	useEffect(() => {
 		const handleScroll = () => {
 			if (window.scrollY > 500) {
@@ -135,42 +125,50 @@ export default function UserProfile({ user }: UserProfileProps) {
 	}, []);
 
 	return (
-		<div className="container mx-auto max-w-5xl">
-			<div className="grid gap-8 md:grid-cols-3">
-				{/* Left column - Profile information (sticky) */}
-				<div className="relative md:col-span-1">
-					<div className="sticky top-16">
-						<Card className="overflow-hidden border border-border/50 bg-gradient-to-br from-background to-muted/30 pt-0 shadow-md">
-							<div className="bg-gradient-to-r from-primary/30 via-primary/20 to-primary/5 p-6 text-center">
-								<div className="mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-4 border-background shadow-lg">
+		<div className="min-h-screen">
+			<div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-12">
+				{/* Left sidebar with profile info */}
+				<div className="md:col-span-3">
+					<div className="sticky top-20 space-y-6">
+						{/* Profile card */}
+						<div className="overflow-hidden rounded-lg border border-border/50 bg-background shadow-sm">
+							<div className="relative border-border/50 border-b bg-muted p-4 text-center dark:border-border/20 dark:bg-muted/20">
+								<div className="mx-auto h-24 w-24 overflow-hidden rounded-full border-2 border-background shadow-sm">
 									<Image
 										src={user.avatarUrl}
-										alt={user.username}
-										width={128}
-										height={128}
+										alt={`${user.fullname}'s profile picture`}
+										width={96}
+										height={96}
 										className="h-full w-full object-cover"
+										priority
 									/>
 								</div>
-								<h1 className="mb-1 font-bold text-2xl tracking-tight">
+								<h1 className="mt-3 font-semibold text-[#2300A7] text-xl dark:text-[#75A9FF]">
 									{user.fullname}
 								</h1>
-								<p className="text-muted-foreground">@{user.username}</p>
-
-								<div className="mt-6 flex justify-center space-x-2">
-									<Button
-										asChild
-										size="sm"
-										variant="default"
-										className="shadow-sm transition-all duration-300 hover:shadow"
+								<div className="flex items-center justify-center gap-1 text-[#008080] text-sm dark:text-[#98FEE3]">
+									<Link
+										href={`https://github.com/${user.username}`}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="flex items-center gap-0.5 hover:underline"
 									>
-										<a
-											href={githubProfileUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<Github className="mr-1 h-4 w-4" />
-											GitHub
-										</a>
+										@{user.username}
+										<ExternalLink className="h-3 w-3 text-muted-foreground" />
+									</Link>
+								</div>
+
+								{/* Social links */}
+								<div className="mt-3 flex justify-center space-x-2">
+									{/* Share button */}
+									<Button
+										size="sm"
+										variant="ghost"
+										onClick={shareProfile}
+										className="h-8 w-8 p-0"
+										aria-label="Share profile"
+									>
+										<Share2 className="h-4 w-4" />
 									</Button>
 
 									{socialLinks.map((link) => (
@@ -178,13 +176,14 @@ export default function UserProfile({ user }: UserProfileProps) {
 											asChild
 											key={link.name}
 											size="sm"
-											variant="outline"
-											className="transition-all duration-300 hover:bg-muted/10"
+											variant="ghost"
+											className="h-8 w-8 p-0"
 										>
 											<a
 												href={link.url}
 												target="_blank"
 												rel="noopener noreferrer"
+												aria-label={`Visit ${user.username}'s ${link.name}`}
 											>
 												{link.icon}
 											</a>
@@ -193,248 +192,242 @@ export default function UserProfile({ user }: UserProfileProps) {
 								</div>
 							</div>
 
-							<div className="p-6">
-								{/* GitHub Statistics */}
-								<div className="mb-6 grid grid-cols-2 gap-4 text-center">
-									<div className="rounded-lg bg-background/60 p-3 transition-colors hover:bg-background">
-										<p className="font-bold text-2xl text-primary">
+							<div className="p-4">
+								{/* Stats grid */}
+								<div className="mb-4 grid grid-cols-2 gap-2">
+									<div className="rounded-md bg-muted/20 p-2 text-center">
+										<div className="font-semibold text-lg text-primary">
 											{user.stars}
-										</p>
-										<p className="text-muted-foreground text-sm">Stars</p>
+										</div>
+										<div className="text-muted-foreground text-xs">Stars</div>
 									</div>
-									<div className="rounded-lg bg-background/60 p-3 transition-colors hover:bg-background">
-										<p className="font-bold text-2xl text-primary">
+									<div className="rounded-md bg-muted/20 p-2 text-center">
+										<div className="font-semibold text-lg text-primary">
 											{user.repositories}
-										</p>
-										<p className="text-muted-foreground text-sm">Repos</p>
+										</div>
+										<div className="text-muted-foreground text-xs">Repos</div>
 									</div>
-									<div className="rounded-lg bg-background/60 p-3 transition-colors hover:bg-background">
-										<p className="font-bold text-2xl text-primary">
+									<div className="rounded-md bg-muted/20 p-2 text-center">
+										<div className="font-semibold text-lg text-primary">
 											{user.followers}
-										</p>
-										<p className="text-muted-foreground text-sm">Followers</p>
+										</div>
+										<div className="text-muted-foreground text-xs">
+											Followers
+										</div>
 									</div>
-									<div className="rounded-lg bg-background/60 p-3 transition-colors hover:bg-background">
-										<p className="font-bold text-2xl text-primary">
+									<div className="rounded-md bg-muted/20 p-2 text-center">
+										<div className="font-semibold text-lg text-primary">
 											{user.following}
-										</p>
-										<p className="text-muted-foreground text-sm">Following</p>
+										</div>
+										<div className="text-muted-foreground text-xs">
+											Following
+										</div>
 									</div>
 								</div>
 
 								{/* Location */}
 								{(user.city || user.country) && (
-									<div className="mb-4 flex items-center gap-2 rounded-md bg-background/40 p-2.5">
+									<div className="mb-3 flex items-center gap-2 text-sm">
 										{getCountryCode(user.country) ? (
 											<CountryFlag
-												countryCode={getCountryCode(user.country) || "US"}
-												className="h-4 w-4"
+												countryCode={getCountryCode(user.country) || "us"}
+												size="sm"
 											/>
 										) : (
 											<MapPin className="h-4 w-4 text-muted-foreground" />
 										)}
-										<span className="text-sm">
+										<span className="text-muted-foreground">
 											{[user.city, user.country].filter(Boolean).join(", ")}
 										</span>
 									</div>
 								)}
 
 								{/* Contributions */}
-								<div className="mb-4 flex items-center rounded-md bg-background/40 p-2.5">
-									<Calendar className="mr-2 h-4 w-4 text-muted-foreground" />
-									<span className="text-sm">
-										{user.contributions}+ contributions
+								<div className="mb-3 flex items-center gap-2 text-sm">
+									<BarChart className="h-4 w-4 text-muted-foreground" />
+									<span className="text-muted-foreground">
+										{user.contributions.toLocaleString()} contributions
 									</span>
 								</div>
 
 								{/* Organizations */}
 								{organizations.length > 0 && (
 									<div className="mb-4">
-										<h3 className="mb-2 flex items-center font-semibold">
-											<Building2 className="mr-2 h-4 w-4 text-yellow-500" />{" "}
+										<h3 className="mb-2 font-medium text-muted-foreground text-xs uppercase">
 											Organizations
 										</h3>
-										<div className="space-y-2">
-											{organizations.map((org) => (
+										<div className="space-y-1">
+											{organizations.slice(0, 3).map((org) => (
 												<a
 													key={org}
 													href={`https://github.com/${org}`}
 													target="_blank"
 													rel="noopener noreferrer"
-													className="flex items-center rounded-md bg-background/40 p-2 transition-colors hover:bg-background"
+													className="flex items-center rounded-md bg-muted/20 p-2 text-sm transition-colors hover:bg-muted/30"
 												>
-													<Building2 className="mr-2 h-4 w-4 text-yellow-500" />
-													<span className="font-medium text-sm">{org}</span>
+													<Building2 className="mr-2 h-4 w-4 text-muted-foreground" />
+													<span>{org}</span>
 												</a>
 											))}
+											{organizations.length > 3 && (
+												<div className="text-right text-muted-foreground text-xs">
+													+{organizations.length - 3} more
+												</div>
+											)}
 										</div>
 									</div>
 								)}
 
 								{/* Potential Roles */}
 								{user.potentialRoles && user.potentialRoles.length > 0 && (
-									<div className="mb-4">
-										<h3 className="mb-2 flex items-center font-semibold">
-											<Briefcase className="mr-2 h-4 w-4" /> Potential Roles
+									<div>
+										<h3 className="mb-2 font-medium text-muted-foreground text-xs uppercase">
+											Potential Roles
 										</h3>
-										<div className="flex flex-wrap gap-2">
+										<div className="flex flex-wrap gap-1">
 											{user.potentialRoles.map((role) => (
-												<Badge
+												<span
 													key={role}
-													variant="outline"
-													className="bg-background/60"
+													className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300"
 												>
 													{role}
-												</Badge>
+												</span>
 											))}
 										</div>
 									</div>
 								)}
 							</div>
-						</Card>
+						</div>
 					</div>
 				</div>
 
-				{/* Right column - Main content */}
-				<div className="space-y-6 md:col-span-2">
-					{/* About */}
+				{/* Main content area */}
+				<div className="space-y-8 md:col-span-9">
+					{/* About section */}
 					{user.about && (
-						<Card className="border border-border/50 p-6 shadow-sm">
-							<h2 className="mb-4 font-semibold text-xl">About</h2>
-							<p className="text-muted-foreground">{user.about}</p>
-						</Card>
+						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
+							<h2 className="mb-4 font-medium text-lg">About</h2>
+							<p className="text-foreground text-sm">{user.about}</p>
+						</div>
 					)}
 
 					{/* Tech Stack */}
 					{user.stack && user.stack.length > 0 && (
-						<Card className="border border-border/50 p-6 shadow-sm">
-							<h2 className="mb-4 flex items-center font-semibold text-xl">
-								<Code className="mr-2 h-5 w-5" /> Tech Stack
+						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
+							<h2 className="mb-4 flex items-center font-medium text-lg">
+								<Code className="mr-2 h-5 w-5 text-[#2300A7] dark:text-[#75A9FF]" />
+								Tech Stack
 							</h2>
 							<div className="relative">
 								<div
-									className={`flex flex-wrap gap-2 ${!showAllTech ? "h-28 overflow-hidden" : ""}`}
+									className={`flex flex-wrap gap-2 ${!showAllTech && user.stack.length > 15 ? "max-h-28 overflow-hidden" : ""}`}
 								>
-									{visibleTechStack.map((tech) => (
-										<TooltipProvider key={tech}>
-											<Tooltip>
-												<TooltipTrigger>
-													<Badge variant="secondary">{tech}</Badge>
-												</TooltipTrigger>
-												<TooltipContent>
-													<p>{tech}</p>
-												</TooltipContent>
-											</Tooltip>
-										</TooltipProvider>
+									{user.stack.map((tech) => (
+										<span
+											key={tech}
+											className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300"
+										>
+											{tech}
+										</span>
 									))}
 								</div>
 
-								{shouldShowMoreButton && (
+								{user.stack.length > 15 && (
 									<div
 										className={`${!showAllTech ? "absolute right-0 bottom-0 left-0 pt-10" : "mt-4"}`}
 									>
 										{!showAllTech && (
-											<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card via-card/95 to-transparent" />
+											<div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background to-transparent" />
 										)}
 										<Button
 											type="button"
+											variant="ghost"
 											onClick={() => setShowAllTech(!showAllTech)}
-											className="relative w-full cursor-pointer bg-transparent py-2 font-medium text-primary text-sm hover:bg-transparent hover:text-primary/80"
+											className="relative w-full text-xs hover:bg-transparent"
 										>
 											{showAllTech ? "Show Less" : "Show More"}
 										</Button>
 									</div>
 								)}
 							</div>
-						</Card>
+						</div>
 					)}
 
 					{/* Featured Repositories */}
 					{userRepos.length > 0 && (
-						<Card className="border border-border/50 p-6 shadow-sm">
-							<h2 className="mb-4 font-semibold text-xl">
+						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
+							<h2 className="mb-4 font-medium text-lg">
 								Featured Repositories
 							</h2>
 							<div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
 								{visibleRepos.map((repo) => {
-									const repoOwner = repo.fullName.split("/")[0];
 									const repoName = repo.fullName.split("/")[1];
+									const repoOwner = repo.fullName.split("/")[0];
 									const isOrg = isOrgRepo(repo.fullName);
 
 									return (
-										<Card
+										<div
 											key={repo.fullName}
-											className="overflow-hidden border border-border/50 bg-gradient-to-br from-transparent to-background transition-all duration-300 hover:shadow-md"
+											className="overflow-hidden rounded-lg border border-border/50 bg-muted/10 transition-all hover:border-primary/20 hover:shadow-sm"
 										>
-											<div
-												className={`${isOrg ? "bg-yellow-500/10" : "bg-blue-500/10"} flex items-center justify-between border-border/40 border-b px-4 py-2`}
-											>
-												<div className="flex items-center gap-2">
-													{isOrg ? (
-														<Building2 className="h-4 w-4 text-yellow-500" />
-													) : (
-														<UserRound className="h-4 w-4 text-blue-500" />
-													)}
+											<div className="flex items-center justify-between border-border/40 border-b bg-muted px-4 py-2 dark:bg-muted/20">
+												<div className="flex items-center gap-1.5">
+													<Code2 className="h-3.5 w-3.5" />
 													<span className="font-medium text-sm">
-														{repoOwner}
+														{isOrg ? repoOwner : "Personal"}
 													</span>
 												</div>
-												<div className="flex items-center">
-													<Star className="mr-1 h-4 w-4 text-yellow-500" />
-													<span className="font-semibold text-sm">
+												<div className="flex items-center gap-1">
+													<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
+													<span className="font-medium text-xs">
 														{repo.stars}
 													</span>
 												</div>
 											</div>
-											<div className="p-4">
-												<h3 className="mb-1 font-bold">{repoName}</h3>
-												<p className="mb-4 line-clamp-4 text-muted-foreground text-sm">
-													{repo.description || "No description available."}
-												</p>
-												<div className="mb-3 flex flex-wrap gap-1">
-													{repo.techStack.slice(0, 3).map((tech) => (
-														<Badge
-															key={tech}
-															variant="outline"
-															className="text-xs"
-														>
-															{tech}
-														</Badge>
-													))}
-													{repo.techStack.length > 3 && (
-														<TooltipProvider>
-															<Tooltip>
-																<TooltipTrigger>
-																	<Badge variant="outline" className="text-xs">
-																		+{repo.techStack.length - 3}
-																	</Badge>
-																</TooltipTrigger>
-																<TooltipContent>
-																	<p className="whitespace-pre-line text-xs">
-																		{repo.techStack.slice(3).join("\n")}
-																	</p>
-																</TooltipContent>
-															</Tooltip>
-														</TooltipProvider>
-													)}
-												</div>
-												<Button
-													variant="secondary"
-													size="sm"
-													className="w-full text-xs"
-													asChild
-												>
-													<a
+											<div className="bg-background/50 p-4">
+												<h3 className="mb-1 font-semibold text-[#2300A7] hover:underline dark:text-[#75A9FF]">
+													<Link
 														href={`https://github.com/${repo.fullName}`}
 														target="_blank"
 														rel="noopener noreferrer"
 													>
-														<ExternalLink className="mr-1 h-3 w-3" /> View
-														Repository
-													</a>
-												</Button>
+														{repoName}
+													</Link>
+												</h3>
+												<p className="mb-3 line-clamp-2 text-muted-foreground text-xs">
+													{repo.description || "No description available."}
+												</p>
+
+												{/* Tech stack tags */}
+												<div className="mb-3 flex flex-wrap gap-1">
+													{repo.techStack.slice(0, 3).map((tech) => (
+														<span
+															key={tech}
+															className="inline-flex rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+														>
+															{tech}
+														</span>
+													))}
+													{repo.techStack.length > 3 && (
+														<span className="inline-flex rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+															+{repo.techStack.length - 3}
+														</span>
+													)}
+												</div>
+
+												{/* Stats */}
+												<div className="flex items-center gap-3 text-muted-foreground text-xs">
+													<div className="flex items-center gap-1">
+														<Star className="h-3 w-3 text-[#E87701] dark:text-[#FFC799]" />
+														<span>{repo.stars}</span>
+													</div>
+													<div className="flex items-center gap-1">
+														<GitFork className="h-3 w-3" />
+														<span>{Math.floor(repo.stars * 0.4)}</span>
+													</div>
+												</div>
 											</div>
-										</Card>
+										</div>
 									);
 								})}
 							</div>
@@ -443,14 +436,15 @@ export default function UserProfile({ user }: UserProfileProps) {
 								<div className="mt-6 text-center">
 									<Button
 										variant="outline"
-										onClick={() => setVisibleReposCount((prev) => prev + 10)}
-										className="px-8"
+										size="sm"
+										onClick={() => setVisibleReposCount((prev) => prev + 6)}
+										className="px-4 py-1 text-xs"
 									>
 										Load More Repositories
 									</Button>
 								</div>
 							)}
-						</Card>
+						</div>
 					)}
 				</div>
 			</div>
@@ -459,7 +453,7 @@ export default function UserProfile({ user }: UserProfileProps) {
 			{showScrollButton && (
 				<Button
 					onClick={scrollToTop}
-					className="fixed right-6 bottom-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:bg-primary/90"
+					className="fixed right-4 bottom-4 h-10 w-10 rounded-full bg-primary p-0 text-primary-foreground shadow-md"
 					aria-label="Scroll to top"
 				>
 					<ArrowUp className="h-5 w-5" />

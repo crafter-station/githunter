@@ -1,7 +1,7 @@
 "use client";
 
 import { useRealtimeRun } from "@trigger.dev/react-hooks";
-import { CheckCircle, Clock, Loader2 } from "lucide-react";
+import { ArrowLeft, CheckCircle, Clock, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -39,9 +39,11 @@ export function RunProgress({
 
 	if (isLoading) {
 		return (
-			<div className="container mx-auto flex max-w-2xl flex-col items-center px-4 py-16">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-				<h2 className="mt-4 font-semibold text-xl">
+			<div className="w-full max-w-md px-4 text-center">
+				<div className="mb-6 flex justify-center">
+					<Loader2 className="h-10 w-10 animate-spin text-primary" />
+				</div>
+				<h2 className="font-semibold text-xl tracking-tight">
 					Connecting to real-time updates...
 				</h2>
 			</div>
@@ -50,39 +52,63 @@ export function RunProgress({
 
 	if (error) {
 		return (
-			<div className="container mx-auto max-w-2xl px-4 py-16">
-				<h1 className="mb-6 font-bold text-3xl">Error</h1>
-				<p className="text-destructive">
+			<div className="w-full max-w-md px-4 text-center">
+				<h1 className="mb-4 font-semibold text-2xl tracking-tight">Error</h1>
+				<p className="text-destructive text-sm">
 					Failed to connect to real-time updates: {error.message}
 				</p>
+				<div className="mt-6">
+					<Link
+						href="/new"
+						className={buttonVariants({ variant: "outline", size: "sm" })}
+					>
+						<ArrowLeft className="mr-2 h-4 w-4" />
+						Back to profile creation
+					</Link>
+				</div>
 			</div>
 		);
 	}
 
 	if (!run) {
 		return (
-			<div className="container mx-auto max-w-2xl px-4 py-16">
-				<h1 className="mb-6 font-bold text-3xl">Run Not Found</h1>
-				<p>Unable to find the specified run.</p>
+			<div className="w-full max-w-md px-4 text-center">
+				<h1 className="mb-4 font-semibold text-2xl tracking-tight">
+					Run Not Found
+				</h1>
+				<p className="text-muted-foreground text-sm">
+					Unable to find the specified run.
+				</p>
+				<div className="mt-6">
+					<Link
+						href="/new"
+						className={buttonVariants({ variant: "outline", size: "sm" })}
+					>
+						<ArrowLeft className="mr-2 h-4 w-4" />
+						Back to profile creation
+					</Link>
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="container mx-auto max-w-2xl px-4 py-16">
-			<div className="mb-8">
-				<h1 className="font-bold text-3xl">GitHub Profile: {username}</h1>
-				<p className="mt-2 text-muted-foreground">
-					Current status:{" "}
-					<span className="font-medium">
-						{STATUS_MAP[run.status as keyof typeof STATUS_MAP] || run.status}
-					</span>
+		<div className="w-full max-w-md px-4">
+			<div className="mb-6 text-center">
+				<h1 className="mb-1 font-semibold text-2xl tracking-tight">
+					Building Profile for <span className="text-primary">@{username}</span>
+				</h1>
+				<p className="text-muted-foreground text-sm">
+					Status:{" "}
+					{STATUS_MAP[run.status as keyof typeof STATUS_MAP] || run.status}
 				</p>
 			</div>
 
-			<div className="rounded-lg border bg-card shadow-sm">
-				<div className="p-6">
-					<h2 className="mb-4 font-semibold text-xl">Processing Tasks</h2>
+			<div className="rounded-lg border border-border/50 bg-muted/20 shadow-sm">
+				<div className="p-5">
+					<h2 className="mb-4 font-medium text-muted-foreground text-sm uppercase">
+						Processing Tasks
+					</h2>
 
 					<div className="space-y-3">
 						{Object.entries(PROGRESS_STAGES).map(([stage, description]) => {
@@ -103,11 +129,17 @@ export function RunProgress({
 							return (
 								<div
 									key={stage}
-									className="flex items-center justify-between rounded-md bg-muted p-3"
+									className={`flex items-center justify-between rounded-md p-3 transition-colors ${
+										isCompleted
+											? "bg-success/5 text-success-foreground"
+											: isCurrent
+												? "bg-primary/5 text-primary"
+												: "bg-muted/50 text-muted-foreground"
+									}`}
 								>
 									<div>
-										<p className="font-medium">{description}</p>
-										<p className="text-muted-foreground text-sm">
+										<p className="font-medium text-sm">{description}</p>
+										<p className="text-xs opacity-80">
 											{isCompleted
 												? "Completed"
 												: isCurrent
@@ -123,40 +155,56 @@ export function RunProgress({
 				</div>
 			</div>
 
-			{run.status === "COMPLETED" && (
-				<div className="mt-8 text-center">
-					<p className="mb-4 font-medium text-primary">
-						All tasks completed successfully!
+			{run.status === "COMPLETED" ? (
+				<div className="mt-8 space-y-4">
+					<p className="text-center font-medium text-[#008080] text-sm text-sm text-success dark:text-[#98FEE3]">
+						Profile successfully generated!
 					</p>
-					<a
-						href={`/users/${username}`}
-						className="inline-block rounded-md bg-primary px-6 py-3 text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring"
+					<div className="flex flex-col gap-3">
+						<a
+							href={`/developer/${username}`}
+							className={buttonVariants({ size: "sm" })}
+						>
+							View Profile
+						</a>
+						<Link
+							href="/new"
+							className={buttonVariants({ variant: "outline", size: "sm" })}
+						>
+							Add another developer
+						</Link>
+					</div>
+				</div>
+			) : (
+				<div className="mt-8 text-center">
+					<Link
+						href="/new"
+						className={buttonVariants({ variant: "outline", size: "sm" })}
 					>
-						View Profile
-					</a>
+						Add another developer
+					</Link>
 				</div>
 			)}
-			<div className="mt-8 flex justify-center">
-				<Link href="/new" className={buttonVariants({ variant: "outline" })}>
-					Add another user
-				</Link>
-			</div>
 		</div>
 	);
 }
 
 function TaskStatusIcon({ status }: { status: string }) {
 	if (status === "COMPLETED") {
-		return <CheckCircle className="h-6 w-6 text-success" />;
+		return <CheckCircle className="h-4.5 w-4.5 text-success" />;
 	}
 
 	if (["FAILED", "CANCELED", "CRASHED", "TIMED_OUT"].includes(status)) {
-		return <div className="h-6 w-6 text-destructive">✗</div>;
+		return (
+			<div className="flex h-4.5 w-4.5 items-center justify-center rounded-full bg-destructive text-white text-xs">
+				✗
+			</div>
+		);
 	}
 
 	if (["EXECUTING", "QUEUED", "REATTEMPTING"].includes(status)) {
-		return <Loader2 className="h-6 w-6 animate-spin text-primary" />;
+		return <Loader2 className="h-4.5 w-4.5 animate-spin text-primary" />;
 	}
 
-	return <Clock className="h-6 w-6 text-muted-foreground" />;
+	return <Clock className="h-4.5 w-4.5 text-muted-foreground opacity-70" />;
 }
