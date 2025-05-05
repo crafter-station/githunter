@@ -1,8 +1,15 @@
 import { RepoAnalyzer } from "@/services/repo-analyzer";
 import { UserMetadataExtractor } from "@/services/user-metadata-extractor";
 import { GithubService } from "../../services/github-scrapper";
-import type { RepoSummary } from "../../services/github-scrapper";
-import { mapTechStackFromRepos, mapUser } from "../models/mappers";
+import type {
+	RepoContribution,
+	RepoSummary,
+} from "../../services/github-scrapper";
+import {
+	mapReposOfUser,
+	mapTechStackFromRepos,
+	mapUser,
+} from "../models/mappers";
 import type { RepoOfUser } from "../models/user";
 import { UserRepository } from "../repositories/user-repository";
 
@@ -26,11 +33,10 @@ export class PopulateGithubUser {
 		repoCount = 20,
 	): Promise<void> {
 		const userProfile = await this.githubService.getUserInfo(username);
-		const topRepos = await this.githubService.getTopReposIncludingOrgs(
-			username,
-			repoCount,
-		);
-		const userRepos = await this.extractRepoDetails(topRepos);
+		const contributedRepos =
+			await this.githubService.getContributedReposInLastMonth(username);
+
+		const userRepos = await this.extractRepoDetails(contributedRepos, username);
 
 		const metadata = await this.userMetadataExtractor.extract(
 			username,
@@ -66,11 +72,14 @@ export class PopulateGithubUser {
 
 	private async extractRepoDetails(
 		topRepos: RepoSummary[],
+		username: string,
 	): Promise<RepoOfUser[]> {
 		const topReposDetails = new Map<
 			string,
 			{ fullName: string; techStack: string[]; description: string }
 		>();
+
+		const repoContributions = new Map<string, RepoContribution>();
 
 		for (const repo of topRepos) {
 			const fileTree = await this.githubService.getRepoFileTree(repo.fullName);
@@ -85,26 +94,14 @@ export class PopulateGithubUser {
 				techStack,
 				description,
 			});
+
+			const contribution =
+				await this.githubService.getRepoContributionsInLastMonth(
+					repo.fullName,
+					username,
+				);
+			repoContributions.set(repo.fullName, contribution);
 		}
-		const userRepos: RepoOfUser[] = [];
-
-		for (const repo of topRepos) {
-			if (topReposDetails.has(repo.fullName)) {
-				const detail = topReposDetails.get(repo.fullName);
-
-				if (!detail) {
-					continue;
-				}
-
-				userRepos.push({
-					fullName: repo.fullName,
-					description: detail.description,
-					stars: repo.stars,
-					techStack: detail.techStack,
-				});
-			}
-		}
-
-		return userRepos;
+		return mapReposOfUser(topRepos, topReposDetails, repoContributions);
 	}
 }

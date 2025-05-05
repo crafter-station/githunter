@@ -25,7 +25,9 @@ if (require.main === module) {
 			const userRepository = new UserRepository();
 			const existingUser = await userRepository.findByUsername(username);
 			if (existingUser) {
-				console.log(`github username ${username} already processed, skipping`);
+				console.log(
+					`github username ${username} already processed with id ${existingUser.id}, skipping`,
+				);
 				return;
 			}
 
