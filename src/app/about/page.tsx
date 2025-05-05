@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { Card } from "@/components/ui/card";
 import { ArrowUp, BarChart2, FileText, Mic, Search, User } from "lucide-react";
 import Image from "next/image";
