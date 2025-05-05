@@ -1,5 +1,5 @@
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header-2";
 import { UserProfile } from "@/components/profile";
 import { getUserByUsername } from "@/db/query/user";
 import { notFound } from "next/navigation";

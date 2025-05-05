@@ -1,9 +1,9 @@
-import { Header } from "@/components/Header";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header-2";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { VariantProps } from "class-variance-authority";
 import { Check } from "lucide-react";
-import Image from "next/image";
 
 type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
 
@@ -155,50 +155,7 @@ export default function PricingPage() {
 			</section>
 
 			{/* Footer */}
-			<footer className="border-border border-t border-dashed bg-background">
-				<div className="container mx-auto px-4 py-10">
-					<div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-						<div className="flex items-center gap-2">
-							<Image
-								src="/github-logo.svg"
-								alt="GitHunter Logo"
-								width={20}
-								height={20}
-								className="dark:invert"
-							/>
-							<span className="text-muted-foreground text-sm">
-								© 2023 GitHunter
-							</span>
-						</div>
-						<div className="flex gap-8">
-							<a
-								href="#about"
-								className="text-muted-foreground text-sm transition-colors hover:text-foreground"
-							>
-								About
-							</a>
-							<a
-								href="#features"
-								className="text-muted-foreground text-sm transition-colors hover:text-foreground"
-							>
-								Privacy
-							</a>
-							<a
-								href="#terms"
-								className="text-muted-foreground text-sm transition-colors hover:text-foreground"
-							>
-								Terms
-							</a>
-							<a
-								href="#contact"
-								className="text-muted-foreground text-sm transition-colors hover:text-foreground"
-							>
-								Contact
-							</a>
-						</div>
-					</div>
-				</div>
-			</footer>
+			<Footer />
 		</div>
 	);
 }
