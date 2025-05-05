@@ -28,6 +28,12 @@ bun dev
 bun x trigger.dev dev
 ```
 
+3. Deploy triggers (on updates):
+
+```bash
+npx trigger.dev@latest deploy
+```
+
 ## Important
 
 All triggers must be declared inside of `src/triggers`.
