@@ -58,23 +58,30 @@ export async function queryUsers(searchParams: SearchParams) {
 	const usersFirstFilter = await db.execute(query);
 
 	function calculateScore(user: UserSelect & { potential_roles: string[] }) {
+		let score = user.followers * 5 + user.following * 2 + user.repositories;
+
 		const amountOfRolesThatMatch = user.potential_roles.filter((role) =>
 			// biome-ignore lint/style/noNonNullAssertion: <explanation>
 			searchParams!.roles.includes(role),
 		).length;
-		const amountOfTechStackThatMatch = user.stack.filter((tech) =>
-			// biome-ignore lint/style/noNonNullAssertion: <explanation>
-			searchParams!.techStack.includes(tech),
-		).length;
-		return (
-			amountOfRolesThatMatch * 10 +
-			amountOfTechStackThatMatch * 5 +
-			user.contributions +
-			user.followers * 5 +
-			user.following * 2 +
-			user.stars * 10 +
-			user.repositories * 5
-		);
+
+		score += amountOfRolesThatMatch * 10;
+
+		for (const repo of user.repos) {
+			const amountOfTechStackThatMatch = repo.techStack.filter((tech) =>
+				searchParams.techStack.includes(tech),
+			).length;
+			if (amountOfTechStackThatMatch > 0) {
+				score +=
+					Math.log(repo.stars + 1) *
+					(repo.contribution.commitsCount +
+						repo.contribution.issuesCount * 0.5 +
+						repo.contribution.pullRequestsCount * 2) *
+					amountOfTechStackThatMatch;
+			}
+		}
+
+		return score;
 	}
 
 	const usersSorted = (
