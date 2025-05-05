@@ -81,3 +81,16 @@ export async function getUsersByLocation(location: string, limit = 10) {
 		return [];
 	}
 }
+
+export async function getUserByUsername(username: string) {
+	try {
+		const result = await db.query.user.findFirst({
+			where: eq(user.username, username),
+		});
+
+		return result;
+	} catch (error) {
+		console.error("Error fetching user by username:", error);
+		return null;
+	}
+}

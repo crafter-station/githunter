@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
 	Popover,
 	PopoverContent,
@@ -17,13 +18,24 @@ type SuggestedQuery = {
 	text: string;
 };
 
-export function SearchBox() {
+interface SearchBoxProps {
+	initialQuery?: string;
+	variant?: "full" | "compact";
+}
+
+export function SearchBox({
+	initialQuery = "",
+	variant = "full",
+}: SearchBoxProps) {
 	const [open, setOpen] = useState(false);
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useState(initialQuery);
 	const [isLoading, setIsLoading] = useState(false);
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const textAreaRef = useRef<HTMLTextAreaElement>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const triggerRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
+
+	const isCompact = variant === "compact";
 
 	const suggestedQueries: SuggestedQuery[] = [
 		{
@@ -42,21 +54,27 @@ export function SearchBox() {
 			id: "query-4",
 			text: "Rust developers who contribute to open source",
 		},
-		{
-			id: "query-5",
-			text: "Full-stack developers in San Francisco",
-		},
-		{
-			id: "query-6",
-			text: "Backend developers with microservices experience",
-		},
-		{
-			id: "query-7",
-			text: "Mobile developers skilled in React Native",
-		},
+		...(isCompact
+			? []
+			: [
+					{
+						id: "query-5",
+						text: "Full-stack developers in San Francisco",
+					},
+					{
+						id: "query-6",
+						text: "Backend developers with microservices experience",
+					},
+					{
+						id: "query-7",
+						text: "Mobile developers skilled in React Native",
+					},
+				]),
 	];
 
-	const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleInputChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		setQuery(e.target.value);
 	};
 
@@ -79,7 +97,10 @@ export function SearchBox() {
 		setOpen(false);
 	};
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleInputKeyDown = (
+		e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		// Solo manejamos Enter para búsqueda
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
 			handleSearch();
@@ -94,34 +115,59 @@ export function SearchBox() {
 		setOpen(false);
 	};
 
-	// Efecto para establecer el foco cuando el popover se abre
+	// Forzar la apertura del popover al hacer clic en el input/textarea
+	const handleInputClick = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (!open) {
+			setOpen(true);
+		}
+	};
+
 	useEffect(() => {
 		if (open) {
 			setTimeout(() => {
-				textareaRef.current?.focus();
+				if (isCompact) {
+					inputRef.current?.focus();
+				} else {
+					textAreaRef.current?.focus();
+				}
 			}, 0);
 		}
-	}, [open]);
+	}, [open, isCompact]);
 
 	const handleTriggerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		// Evitar que los clics en los botones disparen el manejador del trigger
-		if (e.target instanceof HTMLButtonElement) {
-			e.stopPropagation();
+		// No abrir el popover si hacemos clic directamente en un botón o en el campo de entrada
+		if (
+			e.target instanceof HTMLButtonElement ||
+			e.target instanceof HTMLInputElement ||
+			e.target instanceof HTMLTextAreaElement
+		) {
 			return;
 		}
 		setOpen(true);
 	};
 
-	const handleTextareaClick = (e: React.MouseEvent<HTMLTextAreaElement>) => {
-		// Evitar que el clic en el textarea dispare el manejador del trigger
-		e.stopPropagation();
-		setOpen(true);
+	const handleTriggerKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		// Ignorar eventos de teclado que vienen de campos de entrada
+		if (
+			e.target instanceof HTMLInputElement ||
+			e.target instanceof HTMLTextAreaElement
+		) {
+			return;
+		}
+
+		// Solo activamos el popover con Enter o Space en el contenedor
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			setOpen(true);
+		}
 	};
 
 	return (
 		<div
 			className={cn(
-				"w-full max-w-3xl rounded-lg bg-background",
+				"w-full",
+				!isCompact && "max-w-3xl rounded-lg bg-background",
 				open && "rounded-b-none",
 			)}
 		>
@@ -130,59 +176,105 @@ export function SearchBox() {
 					<div
 						ref={triggerRef}
 						className={cn(
-							"relative flex items-end rounded-lg border border-border bg-input/30 p-2 shadow-sm",
+							"relative flex w-full border border-border bg-input/30 text-left shadow-sm",
+							isCompact
+								? "items-center rounded-lg px-3 py-1.5"
+								: "items-end rounded-lg p-2",
 							open && "rounded-b-none",
 							isLoading && "opacity-75",
 						)}
 						onClick={handleTriggerClick}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") {
-								e.preventDefault();
-								setOpen(true);
-							}
-						}}
+						onKeyDown={handleTriggerKeyDown}
+						aria-haspopup="true"
+						// biome-ignore lint/a11y/useSemanticElements: <explanation>
+						role="button"
+						tabIndex={0}
 					>
-						<Textarea
-							ref={textareaRef}
-							placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
-							className="!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 text-sm [field-sizing:content] focus-visible:ring-0 md:text-base"
-							onClick={handleTextareaClick}
-							onChange={handleTextareaChange}
-							onKeyDown={handleKeyDown}
-							value={query}
-							disabled={isLoading}
-						/>
-						<div className="absolute right-4 bottom-2 flex items-center gap-1.5">
+						{isCompact ? (
+							<>
+								<Search className="mr-2 h-4 w-4 text-muted-foreground" />
+								<Input
+									ref={inputRef}
+									type="text"
+									placeholder="Search developers..."
+									className="!shadow-none h-8 flex-1 border-0 bg-transparent px-0 text-sm focus-visible:ring-0"
+									value={query}
+									onChange={handleInputChange}
+									onKeyDown={handleInputKeyDown}
+									disabled={isLoading}
+									onClick={handleInputClick}
+								/>
+							</>
+						) : (
+							<Textarea
+								ref={textAreaRef}
+								placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
+								className={cn(
+									"!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 text-sm [field-sizing:content] focus-visible:ring-0 md:text-base",
+								)}
+								onChange={handleInputChange}
+								onKeyDown={handleInputKeyDown}
+								value={query}
+								disabled={isLoading}
+								onClick={handleInputClick}
+							/>
+						)}
+
+						<div
+							className={cn(
+								"flex items-center gap-1.5",
+								isCompact ? "" : "absolute right-4 bottom-2",
+							)}
+						>
 							<Button
 								variant="ghost"
 								size="icon"
-								className="h-8 w-8 rounded-full text-muted-foreground"
-								onClick={(e) => e.stopPropagation()} // Evitar que el clic en el botón dispare el trigger
+								className={cn(
+									"rounded-full text-muted-foreground",
+									isCompact ? "h-7 w-7" : "h-8 w-8",
+								)}
+								onClick={(e) => e.stopPropagation()}
 								disabled={isLoading}
 							>
-								<Mic className="h-4 w-4" />
+								<Mic className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")} />
 								<span className="sr-only">Voice search</span>
 							</Button>
 							<Button
 								variant="ghost"
 								size="icon"
-								className="mr-1 h-8 w-8 rounded-full text-muted-foreground hover:text-primary"
-								onClick={(e) => e.stopPropagation()} // Evitar que el clic en el botón dispare el trigger
+								className={cn(
+									"hidden rounded-full text-muted-foreground hover:text-primary md:block",
+									isCompact ? "h-7 w-7" : "mr-1 h-8 w-8",
+								)}
+								onClick={(e) => e.stopPropagation()}
 								disabled={isLoading}
 							>
-								<Sparkles className="h-4 w-4" />
+								<Sparkles
+									className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")}
+								/>
 								<span className="sr-only">Enhance prompt</span>
 							</Button>
+
 							<Button
 								size="icon"
-								className="h-8 w-8 rounded-full bg-primary text-primary-foreground"
+								className={cn(
+									"rounded-full bg-primary text-primary-foreground",
+									isCompact ? "h-7 w-7" : "h-8 w-8",
+								)}
 								onClick={handleSearch}
 								disabled={isLoading}
 							>
 								{isLoading ? (
-									<Loader2 className="h-4 w-4 animate-spin" />
+									<Loader2
+										className={cn(
+											"animate-spin",
+											isCompact ? "h-3.5 w-3.5" : "h-4 w-4",
+										)}
+									/>
 								) : (
-									<ArrowUp className="h-4 w-4" />
+									<ArrowUp
+										className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")}
+									/>
 								)}
 								<span className="sr-only">Search</span>
 							</Button>
@@ -213,23 +305,25 @@ export function SearchBox() {
 										</span>
 									</div>
 								</div>
-								<div className="ml-auto pr-xs text-super opacity-0 group-hover:opacity-100 dark:text-superDark">
-									<div className="appearance-none">
-										<svg
-											aria-hidden="true"
-											focusable="false"
-											className="h-4 w-4"
-											role="img"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 384 512"
-										>
-											<path
-												fill="currentColor"
-												d="M56 96c-13.3 0-24 10.7-24 24l0 240c0 13.3 10.7 24 24 24s24-10.7 24-24l0-182.1L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-231-231L296 144c13.3 0 24-10.7 24-24s-10.7-24-24-24L56 96z"
-											/>
-										</svg>
+								{!isCompact && (
+									<div className="ml-auto pr-xs text-super opacity-0 group-hover:opacity-100 dark:text-superDark">
+										<div className="appearance-none">
+											<svg
+												aria-hidden="true"
+												focusable="false"
+												className="h-4 w-4"
+												role="img"
+												xmlns="http://www.w3.org/2000/svg"
+												viewBox="0 0 384 512"
+											>
+												<path
+													fill="currentColor"
+													d="M56 96c-13.3 0-24 10.7-24 24l0 240c0 13.3 10.7 24 24 24s24-10.7 24-24l0-182.1L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-231-231L296 144c13.3 0 24-10.7 24-24s-10.7-24-24-24L56 96z"
+												/>
+											</svg>
+										</div>
 									</div>
-								</div>
+								)}
 							</button>
 						))}
 					</div>
