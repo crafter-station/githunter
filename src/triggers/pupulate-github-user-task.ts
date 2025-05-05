@@ -19,7 +19,7 @@ import { getUserMetadata } from "./get-user-metadata";
 import { insertUserToDbTask } from "./insert-user-to-db-task";
 
 export const pupulateGithubUserTask = schemaTask({
-	id: "pupulate-github-user-task",
+	id: "pupulate-github-user",
 	schema: z.object({
 		username: z.string(),
 	}),
