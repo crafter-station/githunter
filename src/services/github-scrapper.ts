@@ -39,11 +39,7 @@ export interface UserProfile {
 export interface RepoSummary {
 	name: string;
 	fullName: string;
-	htmlUrl: string;
 	stars: number;
-	owner: {
-		login: string;
-	};
 	defaultBranch: string;
 }
 
@@ -239,6 +235,17 @@ export class GithubService {
 		}
 
 		return reposSet;
+	}
+
+	async getRepoSummary(fullName: string): Promise<RepoSummary> {
+		const [owner, repo] = fullName.split("/");
+		const { data } = await this.octokit.repos.get({ owner, repo });
+		return {
+			name: data.name,
+			fullName: data.full_name,
+			stars: data.stargazers_count,
+			defaultBranch: data.default_branch,
+		};
 	}
 
 	/** Fetch detailed repo info */
@@ -553,11 +560,7 @@ export class GithubService {
 			.map((repo) => ({
 				name: repo.name,
 				fullName: repo.full_name,
-				htmlUrl: repo.html_url,
 				stars: repo.stargazers_count ?? 0,
-				owner: {
-					login: repo.owner?.login || "",
-				},
 				defaultBranch: repo.default_branch,
 			}));
 	}
