@@ -39,11 +39,7 @@ export interface UserProfile {
 export interface RepoSummary {
 	name: string;
 	fullName: string;
-	htmlUrl: string;
 	stars: number;
-	owner: {
-		login: string;
-	};
 	defaultBranch: string;
 }
 
@@ -51,6 +47,12 @@ export interface RepoDetails {
 	readme: string;
 	languages: string[];
 	tree: string;
+}
+
+export interface RepoContribution {
+	pullRequests: number;
+	commits: number;
+	issues: number;
 }
 
 export class GithubService {
@@ -142,6 +144,108 @@ export class GithubService {
 				"STAR_COUNT_ERROR",
 			);
 		}
+	}
+
+	async getRepoContributionsInLastMonth(
+		repoFullName: string,
+		username: string,
+	): Promise<RepoContribution> {
+		const [owner, repo] = repoFullName.split("/");
+		const sinceDate = new Date();
+		sinceDate.setMonth(sinceDate.getMonth() - 1);
+		const since = sinceDate.toISOString();
+
+		const prQuery = `type:pr repo:${owner}/${repo} author:${username} created:>=${since}`;
+		const { data: prList } = await this.octokit.search.issuesAndPullRequests({
+			q: prQuery,
+		});
+
+		const issueQuery = `type:issue repo:${owner}/${repo} author:${username} created:>=${since}`;
+		const { data: issueList } = await this.octokit.search.issuesAndPullRequests(
+			{
+				q: issueQuery,
+			},
+		);
+
+		let totalCommits = 0;
+		let page = 1;
+		while (true) {
+			const { data: commitList } = await this.octokit.repos.listCommits({
+				owner,
+				repo,
+				author: username,
+				since,
+				per_page: 100,
+				page,
+			});
+			if (!commitList.length) break;
+			totalCommits += commitList.length;
+			page++;
+			if (page > 10) break;
+		}
+
+		return {
+			pullRequests: prList.total_count,
+			issues: issueList.total_count,
+			commits: totalCommits,
+		};
+	}
+
+	async getContributedReposInLastMonth(username: string): Promise<Set<string>> {
+		const sinceDate = new Date();
+		sinceDate.setMonth(sinceDate.getMonth() - 1);
+		const since = sinceDate.toISOString();
+
+		const reposSet = new Set<string>();
+		let page = 1;
+
+		while (true) {
+			const { data: events } =
+				await this.octokit.activity.listPublicEventsForUser({
+					username,
+					per_page: 100,
+					page,
+				});
+			if (!events.length) break;
+
+			for (const ev of events) {
+				if (!ev.created_at) {
+					continue;
+				}
+
+				const eventDate = new Date(ev.created_at);
+				if (eventDate.toISOString() < since) {
+					page = Number.POSITIVE_INFINITY;
+					break;
+				}
+				// Filtrar solo eventos que representan contribuciones
+				if (
+					ev.type === "PushEvent" ||
+					ev.type === "PullRequestEvent" ||
+					ev.type === "IssuesEvent"
+				) {
+					if (ev.repo?.name) {
+						reposSet.add(ev.repo.name);
+					}
+				}
+			}
+
+			page++;
+			if (page > 10) break;
+		}
+
+		return reposSet;
+	}
+
+	async getRepoSummary(fullName: string): Promise<RepoSummary> {
+		const [owner, repo] = fullName.split("/");
+		const { data } = await this.octokit.repos.get({ owner, repo });
+		return {
+			name: data.name,
+			fullName: data.full_name,
+			stars: data.stargazers_count,
+			defaultBranch: data.default_branch,
+		};
 	}
 
 	/** Fetch detailed repo info */
@@ -456,11 +560,7 @@ export class GithubService {
 			.map((repo) => ({
 				name: repo.name,
 				fullName: repo.full_name,
-				htmlUrl: repo.html_url,
 				stars: repo.stargazers_count ?? 0,
-				owner: {
-					login: repo.owner?.login || "",
-				},
 				defaultBranch: repo.default_branch,
 			}));
 	}
