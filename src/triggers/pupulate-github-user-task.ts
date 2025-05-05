@@ -174,8 +174,8 @@ export const pupulateGithubUserTask = schemaTask({
 				}
 			}
 
-			logger.info(`repoContributions: ${repoContributions}`);
-			logger.info(`repoDetails: ${repoDetails}`);
+			logger.info(`repoContributions: ${[...repoContributions.entries()]}`);
+			logger.info(`repoDetails: ${[...repoDetails.entries()]}`);
 
 			return mapReposOfUser(repoSummaries, repoDetails, repoContributions);
 		}
