@@ -25,15 +25,15 @@ import { notFound } from "next/navigation";
 export const revalidate = 300;
 
 interface DeveloperPageProps {
-	params: {
-		username: string;
-	};
+	params: Promise<{ username: string }>;
 }
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
+	const { username } = await params;
+
 	// Fetch the user data from the database
 	const userData = await db.query.user.findFirst({
-		where: eq(user.username, params.username),
+		where: eq(user.username, username),
 	});
 
 	// If user not found, return 404
