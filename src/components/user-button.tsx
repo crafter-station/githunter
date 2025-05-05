@@ -9,12 +9,11 @@ import { useRouter } from "next/navigation";
 
 export function UserButton() {
 	const router = useRouter();
-	const isMobile = window.innerWidth < 768;
 
 	return (
 		<div className="ml-2 flex items-center gap-4 lg:ml-0">
 			<SignedIn>
-				<ClerkUserButton showName={!isMobile} />
+				<ClerkUserButton />
 			</SignedIn>
 			<SignedOut>
 				<Button
