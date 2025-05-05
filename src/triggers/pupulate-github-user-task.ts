@@ -45,7 +45,10 @@ export const pupulateGithubUserTask = schemaTask({
 		);
 
 		metadata.set("progress", "saving_to_database");
-		insertUserToDbTask.trigger(userRecord);
+		const result = await insertUserToDbTask.triggerAndWait(userRecord);
+		if (!result.ok) {
+			throw new Error("Failed to save into database");
+		}
 
 		// Final progress update
 		metadata.set("progress", "completed");
@@ -133,7 +136,7 @@ export const pupulateGithubUserTask = schemaTask({
 					id: getRepoContributionsTask.id,
 					payload: {
 						username: username,
-						reposFullNames: repos.map((repo) => repo.fullName),
+						reposFullNames: repoSummaries.map((repo) => repo.fullName),
 					},
 				},
 				...repoSummaries.map((repo) => ({

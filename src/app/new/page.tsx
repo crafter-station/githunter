@@ -1,80 +1,44 @@
-"use client";
-
-import { createGithubProfileAction } from "@/actions/create-github-profile";
-import { ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
-import { useFormStatus } from "react-dom";
-
+import { Footer } from "@/components/footer/Footer";
+import { Header } from "@/components/header-2";
+import { ArrowRight, UserPlus } from "lucide-react";
+import Link from "next/link";
+import { Form } from "./form";
 // Define a type for the form state returned by the server action
-interface FormState {
-	error: string | null;
-	success?: boolean;
-	redirectUrl?: string;
-}
 
-export default function NewProfilePage() {
+export default async function NewProfilePage() {
 	return (
-		<div className="container mx-auto max-w-lg px-4 py-16">
-			<h1 className="mb-8 font-bold text-3xl">Create New GitHub Profile</h1>
+		<div className="flex min-h-screen flex-col">
+			<Header />
 
-			<Form />
-		</div>
-	);
-}
+			<main className="flex flex-1 flex-col items-center justify-center py-12">
+				<div className="w-full max-w-md px-4">
+					<div className="mb-8 text-center">
+						<div className="mb-2 inline-flex items-center justify-center rounded-full bg-primary/10 p-3 text-primary">
+							<UserPlus className="h-6 w-6" />
+						</div>
+						<h1 className="font-semibold text-2xl tracking-tight">
+							Add GitHub Developer
+						</h1>
+						<p className="mt-2 text-muted-foreground text-sm">
+							Find and create a profile for any GitHub developer
+						</p>
+					</div>
 
-function Form() {
-	const router = useRouter();
-	const initialState: FormState = { error: null };
-	const [state, formAction] = useActionState(
-		createGithubProfileAction,
-		initialState,
-	);
+					<Form />
 
-	// Handle redirect when action returns a redirectUrl
-	useEffect(() => {
-		if (state?.redirectUrl) {
-			router.push(state.redirectUrl);
-		}
-	}, [state, router]);
-
-	return (
-		<form action={formAction} className="space-y-6">
-			<div className="space-y-2">
-				<label htmlFor="username" className="font-medium text-sm">
-					GitHub Username
-				</label>
-				<div className="relative">
-					<input
-						id="username"
-						name="username"
-						type="text"
-						placeholder="Enter a GitHub username"
-						required
-						className="w-full rounded-md border border-input px-4 py-2 focus:border-input focus:outline-none focus:ring-2 focus:ring-ring"
-					/>
+					<div className="mt-6 text-center text-muted-foreground text-xs">
+						<Link
+							href="/"
+							className="inline-flex items-center hover:text-primary hover:underline"
+						>
+							<ArrowRight className="mr-1 h-3 w-3 rotate-180" />
+							Back to search
+						</Link>
+					</div>
 				</div>
-				{state.error && (
-					<p className="text-destructive text-sm">{state.error}</p>
-				)}
-			</div>
+			</main>
 
-			<SubmitButton />
-		</form>
-	);
-}
-
-function SubmitButton() {
-	const { pending } = useFormStatus();
-
-	return (
-		<button
-			type="submit"
-			disabled={pending}
-			className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-primary/50"
-		>
-			<span>{pending ? "Processing..." : "Generate Profile"}</span>
-			{!pending && <ArrowRight className="h-4 w-4" />}
-		</button>
+			<Footer />
+		</div>
 	);
 }

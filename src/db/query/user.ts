@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { desc, eq, inArray } from "drizzle-orm";
+import { desc, eq, ilike, inArray } from "drizzle-orm";
 import { user } from "../schema/user";
 
 export async function getFeaturedUsers(limit = 3, userIds?: string[]) {
@@ -82,10 +82,14 @@ export async function getUsersByLocation(location: string, limit = 10) {
 	}
 }
 
-export async function getUserByUsername(username: string) {
+export async function getUserByUsername(username?: string | null) {
 	try {
+		if (!username) {
+			return null;
+		}
+
 		const result = await db.query.user.findFirst({
-			where: eq(user.username, username),
+			where: ilike(user.username, username),
 		});
 
 		return result;

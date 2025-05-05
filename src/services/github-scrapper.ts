@@ -194,54 +194,56 @@ export class GithubService {
 	async getContributedReposInLastMonth(
 		username: string,
 	): Promise<RepoSummary[]> {
-		const sinceDate = new Date();
-		sinceDate.setMonth(sinceDate.getMonth() - 1);
-		const since = sinceDate.toISOString();
+		const now = new Date();
+		const since = new Date(now);
+		since.setMonth(since.getMonth() - 1);
 
-		const reposSet = new Set<string>();
-		let page = 1;
-
-		while (true) {
-			const { data: events } =
-				await this.octokit.activity.listPublicEventsForUser({
-					username,
-					per_page: 100,
-					page,
-				});
-			if (!events.length) break;
-
-			for (const ev of events) {
-				if (!ev.created_at) {
-					continue;
+		const query = `
+		  query($login: String!, $from: DateTime!, $to: DateTime!) {
+			user(login: $login) {
+			  contributionsCollection(from: $from, to: $to) {
+				commitContributionsByRepository {
+				  repository { nameWithOwner }
 				}
-
-				const eventDate = new Date(ev.created_at);
-				if (eventDate.toISOString() < since) {
-					page = Number.POSITIVE_INFINITY;
-					break;
+				pullRequestContributionsByRepository {
+				  repository { nameWithOwner }
 				}
-				// Filtrar solo eventos que representan contribuciones
-				if (
-					ev.type === "PushEvent" ||
-					ev.type === "PullRequestEvent" ||
-					ev.type === "IssuesEvent"
-				) {
-					if (ev.repo?.name) {
-						reposSet.add(ev.repo.name);
-					}
+				issueContributionsByRepository {
+				  repository { nameWithOwner }
 				}
+			  }
 			}
+		  }
+		`;
 
-			page++;
-			if (page > 10) break;
+		const variables = {
+			login: username,
+			from: since.toISOString(),
+			to: now.toISOString(),
+		};
+
+		const resp = await this.octokit.graphql<{
+			// biome-ignore lint/suspicious/noExplicitAny: avoid complex type
+			user: { contributionsCollection: any };
+		}>(query, variables);
+
+		const repos = new Set<string>();
+		const c = resp.user.contributionsCollection;
+
+		for (const group of [
+			c.commitContributionsByRepository,
+			c.pullRequestContributionsByRepository,
+			c.issueContributionsByRepository,
+		]) {
+			for (const bucket of group) {
+				repos.add(bucket.repository.nameWithOwner);
+			}
 		}
 
 		const summaries: RepoSummary[] = [];
-		for (const [name] of reposSet.entries()) {
-			const summary = await this.getRepoSummary(name);
-			summaries.push(summary);
+		for (const name of repos) {
+			summaries.push(await this.getRepoSummary(name));
 		}
-
 		return summaries;
 	}
 
