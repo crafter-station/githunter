@@ -133,7 +133,7 @@ export const pupulateGithubUserTask = schemaTask({
 					id: getRepoContributionsTask.id,
 					payload: {
 						username: username,
-						reposFullNames: repos.map((repo) => repo.fullName),
+						reposFullNames: repoSummaries.map((repo) => repo.fullName),
 					},
 				},
 				...repoSummaries.map((repo) => ({
