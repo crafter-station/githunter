@@ -1,5 +1,6 @@
 "use client";
 
+import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -38,9 +39,6 @@ export default function UserProfile({ user }: UserProfileProps) {
 	const [visibleReposCount, setVisibleReposCount] = useState(10);
 
 	const githubProfileUrl = `https://github.com/${user.username}`;
-	const twitterUrl = user.twitter;
-	const linkedinUrl = user.linkedin;
-	const websiteUrl = user.website;
 
 	// Tech stack visibility logic
 	const techStackItems = user.stack || [];
@@ -73,6 +71,52 @@ export default function UserProfile({ user }: UserProfileProps) {
 			top: 0,
 			behavior: "smooth",
 		});
+	};
+
+	// Format social links
+	const socialLinks = [
+		{
+			name: "GitHub",
+			url: `https://github.com/${user.username}`,
+			icon: <Github className="h-4 w-4" />,
+		},
+		user.website && {
+			name: "Website",
+			url: user.website,
+			icon: <Globe className="h-4 w-4" />,
+		},
+		user.twitter && {
+			name: "Twitter",
+			url: user.twitter,
+			icon: <Twitter className="h-4 w-4" />,
+		},
+		user.linkedin && {
+			name: "LinkedIn",
+			url: user.linkedin,
+			icon: <Linkedin className="h-4 w-4" />,
+		},
+	].filter(Boolean) as Array<{
+		name: string;
+		url: string;
+		icon: React.ReactNode;
+	}>;
+
+	// Country code mapping (simple approach)
+	const getCountryCode = (country: string | null) => {
+		if (!country) return null;
+
+		const countryMap: Record<string, string> = {
+			Peru: "PE",
+			"United States": "US",
+			Germany: "DE",
+			"United Kingdom": "GB",
+			Canada: "CA",
+			Australia: "AU",
+			Spain: "ES",
+			// Add more as needed
+		};
+
+		return countryMap[country] || "US"; // Default to US if not found
 	};
 
 	useEffect(() => {
@@ -129,56 +173,23 @@ export default function UserProfile({ user }: UserProfileProps) {
 										</a>
 									</Button>
 
-									{twitterUrl && (
+									{socialLinks.map((link) => (
 										<Button
 											asChild
+											key={link.name}
 											size="sm"
 											variant="outline"
-											className="transition-all duration-300 hover:bg-sky-500/10"
+											className="transition-all duration-300 hover:bg-muted/10"
 										>
 											<a
-												href={twitterUrl}
+												href={link.url}
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												<Twitter className="h-4 w-4" />
+												{link.icon}
 											</a>
 										</Button>
-									)}
-
-									{linkedinUrl && (
-										<Button
-											asChild
-											size="sm"
-											variant="outline"
-											className="transition-all duration-300 hover:bg-blue-600/10"
-										>
-											<a
-												href={linkedinUrl}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<Linkedin className="h-4 w-4" />
-											</a>
-										</Button>
-									)}
-
-									{websiteUrl && (
-										<Button
-											asChild
-											size="sm"
-											variant="outline"
-											className="transition-all duration-300 hover:bg-green-500/10"
-										>
-											<a
-												href={websiteUrl}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<Globe className="h-4 w-4" />
-											</a>
-										</Button>
-									)}
+									))}
 								</div>
 							</div>
 
@@ -213,8 +224,15 @@ export default function UserProfile({ user }: UserProfileProps) {
 
 								{/* Location */}
 								{(user.city || user.country) && (
-									<div className="mb-4 flex items-center rounded-md bg-background/40 p-2.5">
-										<MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
+									<div className="mb-4 flex items-center gap-2 rounded-md bg-background/40 p-2.5">
+										{getCountryCode(user.country) ? (
+											<CountryFlag
+												countryCode={getCountryCode(user.country) || "US"}
+												className="h-4 w-4"
+											/>
+										) : (
+											<MapPin className="h-4 w-4 text-muted-foreground" />
+										)}
 										<span className="text-sm">
 											{[user.city, user.country].filter(Boolean).join(", ")}
 										</span>

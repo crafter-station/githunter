@@ -1,5 +1,5 @@
 import { EmptyState } from "@/components/EmptyState";
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import {
 	EmptyRepositoryIcon,
 	GitHubSadFaceIcon,

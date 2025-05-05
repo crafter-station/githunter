@@ -1,4 +1,4 @@
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { VariantProps } from "class-variance-authority";
