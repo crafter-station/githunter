@@ -50,9 +50,9 @@ export interface RepoDetails {
 }
 
 export interface RepoContribution {
-	pullRequests: number;
-	commits: number;
-	issues: number;
+	pullRequestsCount: number;
+	commitsCount: number;
+	issuesCount: number;
 }
 
 export class GithubService {
@@ -185,13 +185,15 @@ export class GithubService {
 		}
 
 		return {
-			pullRequests: prList.total_count,
-			issues: issueList.total_count,
-			commits: totalCommits,
+			pullRequestsCount: prList.total_count,
+			issuesCount: issueList.total_count,
+			commitsCount: totalCommits,
 		};
 	}
 
-	async getContributedReposInLastMonth(username: string): Promise<Set<string>> {
+	async getContributedReposInLastMonth(
+		username: string,
+	): Promise<RepoSummary[]> {
 		const sinceDate = new Date();
 		sinceDate.setMonth(sinceDate.getMonth() - 1);
 		const since = sinceDate.toISOString();
@@ -234,7 +236,13 @@ export class GithubService {
 			if (page > 10) break;
 		}
 
-		return reposSet;
+		const summaries: RepoSummary[] = [];
+		for (const [name] of reposSet.entries()) {
+			const summary = await this.getRepoSummary(name);
+			summaries.push(summary);
+		}
+
+		return summaries;
 	}
 
 	async getRepoSummary(fullName: string): Promise<RepoSummary> {

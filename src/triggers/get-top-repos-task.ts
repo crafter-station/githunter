@@ -3,8 +3,8 @@ import { z } from "zod";
 
 import { GithubService } from "../services/github-scrapper";
 
-export const getTopReposTask = schemaTask({
-	id: "get-top-repos",
+export const getContributedReposInLastMonthTask = schemaTask({
+	id: "get-contributed-repos-in-last-month",
 	schema: z.object({
 		username: z
 			.string()
@@ -12,10 +12,6 @@ export const getTopReposTask = schemaTask({
 	}),
 	maxDuration: 60,
 	run: async ({ username }) => {
-		const githubService = new GithubService();
-
-		const topRepos = await githubService.getTopReposIncludingOrgs(username, 20);
-
-		return topRepos;
+		return await new GithubService().getContributedReposInLastMonth(username);
 	},
 });
