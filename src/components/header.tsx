@@ -9,7 +9,7 @@ export function Header() {
 	const router = useRouter();
 
 	return (
-		<header className="sticky top-0 z-[100] border-border border-b border-dashed bg-background bg-background">
+		<header className="sticky top-0 z-[100] border-border border-b border-dashed bg-background">
 			<div className="container mx-auto flex h-12 items-center justify-between px-4">
 				<div className="flex items-center gap-2">
 					<Link href="/" className="flex items-center gap-2">
