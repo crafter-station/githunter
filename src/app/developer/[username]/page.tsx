@@ -18,6 +18,7 @@ import {
 	Users,
 	Wrench,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,6 +27,32 @@ export const revalidate = 300;
 
 interface DeveloperPageProps {
 	params: Promise<{ username: string }>;
+}
+
+export async function generateMetadata({
+	params,
+}: DeveloperPageProps): Promise<Metadata> {
+	const { username } = await params;
+
+	return {
+		title: `${username}'s profile`,
+		openGraph: {
+			images: [`/developer/${username}/opengraph-image`],
+			title: `${username}'s profile`,
+			description: `Profile page for ${username}.`,
+			url: `https://githunter.dev/developer/${username}`,
+			siteName: "GitHunter",
+			type: "website",
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${username}'s profile`,
+			description: `This is the profile page for ${username}.`,
+			images: [`/developer/${username}/opengraph-image`],
+		},
+		description: `Profile page for ${username}.`,
+		keywords: ["profile", "user", "github", "githunter"],
+	};
 }
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
