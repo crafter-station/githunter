@@ -23,7 +23,7 @@ export function mapUser(
 		fullname: userInfo.name ?? "",
 		avatarUrl: userInfo.avatarUrl,
 
-		stars: repos.reduce((acc, repo) => acc + repo.stars, 0),
+		stars: userInfo.starsCount,
 		followers: userInfo.followers,
 		following: userInfo.following,
 		repositories: userInfo.publicRepos,
