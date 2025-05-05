@@ -159,9 +159,7 @@ export const pupulateGithubUserTask = schemaTask({
 					continue;
 				}
 
-				logger.info(`run ${run.id} ok: ${run.output}`);
-
-				if (run.id === getRepoDetailsTask.id) {
+				if (run.taskIdentifier === getRepoDetailsTask.id) {
 					const data = run.output as {
 						fullName: string;
 						techStack: string[];
@@ -171,7 +169,7 @@ export const pupulateGithubUserTask = schemaTask({
 					continue;
 				}
 
-				if (run.id === getRepoContributionsTask.id) {
+				if (run.taskIdentifier === getRepoContributionsTask.id) {
 					repoContributions = run.output as Map<string, RepoContribution>;
 				}
 			}
