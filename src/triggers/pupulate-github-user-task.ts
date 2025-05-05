@@ -159,6 +159,8 @@ export const pupulateGithubUserTask = schemaTask({
 					continue;
 				}
 
+				logger.info(`run ${run.id} ok: ${run.output}`);
+
 				if (run.id === getRepoDetailsTask.id) {
 					const data = run.output as {
 						fullName: string;
