@@ -84,6 +84,7 @@ export default async function SearchPage({
 	}
 
 	const usersSorted = await queryUsers(searchParams);
+	console.log({ usersSorted });
 
 	// Format for display
 	const formattedQuery = slug.replace(/-/g, " ");
