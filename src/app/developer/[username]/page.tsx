@@ -2,7 +2,6 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header-2";
 import { UserProfile } from "@/components/profile";
 import { getUserByUsername } from "@/db/query/user";
-import {} from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -31,8 +30,18 @@ export async function generateMetadata({
 		openGraph: {
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [userData.avatarUrl],
+			images: [`/developer/${username}/opengraph-image`],
+			url: `https://githunter.dev/developer/${username}`,
+			siteName: "GitHunter",
+			type: "website",
 		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${userData.fullname || userData.username} | GitHunter`,
+			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
+			images: [`/developer/${username}/opengraph-image`],
+		},
+		keywords: ["dev", "user", "github", "githunter"],
 	};
 }
 
