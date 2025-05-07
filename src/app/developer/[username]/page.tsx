@@ -41,7 +41,7 @@ export async function generateMetadata({
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
 			images: [`/developer/${username}/opengraph-image`],
 		},
-		keywords: ["profile", "user", "github", "githunter"],
+		keywords: ["dev", "user", "github", "githunter"],
 	};
 }
 

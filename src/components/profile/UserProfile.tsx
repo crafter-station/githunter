@@ -2,7 +2,6 @@
 
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/tooltip";
 import type { UserSelect } from "@/db/schema/user";
 import { getCountryCode } from "@/lib/country-codes";
 import {
@@ -24,6 +23,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface UserProfileProps {
 	user: UserSelect;
@@ -63,21 +63,26 @@ export default function UserProfile({ user }: UserProfileProps) {
 		});
 	};
 
-	// Share profile functionality
 	const shareProfile = async () => {
-		if (navigator.share) {
-			try {
-				await navigator.share({
-					title: `${user.fullname} | GitHunter Profile`,
-					text: `Check out ${user.fullname}'s developer profile on GitHunter!`,
-					url: window.location.href,
-				});
-			} catch (error) {
-				console.error("Error sharing:", error);
+		try {
+			const shareData = {
+				title: `${user.fullname} | GitHunter Profile`,
+				text: `Check out ${user.fullname}'s developer profile on GitHunter!`,
+				url: window.location.href,
+			};
+
+			if (navigator.share) {
+				await navigator.share(shareData);
+				toast.success("Profile shared successfully!");
+			} else if (navigator.clipboard) {
+				await navigator.clipboard.writeText(shareData.url);
+				toast.success("Profile link copied to clipboard!");
+			} else {
+				toast.error("Sharing is not supported in this browser.");
 			}
-		} else {
-			navigator.clipboard.writeText(window.location.href);
-			// Show toast notification here
+		} catch (error) {
+			console.error("Failed to share profile:", error);
+			toast.error("Oops! Something went wrong while sharing.");
 		}
 	};
 
@@ -159,7 +164,7 @@ export default function UserProfile({ user }: UserProfileProps) {
 								</div>
 
 								{/* Social links */}
-								<div className="mt-3 flex justify-center space-x-2">
+								<div className="mt-3 flex flex-wrap justify-center space-x-2">
 									{/* Share button */}
 									<Button
 										size="sm"
