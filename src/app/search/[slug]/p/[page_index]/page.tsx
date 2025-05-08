@@ -26,8 +26,8 @@ import {
 	Wrench,
 } from "lucide-react";
 import Link from "next/link";
-import { getQueryParams } from "./get-query-params";
-import { queryUsers } from "./query-users";
+import { getQueryParams } from "../../get-query-params";
+import { queryUsers } from "../../query-users";
 
 export const revalidate = 300;
 export const dynamic = "force-static";
@@ -44,18 +44,28 @@ export async function generateStaticParams() {
 		searchKeys.push(...keys);
 	} while (cursor !== "0");
 
-	// Extract the slug from each key (remove the "search:" prefix)
-	return searchKeys.map((key) => ({
-		slug: key.replace("search:", ""),
-	}));
+	// For each search key, generate page 1 only (other pages will be generated on demand)
+	const params = [];
+
+	for (const key of searchKeys) {
+		const slug = key.replace("search:", "");
+		params.push({
+			slug,
+			page_index: "1",
+		});
+	}
+
+	return params;
 }
 
-export default async function SearchPage({
+export default async function SearchPagePaginated({
 	params,
 }: {
-	params: Promise<{ slug: string }>;
+	params: { slug: string; page_index: string };
 }) {
-	const { slug } = await params;
+	const { slug, page_index } = params;
+	const pageIndex = Number.parseInt(page_index, 10) || 1;
+
 	const searchParams = await getQueryParams(slug);
 
 	if (Object.keys(searchParams).length === 0) {
@@ -95,7 +105,7 @@ export default async function SearchPage({
 	);
 
 	// Ensure pageIndex is within valid range
-	const currentPage = 1;
+	const currentPage = Math.min(Math.max(1, pageIndex), totalPages);
 
 	// Get paginated users
 	const startIndex = (currentPage - 1) * SEARCH_RESULTS_PER_PAGE;
@@ -142,6 +152,11 @@ export default async function SearchPage({
 								{totalUsers} results
 							</span>
 							<span>for developers</span>
+							{totalPages > 1 && (
+								<span className="ml-2">
+									(Page {currentPage} of {totalPages})
+								</span>
+							)}
 						</div>
 
 						{locationText && (
@@ -373,11 +388,12 @@ export default async function SearchPage({
 						/>
 					</div>
 				)}
+
 				{/* Pagination component */}
 				{totalPages > 1 && (
 					<div className="mt-8 flex justify-center">
 						<Pagination
-							currentPage={1}
+							currentPage={currentPage}
 							totalPages={totalPages}
 							baseUrl={`/search/${slug}/p`}
 						/>

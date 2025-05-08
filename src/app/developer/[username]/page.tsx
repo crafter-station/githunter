@@ -5,10 +5,48 @@ import { getUserByUsername } from "@/db/query/user";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { db } from "@/db";
+
 export const revalidate = 300;
+export const dynamic = "force-static";
+export const dynamicParams = true;
 
 interface DeveloperPageProps {
 	params: Promise<{ username: string }>;
+}
+
+export async function generateStaticParams() {
+	const users = await db.query.user.findMany({
+		columns: {
+			username: true,
+		},
+		limit: 100,
+	});
+	return users.map((user) => ({
+		username: user.username,
+	}));
+}
+
+export default async function DeveloperPage({ params }: DeveloperPageProps) {
+	const { username } = await params;
+
+	const userData = await getUserByUsername(username);
+
+	if (!userData) {
+		notFound();
+	}
+
+	return (
+		<div className="flex min-h-screen flex-col bg-background">
+			<Header />
+			<main className="flex-1">
+				<div className="container mx-auto px-4 py-8">
+					<UserProfile user={userData} />
+				</div>
+			</main>
+			<Footer />
+		</div>
+	);
 }
 
 export async function generateMetadata({
@@ -43,26 +81,4 @@ export async function generateMetadata({
 		},
 		keywords: ["dev", "user", "github", "githunter"],
 	};
-}
-
-export default async function DeveloperPage({ params }: DeveloperPageProps) {
-	const { username } = await params;
-
-	const userData = await getUserByUsername(username);
-
-	if (!userData) {
-		notFound();
-	}
-
-	return (
-		<div className="flex min-h-screen flex-col bg-background">
-			<Header />
-			<main className="flex-1">
-				<div className="container mx-auto px-4 py-8">
-					<UserProfile user={userData} />
-				</div>
-			</main>
-			<Footer />
-		</div>
-	);
 }

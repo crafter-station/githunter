@@ -54,6 +54,9 @@ export async function queryUsers(searchParams: SearchParams) {
 	// Add ordering
 	query.append(sql` ORDER BY ${user.contributions} DESC`);
 
+	// Add limit
+	query.append(sql` LIMIT 200`);
+
 	// Execute the query
 	const usersFirstFilter = await db.execute(query);
 
