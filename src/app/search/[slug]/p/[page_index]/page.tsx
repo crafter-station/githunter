@@ -1,7 +1,7 @@
 import { EmptyState } from "@/components/EmptyState";
 import { Footer } from "@/components/footer";
 import GitHunterLogo from "@/components/githunter-logo";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import {
 	EmptyRepositoryIcon,
 	GitHubSadFaceIcon,

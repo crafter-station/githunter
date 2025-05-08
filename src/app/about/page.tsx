@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { Card } from "@/components/ui/card";
 import { ArrowUp, BarChart2, FileText, Mic, Search, User } from "lucide-react";
 

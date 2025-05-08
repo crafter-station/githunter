@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { UserProfile } from "@/components/profile";
 import { getUserByUsername } from "@/db/query/user";
 import type { Metadata } from "next";
@@ -58,8 +58,8 @@ export async function generateMetadata({
 		openGraph: {
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [`/developer/${username}/opengraph-image`],
-			url: `https://githunter.dev/developer/${username}`,
+			images: [`/api/og/users/${username}`],
+			url: `https://githunter.dev/api/og/users/${username}`,
 			siteName: "GitHunter",
 			type: "website",
 		},

@@ -1,7 +1,7 @@
 import { RunProgress } from "@/components/RunProgress";
 import { TriggerProvider } from "@/components/TriggerProvider";
 import { Footer } from "@/components/footer/Footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 
 export default async function UserProfilePage({
 	params,
