@@ -3,6 +3,8 @@ import { Octokit } from "@octokit/rest";
 import { generateObject } from "ai";
 import { z } from "zod";
 
+import { clerkClient } from "@clerk/nextjs/server";
+import { logger } from "@trigger.dev/sdk/v3";
 // Add these imports for HTML scraping
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -56,12 +58,67 @@ export interface RepoContribution {
 }
 
 export class GithubService {
-	private octokit = new Octokit({
-		auth: process.env.GITHUB_TOKEN || undefined,
-	});
+	private octokit: Octokit;
+	private isUserInitialized = false;
+	private userId?: string;
+
+	constructor(userId?: string) {
+		// If no userId provided, use default token from env
+		if (!userId) {
+			this.octokit = new Octokit({
+				auth: process.env.GITHUB_TOKEN || undefined,
+			});
+			this.isUserInitialized = true;
+		} else {
+			// Store userId for token retrieval later
+			this.userId = userId;
+			// Initialize with no auth, will fetch user token on first API call
+			this.octokit = new Octokit();
+			this.isUserInitialized = false;
+		}
+	}
+
+	// Ensure we have a properly initialized Octokit instance
+	private async ensureInitialized(): Promise<void> {
+		// If already initialized with a token, nothing to do
+		if (this.isUserInitialized) return;
+
+		// If we have a userId but haven't initialized yet, do it now
+		if (this.userId) {
+			try {
+				const token = await this.getGithubToken(this.userId);
+				this.octokit = new Octokit({ auth: token });
+				this.isUserInitialized = true;
+				logger.info(`Token: ${token}`);
+			} catch (error) {
+				console.error(
+					`Failed to get GitHub token for user ${this.userId}:`,
+					error,
+				);
+				// Fall back to default token if available
+				this.octokit = new Octokit({
+					auth: process.env.GITHUB_TOKEN || undefined,
+				});
+				this.isUserInitialized = true;
+			}
+			logger.info("Ensuring initialized");
+		}
+	}
+
+	private async getGithubToken(userId: string) {
+		const client = await clerkClient();
+		const oauthTokensResponse = await client.users.getUserOauthAccessToken(
+			userId,
+			"github",
+		);
+		return oauthTokensResponse.data[0].token;
+	}
 
 	async getUserInfo(username: string): Promise<UserProfile> {
 		try {
+			// Ensure we have a properly initialized client before making API calls
+			await this.ensureInitialized();
+
 			const { data } = await this.octokit.users.getByUsername({ username });
 			const starsCount = await this.getTotalStars(username);
 			const contributionCount =
@@ -124,6 +181,8 @@ export class GithubService {
 
 	private async getTotalStars(username: string): Promise<number> {
 		try {
+			await this.ensureInitialized();
+
 			let page = 1;
 			let stars = 0;
 			while (true) {
@@ -150,6 +209,8 @@ export class GithubService {
 		repoFullName: string,
 		username: string,
 	): Promise<RepoContribution> {
+		await this.ensureInitialized();
+
 		const [owner, repo] = repoFullName.split("/");
 		const sinceDate = new Date();
 		sinceDate.setMonth(sinceDate.getMonth() - 1);
@@ -194,6 +255,8 @@ export class GithubService {
 	async getContributedReposInLastMonth(
 		username: string,
 	): Promise<RepoSummary[]> {
+		await this.ensureInitialized();
+
 		const now = new Date();
 		const since = new Date(now);
 		since.setMonth(since.getMonth() - 1);
@@ -248,6 +311,8 @@ export class GithubService {
 	}
 
 	async getRepoSummary(fullName: string): Promise<RepoSummary> {
+		await this.ensureInitialized();
+
 		const [owner, repo] = fullName.split("/");
 		const { data } = await this.octokit.repos.get({ owner, repo });
 		return {
@@ -261,6 +326,8 @@ export class GithubService {
 	/** Fetch detailed repo info */
 	async getRepoFileTree(fullName: string): Promise<string> {
 		try {
+			await this.ensureInitialized();
+
 			const [owner, repo] = fullName.split("/");
 
 			// File tree - Try multiple approaches to handle both personal and org repos
@@ -447,7 +514,7 @@ export class GithubService {
 			});
 		}
 
-		// kick it off from root; root itself is considered “last”
+		// kick it off from root; root itself is considered "last"
 		render(root, "", true);
 
 		return lines.join("\n");
@@ -495,6 +562,8 @@ export class GithubService {
 		topN: number,
 	): Promise<RepoSummary[]> {
 		try {
+			await this.ensureInitialized();
+
 			// collect user's own repos
 			const userRepos = await this.collectUserRepos(username);
 

@@ -18,13 +18,13 @@ import { getUserInfoTask } from "./get-user-info-task";
 import { getUserMetadata } from "./get-user-metadata";
 import { insertUserToDbTask } from "./insert-user-to-db-task";
 
-export const pupulateGithubUserTask = schemaTask({
-	id: "pupulate-github-user",
+export const pupulateAuthenticatedGithubUserTask = schemaTask({
+	id: "pupulate-authenticated-github-user",
 	schema: z.object({
 		username: z.string(),
+		userId: z.string().optional(),
 	}),
-	run: async ({ username }) => {
-		// Log the start of profile generation
+	run: async ({ username, userId }) => {
 		logger.info(`Starting GitHub profile generation for ${username}`);
 
 		// Add metadata for tracking this task
@@ -82,11 +82,12 @@ export const pupulateGithubUserTask = schemaTask({
 					id: getUserInfoTask.id,
 					payload: {
 						username,
+						userId,
 					},
 				},
 				{
 					id: getContributedReposInLastMonthTask.id,
-					payload: { username },
+					payload: { username, userId },
 				},
 			]);
 
@@ -137,6 +138,7 @@ export const pupulateGithubUserTask = schemaTask({
 					payload: {
 						username: username,
 						reposFullNames: repoSummaries.map((repo) => repo.fullName),
+						userId,
 					},
 				},
 				...repoSummaries.map((repo) => ({
@@ -144,6 +146,7 @@ export const pupulateGithubUserTask = schemaTask({
 					payload: {
 						fullName: repo.fullName,
 						defaultBranch: repo.defaultBranch,
+						userId,
 					},
 				})),
 			]);

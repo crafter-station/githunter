@@ -209,7 +209,7 @@ export default async function SearchPage({
 														href={`https://github.com/${user.username}`}
 														target="_blank"
 														rel="noopener noreferrer"
-														className="block flex max-w-max items-center gap-1 font-medium hover:underline"
+														className="flex max-w-max items-center gap-1 font-medium hover:underline"
 													>
 														github.com/{user.username}
 														<ExternalLink className="h-3 w-3 text-muted-foreground" />

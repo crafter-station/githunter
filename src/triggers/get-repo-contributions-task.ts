@@ -10,9 +10,10 @@ export const getRepoContributionsTask = schemaTask({
 	schema: z.object({
 		reposFullNames: z.array(z.string()),
 		username: z.string(),
+		userId: z.string().optional(),
 	}),
-	run: async ({ reposFullNames, username }) => {
-		const githubService = new GithubService();
+	run: async ({ reposFullNames, username, userId }) => {
+		const githubService = new GithubService(userId);
 
 		const contributions = new Map<string, RepoContribution>();
 		for (const fullName of reposFullNames) {
