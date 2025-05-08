@@ -12,7 +12,6 @@ import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { getCountryCode } from "@/lib/country-codes";
-import { redis } from "@/redis";
 import {
 	ArrowLeft,
 	BarChart,
@@ -26,37 +25,13 @@ import {
 	Wrench,
 } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { getQueryParams } from "../../get-query-params";
 import { queryUsers } from "../../query-users";
 
 export const revalidate = 300;
 export const dynamic = "force-static";
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-	// Use scan with a pattern match to get all search keys
-	const searchKeys = [];
-	let cursor = "0";
-
-	do {
-		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
-		cursor = nextCursor;
-		searchKeys.push(...keys);
-	} while (cursor !== "0");
-
-	// For each search key, generate page 1 only (other pages will be generated on demand)
-	const params = [];
-
-	for (const key of searchKeys) {
-		const slug = key.replace("search:", "");
-		params.push({
-			slug,
-			page_index: "1",
-		});
-	}
-
-	return params;
-}
 
 export default async function SearchPagePaginated({
 	params,
@@ -65,6 +40,13 @@ export default async function SearchPagePaginated({
 }) {
 	const { slug, page_index } = params;
 	const pageIndex = Number.parseInt(page_index, 10) || 1;
+
+	if (pageIndex < 1) {
+		return notFound();
+	}
+	if (pageIndex > 10) {
+		return notFound();
+	}
 
 	const searchParams = await getQueryParams(slug);
 

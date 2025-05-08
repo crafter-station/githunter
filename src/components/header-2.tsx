@@ -11,7 +11,7 @@ export async function Header() {
 	const githubUser = await getUserByUsername(clerkUser?.username);
 
 	return (
-		<header className="sticky top-0 z-[100] border-border border-b border-dashed bg-background bg-background">
+		<header className="sticky top-0 z-[100] border-border border-b border-dashed bg-background">
 			<div className="container mx-auto flex h-12 items-center justify-between px-4 md:h-18">
 				<div className="flex items-center gap-2">
 					<Link href="/" className="flex items-center gap-2">
