@@ -1,5 +1,5 @@
+import { pupulateAuthenticatedGithubUserTask } from "@/triggers/pupulate-authenticated-github-user-task";
 import type { WebhookEvent } from "@clerk/nextjs/server";
-import { clerkClient } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 
@@ -49,7 +49,6 @@ export async function POST(req: Request) {
 	}
 
 	if (evt.type === "user.created") {
-		const fullname = `${evt.data.first_name} ${evt.data.last_name}`;
 		const email = evt.data.email_addresses.find(
 			(email) => email.id === evt.data.primary_email_address_id,
 		)?.email_address;
@@ -58,25 +57,16 @@ export async function POST(req: Request) {
 			throw new Error("Email not found");
 		}
 
-		const clerkId = "user_2wbqfvnXExleYyyuNHACiVBxRk5";
-
-		console.log("clerkId", clerkId);
-
-		const client = await clerkClient();
-
-		const oauthTokensResponse = await client.users.getUserOauthAccessToken(
-			clerkId,
-			"github",
-		);
-		const oauthTokens = oauthTokensResponse.data;
-
-		if (!oauthTokens.length) {
-			throw new Error("No oauth tokens found");
+		if (!evt.data.username) {
+			throw new Error("Username not found");
 		}
 
-		const ghToken = oauthTokens[0].token;
+		console.log(evt.data);
 
-		console.log("ghToken", ghToken);
+		await pupulateAuthenticatedGithubUserTask.trigger({
+			username: evt.data.username,
+			userId: evt.data.id,
+		});
 	}
 
 	return new Response("Webhook received", { status: 200 });

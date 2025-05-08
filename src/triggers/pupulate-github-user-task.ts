@@ -128,7 +128,7 @@ export const pupulateGithubUserTask = schemaTask({
 				return repos;
 			}
 
-			await metadata.set("progress", "fetching_repo_details");
+			metadata.set("progress", "fetching_repo_details");
 			const { runs } = await batch.triggerAndWait<
 				typeof getRepoDetailsTask | typeof getRepoContributionsTask
 			>([
