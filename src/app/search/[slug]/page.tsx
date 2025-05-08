@@ -380,6 +380,7 @@ export default async function SearchPage({
 							currentPage={1}
 							totalPages={totalPages}
 							baseUrl={`/search/${slug}/p`}
+							firstPageUrl={`/search/${slug}`}
 						/>
 					</div>
 				)}

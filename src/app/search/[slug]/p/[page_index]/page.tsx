@@ -382,6 +382,7 @@ export default async function SearchPagePaginated({
 							currentPage={currentPage}
 							totalPages={totalPages}
 							baseUrl={`/search/${slug}/p`}
+							firstPageUrl={`/search/${slug}`}
 						/>
 					</div>
 				)}

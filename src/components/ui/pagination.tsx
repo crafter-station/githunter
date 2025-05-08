@@ -7,6 +7,7 @@ interface PaginationProps {
 	currentPage: number;
 	totalPages: number;
 	baseUrl: string;
+	firstPageUrl: string;
 	maxItems?: number;
 }
 
@@ -15,6 +16,7 @@ export function Pagination({
 	totalPages,
 	baseUrl,
 	maxItems = 5,
+	firstPageUrl,
 }: PaginationProps) {
 	// Only show pagination if there's more than one page
 	if (totalPages <= 1) {
@@ -80,7 +82,9 @@ export function Pagination({
 				{/* Previous page button */}
 				<li>
 					<Link
-						href={currentPage > 1 ? `${baseUrl}/${currentPage - 1}` : "#"}
+						href={
+							currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : firstPageUrl
+						}
 						aria-disabled={currentPage <= 1}
 						className={cn(
 							buttonVariants({ variant: "outline", size: "icon" }),
@@ -104,6 +108,25 @@ export function Pagination({
 								<span className="flex h-8 w-8 items-center justify-center text-muted-foreground text-sm">
 									<MoreHorizontal className="h-4 w-4" />
 								</span>
+							</li>
+						);
+					}
+
+					if (page === 1) {
+						return (
+							<li key={1}>
+								<Link
+									href={firstPageUrl}
+									className={cn(
+										buttonVariants({
+											variant: page === currentPage ? "default" : "outline",
+										}),
+										"h-8 w-8 p-0",
+										page === currentPage && "pointer-events-none",
+									)}
+								>
+									<span>{page}</span>
+								</Link>
 							</li>
 						);
 					}
