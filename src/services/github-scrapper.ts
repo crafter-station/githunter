@@ -4,7 +4,6 @@ import { generateObject } from "ai";
 import { z } from "zod";
 
 import { clerkClient } from "@clerk/nextjs/server";
-import { logger } from "@trigger.dev/sdk/v3";
 // Add these imports for HTML scraping
 import axios from "axios";
 import * as cheerio from "cheerio";
@@ -89,7 +88,6 @@ export class GithubService {
 				const token = await this.getGithubToken(this.userId);
 				this.octokit = new Octokit({ auth: token });
 				this.isUserInitialized = true;
-				logger.info(`Token: ${token}`);
 			} catch (error) {
 				console.error(
 					`Failed to get GitHub token for user ${this.userId}:`,
@@ -101,7 +99,6 @@ export class GithubService {
 				});
 				this.isUserInitialized = true;
 			}
-			logger.info("Ensuring initialized");
 		}
 	}
 
