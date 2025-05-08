@@ -36,9 +36,9 @@ export const dynamicParams = true;
 export default async function SearchPagePaginated({
 	params,
 }: {
-	params: { slug: string; page_index: string };
+	params: Promise<{ slug: string; page_index: string }>;
 }) {
-	const { slug, page_index } = params;
+	const { slug, page_index } = await params;
 	const pageIndex = Number.parseInt(page_index, 10) || 1;
 
 	if (pageIndex < 1) {

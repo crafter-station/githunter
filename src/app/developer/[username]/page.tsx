@@ -5,8 +5,6 @@ import { getUserByUsername } from "@/db/query/user";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { db } from "@/db";
-
 export const revalidate = 300;
 export const dynamic = "force-static";
 export const dynamicParams = true;
@@ -16,15 +14,7 @@ interface DeveloperPageProps {
 }
 
 export async function generateStaticParams() {
-	const users = await db.query.user.findMany({
-		columns: {
-			username: true,
-		},
-		limit: 100,
-	});
-	return users.map((user) => ({
-		username: user.username,
-	}));
+	return [];
 }
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {

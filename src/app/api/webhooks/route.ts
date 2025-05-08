@@ -61,8 +61,6 @@ export async function POST(req: Request) {
 			throw new Error("Username not found");
 		}
 
-		console.log(evt.data);
-
 		await pupulateAuthenticatedGithubUserTask.trigger({
 			username: evt.data.username,
 			userId: evt.data.id,
