@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { VariantProps } from "class-variance-authority";

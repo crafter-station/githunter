@@ -12,7 +12,6 @@ import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { getCountryCode } from "@/lib/country-codes";
-import { redis } from "@/redis";
 import {
 	ArrowLeft,
 	BarChart,
@@ -26,36 +25,33 @@ import {
 	Wrench,
 } from "lucide-react";
 import Link from "next/link";
-import { getQueryParams } from "./get-query-params";
-import { queryUsers } from "./query-users";
+import { notFound } from "next/navigation";
+import { getQueryParams } from "../../get-query-params";
+import { queryUsers } from "../../query-users";
 
 export const revalidate = 300;
 export const dynamic = "force-static";
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-	// Use scan with a pattern match to get all search keys
-	const searchKeys = [];
-	let cursor = "0";
-
-	do {
-		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
-		cursor = nextCursor;
-		searchKeys.push(...keys);
-	} while (cursor !== "0");
-
-	// Extract the slug from each key (remove the "search:" prefix)
-	return searchKeys.map((key) => ({
-		slug: key.replace("search:", ""),
-	}));
+	return [];
 }
 
-export default async function SearchPage({
+export default async function SearchPagePaginated({
 	params,
 }: {
-	params: Promise<{ slug: string }>;
+	params: Promise<{ slug: string; page_index: string }>;
 }) {
-	const { slug } = await params;
+	const { slug, page_index } = await params;
+	const pageIndex = Number.parseInt(page_index, 10) || 1;
+
+	if (pageIndex < 1) {
+		return notFound();
+	}
+	if (pageIndex > 10) {
+		return notFound();
+	}
+
 	const searchParams = await getQueryParams(slug);
 
 	if (Object.keys(searchParams).length === 0) {
@@ -95,7 +91,7 @@ export default async function SearchPage({
 	);
 
 	// Ensure pageIndex is within valid range
-	const currentPage = 1;
+	const currentPage = Math.min(Math.max(1, pageIndex), totalPages);
 
 	// Get paginated users
 	const startIndex = (currentPage - 1) * SEARCH_RESULTS_PER_PAGE;
@@ -142,6 +138,11 @@ export default async function SearchPage({
 								{totalUsers} results
 							</span>
 							<span>for developers</span>
+							{totalPages > 1 && (
+								<span className="ml-2">
+									(Page {currentPage} of {totalPages})
+								</span>
+							)}
 						</div>
 
 						{locationText && (
@@ -373,11 +374,12 @@ export default async function SearchPage({
 						/>
 					</div>
 				)}
+
 				{/* Pagination component */}
 				{totalPages > 1 && (
 					<div className="mt-8 flex justify-center">
 						<Pagination
-							currentPage={1}
+							currentPage={currentPage}
 							totalPages={totalPages}
 							baseUrl={`/search/${slug}/p`}
 							firstPageUrl={`/search/${slug}`}

@@ -1,4 +1,4 @@
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { HeroSection } from "@/components/hero";
 import { getFeaturedUsers } from "@/db/query/user";
 

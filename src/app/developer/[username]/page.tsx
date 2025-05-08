@@ -1,48 +1,20 @@
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { UserProfile } from "@/components/profile";
 import { getUserByUsername } from "@/db/query/user";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const revalidate = 300;
+export const dynamic = "force-static";
+export const dynamicParams = true;
 
 interface DeveloperPageProps {
 	params: Promise<{ username: string }>;
 }
 
-export async function generateMetadata({
-	params,
-}: DeveloperPageProps): Promise<Metadata> {
-	const { username } = await params;
-
-	const userData = await getUserByUsername(username);
-
-	if (!userData) {
-		return {
-			title: "Developer Not Found | GitHunter",
-		};
-	}
-
-	return {
-		title: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
-		description: `View ${userData.fullname || userData.username}'s GitHub profile, repositories, tech stack and more on GitHunter.`,
-		openGraph: {
-			title: `${userData.fullname || userData.username} | GitHunter`,
-			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [`/developer/${username}/opengraph-image`],
-			url: `https://githunter.dev/developer/${username}`,
-			siteName: "GitHunter",
-			type: "website",
-		},
-		twitter: {
-			card: "summary_large_image",
-			title: `${userData.fullname || userData.username} | GitHunter`,
-			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [`/developer/${username}/opengraph-image`],
-		},
-		keywords: ["dev", "user", "github", "githunter"],
-	};
+export async function generateStaticParams() {
+	return [];
 }
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
@@ -65,4 +37,38 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 			<Footer />
 		</div>
 	);
+}
+
+export async function generateMetadata({
+	params,
+}: DeveloperPageProps): Promise<Metadata> {
+	const { username } = await params;
+
+	const userData = await getUserByUsername(username);
+
+	if (!userData) {
+		return {
+			title: "Developer Not Found | GitHunter",
+		};
+	}
+
+	return {
+		title: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
+		description: `View ${userData.fullname || userData.username}'s GitHub profile, repositories, tech stack and more on GitHunter.`,
+		openGraph: {
+			title: `${userData.fullname || userData.username} | GitHunter`,
+			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
+			images: [`/api/og/users/${username}`],
+			url: `https://githunter.dev/api/og/users/${username}`,
+			siteName: "GitHunter",
+			type: "website",
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${userData.fullname || userData.username} | GitHunter`,
+			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
+			images: [`/developer/${username}/opengraph-image`],
+		},
+		keywords: ["dev", "user", "github", "githunter"],
+	};
 }

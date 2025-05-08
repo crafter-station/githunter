@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer/Footer";
-import { Header } from "@/components/header-2";
+import { Header } from "@/components/header";
 import { ArrowRight, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { Form } from "./form";
