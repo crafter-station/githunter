@@ -1,4 +1,5 @@
 import type {
+	PinnedRepo,
 	RepoContribution,
 	RepoSummary,
 	UserProfile,
@@ -15,6 +16,7 @@ export function mapUser(
 		about: string;
 	},
 	techStack: Set<string>,
+	pinnedOrTopRepos: PinnedRepo[],
 ): User {
 	return {
 		id: nanoid(),
@@ -42,6 +44,7 @@ export function mapUser(
 		potentialRoles: metadata.roles,
 
 		repos,
+		pinnedRepos: pinnedOrTopRepos,
 	};
 }
 

@@ -56,6 +56,12 @@ export interface RepoContribution {
 	issuesCount: number;
 }
 
+export interface PinnedRepo {
+	fullName: string;
+	description: string | null;
+	stars: number;
+}
+
 export class GithubService {
 	private octokit: Octokit;
 	private isUserInitialized = false;
@@ -667,5 +673,82 @@ export class GithubService {
 			// Return default empty values if scraping fails
 			return 0;
 		}
+	}
+
+	public async getPinnedOrTopRepos(
+		username: string,
+		topN = 10,
+	): Promise<PinnedRepo[]> {
+		await this.ensureInitialized();
+
+		// 1. Try to fetch pinned repositories via GraphQL
+		const pinnedQuery = `
+    query($login: String!, $first: Int!) {
+      user(login: $login) {
+        pinnedItems(first: $first, types: REPOSITORY) {
+          nodes {
+            ... on Repository {
+              nameWithOwner
+              description
+              stargazerCount
+            }
+          }
+        }
+      }
+    }
+  `;
+		const pinnedResp = await this.octokit.graphql<{
+			user: {
+				pinnedItems: {
+					nodes: Array<{
+						nameWithOwner: string;
+						description: string | null;
+						stargazerCount: number;
+					}>;
+				};
+			};
+		}>(pinnedQuery, { login: username, first: 6 });
+
+		const pinned = pinnedResp.user.pinnedItems.nodes.map((repo) => ({
+			fullName: repo.nameWithOwner,
+			description: repo.description,
+			stars: repo.stargazerCount,
+		}));
+
+		if (pinned.length > 0) {
+			return pinned;
+		}
+
+		// 2. Fallback: fetch top-starred repos via GraphQL
+		const topQuery = `
+    query($login: String!, $first: Int!) {
+      user(login: $login) {
+        repositories(first: $first, orderBy: { field: STARGAZERS, direction: DESC }) {
+          nodes {
+            nameWithOwner
+            description
+            stargazerCount
+          }
+        }
+      }
+    }
+  `;
+		const topResp = await this.octokit.graphql<{
+			user: {
+				repositories: {
+					nodes: Array<{
+						nameWithOwner: string;
+						description: string | null;
+						stargazerCount: number;
+					}>;
+				};
+			};
+		}>(topQuery, { login: username, first: topN });
+
+		return topResp.user.repositories.nodes.map((repo) => ({
+			fullName: repo.nameWithOwner,
+			description: repo.description,
+			stars: repo.stargazerCount,
+		}));
 	}
 }
