@@ -11,6 +11,7 @@ import type {
 	RepoSummary,
 	UserProfile,
 } from "../services/github-scrapper";
+import { getPinnedReposTask } from "./get-pinned-repos-task";
 import { getRepoContributionsTask } from "./get-repo-contributions-task";
 import { getRepoDetailsTask } from "./get-repo-details-task";
 import { getContributedReposInLastMonthTask } from "./get-top-repos-task";
@@ -35,6 +36,7 @@ export const pupulateGithubUserTask = schemaTask({
 		const userMetadata = await extractMetadata();
 		const techStackSet = mapTechStackFromRepos(repos);
 		logger.info(`Stack: ${Array.from(techStackSet)}`);
+		const pinnedRepos = await getPinnedRepos();
 
 		const userRecord = mapUser(
 			username,
@@ -42,6 +44,7 @@ export const pupulateGithubUserTask = schemaTask({
 			repos,
 			userMetadata,
 			techStackSet,
+			pinnedRepos,
 		);
 
 		metadata.set("progress", "saving_to_database");
@@ -178,6 +181,20 @@ export const pupulateGithubUserTask = schemaTask({
 			logger.info(`repoDetails: ${[...repoDetails.entries()]}`);
 
 			return mapReposOfUser(repoSummaries, repoDetails, repoContributions);
+		}
+
+		async function getPinnedRepos() {
+			metadata.set("progress", "extracting_pinned_repos");
+
+			const result = await getPinnedReposTask.triggerAndWait({
+				username,
+			});
+
+			if (!result.ok) {
+				throw new Error("Failed to get pinned repos");
+			}
+
+			return result.output;
 		}
 	},
 });

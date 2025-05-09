@@ -12,6 +12,12 @@ export const RepoOfUserSchema = z.object({
 	}),
 });
 
+export const PinnedRepoOfUserSchema = z.object({
+	fullName: z.string(),
+	description: z.string().nullable(),
+	stars: z.number(),
+});
+
 export const UserMetadata = z.object({
 	roles: z.array(z.string()),
 	about: z.string(),
@@ -42,8 +48,10 @@ export const UserSchema = z.object({
 	stack: z.array(z.string()),
 	potentialRoles: z.array(z.string()),
 	repos: z.array(RepoOfUserSchema),
+	pinnedRepos: z.array(PinnedRepoOfUserSchema),
 });
 
 export type User = z.infer<typeof UserSchema>;
 export type RepoOfUser = z.infer<typeof RepoOfUserSchema>;
+export type PinnedRepoOfUser = z.infer<typeof PinnedRepoOfUserSchema>;
 export type UserMetadata = z.infer<typeof UserMetadata>;

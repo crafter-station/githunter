@@ -37,7 +37,8 @@ export class PopulateGithubUser {
 			await this.githubService.getContributedReposInLastMonth(username);
 
 		const userRepos = await this.extractRepoDetails(contributedRepos, username);
-
+		const pinnedOrTopRepos =
+			await this.githubService.getPinnedOrTopRepos(username);
 		const metadata = await this.userMetadataExtractor.extract(
 			username,
 			userRepos,
@@ -59,6 +60,7 @@ export class PopulateGithubUser {
 			userRepos,
 			metadata,
 			techStackSet,
+			pinnedOrTopRepos,
 		);
 
 		const existingUser = await this.userRepository.findByUsername(username);

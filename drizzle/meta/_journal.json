@@ -43,6 +43,13 @@
 			"when": 1746386925819,
 			"tag": "0005_dizzy_zaladane",
 			"breakpoints": true
+		},
+		{
+			"idx": 6,
+			"version": "7",
+			"when": 1746755727281,
+			"tag": "0006_add-pinned-repos-to-user",
+			"breakpoints": true
 		}
 	]
 }
