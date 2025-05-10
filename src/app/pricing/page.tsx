@@ -110,6 +110,9 @@ export default function PricingPage() {
 											plan.popular &&
 												"bg-primary text-primary-foreground hover:bg-primary/90",
 										)}
+										target={
+											getLink(plan.id).includes("portal") ? "_blank" : undefined
+										}
 									>
 										{currentPlan?.id === plan.id
 											? "Manage Subscription"
