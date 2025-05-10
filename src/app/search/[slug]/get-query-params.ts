@@ -28,7 +28,7 @@ export async function getQueryParams(slug: string) {
 1. Role Information:
    - Primary role and alternative role names
    - Focus on developer and engineering positions
-   - Example: "frontend developer" → ["frontend developer", "frontend engineer", "UI developer"]
+   - Example: "frontend developer" → ["frontend developer", "frontend engineer", "ui developer"]
 	 - In english
 
 2. Technology Stack:
