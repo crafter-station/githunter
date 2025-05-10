@@ -159,12 +159,15 @@ export default async function SearchPage({
 							</div>
 						)}
 
-						{searchParams.primaryTechStack.length > 0 && (
+						{searchParams.techStack.length > 0 && (
 							<div className="flex items-center gap-1.5">
 								<Wrench className="size-3.5" />
-								{searchParams.primaryTechStack.slice(0, 2).join(", ")}
-								{searchParams.primaryTechStack.length > 2 &&
-									` +${searchParams.primaryTechStack.length - 2}`}
+								{searchParams.techStack
+									.slice(0, 2)
+									.map((tech) => tech.tech)
+									.join(", ")}
+								{searchParams.techStack.length > 2 &&
+									` +${searchParams.techStack.length - 2}`}
 							</div>
 						)}
 

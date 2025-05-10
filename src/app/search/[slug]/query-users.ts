@@ -45,12 +45,9 @@ export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
 	}
 
 	// Use array overlap for tech stack too
-	if (
-		searchParams.primaryTechStack &&
-		searchParams.primaryTechStack.length > 0
-	) {
+	if (searchParams.techStack && searchParams.techStack.length > 0) {
 		query.append(sql` AND ${user.stack} && ARRAY[`);
-		const techArray = searchParams.primaryTechStack.map((tech) => sql`${tech}`);
+		const techArray = searchParams.techStack.map((tech) => sql`${tech.tech}`);
 		query.append(sql.join(techArray, sql`, `));
 		query.append(sql`]`);
 	}
@@ -78,17 +75,15 @@ export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
 		let score = user.followers * 5 + user.following * 2 + user.repositories;
 
 		for (const repo of user.repos) {
-			const amountOfPrimaryTechStackThatMatch = repo.techStack.filter((tech) =>
-				searchParams.primaryTechStack.includes(tech),
-			).length;
-
-			if (amountOfPrimaryTechStackThatMatch > 0) {
-				score +=
-					Math.log(repo.stars + 1) *
-					(repo.contribution.commitsCount +
-						repo.contribution.issuesCount * 0.5 +
-						repo.contribution.pullRequestsCount * 2) *
-					amountOfPrimaryTechStackThatMatch;
+			for (const tech of searchParams.techStack) {
+				if (repo.techStack.includes(tech.tech)) {
+					score +=
+						Math.log(repo.stars + 1) *
+						(repo.contribution.commitsCount +
+							repo.contribution.issuesCount * 0.5 +
+							repo.contribution.pullRequestsCount * 2) *
+						tech.relevance;
+				}
 			}
 		}
 
@@ -104,6 +99,11 @@ export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
 			updated_at: Date;
 		})[]
 	)
+		.filter((u) =>
+			searchParams.techStack
+				.filter((t) => t.relevance > 80)
+				.every((t) => u.stack.includes(t.tech)),
+		)
 		.map(
 			(u) =>
 				({
