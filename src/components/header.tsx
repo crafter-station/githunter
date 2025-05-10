@@ -39,7 +39,7 @@ export function Header() {
 				</div>
 				<div className="flex items-center gap-4">
 					{currentPlan && (
-						<Link href="/portal">
+						<Link href="/portal" target="_blank">
 							<Button variant="outline" className="cursor-pointer">
 								{currentPlan.name}
 							</Button>
