@@ -128,7 +128,7 @@ export async function GET(req: NextRequest) {
 							justifyContent: "center",
 							marginTop: 12,
 							marginBottom: 24,
-							fontSize: 32,
+							fontSize: 40,
 							fontWeight: 400,
 							color: "#94a3b8",
 							padding: "8px 16px",
@@ -139,8 +139,8 @@ export async function GET(req: NextRequest) {
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							width="26"
-							height="26"
+							width="36"
+							height="36"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
@@ -170,10 +170,10 @@ export async function GET(req: NextRequest) {
 					bottom: 30,
 					width: "100%",
 					textAlign: "center",
-					fontSize: 18,
+					fontSize: 24,
 					fontWeight: 500,
 					letterSpacing: "0.5px",
-					color: "#94a3b8",
+					color: "#bac2ce",
 					display: "flex",
 					justifyContent: "center",
 					alignItems: "center",
