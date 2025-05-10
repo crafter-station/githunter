@@ -10,7 +10,6 @@ import { SearchBox } from "@/components/search";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
-import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
 import {
@@ -86,22 +85,21 @@ export default async function SearchPage({
 		);
 	}
 
-	const allUsers = await queryUsers(searchParams);
-
-	// Calculate pagination values
-	const totalUsers = allUsers.length;
-	const totalPages = Math.max(
+	const { paginatedUsers, totalUsers, totalPages } = await queryUsers(
+		slug,
+		searchParams,
 		1,
-		Math.ceil(totalUsers / SEARCH_RESULTS_PER_PAGE),
 	);
 
-	// Ensure pageIndex is within valid range
-	const currentPage = 1;
-
-	// Get paginated users
-	const startIndex = (currentPage - 1) * SEARCH_RESULTS_PER_PAGE;
-	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
-	const paginatedUsers = allUsers.slice(startIndex, endIndex);
+	await Promise.all(
+		paginatedUsers.map(
+			(user, index) =>
+				index < 10 &&
+				redis.hset(`rank:${user.username}`, {
+					[slug]: index + 1,
+				}),
+		),
+	);
 
 	// Format for display
 	const formattedQuery = slug.replace(/-/g, " ");

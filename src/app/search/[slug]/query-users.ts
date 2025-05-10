@@ -1,9 +1,14 @@
 import { db } from "@/db";
 import { type UserSelect, user } from "@/db/schema";
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { sql } from "drizzle-orm";
 import type { SearchParams } from "./types";
 
-export async function queryUsers(searchParams: SearchParams) {
+export async function queryUsers(
+	slug: string,
+	searchParams: SearchParams,
+	pageIndex: number,
+) {
 	const query = sql.empty();
 
 	// Base query
@@ -137,5 +142,14 @@ export async function queryUsers(searchParams: SearchParams) {
 		)
 		.sort((a, b) => b.score - a.score);
 
-	return usersSorted;
+	// Get paginated users
+	const startIndex = (pageIndex - 1) * SEARCH_RESULTS_PER_PAGE;
+	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
+	const paginatedUsers = usersSorted.slice(startIndex, endIndex);
+
+	return {
+		paginatedUsers,
+		totalUsers: usersSorted.length,
+		totalPages: Math.ceil(usersSorted.length / SEARCH_RESULTS_PER_PAGE),
+	};
 }
