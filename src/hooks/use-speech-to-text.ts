@@ -30,7 +30,8 @@ export function useSpeechToText({ onResult, onError }: UseSpeechToTextOptions) {
 			}
 		} catch (err) {
 			console.error("Error transcribing:", err);
-			onError?.(`Error processing audio: ${err.message}`);
+			const errorMessage = err instanceof Error ? err.message : "Unknown error";
+			onError?.(`Error processing audio: ${errorMessage}`);
 		} finally {
 			setIsProcessing(false);
 		}
