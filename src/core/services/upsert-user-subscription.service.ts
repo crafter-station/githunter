@@ -38,7 +38,7 @@ export class UpsertUserSubscription {
 			throw new Error(`user not found for userId ${data.userId}`);
 		}
 
-		if (!user.clerkId) {
+		if (!user.username) {
 			throw new Error(`user has no clerkId for userId ${data.userId}`);
 		}
 
@@ -60,7 +60,7 @@ export class UpsertUserSubscription {
 
 		const client = await clerkClient();
 
-		await client.users.updateUserMetadata(user.clerkId, {
+		await client.users.updateUserMetadata(user.id, {
 			publicMetadata: {
 				subscriptionPlanId: plan.id,
 				subscriptionStatus: data.active ? "active" : "inactive",

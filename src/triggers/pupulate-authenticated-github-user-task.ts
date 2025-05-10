@@ -54,8 +54,6 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			userMetadata,
 			techStackSet,
 			pinnedRepos,
-			userId || null,
-			clerkUser?.emailAddresses[0]?.emailAddress || null,
 		);
 
 		metadata.set("progress", "saving_to_database");

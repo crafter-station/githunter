@@ -17,7 +17,7 @@ export const PRICING_PLANS = [
 		features: ["20 searches per day"],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_PRO_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "",
 		name: "Pro",
 		description: "For recruiters",
 		price: 5,
@@ -31,7 +31,7 @@ export const PRICING_PLANS = [
 		],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_PLUS_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "",
 		name: "Plus",
 		description: "For companies hiring at scale",
 		price: 20,
