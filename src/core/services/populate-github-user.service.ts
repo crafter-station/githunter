@@ -61,6 +61,8 @@ export class PopulateGithubUser {
 			metadata,
 			techStackSet,
 			pinnedOrTopRepos,
+			null,
+			null,
 		);
 
 		const existingUser = await this.userRepository.findByUsername(username);
