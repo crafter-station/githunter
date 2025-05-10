@@ -14,8 +14,8 @@ export function mapUser(
 	metadata: {
 		roles: string[];
 		about: string;
+		stack: string[];
 	},
-	techStack: Set<string>,
 	pinnedOrTopRepos: PinnedRepo[],
 ): User {
 	return {
@@ -40,11 +40,11 @@ export function mapUser(
 
 		about: metadata.about,
 
-		stack: Array.from(techStack),
+		stack: metadata.stack,
 		potentialRoles: metadata.roles,
 
 		repos,
-		pinnedRepos: pinnedOrTopRepos,
+		pinnedRepos: Array.from(pinnedOrTopRepos),
 	};
 }
 

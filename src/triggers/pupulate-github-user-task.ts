@@ -43,7 +43,6 @@ export const pupulateGithubUserTask = schemaTask({
 			userInfo,
 			repos,
 			userMetadata,
-			techStackSet,
 			pinnedRepos,
 		);
 
