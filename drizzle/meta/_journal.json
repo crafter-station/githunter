@@ -50,6 +50,20 @@
 			"when": 1746755727281,
 			"tag": "0006_add-pinned-repos-to-user",
 			"breakpoints": true
+		},
+		{
+			"idx": 7,
+			"version": "7",
+			"when": 1746829941639,
+			"tag": "0007_create-subscription-plan",
+			"breakpoints": true
+		},
+		{
+			"idx": 8,
+			"version": "7",
+			"when": 1746830000927,
+			"tag": "0008_create-user-subscription",
+			"breakpoints": true
 		}
 	]
 }
