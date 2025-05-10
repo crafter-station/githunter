@@ -7,6 +7,7 @@ import {
 	GitHubSadFaceIcon,
 } from "@/components/icons/EmptyStateIcons";
 import { SearchBox } from "@/components/search";
+import { SearchSummary } from "@/components/search/SearchSummary";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
@@ -86,7 +87,10 @@ export default async function SearchPage({
 		);
 	}
 
-	const allUsers = await queryUsers(searchParams);
+	const allUsers = await queryUsers({
+		searchParams,
+		slug,
+	});
 
 	// Calculate pagination values
 	const totalUsers = allUsers.length;
@@ -135,6 +139,9 @@ export default async function SearchPage({
 			</div>
 
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
+				{/* Search Summary - AI generated overview of results */}
+				<SearchSummary slug={slug} />
+
 				{/* Search metadata/filters */}
 				<div className="mb-4 border-b pb-3 text-muted-foreground text-sm">
 					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
