@@ -8,8 +8,9 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
+import { useSpeechToText } from "@/hooks/use-speech-to-text";
 import { cn } from "@/lib/utils";
-import { ArrowUp, Loader2, Mic, Search, Sparkles } from "lucide-react";
+import { ArrowUp, Loader2, Mic, MicOff, Search, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -36,6 +37,18 @@ export function SearchBox({
 	const router = useRouter();
 
 	const isCompact = variant === "compact";
+
+	//---- Transcription ------
+
+	const [error, setError] = useState<string | null>(null);
+
+	const { isRecording, isProcessing, startRecording, stopRecording } =
+		useSpeechToText({
+			onResult: (text) => setQuery(text),
+			onError: setError,
+		});
+
+	//---- Transcription END ------
 
 	const suggestedQueries: SuggestedQuery[] = [
 		{
@@ -196,26 +209,40 @@ export function SearchBox({
 								<Input
 									ref={inputRef}
 									type="text"
-									placeholder="Search developers..."
+									placeholder={"Search developers..."}
 									className="!shadow-none h-8 flex-1 border-0 bg-transparent px-0 text-sm focus-visible:ring-0"
-									value={query}
+									value={
+										isRecording
+											? "Recording audio..."
+											: isProcessing
+												? "Processing audio..."
+												: query
+									}
 									onChange={handleInputChange}
 									onKeyDown={handleInputKeyDown}
-									disabled={isLoading}
+									disabled={isLoading || isProcessing || isRecording}
 									onClick={handleInputClick}
 								/>
 							</>
 						) : (
 							<Textarea
 								ref={textAreaRef}
-								placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
+								placeholder={
+									"Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
+								}
 								className={cn(
 									"!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 text-sm [field-sizing:content] focus-visible:ring-0 md:text-base",
 								)}
 								onChange={handleInputChange}
 								onKeyDown={handleInputKeyDown}
-								value={query}
-								disabled={isLoading}
+								value={
+									isRecording
+										? "Recording audio..."
+										: isProcessing
+											? "Processing audio..."
+											: query
+								}
+								disabled={isLoading || isProcessing || isRecording}
 								onClick={handleInputClick}
 							/>
 						)}
@@ -233,11 +260,21 @@ export function SearchBox({
 									"rounded-full text-muted-foreground",
 									isCompact ? "h-7 w-7" : "h-8 w-8",
 								)}
-								onClick={(e) => e.stopPropagation()}
-								disabled={isLoading}
+								onClick={isRecording ? stopRecording : startRecording}
+								disabled={isLoading || isProcessing}
+								aria-pressed={isRecording}
 							>
-								<Mic className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")} />
-								<span className="sr-only">Voice search</span>
+								{isRecording ? (
+									<MicOff
+										className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")}
+									/>
+								) : (
+									<Mic className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")} />
+								)}
+								<span className="sr-only">
+									Voice Search –{" "}
+									{isRecording ? "Stop recording" : "Start recording"}
+								</span>
 							</Button>
 							<Button
 								variant="ghost"
@@ -262,9 +299,9 @@ export function SearchBox({
 									isCompact ? "h-7 w-7" : "h-8 w-8",
 								)}
 								onClick={handleSearch}
-								disabled={isLoading}
+								disabled={isLoading || isProcessing}
 							>
-								{isLoading ? (
+								{isLoading || isProcessing ? (
 									<Loader2
 										className={cn(
 											"animate-spin",
@@ -329,6 +366,7 @@ export function SearchBox({
 					</div>
 				</PopoverContent>
 			</Popover>
+			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
 		</div>
 	);
 }
