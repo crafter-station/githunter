@@ -25,6 +25,7 @@ import {
 	Users,
 	Wrench,
 } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
@@ -390,4 +391,38 @@ export default async function SearchPage({
 			<Footer />
 		</div>
 	);
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+	const { slug } = await params;
+	const formattedQuery = slug.replace(/-/g, " ");
+
+	const title = `${formattedQuery} | GitHunter`;
+	const description =
+		"Find top GitHub developers. Discover talented programmers, view stats, repositories and more.";
+	const ogImageUrl = `/api/og/search?q=${encodeURIComponent(formattedQuery)}`;
+
+	return {
+		title,
+		description,
+		openGraph: {
+			title,
+			description,
+			images: [ogImageUrl],
+			url: `/search/${slug}`,
+			siteName: "GitHunter",
+			type: "website",
+		},
+		twitter: {
+			card: "summary_large_image",
+			title,
+			description,
+			images: [`${ogImageUrl}/opengraph-image`],
+		},
+		keywords: formattedQuery.split(" ").filter(Boolean),
+	};
 }

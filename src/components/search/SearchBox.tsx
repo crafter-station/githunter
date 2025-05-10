@@ -10,6 +10,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { useDebounce } from "@/hooks/use-debounce";
+import { useSpeechToText } from "@/hooks/use-speech-to-text";
 import { getCountryCode } from "@/lib/country-codes";
 import { cn } from "@/lib/utils";
 import type { UserSearchMetadata } from "@/types";
@@ -19,6 +20,7 @@ import {
 	ArrowUp,
 	Loader2,
 	Mic,
+	MicOff,
 	Plus,
 	Search,
 	Sparkle,
@@ -160,6 +162,18 @@ export function SearchBox({
 	const isQueryTooLong = query.length > 30;
 
 	const isCompact = variant === "compact";
+
+	//---- Transcription ------
+
+	const [error, setError] = useState<string | null>(null);
+
+	const { isRecording, isProcessing, startRecording, stopRecording } =
+		useSpeechToText({
+			onResult: (text) => setQuery(text),
+			onError: setError,
+		});
+
+	//---- Transcription END ------
 
 	const suggestedQueries: SuggestedQuery[] = [
 		{
@@ -309,7 +323,7 @@ export function SearchBox({
 		return parts.map((part, i) => {
 			// Check if this part matches any search term
 			const isMatch = searchTerms.some(
-				(term) => part.toLowerCase() === term.toLowerCase(),
+				(term) => part?.toLowerCase() === term?.toLowerCase(),
 			);
 
 			// Create a unique key for this part based on its content and position
@@ -404,26 +418,40 @@ export function SearchBox({
 								<Input
 									ref={inputRef}
 									type="text"
-									placeholder="Search developers..."
+									placeholder={"Search developers..."}
 									className="!shadow-none h-8 flex-1 border-0 bg-transparent px-0 text-sm focus-visible:ring-0"
-									value={query}
+									value={
+										isRecording
+											? "Recording audio..."
+											: isProcessing
+												? "Processing audio..."
+												: query
+									}
 									onChange={handleInputChange}
 									onKeyDown={handleInputKeyDown}
-									disabled={isLoading}
+									disabled={isLoading || isProcessing || isRecording}
 									onClick={handleInputClick}
 								/>
 							</>
 						) : (
 							<Textarea
 								ref={textAreaRef}
-								placeholder="Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
+								placeholder={
+									"Search for developers, e.g., 'nextjs developers in Lima with >50 stars'"
+								}
 								className={cn(
 									"!bg-transparent !shadow-none min-h-[52px] w-full resize-none border-0 p-2 pb-10 text-sm [field-sizing:content] focus-visible:ring-0 md:text-base",
 								)}
 								onChange={handleInputChange}
 								onKeyDown={handleInputKeyDown}
-								value={query}
-								disabled={isLoading}
+								value={
+									isRecording
+										? "Recording audio..."
+										: isProcessing
+											? "Processing audio..."
+											: query
+								}
+								disabled={isLoading || isProcessing || isRecording}
 								onClick={handleInputClick}
 							/>
 						)}
@@ -441,17 +469,27 @@ export function SearchBox({
 									"rounded-full text-muted-foreground",
 									isCompact ? "h-7 w-7" : "h-8 w-8",
 								)}
-								onClick={(e) => e.stopPropagation()}
-								disabled={isLoading}
+								onClick={isRecording ? stopRecording : startRecording}
+								disabled={isLoading || isProcessing}
+								aria-pressed={isRecording}
 							>
-								<Mic className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")} />
-								<span className="sr-only">Voice search</span>
+								{isRecording ? (
+									<MicOff
+										className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")}
+									/>
+								) : (
+									<Mic className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")} />
+								)}
+								<span className="sr-only">
+									Voice Search –{" "}
+									{isRecording ? "Stop recording" : "Start recording"}
+								</span>
 							</Button>
 							<Button
 								variant="ghost"
 								size="icon"
 								className={cn(
-									"hidden rounded-full text-muted-foreground hover:text-primary md:block",
+									"hidden items-center justify-center rounded-full text-muted-foreground hover:text-primary md:flex",
 									isCompact ? "h-7 w-7" : "mr-1 h-8 w-8",
 								)}
 								onClick={(e) => e.stopPropagation()}
@@ -470,9 +508,9 @@ export function SearchBox({
 									isCompact ? "h-7 w-7" : "h-8 w-8",
 								)}
 								onClick={handleSearch}
-								disabled={isLoading}
+								disabled={isLoading || isProcessing}
 							>
-								{isLoading ? (
+								{isLoading || isProcessing ? (
 									<Loader2
 										className={cn(
 											"animate-spin",
@@ -976,6 +1014,7 @@ export function SearchBox({
 					</div>
 				</PopoverContent>
 			</Popover>
+			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
 		</div>
 	);
 }

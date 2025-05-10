@@ -1,5 +1,5 @@
 import GitHunterLogo from "@/components/githunter-logo";
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default function Page() {
@@ -11,8 +11,8 @@ export default function Page() {
 					<div className="rounded-lg border border-border bg-background p-2">
 						<GitHunterLogo className="h-6 w-6" />
 					</div>
-					<SignIn />
-					<Link href="/sign-up">Don't have an account? Sign up</Link>
+					<SignUp />
+					<Link href="/sign-in">Already have an account? Sign in</Link>
 				</div>
 			</div>
 

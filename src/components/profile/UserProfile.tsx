@@ -19,17 +19,20 @@ import {
 	Share2,
 	Star,
 	Twitter,
+	Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import SimilarProfileCard from "./SimilarProfileCard";
 
 interface UserProfileProps {
 	user: UserSelect;
+	similarUsers?: UserSelect[];
 }
 
-export default function UserProfile({ user }: UserProfileProps) {
+export default function UserProfile({ user, similarUsers }: UserProfileProps) {
 	const [showAllTech, setShowAllTech] = useState(false);
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [visibleReposCount, setVisibleReposCount] = useState(6);
@@ -348,7 +351,7 @@ export default function UserProfile({ user }: UserProfileProps) {
 											type="button"
 											variant="ghost"
 											onClick={() => setShowAllTech(!showAllTech)}
-											className="relative w-full text-xs hover:bg-transparent"
+											className="relative w-full cursor-pointer text-xs hover:bg-transparent"
 										>
 											{showAllTech ? "Show Less" : "Show More"}
 										</Button>
@@ -449,6 +452,23 @@ export default function UserProfile({ user }: UserProfileProps) {
 									</Button>
 								</div>
 							)}
+						</div>
+					)}
+					{!!similarUsers?.length && (
+						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
+							<h2 className="mb-4 flex items-center font-medium text-lg">
+								<Users className="mr-2 h-5 w-5 text-[#2300A7] dark:text-[#75A9FF]" />
+								Suggested Profiles
+							</h2>
+							<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+								{similarUsers?.map((similarUser) => (
+									<SimilarProfileCard
+										key={similarUser.id}
+										similarUser={similarUser}
+										currentUserStack={user.stack || []}
+									/>
+								))}
+							</div>
 						</div>
 					)}
 				</div>

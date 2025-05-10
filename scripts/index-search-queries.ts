@@ -95,21 +95,172 @@ function generateSearchQueries() {
 
 	// Locations - keeping limited to avoid explosion of combinations
 	const locations = [
-		"remote",
+		// Ciudades latinoamericanas principales (versión neutral sin tildes)
+		"Lima",
+		"Bogota",
+		"Buenos Aires",
+		"Santiago",
+		"Caracas",
+		"Sao Paulo",
+		"Rio de Janeiro",
+		"Montevideo",
+		"Quito",
+		"La Paz",
+		"Asuncion",
+		"San Jose",
+		"Panama City", // Mantenemos en inglés, con versión española separada
+		"Ciudad de Panama", // Versión española diferente
+		"Medellin",
+		"Cali",
+		"Arequipa",
+		"Cusco",
+		"Cordoba",
+		"Rosario",
+		"Guadalajara",
+		"Monterrey",
+
+		// Ciudades europeas (versión neutral sin tildes)
+		"Barcelona",
+		"Paris",
+		"Amsterdam",
+		"Rome",
+		"Munich",
+		"Lisbon",
+		"Dublin",
+		"Vienna",
+		"Prague",
+		"Stockholm",
+
+		// Ciudades estadounidenses (sin cambios, mismas en ambos idiomas)
+		"Chicago",
+		"Austin",
+		"Seattle",
+		"Boston",
+		"Miami",
 		"New York",
 		"San Francisco",
-		"London",
-		"Berlin",
-		"Madrid",
-		"Mexico City",
-		"remoto",
-		"Nueva York",
-		"San Francisco",
-		"Londres",
-		"Berlín",
-		"Madrid",
-		"Ciudad de México",
+		"Los Angeles",
+		"Washington",
+		"Philadelphia",
+		"Dallas",
+		"Houston",
+		"Denver",
+		"Atlanta",
+
+		// Ciudades adicionales en Asia/Oceanía/África importantes para tecnología
+		"Tokyo",
+		"Singapore",
+		"Hong Kong",
+		"Sydney",
+		"Melbourne",
+		"Dubai",
+		"Tel Aviv",
+		"Cape Town",
+		"Johannesburg",
+		"Nairobi",
+		"Bangalore",
+		"Mumbai",
+
+		// Países y regiones (versión neutral sin tildes)
+		"Mexico",
+		"Peru",
+		"Colombia",
+		"Argentina",
+		"Chile",
+		"Brazil",
+		"Uruguay",
+		"Ecuador",
+		"Bolivia",
+		"Paraguay",
+		"Costa Rica",
+		"Panama",
+		"Venezuela",
+
+		"Spain",
+		"France",
+		"Germany",
+		"United Kingdom",
+		"Italy",
+		"Portugal",
+		"Ireland",
+		"Netherlands",
+		"Switzerland",
+		"Austria",
+		"Sweden",
+		"Norway",
+		"Denmark",
+		"Finland",
+		"Belgium",
+		"Poland",
+		"Czech Republic",
+
+		"United States",
+		"Canada",
+
+		"China",
+		"Japan",
+		"South Korea",
+		"India",
+		"Australia",
+		"New Zealand",
+		"Singapore",
+		"Israel",
+		"United Arab Emirates",
+		"South Africa",
+		"Kenya",
+
+		// Regiones geográficas (versión neutral sin tildes)
+		"North America",
+		"South America",
+		"Latin America",
+		"Europe",
+		"Asia",
+		"Middle East",
+		"Africa",
+		"Oceania",
+		"Caribbean",
+		"Central America",
+
+		// Modalidad de trabajo (no tiene diferencias significativas)
+		"remote",
+		"hybrid",
+		"onsite",
+		"in office",
 	];
+
+	// Versiones en español solo cuando son significativamente diferentes
+	const spanishSpecificLocations = [
+		"Perú",
+		"Ciudad de Mexico", // vs "Mexico City"
+		"Estados Unidos", // vs "United States"
+		"Reino Unido", // vs "United Kingdom"
+		"Alemania", // vs "Germany"
+		"Francia", // vs "France"
+		"Italia", // vs "Italy"
+		"Paises Bajos", // vs "Netherlands"
+		"Suiza", // vs "Switzerland"
+		"Belgica", // vs "Belgium"
+		"Republica Checa", // vs "Czech Republic"
+		"Corea del Sur", // vs "South Korea"
+		"Nueva Zelanda", // vs "New Zealand"
+		"Emiratos Arabes Unidos", // vs "United Arab Emirates"
+		"Sudafrica", // vs "South Africa"
+
+		// Regiones geográficas con nombres distintos
+		"America del Norte", // vs "North America"
+		"America del Sur", // vs "South America"
+		"America Latina", // vs "Latin America"
+		"Oriente Medio", // vs "Middle East"
+
+		// Modalidad de trabajo
+		"remoto", // vs "remote"
+		"hibrido", // vs "hybrid"
+		"presencial", // vs "onsite/in office"
+		"en oficina", // vs "in office"
+	];
+
+	// Array combinado para uso en aplicaciones que necesitan soporte multilingüe completo
+	const allLocations = [...locations, ...spanishSpecificLocations];
 
 	// Tech stacks - selected most popular
 	const techStacks = [
@@ -180,7 +331,7 @@ function generateSearchQueries() {
 	// --- 2. ROLE + LOCATION COMBINATIONS ---
 	// e.g. "frontend developer in San Francisco", "desarrollador frontend en Madrid"
 	for (const role of roles) {
-		for (const location of locations) {
+		for (const location of allLocations) {
 			// English pattern
 			if (role.match(/developer|engineer|designer|lead|senior|junior/)) {
 				searchQueries.push(`${role} in ${location}`);
