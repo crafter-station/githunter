@@ -5,7 +5,7 @@ export const POST = Webhooks({
 	webhookSecret: process.env.POLAR_WEBHOOK_SECRET as string,
 	onSubscriptionActive: async (payload) => {
 		new UpsertUserSubscription().exec({
-			userId: payload.data.metadata.userId as string, // TODO: check if this has value
+			userId: payload.data.metadata.userId as string,
 			polarCustomerId: payload.data.customerId,
 			polarProductId: payload.data.productId,
 			active: true, // TODO: check if this is really active
@@ -13,7 +13,7 @@ export const POST = Webhooks({
 	},
 	onSubscriptionCanceled: async (payload) => {
 		new UpsertUserSubscription().exec({
-			userId: payload.data.metadata.userId as string, // TODO: check if this has value
+			userId: payload.data.metadata.userId as string,
 			polarCustomerId: payload.data.customerId,
 			polarProductId: payload.data.productId,
 			active: false, // TODO: check if this is really active
