@@ -33,7 +33,7 @@ export function Header() {
 							<GitHunterLogo className="size-4 " />
 						</div>
 						<span className="font-medium text-lg tracking-tight">
-							GitHunter
+							Dev Hunter
 						</span>
 					</Link>
 				</div>

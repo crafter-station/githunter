@@ -31,7 +31,7 @@ interface SearchSummaryProps {
 	slug: string;
 }
 
-export function SearchSummary({ slug }: SearchSummaryProps) {
+export default function SearchSummary({ slug }: SearchSummaryProps) {
 	const [summaryData, setSummaryData] = useState<SearchSummaryData | null>(
 		null,
 	);
@@ -43,8 +43,6 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 		async function fetchSummary() {
 			try {
 				setLoading(true);
-				setError(null);
-
 				const response = await fetch("/api/search/summary", {
 					method: "POST",
 					headers: {
@@ -54,9 +52,8 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 				});
 
 				if (!response.ok) {
-					throw new Error(`Failed to fetch summary: ${response.statusText}`);
+					throw new Error(`Server responded with ${response.status}`);
 				}
-
 				const data = await response.json();
 				setSummaryData(data);
 				setLoading(false);
@@ -156,7 +153,6 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 											strokeLinecap="round"
 											strokeLinejoin="round"
 											aria-hidden="true"
-											role="img"
 											aria-label="Location"
 										>
 											<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -195,7 +191,7 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 							<div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 								{summaryData.topDevelopers.slice(0, 3).map((dev, i) => (
 									<div
-										key={`dev-${dev.username}-${i}`}
+										key={`dev-${dev.username}`}
 										className="rounded-md border bg-card p-3 shadow-sm"
 									>
 										<div className="flex items-start gap-2">
@@ -231,7 +227,6 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 															strokeLinecap="round"
 															strokeLinejoin="round"
 															aria-hidden="true"
-															role="img"
 															aria-label="Location"
 														>
 															<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -279,9 +274,9 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 										{/* Skills */}
 										{dev.topSkills.length > 0 && (
 											<div className="mt-2 flex flex-wrap gap-1">
-												{dev.topSkills.slice(0, 3).map((skill, j) => (
+												{dev.topSkills.slice(0, 3).map((skill) => (
 													<span
-														key={`skill-${dev.username}-${skill}-${j}`}
+														key={`skill-${dev.username}-${skill}`}
 														className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary"
 													>
 														{skill}
@@ -318,6 +313,7 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 								</Button>
 							)}
 
+							{/* Show more developers button section */}
 							{expanded && (
 								<div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
 									{summaryData.topDevelopers.slice(3).map((dev, i) => (
@@ -362,7 +358,6 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 																strokeLinecap="round"
 																strokeLinejoin="round"
 																aria-hidden="true"
-																role="img"
 																aria-label="Location"
 															>
 																<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -410,9 +405,9 @@ export function SearchSummary({ slug }: SearchSummaryProps) {
 											{/* Skills */}
 											{dev.topSkills.length > 0 && (
 												<div className="mt-2 flex flex-wrap gap-1">
-													{dev.topSkills.slice(0, 3).map((skill, j) => (
+													{dev.topSkills.slice(0, 3).map((skill) => (
 														<span
-															key={`expanded-skill-${dev.username}-${skill}-${j}`}
+															key={`expanded-skill-${dev.username}-${skill}`}
 															className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary"
 														>
 															{skill}

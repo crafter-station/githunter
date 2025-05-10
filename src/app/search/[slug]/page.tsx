@@ -7,7 +7,7 @@ import {
 	GitHubSadFaceIcon,
 } from "@/components/icons/EmptyStateIcons";
 import { SearchBox } from "@/components/search";
-import { SearchSummary } from "@/components/search/SearchSummary";
+import SearchSummary from "@/components/search/SearchSummary";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
@@ -125,7 +125,7 @@ export default async function SearchPage({
 								<GitHunterLogo className="size-4 " />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
-								GitHunter
+								Dev Hunter
 							</span>
 						</Link>
 

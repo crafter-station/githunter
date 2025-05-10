@@ -81,7 +81,10 @@ export default async function SearchPagePaginated({
 		);
 	}
 
-	const allUsers = await queryUsers(searchParams);
+	const allUsers = await queryUsers({
+		searchParams,
+		slug,
+	});
 
 	// Calculate pagination values
 	const totalUsers = allUsers.length;
@@ -116,7 +119,7 @@ export default async function SearchPagePaginated({
 								<GitHunterLogo className="size-4 " />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
-								GitHunter
+								Dev Hunter
 							</span>
 						</Link>
 
