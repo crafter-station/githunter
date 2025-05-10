@@ -43,6 +43,27 @@
 			"when": 1746386925819,
 			"tag": "0005_dizzy_zaladane",
 			"breakpoints": true
+		},
+		{
+			"idx": 6,
+			"version": "7",
+			"when": 1746755727281,
+			"tag": "0006_add-pinned-repos-to-user",
+			"breakpoints": true
+		},
+		{
+			"idx": 7,
+			"version": "7",
+			"when": 1746829941639,
+			"tag": "0007_create-subscription-plan",
+			"breakpoints": true
+		},
+		{
+			"idx": 8,
+			"version": "7",
+			"when": 1746830000927,
+			"tag": "0008_create-user-subscription",
+			"breakpoints": true
 		}
 	]
 }

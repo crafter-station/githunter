@@ -127,6 +127,7 @@ export async function queryUsers(searchParams: SearchParams) {
 					stack: u.stack,
 					potentialRoles: u.potential_roles,
 					repos: u.repos,
+					pinnedRepos: u.pinnedRepos,
 
 					createdAt: u.created_at,
 					updatedAt: u.updated_at,

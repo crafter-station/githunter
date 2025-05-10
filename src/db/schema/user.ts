@@ -22,7 +22,14 @@ export const repoSchema = z.object({
 	}),
 });
 
+export const pinnedRepoSchema = z.object({
+	fullName: z.string(),
+	description: z.string().nullable(),
+	stars: z.number(),
+});
+
 export type Repo = z.infer<typeof repoSchema>;
+export type PinnedRepo = z.infer<typeof pinnedRepoSchema>;
 
 export const user = pgTable(
 	"user",
@@ -69,6 +76,11 @@ export const user = pgTable(
 		updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
 		repos: jsonb("repos").array().notNull().default([]).$type<Repo[]>(),
+		pinnedRepos: jsonb("pinned_repos")
+			.array()
+			.notNull()
+			.default([])
+			.$type<PinnedRepo[]>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns
