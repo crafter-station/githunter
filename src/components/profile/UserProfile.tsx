@@ -477,7 +477,7 @@ export default function UserProfile({
 						</div>
 					)}
 
-					{!!rank && (
+					{!!rank && Object.keys(rank).length > 0 && (
 						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
 							<h2 className="mb-4 flex items-center font-medium text-lg">
 								<Users className="mr-2 h-5 w-5 text-[#2300A7] dark:text-[#75A9FF]" />
