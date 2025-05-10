@@ -17,6 +17,8 @@
 		"@clerk/nextjs": "^6.18.5",
 		"@neondatabase/serverless": "^1.0.0",
 		"@octokit/rest": "^21.1.1",
+		"@polar-sh/nextjs": "^0.4.0",
+		"@polar-sh/sdk": "^0.32.13",
 		"@radix-ui/react-popover": "^1.1.11",
 		"@radix-ui/react-scroll-area": "^1.2.6",
 		"@radix-ui/react-slot": "^1.2.0",

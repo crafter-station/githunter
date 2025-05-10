@@ -26,4 +26,16 @@ export class UserRepository {
 
 		return existingUser;
 	}
+
+	public async findById(id: string): Promise<User | null> {
+		const existingUser = await db.query.user.findFirst({
+			where: eq(userTable.id, id),
+		});
+
+		if (!existingUser) {
+			return null;
+		}
+
+		return existingUser;
+	}
 }
