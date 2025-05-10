@@ -152,21 +152,19 @@ export default async function SearchPagePaginated({
 							</div>
 						)}
 
-						{searchParams.techStack.length > 0 && (
+						{searchParams.primaryTechStack.length > 0 && (
 							<div className="flex items-center gap-1.5">
 								<Wrench className="size-3.5" />
-								{searchParams.techStack.slice(0, 2).join(", ")}
-								{searchParams.techStack.length > 2 &&
-									` +${searchParams.techStack.length - 2}`}
+								{searchParams.primaryTechStack.slice(0, 2).join(", ")}
+								{searchParams.primaryTechStack.length > 2 &&
+									` +${searchParams.primaryTechStack.length - 2}`}
 							</div>
 						)}
 
-						{searchParams.roles.length > 0 && (
+						{searchParams.role.length > 0 && (
 							<div className="flex items-center gap-1.5">
 								<Sparkles className="size-3.5" />
-								{searchParams.roles[0]}
-								{searchParams.roles.length > 1 &&
-									` +${searchParams.roles.length - 1}`}
+								{searchParams.role}
 							</div>
 						)}
 					</div>

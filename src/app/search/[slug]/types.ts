@@ -1,6 +1,8 @@
 export type SearchParams = {
-	roles: string[];
-	techStack: string[];
+	role: string;
+	alternativeNamesForRole: string[];
+	primaryTechStack: string[];
+	secondaryTechStack: string[];
 	country: string | null;
 	city: string | null;
 	minStars: number | null;

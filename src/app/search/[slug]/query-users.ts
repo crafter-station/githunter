@@ -14,9 +14,12 @@ export async function queryUsers(searchParams: SearchParams) {
 
 	// Use array overlap operator && instead of contains @>
 	// This will match if ANY of the search terms match instead of requiring ALL to match
-	if (searchParams.roles && searchParams.roles.length > 0) {
+	if (searchParams.role && searchParams.role.length > 0) {
 		query.append(sql` AND ${user.potentialRoles} && ARRAY[`);
-		const rolesArray = searchParams.roles.map((role) => sql`${role}`);
+		const rolesArray = [
+			searchParams.role,
+			...searchParams.alternativeNamesForRole,
+		].map((role) => sql`${role}`);
 		query.append(sql.join(rolesArray, sql`, `));
 		query.append(sql`]`);
 	}
@@ -34,9 +37,12 @@ export async function queryUsers(searchParams: SearchParams) {
 	}
 
 	// Use array overlap for tech stack too
-	if (searchParams.techStack && searchParams.techStack.length > 0) {
+	if (
+		searchParams.primaryTechStack &&
+		searchParams.primaryTechStack.length > 0
+	) {
 		query.append(sql` AND ${user.stack} && ARRAY[`);
-		const techArray = searchParams.techStack.map((tech) => sql`${tech}`);
+		const techArray = searchParams.primaryTechStack.map((tech) => sql`${tech}`);
 		query.append(sql.join(techArray, sql`, `));
 		query.append(sql`]`);
 	}
@@ -63,24 +69,18 @@ export async function queryUsers(searchParams: SearchParams) {
 	function calculateScore(user: UserSelect & { potential_roles: string[] }) {
 		let score = user.followers * 5 + user.following * 2 + user.repositories;
 
-		const amountOfRolesThatMatch = user.potential_roles.filter((role) =>
-			// biome-ignore lint/style/noNonNullAssertion: <explanation>
-			searchParams!.roles.includes(role),
-		).length;
-
-		score += amountOfRolesThatMatch * 10;
-
 		for (const repo of user.repos) {
-			const amountOfTechStackThatMatch = repo.techStack.filter((tech) =>
-				searchParams.techStack.includes(tech),
+			const amountOfPrimaryTechStackThatMatch = repo.techStack.filter((tech) =>
+				searchParams.primaryTechStack.includes(tech),
 			).length;
-			if (amountOfTechStackThatMatch > 0) {
+
+			if (amountOfPrimaryTechStackThatMatch > 0) {
 				score +=
 					Math.log(repo.stars + 1) *
 					(repo.contribution.commitsCount +
 						repo.contribution.issuesCount * 0.5 +
 						repo.contribution.pullRequestsCount * 2) *
-					amountOfTechStackThatMatch;
+					amountOfPrimaryTechStackThatMatch;
 			}
 		}
 
