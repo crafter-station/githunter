@@ -49,15 +49,14 @@ export async function POST(req: Request) {
 	}
 
 	if (evt.type === "user.created") {
-		if (!evt.data.username) {
-			throw new Error("Username not found");
-		}
-
 		if (
 			evt.data.external_accounts.some(
 				(account) => account.provider === "github",
 			)
 		) {
+			if (!evt.data.username) {
+				throw new Error("Username not found");
+			}
 			await pupulateAuthenticatedGithubUserTask.trigger({
 				username: evt.data.username,
 				userId: evt.data.id,
