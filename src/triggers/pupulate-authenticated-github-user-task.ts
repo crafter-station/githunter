@@ -4,6 +4,7 @@ import {
 	mapUser,
 } from "@/core/models/mappers";
 import type { RepoOfUser } from "@/core/models/user";
+import { type User, clerkClient } from "@clerk/nextjs/server";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 import type {
@@ -28,6 +29,14 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 	run: async ({ username, userId }) => {
 		logger.info(`Starting GitHub profile generation for ${username}`);
 
+		const clerk = await clerkClient();
+
+		let clerkUser: User | null = null;
+
+		if (userId) {
+			clerkUser = await clerk.users.getUser(userId);
+		}
+
 		// Add metadata for tracking this task
 		metadata.set("username", username);
 
@@ -45,6 +54,8 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			userMetadata,
 			techStackSet,
 			pinnedRepos,
+			userId || null,
+			clerkUser?.emailAddresses[0]?.emailAddress || null,
 		);
 
 		metadata.set("progress", "saving_to_database");

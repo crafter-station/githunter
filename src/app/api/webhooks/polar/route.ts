@@ -1,22 +1,34 @@
-import { UpsertUserSubscription } from "@/core/services/upsert-user-subscription.service";
+import { clerkClient } from "@clerk/nextjs/server";
 import { Webhooks } from "@polar-sh/nextjs";
 
 export const POST = Webhooks({
 	webhookSecret: process.env.POLAR_WEBHOOK_SECRET as string,
-	onSubscriptionActive: async (payload) => {
-		new UpsertUserSubscription().exec({
-			userId: payload.data.metadata.userId as string,
-			polarCustomerId: payload.data.customerId,
-			polarProductId: payload.data.productId,
-			active: true, // TODO: check if this is really active
-		});
-	},
-	onSubscriptionCanceled: async (payload) => {
-		new UpsertUserSubscription().exec({
-			userId: payload.data.metadata.userId as string,
-			polarCustomerId: payload.data.customerId,
-			polarProductId: payload.data.productId,
-			active: false, // TODO: check if this is really active
+	onSubscriptionUpdated: async (payload) => {
+		const polarCustomerId = payload.data.customerId;
+		const polarProductId = payload.data.productId;
+		const status = payload.data.status;
+
+		const clerkId = payload.data.customer.externalId;
+
+		if (!clerkId) {
+			throw new Error("Clerk ID not found");
+		}
+
+		const clerk = await clerkClient();
+		const user = await clerk.users.getUser(clerkId);
+
+		if (!user) {
+			throw new Error("User not found in Clerk");
+		}
+
+		await clerk.users.updateUserMetadata(user.id, {
+			privateMetadata: {
+				polarCustomerId,
+			},
+			publicMetadata: {
+				subscriptionPlanId: polarProductId,
+				subscriptionStatus: status,
+			},
 		});
 	},
 });

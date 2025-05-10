@@ -17,13 +17,17 @@ export function mapUser(
 	},
 	techStack: Set<string>,
 	pinnedOrTopRepos: PinnedRepo[],
+	clerkId: string | null,
+	email: string | null,
 ): User {
 	return {
 		id: nanoid(),
+		clerkId,
 
 		username: username,
 		fullname: userInfo.name ?? "",
 		avatarUrl: userInfo.avatarUrl,
+		email,
 
 		stars: userInfo.starsCount,
 		followers: userInfo.followers,

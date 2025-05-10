@@ -1,60 +1,64 @@
+"use client";
+
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { Button, type buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import type { VariantProps } from "class-variance-authority";
+import { PRICING_PLANS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
 import { Check } from "lucide-react";
-
-type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
-
-const pricingPlans = [
-	{
-		id: "free",
-		name: "Free",
-		description: "Get started with basic search options",
-		price: 0,
-		popular: false,
-		buttonText: "Get Started",
-		buttonVariant: "default" as ButtonVariant,
-		features: [
-			"10 searches per day",
-			"Basic developer profiles",
-			"GitHub repository information",
-		],
-	},
-	{
-		id: "pro",
-		name: "Pro",
-		description: "Perfect for recruiters and small teams",
-		price: 29,
-		popular: true,
-		buttonText: "Subscribe Now",
-		buttonVariant: "default" as ButtonVariant,
-		features: [
-			"Unlimited searches",
-			"Advanced search filters",
-			"Smart alerts for new matches",
-			"Voice summaries (10/month)",
-		],
-	},
-	{
-		id: "enterprise",
-		name: "Enterprise",
-		description: "For companies hiring at scale",
-		price: 99,
-		popular: false,
-		buttonText: "Contact Sales",
-		buttonVariant: "outline" as ButtonVariant,
-		features: [
-			"Everything in Pro tier",
-			"Team collaboration tools",
-			"API access",
-			"Dedicated support",
-		],
-	},
-];
+import Link from "next/link";
+import React from "react";
 
 export default function PricingPage() {
+	const { user } = useUser();
+
+	const currentPlan = React.useMemo(() => {
+		if (user?.publicMetadata.subscriptionStatus === "active") {
+			return (
+				PRICING_PLANS.find(
+					(plan) => plan.id === user?.publicMetadata.subscriptionPlanId,
+				) || null
+			);
+		}
+
+		return null;
+	}, [user]);
+
+	const getLink = React.useCallback(
+		(planId: string) => {
+			if (planId === "free") {
+				return "/";
+			}
+
+			if (!user) {
+				return "/sign-in";
+			}
+
+			if (currentPlan) {
+				return "/portal";
+			}
+
+			const urlSearchParams = new URLSearchParams();
+			urlSearchParams.set("products", planId);
+			urlSearchParams.set("customerExternalId", user.id);
+
+			if (user.emailAddresses[0].emailAddress) {
+				urlSearchParams.set(
+					"customerEmail",
+					user.emailAddresses[0].emailAddress,
+				);
+			}
+			if (user.fullName) {
+				urlSearchParams.set("customerName", user.fullName);
+			}
+
+			return `/checkout?${urlSearchParams.toString()}`;
+		},
+		[user, currentPlan],
+	);
+
 	return (
 		<div className="flex min-h-screen flex-col bg-background text-foreground">
 			{/* Header */}
@@ -72,7 +76,7 @@ export default function PricingPage() {
 					</p>
 
 					<div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
-						{pricingPlans.map((plan) => (
+						{PRICING_PLANS.map((plan) => (
 							<Card
 								key={plan.id}
 								className={`border-border ${
@@ -95,16 +99,22 @@ export default function PricingPage() {
 											/month
 										</span>
 									</div>
-									<Button
-										className={`mt-4 ${
-											plan.popular
-												? "bg-primary text-primary-foreground hover:bg-primary/90"
-												: ""
-										}`}
-										variant={plan.buttonVariant}
+
+									<Link
+										href={getLink(plan.id)}
+										className={cn(
+											buttonVariants({
+												variant: plan.buttonVariant,
+											}),
+											"mt-4 w-full",
+											plan.popular &&
+												"bg-primary text-primary-foreground hover:bg-primary/90",
+										)}
 									>
-										{plan.buttonText}
-									</Button>
+										{currentPlan?.id === plan.id
+											? "Manage Subscription"
+											: plan.buttonText}
+									</Link>
 
 									<div className="mt-6 space-y-3">
 										{plan.features.map((feature, idx) => (

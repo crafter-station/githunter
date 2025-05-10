@@ -49,22 +49,20 @@ export async function POST(req: Request) {
 	}
 
 	if (evt.type === "user.created") {
-		const email = evt.data.email_addresses.find(
-			(email) => email.id === evt.data.primary_email_address_id,
-		)?.email_address;
-
-		if (!email) {
-			throw new Error("Email not found");
-		}
-
 		if (!evt.data.username) {
 			throw new Error("Username not found");
 		}
 
-		await pupulateAuthenticatedGithubUserTask.trigger({
-			username: evt.data.username,
-			userId: evt.data.id,
-		});
+		if (
+			evt.data.external_accounts.some(
+				(account) => account.provider === "github",
+			)
+		) {
+			await pupulateAuthenticatedGithubUserTask.trigger({
+				username: evt.data.username,
+				userId: evt.data.id,
+			});
+		}
 	}
 
 	return new Response("Webhook received", { status: 200 });

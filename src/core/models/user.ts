@@ -26,9 +26,12 @@ export const UserMetadata = z.object({
 export const UserSchema = z.object({
 	id: z.string(),
 
+	clerkId: z.string().nullable(),
+
 	username: z.string(),
 	fullname: z.string(),
 	avatarUrl: z.string(),
+	email: z.string().nullable(),
 
 	stars: z.number(),
 	followers: z.number(),
