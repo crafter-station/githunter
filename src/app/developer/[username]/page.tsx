@@ -1,7 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { UserProfile } from "@/components/profile";
-import { getUserByUsername } from "@/db/query/user";
+import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -21,6 +21,9 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 	const { username } = await params;
 
 	const userData = await getUserByUsername(username);
+	const similarUsers = userData?.id
+		? await getSimilarUsers(userData.id, 3)
+		: [];
 
 	if (!userData) {
 		notFound();
@@ -31,7 +34,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 			<Header />
 			<main className="flex-1">
 				<div className="container mx-auto px-4 py-8">
-					<UserProfile user={userData} />
+					<UserProfile user={userData} similarUsers={similarUsers} />
 				</div>
 			</main>
 			<Footer />
