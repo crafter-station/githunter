@@ -1,4 +1,4 @@
-import { clerkClient } from "@clerk/nextjs/server";
+import { type User, clerkClient } from "@clerk/nextjs/server";
 import { Webhooks } from "@polar-sh/nextjs";
 
 export const POST = Webhooks({
@@ -8,14 +8,31 @@ export const POST = Webhooks({
 		const polarProductId = payload.data.productId;
 		const status = payload.data.status;
 
-		const clerkId = payload.data.customer.externalId;
+		const clerk = await clerkClient();
+
+		let clerkId = payload.data.customer.externalId;
+		let user: User | null = null;
 
 		if (!clerkId) {
-			throw new Error("Clerk ID not found");
-		}
+			const email = payload.data.customer.email;
+			if (!email) {
+				throw new Error("No email found for customer");
+			}
 
-		const clerk = await clerkClient();
-		const user = await clerk.users.getUser(clerkId);
+			const users = await clerk.users.getUserList({
+				emailAddress: [email],
+			});
+
+			if (users.totalCount === 0) {
+				throw new Error("No user found with email");
+			}
+
+			// Use the first matching user's ID
+			clerkId = users.data[0].id;
+			user = users.data[0];
+		} else {
+			user = await clerk.users.getUser(clerkId);
+		}
 
 		if (!user) {
 			throw new Error("User not found in Clerk");

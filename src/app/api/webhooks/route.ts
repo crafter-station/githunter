@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 	if (evt.type === "user.created") {
 		if (
 			evt.data.external_accounts.some(
-				(account) => account.provider === "github",
+				(account) => account.provider === "oauth_github",
 			)
 		) {
 			if (!evt.data.username) {

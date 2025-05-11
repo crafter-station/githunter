@@ -11,5 +11,5 @@ export const GET = CustomerPortal({
 
 		return user.privateMetadata.polarCustomerId as string;
 	}, // Fuction to resolve a Polar Customer ID
-	server: "sandbox", // Use sandbox if you're testing Polar - omit the parameter or pass 'production' otherwise
+	server: process.env.NODE_ENV === "production" ? "production" : "sandbox", // Use sandbox if you're testing Polar - omit the parameter or pass 'production' otherwise
 });
