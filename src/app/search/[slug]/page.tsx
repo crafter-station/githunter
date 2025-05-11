@@ -80,6 +80,9 @@ export default async function SearchPage({
 		1,
 	);
 
+	// Delete the cached summary each time is revalidated
+	await redis.del(`search-summary:${slug}`);
+
 	await Promise.all(
 		paginatedUsers.map(
 			(user, index) =>
