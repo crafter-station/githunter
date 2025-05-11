@@ -8,6 +8,7 @@ import {
 } from "@/components/icons/EmptyStateIcons";
 import { SearchBox } from "@/components/search";
 import { CountryFlag } from "@/components/ui/CountryFlag";
+import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
 import { getCountryCode } from "@/lib/country-codes";
@@ -17,11 +18,9 @@ import {
 	Code2,
 	ExternalLink,
 	GitFork,
-	MapPin,
-	Sparkles,
 	Star,
+	Terminal,
 	Users,
-	Wrench,
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -88,10 +87,14 @@ export default async function SearchPagePaginated({
 
 	// Format for display
 	const formattedQuery = slug.replace(/-/g, " ");
-	const locationText =
-		searchParams.city && searchParams.country
-			? `${searchParams.city}, ${searchParams.country}`
-			: searchParams.city || searchParams.country || null;
+
+	// Get tech stack from all users (like main page)
+	const techStack = Array.from(
+		new Set(paginatedUsers.flatMap((user) => user.stack || []).filter(Boolean)),
+	).slice(0, 5);
+
+	// Get location if available (like main page)
+	const location = paginatedUsers[0]?.country || null;
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-[#121212]">
@@ -118,45 +121,62 @@ export default async function SearchPagePaginated({
 			</div>
 
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
-				{/* Search metadata/filters */}
-				<div className="mb-4 border-b pb-3 text-muted-foreground text-sm">
-					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-						<div className="flex items-center">
-							<span className="mr-2 font-medium text-foreground">
-								{totalUsers} results
+				{/* Search metadata/tags */}
+				<div className="mb-4 border-border/40 border-b py-3">
+					<div className="flex flex-wrap items-center gap-1.5">
+						<Badge
+							variant="secondary"
+							className="flex items-center gap-1 px-2 py-0.5 text-xs"
+						>
+							<Users className="h-3 w-3" />
+							{totalUsers} developers
+						</Badge>
+
+						{location && (
+							<Badge
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
+							>
+								<svg
+									width="12"
+									height="12"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									aria-hidden="true"
+									aria-label="Location"
+								>
+									<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+									<circle cx="12" cy="10" r="3" />
+								</svg>
+								{location}
+							</Badge>
+						)}
+
+						{techStack.slice(0, 3).map((tech) => (
+							<Badge
+								key={`tech-${tech}`}
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
+							>
+								<Terminal className="h-3 w-3" />
+								{tech}
+							</Badge>
+						))}
+
+						{techStack.length > 3 && (
+							<Badge variant="outline" className="px-2 py-0.5 text-xs">
+								+{techStack.length - 3} more
+							</Badge>
+						)}
+
+						{totalPages > 1 && (
+							<span className="text-muted-foreground text-sm">
+								(Page {pageIndex} of {totalPages})
 							</span>
-							<span>for developers</span>
-							{totalPages > 1 && (
-								<span className="ml-2">
-									(Page {pageIndex} of {totalPages})
-								</span>
-							)}
-						</div>
-
-						{locationText && (
-							<div className="flex items-center gap-1.5">
-								<MapPin className="size-3.5" />
-								{locationText}
-							</div>
-						)}
-
-						{searchParams.techStack.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Wrench className="size-3.5" />
-								{searchParams.techStack
-									.slice(0, 2)
-									.map((t) => t.tech)
-									.join(", ")}
-								{searchParams.techStack.length > 2 &&
-									` +${searchParams.techStack.length - 2}`}
-							</div>
-						)}
-
-						{searchParams.role.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Sparkles className="size-3.5" />
-								{searchParams.role}
-							</div>
 						)}
 					</div>
 				</div>
