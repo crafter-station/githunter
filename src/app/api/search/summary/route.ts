@@ -19,10 +19,13 @@ export async function POST(request: NextRequest) {
 		const searchParams = await getQueryParams(slug);
 
 		// Query users based on search parameters
-		const users = await queryUsers({ searchParams, slug });
+		const users = await queryUsers(slug, searchParams, 1);
 
 		// Generate search summary as structured data
-		const summaryData = await generateSearchSummary(users, searchParams);
+		const summaryData = await generateSearchSummary(
+			users.paginatedUsers,
+			searchParams,
+		);
 
 		// Return the structured data as JSON
 		return Response.json(summaryData);
