@@ -1,6 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { CountryFlag } from "@/components/ui/CountryFlag";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -130,7 +131,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 						{/* Left column - Profile sidebar */}
 						<div className="md:col-span-3">
 							<div className="md:sticky md:top-20">
-								<Card className="overflow-hidden pt-0">
+								<Card className="gap-0 overflow-hidden pt-0">
 									<CardHeader className="p-0">
 										<div className="relative border-border/50 border-b bg-muted p-4 text-center dark:border-border/20 dark:bg-muted/20">
 											<div className="mx-auto h-24 w-24 overflow-hidden rounded-full border-2 border-background shadow-sm">
@@ -157,6 +158,20 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 													<ExternalLink className="h-3 w-3 text-muted-foreground" />
 												</Link>
 											</div>
+
+											<Button
+												variant="default"
+												size="sm"
+												className="mx-auto mt-3 flex w-max items-center"
+												asChild
+											>
+												<Link href={`/new?username=${userData.username}`}>
+													<span className="-mt-0.5">Reindex</span>
+													<Badge className="text-xs" variant="secondary">
+														Plus
+													</Badge>
+												</Link>
+											</Button>
 
 											{/* Social links */}
 											<div className="mt-3 flex flex-wrap justify-center space-x-2">

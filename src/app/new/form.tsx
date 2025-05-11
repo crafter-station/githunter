@@ -1,7 +1,7 @@
 "use client";
 import { ArrowRight } from "lucide-react";
 import { Github } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -24,6 +24,9 @@ export function Form() {
 		initialState,
 	);
 
+	const searchParams = useSearchParams();
+	const username = searchParams.get("username");
+
 	// Handle redirect when action returns a redirectUrl
 	useEffect(() => {
 		if (state?.redirectUrl) {
@@ -45,6 +48,7 @@ export function Form() {
 						placeholder="GitHub username"
 						required
 						className="w-full border-0 bg-transparent py-3 pr-4 pl-10 text-sm focus:outline-none"
+						defaultValue={username ?? undefined}
 					/>
 				</div>
 				{state.error && (
@@ -61,6 +65,8 @@ function SubmitButton() {
 	const { pending } = useFormStatus();
 	const { currentPlan } = useSubscription();
 
+	const searchParams = useSearchParams();
+
 	if (currentPlan?.name !== "Plus") {
 		return (
 			<div className="flex w-full justify-center">
@@ -68,7 +74,7 @@ function SubmitButton() {
 					href="/pricing"
 					className={buttonVariants({ variant: "secondary" })}
 				>
-					Upgrade to Pro to generate profiles
+					Upgrade to Plus to index profiles
 				</Link>
 			</div>
 		);

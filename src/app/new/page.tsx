@@ -17,10 +17,10 @@ export default async function NewProfilePage() {
 							<UserPlus className="h-6 w-6" />
 						</div>
 						<h1 className="font-semibold text-2xl tracking-tight">
-							Add GitHub Developer
+							Index (or reindex) a profile
 						</h1>
 						<p className="mt-2 text-muted-foreground text-sm">
-							Find and create a profile for any GitHub developer
+							Get real insights about any GitHub developer
 						</p>
 					</div>
 

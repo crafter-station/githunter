@@ -1,16 +1,13 @@
 import { EmptyState } from "@/components/EmptyState";
 import { Footer } from "@/components/footer";
-import GitHunterLogo from "@/components/githunter-logo";
 import { Header } from "@/components/header";
 import {
 	EmptyRepositoryIcon,
 	GitHubSadFaceIcon,
 } from "@/components/icons/EmptyStateIcons";
-import { SearchBox } from "@/components/search";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/ui/pagination";
-import { UserButton } from "@/components/user-button";
 import { getCountryCode } from "@/lib/country-codes";
 import {
 	ArrowLeft,
@@ -98,27 +95,7 @@ export default async function SearchPagePaginated({
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-[#121212]">
-			{/* Search bar - Similar to search engines */}
-			<div className="sticky top-0 z-10 border-b border-dashed bg-background py-3">
-				<div className="flex items-center justify-between px-4 md:mx-3">
-					<div className="flex w-full items-center gap-2 md:gap-12">
-						<Link href="/" className="flex items-center gap-2">
-							<div className="rounded-sm border border-border p-1.5">
-								<GitHunterLogo className="size-4 " />
-							</div>
-							<span className="hidden font-medium text-lg tracking-tight md:block">
-								GitHunter
-							</span>
-						</Link>
-
-						<div className="relative max-w-2xl flex-1">
-							<SearchBox initialQuery={formattedQuery} variant="compact" />
-						</div>
-					</div>
-
-					<UserButton />
-				</div>
-			</div>
+			<Header />
 
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
 				{/* Search metadata/tags */}
