@@ -21,12 +21,15 @@ export function CollapsibleSummary({
 	const [expanded, setExpanded] = useState(defaultExpanded);
 
 	return (
-		<div className="relative mb-6 p-2">
+		<div className="relative mb-6 rounded-lg border border-border/40 p-4 transition-all duration-300">
 			<div
 				className={cn(
 					"overflow-hidden transition-all duration-500 ease-in-out",
-					expanded ? `max-h-[${expandedMaxHeight}]` : `max-h-[${maxHeight}]`,
+					expanded ? "max-h-[800px]" : "max-h-[180px]",
 				)}
+				style={{
+					maxHeight: expanded ? expandedMaxHeight : maxHeight,
+				}}
 			>
 				{children}
 			</div>
@@ -34,10 +37,10 @@ export function CollapsibleSummary({
 			{/* Mask overlay for entire content */}
 			{!expanded && (
 				<div
-					className="absolute inset-0 bg-gradient-to-b"
+					className="absolute inset-0 rounded-lg bg-gradient-to-b"
 					style={{
 						background:
-							"linear-gradient(to bottom, transparent 10%, var(--background) 95%)",
+							"linear-gradient(to bottom, transparent 5%, var(--background) 95%)",
 						pointerEvents: "none",
 					}}
 					aria-hidden="true"
@@ -47,7 +50,7 @@ export function CollapsibleSummary({
 			{/* Clickable overlay for expanding */}
 			{!expanded && (
 				<div
-					className="absolute inset-0 cursor-pointer"
+					className="absolute inset-0 cursor-pointer rounded-lg"
 					onClick={() => setExpanded(true)}
 					onKeyDown={(e) => {
 						if (e.key === "Enter" || e.key === " ") {
