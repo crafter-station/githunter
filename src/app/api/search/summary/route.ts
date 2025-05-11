@@ -64,47 +64,48 @@ export async function POST(request: NextRequest) {
 
 		const result = streamText({
 			model: openai("gpt-4o-mini"),
-			system: `You are an AI assistant that creates high-quality search result summaries.
-		Create concise, informative summaries that highlight key information.
-		Be professional but conversational in tone.
-		Focus on providing the most useful information about the developers found in the search..`,
-			prompt: `Generate a structured summary of the search results for GitHub developers.
-		The search was for: ${searchParams.role} developers${searchParams.city ? ` in ${searchParams.city}` : ""}${searchParams.country ? `, ${searchParams.country}` : ""}.
-		
-		Here is the detailed search information about the developers found:
-		Total developers found: ${users.totalUsers}
-		
-		${users.paginatedUsers
-			.map((user) => {
-				return `
-			# ${user.fullname} (${user.username})
-			About: ${user.about}
-			Tech Stack: ${user.stack}
-			Contributions: ${user.contributions}
-			Repositories: ${user.repositories}
-			Followers: ${user.followers}
-			Following: ${user.following}
-			Stars: ${user.stars}
+			system: `You are an AI assistant that creates engaging audio-friendly search result summaries.
+Create summaries optimized for text-to-speech conversion with Eleven Labs.
+Use natural pacing with appropriate pauses (use commas, periods, and paragraph breaks strategically).
+Avoid complex punctuation, abbreviations, or symbols that may cause issues in speech synthesis.
+Maintain a conversational, engaging tone with varied sentence structure for better listening experience.`,
+			prompt: `Generate a speech-optimized summary of GitHub developer search results.
+The search was for: ${searchParams.role} developers${searchParams.city ? ` in ${searchParams.city}` : ""}${searchParams.country ? `, ${searchParams.country}` : ""}.
+
+Here is the information about the developers found:
+Total developers found: ${users.totalUsers}
+
+${users.paginatedUsers
+	.map((user) => {
+		return `
+	# ${user.fullname} (${user.username})
+	About: ${user.about}
+	Tech Stack: ${user.stack}
+	Contributions: ${user.contributions}
+	Repositories: ${user.repositories}
+	Followers: ${user.followers}
+	Following: ${user.following}
+	Stars: ${user.stars}
 
 
-			`;
-			})
-			.join("\n")}
+	`;
+	})
+	.join("\n")}
 
-		Create a well-formatted summary with these key components:
-		- Information about the total number of developers found
-		- Details about the top ${Math.min(5, users.paginatedUsers.length)} developers with their key metrics
-		- A comprehensive spoken digest that explains the search results in a clear, conversational manner
-		
-		Focus on making the spokenDigest detailed and informative, including information about common technologies and any notable metrics from the developers.
-		If location is provided in the query, include the location in the summary.
-		Keep the entire summary concise but informative.
+Create a flowing, natural-sounding audio digest with:
+1. A brief introduction about the search results (mention total developers found and search criteria including location if provided)
+2. Highlights of the top ${Math.min(3, users.paginatedUsers.length)} developers, focusing on their most impressive metrics and skills
+3. A concise conclusion that summarizes common technologies or notable patterns
 
-		Make sure the summary is not too long.
-		Must have the style of a tweet.
-		
-		The length of the summary should be between 300 and 500 characters.
-		`,
+Additional guidelines for speech optimization:
+- Write in a conversational style as if speaking directly to the listener
+- Use natural transitions between sections ("Next, let's look at...", "Another impressive developer is...")
+- Avoid long lists of numbers or technical terms without context
+- Keep sentences medium length for better TTS flow
+- Include brief pauses where appropriate (using commas and periods)
+- Total length should be 60-90 seconds when read aloud (approximately 150-225 words)
+
+The summary should sound natural when read aloud by a text-to-speech system.`,
 			onFinish: async (completion) => {
 				await redis.set(`search-summary:${slug}`, completion.text);
 			},
