@@ -19,11 +19,11 @@ export async function POST(request: NextRequest) {
 		const cachedSummary = await redis.get<string>(`search-summary:${slug}`);
 
 		if (cachedSummary) {
-			// Split into words for more natural streaming
-			const chunks = cachedSummary.split(/\s+/).map((word) => {
+			// Split into characters for more natural streaming, properly handling emojis
+			const chunks = Array.from(cachedSummary).map((char) => {
 				// Replace newlines with \n and escape them properly
-				const escapedWord = word.replace(/\n/g, "\\n");
-				return `0:"${escapedWord} "\n`;
+				const escapedChar = char.replace(/\n/g, "\\n");
+				return `0:"${escapedChar}"\n`;
 			});
 
 			// Add the initial message ID
@@ -42,8 +42,8 @@ export async function POST(request: NextRequest) {
 				async start(controller) {
 					for (const chunk of chunks) {
 						controller.enqueue(encoder.encode(chunk));
-						// Wait 30ms between chunks (adjust as needed)
-						await new Promise((resolve) => setTimeout(resolve, 30));
+						// Wait 10ms between chunks (adjust as needed)
+						await new Promise((resolve) => setTimeout(resolve, 10));
 					}
 					controller.close();
 				},
