@@ -1,6 +1,6 @@
 "use server";
 
-import { getCurrentPlan } from "@/lib/get-plan";
+import { getSubscription } from "@/lib/get-suscription";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 
@@ -12,7 +12,7 @@ export async function createGithubProfileAction(
 	prevState: { error: string | null },
 	formData: FormData,
 ) {
-	const currentPlan = await getCurrentPlan();
+	const currentPlan = await getSubscription();
 
 	if (!currentPlan) {
 		return { error: "Unauthorized" };

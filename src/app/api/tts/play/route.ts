@@ -1,3 +1,4 @@
+import { getSubscription } from "@/lib/get-suscription";
 import { ElevenLabsClient } from "elevenlabs";
 import type { NextRequest } from "next/server";
 
@@ -9,6 +10,16 @@ export async function POST(request: NextRequest) {
 
 		if (!text) {
 			return new Response("No text provided", { status: 400 });
+		}
+
+		const currentPlan = await getSubscription();
+
+		if (!currentPlan) {
+			return new Response("No subscription found", { status: 400 });
+		}
+
+		if (currentPlan.name === "Free") {
+			return new Response("Free plan not allowed", { status: 400 });
 		}
 
 		// Inicializar el cliente de ElevenLabs

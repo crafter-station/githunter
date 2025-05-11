@@ -1,23 +1,35 @@
 "use client";
 
 import { useCompletion } from "@ai-sdk/react";
-import { AlertCircle, Loader2, Sparkles, Volume2 } from "lucide-react";
+import {
+	AlertCircle,
+	Loader2,
+	Sparkles,
+	SquareIcon,
+	Volume2,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSubscription } from "@/lib/hooks/useSuscription";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
 interface SpokenDigestProps {
 	slug: string;
 }
 
 export function SpokenDigest({ slug }: SpokenDigestProps) {
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [isLoadingAudio, setIsLoadingAudio] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const hasCompleted = useRef(false);
+	const audioRef = useRef<HTMLAudioElement | null>(null);
+	const { currentPlan } = useSubscription();
+	const router = useRouter();
 
 	const { completion, isLoading, complete } = useCompletion({
 		api: "/api/search/summary",
@@ -37,8 +49,17 @@ export function SpokenDigest({ slug }: SpokenDigestProps) {
 	const playSpokenDigest = async () => {
 		if (!completion) return;
 
+		// If audio is already playing, stop it
+		if (isPlaying && audioRef.current) {
+			audioRef.current.pause();
+			audioRef.current.currentTime = 0;
+			setIsPlaying(false);
+			return;
+		}
+
 		try {
 			setIsPlaying(true);
+			setIsLoadingAudio(true);
 			setError(null);
 
 			// Connect to ElevenLabs API endpoint
@@ -74,11 +95,14 @@ export function SpokenDigest({ slug }: SpokenDigestProps) {
 
 			// Crear y reproducir el elemento de audio
 			const audio = new Audio(audioUrl);
+			audioRef.current = audio;
 
 			// Manejar cuando termina de reproducirse
 			audio.onended = () => {
 				setIsPlaying(false);
+				setIsLoadingAudio(false);
 				URL.revokeObjectURL(audioUrl); // Limpiar la URL cuando termine
+				audioRef.current = null;
 			};
 
 			// Manejar errores
@@ -86,18 +110,23 @@ export function SpokenDigest({ slug }: SpokenDigestProps) {
 				console.error("Error playing audio:", e);
 				setError("Error al reproducir el audio");
 				setIsPlaying(false);
+				setIsLoadingAudio(false);
 				URL.revokeObjectURL(audioUrl);
+				audioRef.current = null;
 				toast.error("No se pudo reproducir el audio");
 			};
 
 			// Iniciar reproducción
 			await audio.play();
+			setIsLoadingAudio(false);
 		} catch (error) {
 			console.error("Failed to play audio:", error);
 			setError(
 				error instanceof Error ? error.message : "Error al generar el audio",
 			);
 			setIsPlaying(false);
+			setIsLoadingAudio(false);
+			audioRef.current = null;
 			toast.error("No se pudo generar el audio");
 		}
 	};
@@ -145,23 +174,33 @@ export function SpokenDigest({ slug }: SpokenDigestProps) {
 						variant="outline"
 						size="sm"
 						className="flex h-8 items-center gap-1.5 transition-colors hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/30 dark:hover:text-blue-400"
-						onClick={playSpokenDigest}
-						disabled={isPlaying}
+						onClick={() => {
+							if (!currentPlan || currentPlan?.name === "Free") {
+								router.push("/pricing");
+							} else {
+								playSpokenDigest();
+							}
+						}}
+						disabled={isLoading || isLoadingAudio}
 					>
-						{isPlaying ? (
+						{isLoadingAudio ? (
 							<>
 								<Loader2 className="h-3.5 w-3.5 animate-spin" />
-								<span className="text-xs">Playing...</span>
+								<span className="text-xs">Loading...</span>
+							</>
+						) : isPlaying ? (
+							<>
+								<SquareIcon className="h-3.5 w-3.5" />
+								<span className="text-xs">Stop</span>
 							</>
 						) : (
 							<>
-								{isLoading ? (
-									<Loader2 className="h-3.5 w-3.5 animate-spin" />
-								) : (
-									<Volume2 className="h-3.5 w-3.5" />
-								)}
+								<Volume2 className="h-3.5 w-3.5" />
 								<span className="text-xs">Listen</span>
 							</>
+						)}
+						{(!currentPlan || currentPlan?.name === "Free") && (
+							<Badge>Pro</Badge>
 						)}
 					</Button>
 				</div>

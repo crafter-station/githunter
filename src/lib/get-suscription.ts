@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { PRICING_PLANS } from "./constants";
 
-export async function getCurrentPlan() {
+export async function getSubscription() {
 	const user = await currentUser();
 
 	if (!user) {
