@@ -1,11 +1,11 @@
 "use client";
 import { ArrowRight } from "lucide-react";
-import { Github } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
 
 import { createGithubProfileAction } from "@/actions/create-github-profile";
+import { Github } from "@/components/icons/github";
 import { buttonVariants } from "@/components/ui/button";
 import { useSubscription } from "@/lib/hooks/useSuscription";
 import Link from "next/link";

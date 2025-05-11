@@ -6,14 +6,17 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSubscription } from "@/lib/hooks/useSuscription";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
+import { ChevronDown, CreditCard, Layers, User } from "lucide-react";
 import Link from "next/link";
 import { SearchBox } from "./search";
 import { UserButton } from "./user-button";
+
 interface HeaderProps {
 	noSearch?: boolean;
 }
@@ -65,22 +68,43 @@ export function Header({ noSearch = false }: HeaderProps) {
 											{currentPlan.name}
 										</Badge>
 									)}
+									<ChevronDown className="size-4 text-muted-foreground" />
 								</button>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="z-50" align="end">
-								<DropdownMenuItem asChild>
+							<DropdownMenuContent className="z-50 w-56" align="end">
+								<DropdownMenuItem
+									asChild
+									className="flex cursor-pointer items-center gap-2 px-3 py-2"
+								>
 									<Link
-										target="_blank"
 										href={currentPlan ? "/portal" : "/pricing"}
+										className="flex w-full items-center"
 									>
-										Manage subscription
+										<CreditCard className="mr-2 size-4" />
+										<span>Manage subscription</span>
 									</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link href={`/developer/${user.username}`}>View profile</Link>
+								<DropdownMenuItem
+									asChild
+									className="flex cursor-pointer items-center gap-2 px-3 py-2"
+								>
+									<Link
+										href={`/developer/${user.username}`}
+										className="flex w-full items-center"
+									>
+										<User className="mr-2 size-4" />
+										<span>View profile</span>
+									</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link href="/new">Indexer</Link>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem
+									asChild
+									className="flex cursor-pointer items-center gap-2 px-3 py-2"
+								>
+									<Link href="/new" className="flex w-full items-center">
+										<Layers className="mr-2 size-4" />
+										<span>Indexer</span>
+									</Link>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>

@@ -24,7 +24,6 @@ import {
 	Plus,
 	Search,
 	Sparkle,
-	Sparkles,
 	User,
 } from "lucide-react";
 import Image from "next/image";
@@ -485,22 +484,6 @@ export function SearchBox({
 									{isRecording ? "Stop recording" : "Start recording"}
 								</span>
 							</Button>
-							<Button
-								variant="ghost"
-								size="icon"
-								className={cn(
-									"hidden items-center justify-center rounded-full text-muted-foreground hover:text-primary md:flex",
-									isCompact ? "h-7 w-7" : "mr-1 h-8 w-8",
-								)}
-								onClick={(e) => e.stopPropagation()}
-								disabled={isLoading}
-							>
-								<Sparkles
-									className={cn(isCompact ? "h-3.5 w-3.5" : "h-4 w-4")}
-								/>
-								<span className="sr-only">Enhance prompt</span>
-							</Button>
-
 							<Button
 								size="icon"
 								className={cn(
