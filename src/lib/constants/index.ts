@@ -17,7 +17,7 @@ export const PRICING_PLANS = [
 		features: ["Unlimited developer searches"],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "2",
 		name: "Pro",
 		description: "For recruiters",
 		price: 5,
@@ -27,7 +27,7 @@ export const PRICING_PLANS = [
 		features: ["Advanced search filters", "Voice summaries"],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "3",
 		name: "Plus",
 		description: "For companies hiring at scale",
 		price: 20,
