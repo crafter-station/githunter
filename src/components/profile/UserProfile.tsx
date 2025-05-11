@@ -60,13 +60,9 @@ export default function UserProfile({
 	);
 
 	// Get duplicate repos from pinned repos
-	const duplicateRepos = pinnedRepos.filter((pinnedRepo) =>
-		userRepos.some((repo) => repo.fullName === pinnedRepo.fullName),
+	const duplicateRepos = userRepos.filter((repo) =>
+		pinnedRepos.some((pinnedRepo) => pinnedRepo.fullName === repo.fullName),
 	);
-
-	// Identify if it's a duplicate repo
-	const isDuplicateRepo = (fullName: string) =>
-		duplicateRepos.some((repo) => repo.fullName === fullName);
 
 	const visibleRepos = uniqueUserRepos.slice(0, visibleReposCount);
 	const hasMoreRepos = uniqueUserRepos.length > visibleReposCount;
@@ -404,8 +400,7 @@ export default function UserProfile({
 								</h2>
 								<RepoCardSection
 									repositories={pinnedRepos}
-									isOrgRepo={isOrgRepo}
-									isDuplicateRepo={isDuplicateRepo}
+									duplicateRepos={duplicateRepos}
 								/>
 							</div>
 						)}
@@ -419,8 +414,7 @@ export default function UserProfile({
 								</h2>
 								<RepoCardSection
 									repositories={visibleRepos}
-									isOrgRepo={isOrgRepo}
-									isDuplicateRepo={isDuplicateRepo}
+									duplicateRepos={duplicateRepos}
 								/>
 								{hasMoreRepos && (
 									<div className="mt-6 text-center">

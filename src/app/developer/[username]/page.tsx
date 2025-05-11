@@ -1,5 +1,8 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Github } from "@/components/icons/github";
+import { Linkedin } from "@/components/icons/linkedin";
+import { Twitter } from "@/components/icons/twitter";
 import { RepoCardSection } from "@/components/profile/RepoCardSection";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Button } from "@/components/ui/button";
@@ -10,17 +13,17 @@ import type { RepoOfUser } from "@/core/models/user";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
-import { BookCopy, Code, Pin, Star, User, Users } from "lucide-react";
 import {
 	BarChart,
 	Building2,
+	Code,
 	ExternalLink,
-	Github,
 	Globe,
-	Linkedin,
 	MapPin,
 	Share2,
-	Twitter,
+	Star,
+	User,
+	Users,
 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -57,12 +60,6 @@ function getUserContributions(repos: RepoOfUser[]) {
 	);
 }
 
-// Determine if repo is from an organization
-// function isOrgRepo(fullName: string, username: string) {
-// 	const owner = fullName.split("/")[0];
-// 	return owner !== username;
-// }
-
 export async function generateStaticParams() {
 	return [];
 }
@@ -75,12 +72,6 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 	if (!userData) {
 		notFound();
 	}
-
-	// Determine if repo is from an organization
-	const isOrgRepo = (fullName: string) => {
-		const owner = fullName.split("/")[0];
-		return owner !== userData.username;
-	};
 
 	// Calculate contributions after checking userData is not null
 	const contributions = getUserContributions(userData.repos);
@@ -133,16 +124,12 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 			!pinnedRepos.some((pinnedRepo) => pinnedRepo.fullName === repo.fullName),
 	);
 
-	// Get duplicate repos from pinned repos
-	const duplicateRepos = pinnedRepos.filter((pinnedRepo) =>
-		userRepos.some((repo) => repo.fullName === pinnedRepo.fullName),
+	// Get duplicate repos from user repos
+	const duplicateRepos = userRepos.filter((repo) =>
+		pinnedRepos.some((pinnedRepo) => pinnedRepo.fullName === repo.fullName),
 	);
 
-	// Identify if it's a duplicate repo
-	const isDuplicateRepo = (fullName: string) =>
-		duplicateRepos.some((repo) => repo.fullName === fullName);
-
-	const visibleRepos = uniqueUserRepos.slice(0, 6); // Show first 6 repos
+	const visibleRepos = [...pinnedRepos, ...uniqueUserRepos];
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
@@ -401,43 +388,11 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 
 							{/* Bottom section - Full width sections */}
 							<div className="w-full space-y-6">
-								{/* Pinned Repositories */}
-								{pinnedRepos.length > 0 && (
-									<Card className="w-full">
-										<CardHeader>
-											<CardTitle className="flex items-center font-medium text-lg">
-												<Pin className="mr-2 h-4 w-4 text-primary" />
-												Pinned Repositories
-											</CardTitle>
-										</CardHeader>
-										<CardContent>
-											<RepoCardSection
-												repositories={pinnedRepos}
-												isOrgRepo={isOrgRepo}
-												isDuplicateRepo={isDuplicateRepo}
-											/>
-										</CardContent>
-									</Card>
-								)}
-
 								{/* Recent Repositories Contributions */}
-								{visibleRepos.length > 0 && (
-									<Card className="w-full">
-										<CardHeader>
-											<CardTitle className="flex items-center font-medium text-lg">
-												<BookCopy className="mr-2 h-4 w-4 text-primary" />
-												Recent Repositories Contributions
-											</CardTitle>
-										</CardHeader>
-										<CardContent>
-											<RepoCardSection
-												repositories={visibleRepos}
-												isOrgRepo={isOrgRepo}
-												isDuplicateRepo={isDuplicateRepo}
-											/>
-										</CardContent>
-									</Card>
-								)}
+								<RepoCardSection
+									repositories={visibleRepos}
+									duplicateRepos={duplicateRepos}
+								/>
 
 								{/* Suggested Profiles and Rank in two columns */}
 								<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
