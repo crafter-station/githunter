@@ -29,11 +29,15 @@ export const PRICING_PLANS = [
 	{
 		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "3",
 		name: "Plus",
-		description: "For companies hiring at scale",
-		price: 20,
+		description: "For teams hiring at scale",
+		price: 10,
 		popular: false,
 		buttonText: "Subscribe",
 		buttonVariant: "outline" as ButtonVariant,
-		features: ["Everything in Pro tier", "Index new users"],
+		features: [
+			"Everything in Pro tier",
+			"Index new users",
+			"Re-index existing users",
+		],
 	},
 ] as const;
