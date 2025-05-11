@@ -139,7 +139,7 @@ export default async function SearchPage({
 
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
 				{/* Search Summary - AI generated overview of results */}
-				<div className="mb-4 border-border/40 border-b py-3">
+				<div className="mb-4 py-3">
 					<div className="flex flex-wrap items-center gap-1.5">
 						<Badge
 							variant="secondary"
@@ -194,76 +194,76 @@ export default async function SearchPage({
 
 				{/* Summary Card */}
 				<CollapsibleSummary>
-					{/* Spoken Digest */}
-					<SpokenDigest slug={slug} />
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+						<SpokenDigest slug={slug} />
+						{/* Right Column - Top Developers */}
+						<div className="space-y-3">
+							<div className="mb-2 flex items-center gap-2">
+								<Trophy className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
+								<h2 className="font-medium text-sm">Top Developers</h2>
+							</div>
 
-					{/* Top Developers Section */}
-					<div className="w-full space-y-3">
-						<div className="mb-2 flex items-center gap-2">
-							<Trophy className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
-							<h2 className="font-medium text-sm">Top Developers</h2>
-						</div>
+							<div className="grid grid-cols-1 gap-2">
+								{topDevelopers.map((dev, i) => {
+									const topMetric = getTopMetric(dev);
+									const rankColors = [
+										"bg-amber-500 dark:bg-amber-500/80", // 1st place
+										"bg-slate-400 dark:bg-slate-400/80", // 2nd place
+										"bg-orange-400 dark:bg-orange-400/80", // 3rd place
+									];
 
-						<div className="grid grid-cols-1 gap-2">
-							{topDevelopers.map((dev, i) => {
-								const topMetric = getTopMetric(dev);
-								const rankColors = [
-									"bg-amber-500 dark:bg-amber-500/80", // 1st place
-									"bg-slate-400 dark:bg-slate-400/80", // 2nd place
-									"bg-orange-400 dark:bg-orange-400/80", // 3rd place
-								];
-
-								return (
-									<div
-										key={`dev-${dev.username}`}
-										className={cn(
-											"flex items-center rounded-md border bg-card p-2 shadow-sm",
-											i === 0 &&
-												"sm:border-amber-200/70 sm:bg-amber-50/50 dark:sm:border-amber-800/30 dark:sm:bg-amber-950/20",
-											i === 1 &&
-												"sm:border-slate-200/70 sm:bg-slate-50/50 dark:sm:border-slate-800/30 dark:sm:bg-slate-950/20",
-											i === 2 &&
-												"sm:border-orange-200/70 sm:bg-orange-50/50 dark:sm:border-orange-800/30 dark:sm:bg-orange-950/20",
-										)}
-									>
-										{/* Rank Badge */}
-										<div className="mr-2 flex-shrink-0">
-											<div
-												className={cn(
-													"flex h-6 w-6 items-center justify-center rounded-full font-semibold text-[10px] text-white",
-													rankColors[i],
-												)}
-											>
-												{i + 1}
-												{i === 0 ? "st" : i === 1 ? "nd" : "rd"}
+									return (
+										<div
+											key={`dev-${dev.username}`}
+											className={cn(
+												"flex items-center rounded-md border bg-card p-2 shadow-sm",
+												i === 0 &&
+													"sm:border-amber-200/70 sm:bg-amber-50/50 dark:sm:border-amber-800/30 dark:sm:bg-amber-950/20",
+												i === 1 &&
+													"sm:border-slate-200/70 sm:bg-slate-50/50 dark:sm:border-slate-800/30 dark:sm:bg-slate-950/20",
+												i === 2 &&
+													"sm:border-orange-200/70 sm:bg-orange-50/50 dark:sm:border-orange-800/30 dark:sm:bg-orange-950/20",
+											)}
+										>
+											{/* Rank Badge */}
+											<div className="mr-2 flex-shrink-0">
+												<div
+													className={cn(
+														"flex h-6 w-6 items-center justify-center rounded-full font-semibold text-[10px] text-white",
+														rankColors[i],
+													)}
+												>
+													{i + 1}
+													{i === 0 ? "st" : i === 1 ? "nd" : "rd"}
+												</div>
 											</div>
-										</div>
 
-										<div className="flex-1 overflow-hidden">
-											<div className="overflow-hidden">
-												<p className="truncate font-medium text-xs">
-													{dev.fullname}
-												</p>
-												<p className="truncate text-[10px] text-muted-foreground">
-													@{dev.username}
-												</p>
+											<div className="flex-1 overflow-hidden">
+												<div className="overflow-hidden">
+													<p className="truncate font-medium text-xs">
+														{dev.fullname}
+													</p>
+													<p className="truncate text-[10px] text-muted-foreground">
+														@{dev.username}
+													</p>
+												</div>
 											</div>
-										</div>
 
-										<div className="flex flex-col items-end border-l pl-2 text-right">
-											<div className="flex items-center gap-1">
-												{topMetric.icon}
-												<span className="font-medium text-xs">
-													{topMetric.value}
+											<div className="flex flex-col items-end border-l pl-2 text-right">
+												<div className="flex items-center gap-1">
+													{topMetric.icon}
+													<span className="font-medium text-xs">
+														{topMetric.value}
+													</span>
+												</div>
+												<span className="text-[10px] text-muted-foreground">
+													{topMetric.name}
 												</span>
 											</div>
-											<span className="text-[10px] text-muted-foreground">
-												{topMetric.name}
-											</span>
 										</div>
-									</div>
-								);
-							})}
+									);
+								})}
+							</div>
 						</div>
 					</div>
 				</CollapsibleSummary>
