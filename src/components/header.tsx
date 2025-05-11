@@ -2,14 +2,20 @@
 
 import GitHunterLogo from "@/components/githunter-logo";
 import { PRICING_PLANS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { User as UserIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { SearchBox } from "./search";
 import { Button } from "./ui/button";
 import { UserButton } from "./user-button";
 
-export function Header() {
+interface HeaderProps {
+	noSearch?: boolean;
+}
+
+export function Header({ noSearch = false }: HeaderProps) {
 	const { user } = useUser();
 
 	const currentPlan = React.useMemo(() => {
@@ -26,16 +32,28 @@ export function Header() {
 
 	return (
 		<header className="sticky top-0 z-[100] border-border border-b border-dashed bg-background">
-			<div className="container mx-auto flex h-12 items-center justify-between px-4 md:h-18">
-				<div className="flex items-center gap-2">
+			<div className="mx-auto flex h-12 w-full items-center justify-between px-4 md:h-18 md:px-10">
+				<div className="flex w-full items-center gap-2 md:gap-12">
 					<Link href="/" className="flex items-center gap-2">
 						<div className="rounded-sm border border-border p-1.5">
 							<GitHunterLogo className="size-4 " />
 						</div>
-						<span className="font-medium text-lg tracking-tight">
+						{/* If no search, then show GitHunter always */}
+						<span
+							className={cn(
+								"font-medium text-lg tracking-tight",
+								!noSearch && "hidden md:block",
+							)}
+						>
 							GitHunter
 						</span>
 					</Link>
+
+					{!noSearch && (
+						<div className="relative max-w-2xl flex-1">
+							<SearchBox initialQuery="" variant="compact" />
+						</div>
+					)}
 				</div>
 				<div className="flex items-center gap-4">
 					{currentPlan && (

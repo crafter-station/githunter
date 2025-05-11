@@ -7,16 +7,18 @@ const FEATURED_USER_IDS = [
 	"v5Xnl0ziEOMM",
 	"Qq9Qgp0so371",
 	"0itHKXlYtqM7byKLrbKSm",
+	"QSIRMargHGOl",
+	"olNsPeCQZ3MQ",
 ];
 
 export default async function Home() {
 	// Fetch specific featured users by ID
-	const featuredUsers = await getFeaturedUsers(3, FEATURED_USER_IDS);
+	const featuredUsers = await getFeaturedUsers(5, FEATURED_USER_IDS);
 
 	return (
 		<div className="flex min-h-screen flex-col bg-background text-foreground">
 			{/* Header */}
-			<Header />
+			<Header noSearch />
 
 			{/* Hero Section with footer and FAB */}
 			<HeroSection featuredUsers={featuredUsers} />

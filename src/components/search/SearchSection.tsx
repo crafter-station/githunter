@@ -3,14 +3,14 @@ import { FeaturedProfiles } from "../profile/FeaturedProfiles";
 import { SearchBox } from "./SearchBox";
 
 interface SearchSectionProps {
-	users: Omit<GitHubUserProfileProps, "key">[];
+	featuredUsers: Omit<GitHubUserProfileProps, "key">[];
 }
 
-export function SearchSection({ users }: SearchSectionProps) {
+export function SearchSection({ featuredUsers }: SearchSectionProps) {
 	return (
 		<div className="w-full max-w-2xl">
 			<SearchBox />
-			<FeaturedProfiles users={users} />
+			<FeaturedProfiles featuredUsers={featuredUsers} />
 		</div>
 	);
 }
