@@ -20,11 +20,8 @@ import {
 	Code2,
 	ExternalLink,
 	GitFork,
-	MapPin,
-	Sparkles,
 	Star,
 	Users,
-	Wrench,
 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -125,7 +122,7 @@ export default async function SearchPage({
 								<GitHunterLogo className="size-4 " />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
-								Dev Hunter
+								GitHunter
 							</span>
 						</Link>
 
@@ -141,45 +138,6 @@ export default async function SearchPage({
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
 				{/* Search Summary - AI generated overview of results */}
 				<SearchSummary slug={slug} />
-
-				{/* Search metadata/filters */}
-				<div className="mb-4 border-b pb-3 text-muted-foreground text-sm">
-					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-						<div className="flex items-center">
-							<span className="mr-2 font-medium text-foreground">
-								{totalUsers} results
-							</span>
-							<span>for developers</span>
-						</div>
-
-						{locationText && (
-							<div className="flex items-center gap-1.5">
-								<MapPin className="size-3.5" />
-								{locationText}
-							</div>
-						)}
-
-						{searchParams.techStack.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Wrench className="size-3.5" />
-								{searchParams.techStack
-									.slice(0, 2)
-									.map((tech) => tech.tech)
-									.join(", ")}
-								{searchParams.techStack.length > 2 &&
-									` +${searchParams.techStack.length - 2}`}
-							</div>
-						)}
-
-						{searchParams.role.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Sparkles className="size-3.5" />
-								{searchParams.role}
-							</div>
-						)}
-					</div>
-				</div>
-
 				{/* Results List */}
 				{paginatedUsers.length > 0 ? (
 					<div className="space-y-6">

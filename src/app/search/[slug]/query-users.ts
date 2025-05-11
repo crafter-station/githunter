@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { type UserSelect, user } from "@/db/schema";
 import { openai } from "@ai-sdk/openai";
-import { generateObject, streamText } from "ai";
+import { generateObject } from "ai";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import type { SearchParams } from "./types";
@@ -152,7 +152,6 @@ export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
 
 // Define the structure for our search summary
 export const SearchSummarySchema = z.object({
-	headline: z.string(),
 	totalDevelopers: z.number(),
 	location: z.string().nullable(),
 	techStack: z.array(z.string()),
@@ -168,25 +167,10 @@ export const SearchSummarySchema = z.object({
 			stars: z.number(),
 			followers: z.number(),
 			repositories: z.number(),
-			topSkills: z.array(z.string()),
-			highlightMetric: z.object({
-				type: z.enum(["stars", "followers", "repositories", "contributions"]),
-				value: z.number(),
-				description: z.string(),
-			}),
+			avatarUrl: z.string().nullable(),
 		}),
 	),
-	insights: z.object({
-		commonTechnologies: z.array(z.string()),
-		mostImpressiveMetric: z.object({
-			type: z.enum(["stars", "followers", "repositories", "contributions"]),
-			username: z.string(),
-			value: z.number(),
-			description: z.string(),
-		}),
-		suggestion: z.string(),
-	}),
-	markdownSummary: z.string(),
+	spokenDigest: z.string(),
 });
 
 export type SearchSummaryData = z.infer<typeof SearchSummarySchema>;
@@ -206,7 +190,7 @@ export async function generateSearchSummary(
 		query: {
 			role: searchParams.role,
 			alternativeRoles: searchParams.alternativeNamesForRole,
-			techStack: searchParams.primaryTechStack,
+			techStack: searchParams.techStack.map((t) => t.tech),
 			location: searchParams.city
 				? `${searchParams.city}${searchParams.country ? `, ${searchParams.country}` : ""}`
 				: searchParams.country || "Any location",
@@ -238,8 +222,7 @@ export async function generateSearchSummary(
 		system: `You are an AI assistant that creates high-quality search result summaries.
 		Create concise, informative summaries that highlight key information.
 		Be professional but conversational in tone.
-		Identify the most impressive metrics and skills among the developers.
-		For the markdownSummary field, create proper markdown formatting including headings, tables, and bullet points.`,
+		Focus on providing the most useful information about the developers found in the search..`,
 		prompt: `Generate a structured summary of the search results for GitHub developers.
 		The search was for: ${searchParams.role} developers${searchParams.city ? ` in ${searchParams.city}` : ""}${searchParams.country ? `, ${searchParams.country}` : ""}.
 		
@@ -247,85 +230,15 @@ export async function generateSearchSummary(
 		${JSON.stringify(searchSummary, null, 2)}
 		
 		Create a well-formatted summary with these key components:
-		- A concise headline describing the search
 		- Information about the total number of developers found
 		- Details about the top ${Math.min(5, topUsers.length)} developers with their key metrics
-		- Insights about common technologies and impressive metrics
-		- A suggestion for how the user might refine their search or what to look for
+		- A comprehensive spoken digest that explains the search results in a clear, conversational manner
 		- A markdown summary that includes a table of top developers
 		
-		If location is provided in the query, omit the location from the developer table in the markdown summary.
-		For each developer, identify one metric that's particularly impressive as their "highlightMetric".
-		For the "insights" section, identify common technologies across top developers and the most impressive metric from any developer.`,
-	});
-
-	return object;
-}
-
-/**
- * Generate a markdown summary of the search results (original version, kept for compatibility)
- */
-export async function generateMarkdownSummary(
-	users: UserSelect[],
-	searchParams: SearchParams,
-) {
-	// Extract top 5 users for the summary
-	const topUsers = users.slice(0, 5);
-
-	// Create a compact representation of the search parameters and results
-	const searchSummary = {
-		query: {
-			role: searchParams.role,
-			alternativeRoles: searchParams.alternativeNamesForRole,
-			techStack: searchParams.primaryTechStack,
-			location: searchParams.city
-				? `${searchParams.city}${searchParams.country ? `, ${searchParams.country}` : ""}`
-				: searchParams.country || "Any location",
-			minStars: searchParams.minStars,
-			minRepos: searchParams.minRepos,
-		},
-		results: {
-			totalFound: users.length,
-			topUsers: topUsers.map((user) => ({
-				username: user.username,
-				fullname: user.fullname,
-				location:
-					user.city && user.country
-						? `${user.city}, ${user.country}`
-						: user.city || user.country || "Unknown location",
-				stars: user.stars,
-				followers: user.followers,
-				repositories: user.repositories,
-				contributions: user.contributions,
-				stack: user.stack?.slice(0, 5) || [],
-			})),
-		},
-	};
-
-	// Use Vercel AI SDK streamText to generate a summary
-	const { textStream } = await streamText({
-		model: openai("gpt-4o-mini"),
-		system: `You are an AI assistant that creates high-quality search result summaries in markdown format.
-		Create concise, informative summaries that highlight key information.
-		Use proper markdown formatting including headings, tables, and bullet points.
-		Be professional but conversational in tone.
-		DO NOT include any introductory phrases like "Here's a summary" or "Based on your search".
-		START DIRECTLY with the markdown content.`,
-		prompt: `Generate a markdown summary of the search results for GitHub developers.
-		The search was for: ${searchParams.role} developers${searchParams.city ? ` in ${searchParams.city}` : ""}${searchParams.country ? `, ${searchParams.country}` : ""}.
-		
-		Here is the detailed search information and results:
-		${JSON.stringify(searchSummary, null, 2)}
-		
-		Create a well-formatted markdown summary that includes:
-		1. A brief headline that clearly describes what was searched for
-		2. The total number of developers found matching the criteria
-		3. A table of the top 5 developers with their key stats, if location is provided in the query, then omit the location from the table
-		4. A conclusion highlighting common skills/technologies among the top developers
-		
-		Make sure the table is properly formatted markdown and includes columns for username, location, stars, followers, and repositories.
+		Focus on making the spokenDigest detailed and informative, including information about common technologies and any notable metrics from the developers.
+		If location is provided in the query, include the location in the summary.
 		Keep the entire summary concise but informative.`,
 	});
 
-	return textStream;
+	return object;
 }

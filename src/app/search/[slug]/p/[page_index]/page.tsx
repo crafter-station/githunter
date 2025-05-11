@@ -119,7 +119,7 @@ export default async function SearchPagePaginated({
 								<GitHunterLogo className="size-4 " />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
-								Dev Hunter
+								GitHunter
 							</span>
 						</Link>
 

@@ -10,22 +10,16 @@ import {
 	BarChart,
 	ChevronDown,
 	ChevronUp,
-	Code,
 	GitFork,
-	LightbulbIcon,
-	Search,
 	Sparkles,
 	Star,
 	Terminal,
 	TrendingUp,
 	Trophy,
-	User,
 	Users,
-	Zap,
+	Volume2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 interface SearchSummaryProps {
 	slug: string;
@@ -38,6 +32,7 @@ export default function SearchSummary({ slug }: SearchSummaryProps) {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [expanded, setExpanded] = useState(false);
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	useEffect(() => {
 		async function fetchSummary() {
@@ -75,7 +70,7 @@ export default function SearchSummary({ slug }: SearchSummaryProps) {
 	const getMetricIcon = (type: string) => {
 		switch (type) {
 			case "stars":
-				return <Star className="h-4 w-4 text-[#E87701] dark:text-[#FFC799]" />;
+				return <Star className="h-4 w-4 text-amber-500 dark:text-amber-400" />;
 			case "followers":
 				return <Users className="h-4 w-4 text-blue-500" />;
 			case "repositories":
@@ -87,645 +82,337 @@ export default function SearchSummary({ slug }: SearchSummaryProps) {
 		}
 	};
 
+	// Function to play the spoken digest with ElevenLabs
+	const playSpokenDigest = async () => {
+		if (!summaryData) return;
+
+		try {
+			setIsPlaying(true);
+			// This would connect to your ElevenLabs API endpoint
+			await fetch("/api/tts/play", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					text: summaryData.spokenDigest,
+				}),
+			});
+		} catch (error) {
+			console.error("Failed to play audio:", error);
+		} finally {
+			setIsPlaying(false);
+		}
+	};
+
+	// Function to determine the top metric for each developer
+	const getTopMetric = (dev: SearchSummaryData["topDevelopers"][number]) => {
+		// Compare metrics to find the highest relative to typical values
+		const metrics = [
+			{
+				name: "stars",
+				value: dev.stars,
+				icon: (
+					<Star className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
+				),
+				threshold: 100,
+			},
+			{
+				name: "repositories",
+				value: dev.repositories,
+				icon: <GitFork className="h-3.5 w-3.5 text-green-500" />,
+				threshold: 30,
+			},
+			{
+				name: "followers",
+				value: dev.followers,
+				icon: <Users className="h-3.5 w-3.5 text-blue-500" />,
+				threshold: 50,
+			},
+		];
+
+		// Sort by value relative to typical threshold
+		return metrics.sort(
+			(a, b) => b.value / b.threshold - a.value / a.threshold,
+		)[0];
+	};
+
 	if (error) {
 		return (
-			<Card className="mb-6">
-				<CardHeader>
-					<CardTitle className="flex items-center gap-2">
-						<Sparkles className="h-5 w-5 text-primary" />
-						Search Summary
-					</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<p className="text-red-500">{error}</p>
-				</CardContent>
-			</Card>
+			<>
+				{/* Search Metadata */}
+				<div className="mb-4 border-border/40 border-b py-3">
+					<div className="flex flex-wrap items-center gap-1.5">
+						<Badge
+							variant="secondary"
+							className="flex items-center gap-1 px-2 py-0.5 text-xs"
+						>
+							<Users className="h-3 w-3" />0 developers
+						</Badge>
+						<Badge variant="outline" className="px-2 py-0.5 text-xs">
+							Error loading data
+						</Badge>
+					</div>
+				</div>
+
+				{/* Error Card */}
+				<Card className="mb-4">
+					<CardHeader className="py-3">
+						<CardTitle className="flex items-center gap-2 text-base">
+							<Sparkles className="h-4 w-4 text-primary" />
+							Search Summary
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<p className="text-red-500 text-sm">{error}</p>
+					</CardContent>
+				</Card>
+			</>
 		);
 	}
 
 	return (
-		<Card className="mb-6">
-			<CardHeader className="pb-2">
-				<CardTitle className="flex items-center gap-2">
-					<Sparkles className="h-5 w-5 text-primary" />
-					Search Summary
-				</CardTitle>
-			</CardHeader>
-			<CardContent>
-				{loading ? (
-					<div className="space-y-2">
-						<Skeleton className="h-4 w-[90%]" />
-						<Skeleton className="h-4 w-[75%]" />
-						<Skeleton className="h-4 w-[80%]" />
-						<Skeleton className="mt-4 h-20 w-full" />
-						<Skeleton className="mt-4 h-4 w-[60%]" />
-					</div>
-				) : summaryData ? (
-					<div className="space-y-5">
-						{/* Headline and Overview */}
-						<div className="space-y-3">
-							<h1 className="flex items-center gap-2 font-semibold text-2xl text-foreground tracking-tight">
-								<Search className="h-5 w-5 text-primary" />
-								{summaryData.headline}
-							</h1>
+		<>
+			{/* Search Metadata - Always Visible */}
+			{!loading && summaryData && (
+				<div className="mb-4 border-border/40 border-b py-3">
+					<div className="flex flex-wrap items-center gap-1.5">
+						<Badge
+							variant="secondary"
+							className="flex items-center gap-1 px-2 py-0.5 text-xs"
+						>
+							<Users className="h-3 w-3" />
+							{summaryData.totalDevelopers} developers
+						</Badge>
 
-							<div className="flex flex-wrap items-center gap-2">
-								<Badge
-									variant="secondary"
-									className="flex items-center gap-1 px-2 py-1"
-								>
-									<Users className="h-3.5 w-3.5" />
-									{summaryData.totalDevelopers} developers
-								</Badge>
-
-								{summaryData.location && (
-									<Badge
-										variant="outline"
-										className="flex items-center gap-1 px-2 py-1"
-									>
-										<svg
-											width="14"
-											height="14"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											aria-hidden="true"
-											aria-label="Location"
-										>
-											<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-											<circle cx="12" cy="10" r="3" />
-										</svg>
-										{summaryData.location}
-									</Badge>
-								)}
-
-								{summaryData.techStack.slice(0, 3).map((tech) => (
-									<Badge
-										key={`tech-${tech}`}
-										variant="outline"
-										className="flex items-center gap-1 px-2 py-1"
-									>
-										<Terminal className="h-3 w-3" />
-										{tech}
-									</Badge>
-								))}
-
-								{summaryData.techStack.length > 3 && (
-									<Badge variant="outline" className="px-2 py-1">
-										+{summaryData.techStack.length - 3} more
-									</Badge>
-								)}
-							</div>
-						</div>
-
-						{/* Top Developers Section */}
-						<div className="space-y-3 rounded-lg bg-muted/30 p-4">
-							<h2 className="flex items-center gap-2 font-semibold text-lg">
-								<Trophy className="h-4 w-4 text-amber-500" />
-								Top Developers
-							</h2>
-
-							<div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-								{summaryData.topDevelopers.slice(0, 3).map((dev, i) => (
-									<div
-										key={`dev-${dev.username}`}
-										className="rounded-md border bg-card p-3 shadow-sm"
-									>
-										<div className="flex items-start gap-2">
-											<div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-muted">
-												<User className="h-4 w-4 text-muted-foreground" />
-											</div>
-											<div className="min-w-0 flex-1">
-												<div className="flex items-center justify-between">
-													<h3 className="truncate font-medium text-sm">
-														{dev.fullname || dev.username}
-													</h3>
-													<Badge
-														variant="secondary"
-														className="px-1.5 py-0 text-xs"
-													>
-														{i === 0 ? "1st" : i === 1 ? "2nd" : "3rd"}
-													</Badge>
-												</div>
-												<p className="text-muted-foreground text-xs">
-													@{dev.username}
-												</p>
-
-												{dev.location && (
-													<p className="mt-1 flex items-center gap-1 text-muted-foreground text-xs">
-														<svg
-															className="h-3 w-3"
-															width="14"
-															height="14"
-															viewBox="0 0 24 24"
-															fill="none"
-															stroke="currentColor"
-															strokeWidth="2"
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															aria-hidden="true"
-															aria-label="Location"
-														>
-															<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-															<circle cx="12" cy="10" r="3" />
-														</svg>
-														{dev.location}
-													</p>
-												)}
-
-												<div className="mt-2 flex items-center gap-2">
-													<div className="flex items-center gap-1 text-xs">
-														<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
-														{dev.stars}
-													</div>
-													<div className="flex items-center gap-1 text-xs">
-														<Users className="h-3.5 w-3.5 text-muted-foreground" />
-														{dev.followers}
-													</div>
-													<div className="flex items-center gap-1 text-xs">
-														<GitFork className="h-3.5 w-3.5 text-muted-foreground" />
-														{dev.repositories}
-													</div>
-												</div>
-											</div>
-										</div>
-
-										{/* Highlight Metric */}
-										<div className="mt-3 rounded bg-muted/30 px-2 py-1.5 text-xs">
-											<div className="flex items-center gap-1.5">
-												<Zap className="h-3.5 w-3.5 text-yellow-500" />
-												<span className="font-medium">Top Metric:</span>
-												<span className="flex flex-1 items-center gap-1">
-													{getMetricIcon(dev.highlightMetric.type)}
-													<span className="font-medium">
-														{dev.highlightMetric.value}
-													</span>
-													{dev.highlightMetric.type}
-												</span>
-											</div>
-											<p className="mt-1 text-muted-foreground">
-												{dev.highlightMetric.description}
-											</p>
-										</div>
-
-										{/* Skills */}
-										{dev.topSkills.length > 0 && (
-											<div className="mt-2 flex flex-wrap gap-1">
-												{dev.topSkills.slice(0, 3).map((skill) => (
-													<span
-														key={`skill-${dev.username}-${skill}`}
-														className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary"
-													>
-														{skill}
-													</span>
-												))}
-												{dev.topSkills.length > 3 && (
-													<span className="inline-flex rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
-														+{dev.topSkills.length - 3}
-													</span>
-												)}
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-
-							{summaryData.topDevelopers.length > 3 && (
-								<Button
-									variant="ghost"
-									size="sm"
-									className="mt-1 w-full text-xs"
-									onClick={() => setExpanded(!expanded)}
-								>
-									{expanded ? (
-										<>
-											Show less <ChevronUp className="ml-1 h-3 w-3" />
-										</>
-									) : (
-										<>
-											Show {summaryData.topDevelopers.length - 3} more
-											developers <ChevronDown className="ml-1 h-3 w-3" />
-										</>
-									)}
-								</Button>
-							)}
-
-							{/* Show more developers button section */}
-							{expanded && (
-								<div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-									{summaryData.topDevelopers.slice(3).map((dev, i) => (
-										<div
-											key={`expanded-dev-${dev.username}`}
-											className="fade-in slide-in-from-bottom-1 animate-in rounded-md border bg-card p-3 opacity-0 shadow-sm"
-											style={{
-												animationDelay: `${i * 100}ms`,
-												animationFillMode: "forwards",
-											}}
-										>
-											<div className="flex items-start gap-2">
-												<div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-muted">
-													<User className="h-4 w-4 text-muted-foreground" />
-												</div>
-												<div className="min-w-0 flex-1">
-													<div className="flex items-center justify-between">
-														<h3 className="truncate font-medium text-sm">
-															{dev.fullname || dev.username}
-														</h3>
-														<Badge
-															variant="secondary"
-															className="px-1.5 py-0 text-xs"
-														>
-															{i + 4}th
-														</Badge>
-													</div>
-													<p className="text-muted-foreground text-xs">
-														@{dev.username}
-													</p>
-
-													{dev.location && (
-														<p className="mt-1 flex items-center gap-1 text-muted-foreground text-xs">
-															<svg
-																className="h-3 w-3"
-																width="14"
-																height="14"
-																viewBox="0 0 24 24"
-																fill="none"
-																stroke="currentColor"
-																strokeWidth="2"
-																strokeLinecap="round"
-																strokeLinejoin="round"
-																aria-hidden="true"
-																aria-label="Location"
-															>
-																<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-																<circle cx="12" cy="10" r="3" />
-															</svg>
-															{dev.location}
-														</p>
-													)}
-
-													<div className="mt-2 flex items-center gap-2">
-														<div className="flex items-center gap-1 text-xs">
-															<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
-															{dev.stars}
-														</div>
-														<div className="flex items-center gap-1 text-xs">
-															<Users className="h-3.5 w-3.5 text-muted-foreground" />
-															{dev.followers}
-														</div>
-														<div className="flex items-center gap-1 text-xs">
-															<GitFork className="h-3.5 w-3.5 text-muted-foreground" />
-															{dev.repositories}
-														</div>
-													</div>
-												</div>
-											</div>
-
-											{/* Highlight Metric */}
-											<div className="mt-3 rounded bg-muted/30 px-2 py-1.5 text-xs">
-												<div className="flex items-center gap-1.5">
-													<Zap className="h-3.5 w-3.5 text-yellow-500" />
-													<span className="font-medium">Top Metric:</span>
-													<span className="flex flex-1 items-center gap-1">
-														{getMetricIcon(dev.highlightMetric.type)}
-														<span className="font-medium">
-															{dev.highlightMetric.value}
-														</span>
-														{dev.highlightMetric.type}
-													</span>
-												</div>
-												<p className="mt-1 text-muted-foreground">
-													{dev.highlightMetric.description}
-												</p>
-											</div>
-
-											{/* Skills */}
-											{dev.topSkills.length > 0 && (
-												<div className="mt-2 flex flex-wrap gap-1">
-													{dev.topSkills.slice(0, 3).map((skill) => (
-														<span
-															key={`expanded-skill-${dev.username}-${skill}`}
-															className="inline-flex rounded-full bg-primary/10 px-2 py-0.5 text-[10px] text-primary"
-														>
-															{skill}
-														</span>
-													))}
-													{dev.topSkills.length > 3 && (
-														<span className="inline-flex rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
-															+{dev.topSkills.length - 3}
-														</span>
-													)}
-												</div>
-											)}
-										</div>
-									))}
-								</div>
-							)}
-						</div>
-
-						{/* Insights Section */}
-						<div className="space-y-3 rounded-lg bg-muted/30 p-4">
-							<h2 className="flex items-center gap-2 font-semibold text-lg">
-								<LightbulbIcon className="h-4 w-4 text-yellow-500" />
-								Insights
-							</h2>
-
-							{/* Common Technologies */}
-							<div className="space-y-2">
-								<h3 className="font-medium text-sm">Common Technologies</h3>
-								<div className="flex flex-wrap gap-1.5">
-									{summaryData.insights.commonTechnologies.map((tech) => (
-										<Badge
-											key={`insight-tech-${tech}`}
-											variant="secondary"
-											className="flex items-center gap-1"
-										>
-											<Code className="h-3.5 w-3.5" />
-											{tech}
-										</Badge>
-									))}
-								</div>
-							</div>
-
-							{/* Most Impressive Metric */}
-							<div className="space-y-2">
-								<h3 className="font-medium text-sm">Most Impressive</h3>
-								<div className="rounded-md border bg-card p-3">
-									<div className="flex items-center gap-2">
-										<div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20">
-											{getMetricIcon(
-												summaryData.insights.mostImpressiveMetric.type,
-											)}
-										</div>
-										<div className="flex-1">
-											<div className="flex items-center justify-between">
-												<p className="font-medium text-sm">
-													@{summaryData.insights.mostImpressiveMetric.username}
-												</p>
-												<span className="font-bold text-sm">
-													{summaryData.insights.mostImpressiveMetric.value}{" "}
-													{summaryData.insights.mostImpressiveMetric.type}
-												</span>
-											</div>
-											<p className="mt-0.5 text-muted-foreground text-xs">
-												{summaryData.insights.mostImpressiveMetric.description}
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							{/* Suggestion */}
-							<div className="mt-3 rounded-lg border border-primary/20 bg-primary/5 p-3">
-								<div className="flex gap-2">
-									<LightbulbIcon className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-									<p className="text-muted-foreground text-sm">
-										{summaryData.insights.suggestion}
-									</p>
-								</div>
-							</div>
-						</div>
-
-						{/* Markdown Summary - Initially masked */}
-						<div className="relative space-y-3">
-							<div className="flex items-center justify-between">
-								<h2 className="flex items-center gap-2 font-semibold text-lg">
-									<Sparkles className="h-4 w-4 text-primary" />
-									Detailed Summary
-								</h2>
-								<Button
-									variant="ghost"
-									size="sm"
-									className="text-xs"
-									onClick={() => setExpanded(!expanded)}
-								>
-									{expanded ? (
-										<>
-											Collapse <ChevronUp className="ml-1 h-3 w-3" />
-										</>
-									) : (
-										<>
-											Expand <ChevronDown className="ml-1 h-3 w-3" />
-										</>
-									)}
-								</Button>
-							</div>
-
-							<div
-								className={cn(
-									"prose dark:prose-invert relative max-w-none text-sm",
-									!expanded &&
-										"mask-b-from-transparent mask-b-from-70% mask-b-to-white dark:mask-b-to-black max-h-56 overflow-hidden",
-								)}
+						{summaryData.location && (
+							<Badge
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
 							>
-								<ReactMarkdown
-									remarkPlugins={[remarkGfm]}
-									components={{
-										h1: ({ node, ...props }) => (
-											<h1
-												className="mb-3 flex items-center gap-2 font-semibold text-foreground text-xl tracking-tight"
-												{...props}
-											>
-												<Search className="h-4 w-4 text-primary" />
-												{props.children}
-											</h1>
-										),
-										h2: ({ node, ...props }) => (
-											<h2
-												className="mt-5 mb-2 font-semibold text-foreground text-lg tracking-tight"
-												{...props}
-											/>
-										),
-										h3: ({ node, ...props }) => (
-											<h3
-												className="mt-3 mb-2 font-medium text-base text-foreground"
-												{...props}
-											/>
-										),
-										p: ({ node, ...props }) => (
-											<p
-												className="mb-3 text-muted-foreground text-sm"
-												{...props}
-											/>
-										),
-										strong: ({ node, ...props }) => (
-											<strong
-												className="font-semibold text-foreground"
-												{...props}
-											/>
-										),
-										table: ({ node, ...props }) => (
-											<div className="my-3 w-full overflow-auto rounded-lg border">
-												<table
-													className="w-full caption-bottom text-xs"
-													{...props}
-												/>
-											</div>
-										),
-										thead: ({ node, ...props }) => (
-											<thead className="border-b bg-muted/50" {...props} />
-										),
-										tbody: ({ node, ...props }) => (
-											<tbody className="divide-y" {...props} />
-										),
-										tr: ({ node, ...props }) => (
-											<tr
-												className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-												{...props}
-											/>
-										),
-										th: ({ node, ...props }) => (
-											<th
-												className="h-8 px-3 text-left align-middle font-medium text-muted-foreground"
-												{...props}
-											/>
-										),
-										td: ({ node, ...props }) => (
-											<td
-												className="p-2 align-middle [&:has([role=checkbox])]:pr-0"
-												{...props}
-											/>
-										),
-										ul: ({ node, ...props }) => (
-											<ul
-												className="my-3 list-disc space-y-1 pl-5 text-muted-foreground text-sm"
-												{...props}
-											/>
-										),
-										ol: ({ node, ...props }) => (
-											<ol
-												className="my-3 list-decimal space-y-1 pl-5 text-muted-foreground text-sm"
-												{...props}
-											/>
-										),
-										li: ({ node, ...props }) => (
-											<li className="my-0.5" {...props} />
-										),
-										a: ({ node, href, ...props }) => (
-											<a
-												className="font-medium text-primary underline underline-offset-4"
-												href={href}
-												target="_blank"
-												rel="noopener noreferrer"
-												{...props}
-											/>
-										),
-										blockquote: ({ node, ...props }) => (
-											<blockquote
-												className="my-3 border-border border-l-4 pl-4 text-muted-foreground italic"
-												{...props}
-											/>
-										),
-										code: ({ node, className, ...props }) => {
-											// Check if it's an inline code block based on the className
-											const isInline =
-												!className || !className.includes("language-");
-											return isInline ? (
-												<code
-													className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs"
-													{...props}
-												/>
-											) : (
-												<code
-													className="block rounded-md bg-muted p-3 font-mono text-xs"
-													{...props}
-												/>
-											);
-										},
-										hr: ({ node, ...props }) => (
-											<hr className="my-4 border-border" {...props} />
-										),
-										// Custom components for specific text patterns in the markdown
-										text: ({ node, children }) => {
-											// Check for special patterns and add icons accordingly
-											const text = String(children);
-
-											// Match "X developers found" or "Found X developers"
-											if (
-												/(\d+) developers found|Found (\d+) developers/.test(
-													text,
-												)
-											) {
-												return (
-													<span className="inline-flex items-center gap-1.5">
-														<Users className="h-3.5 w-3.5 text-muted-foreground" />
-														{text}
-													</span>
-												);
-											}
-
-											// Match star counts
-											if (/\b\d+ stars\b/.test(text)) {
-												return (
-													<span className="inline-flex items-center gap-1.5">
-														<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
-														{text}
-													</span>
-												);
-											}
-
-											// Match follower counts
-											if (/\b\d+ followers\b/.test(text)) {
-												return (
-													<span className="inline-flex items-center gap-1.5">
-														<Users className="h-3.5 w-3.5 text-muted-foreground" />
-														{text}
-													</span>
-												);
-											}
-
-											// Match contribution counts
-											if (/\b\d+ contributions\b/.test(text)) {
-												return (
-													<span className="inline-flex items-center gap-1.5">
-														<BarChart className="h-3.5 w-3.5 text-muted-foreground" />
-														{text}
-													</span>
-												);
-											}
-
-											// Match repository counts
-											if (/\b\d+ repositories\b/.test(text)) {
-												return (
-													<span className="inline-flex items-center gap-1.5">
-														<GitFork className="h-3.5 w-3.5 text-muted-foreground" />
-														{text}
-													</span>
-												);
-											}
-
-											// Default rendering
-											return <>{children}</>;
-										},
-									}}
+								<svg
+									width="12"
+									height="12"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									aria-hidden="true"
+									aria-label="Location"
 								>
-									{summaryData.markdownSummary}
-								</ReactMarkdown>
-							</div>
+									<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+									<circle cx="12" cy="10" r="3" />
+								</svg>
+								{summaryData.location}
+							</Badge>
+						)}
 
-							{!expanded && (
-								<div className="absolute right-0 bottom-0 left-0 flex justify-center">
+						{summaryData.techStack.slice(0, 3).map((tech) => (
+							<Badge
+								key={`tech-${tech}`}
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
+							>
+								<Terminal className="h-3 w-3" />
+								{tech}
+							</Badge>
+						))}
+
+						{summaryData.techStack.length > 3 && (
+							<Badge variant="outline" className="px-2 py-0.5 text-xs">
+								+{summaryData.techStack.length - 3} more
+							</Badge>
+						)}
+					</div>
+				</div>
+			)}
+
+			{/* Summary Card */}
+			<Card className="mb-4 overflow-hidden py-0">
+				<div className="relative">
+					<div
+						className={cn(
+							"overflow-hidden transition-all duration-500 ease-in-out",
+							expanded ? "max-h-[800px]" : "max-h-[180px]",
+						)}
+					>
+						<CardHeader className="px-4 pt-3 pb-2">
+							<div className="flex flex-wrap items-center gap-2">
+								<div className="flex items-center gap-2">
+									<Sparkles className="h-4 w-4 text-primary" />
+									<CardTitle className="text-base">Search Summary</CardTitle>
+								</div>
+
+								{!loading && summaryData && (
 									<Button
-										variant="ghost"
+										variant="outline"
 										size="sm"
-										className="text-xs"
-										onClick={() => setExpanded(true)}
+										className="ml-auto flex h-7 items-center gap-1.5 px-3 text-xs"
+										onClick={playSpokenDigest}
+										disabled={isPlaying}
 									>
-										Show Full Summary <ChevronDown className="ml-1 h-3 w-3" />
+										{isPlaying ? "Playing" : "Listen"}
+										<Volume2
+											className={cn(
+												"h-3.5 w-3.5",
+												isPlaying && "animate-pulse",
+											)}
+										/>
 									</Button>
+								)}
+							</div>
+						</CardHeader>
+
+						<CardContent
+							className={cn(
+								"grid gap-4 px-4 pt-0 pb-3",
+								expanded ? "md:grid-cols-2" : "grid-cols-1 md:grid-cols-2",
+							)}
+						>
+							{loading ? (
+								<div className="space-y-2 py-3">
+									<Skeleton className="h-4 w-[90%]" />
+									<Skeleton className="h-4 w-[75%]" />
+								</div>
+							) : summaryData ? (
+								<>
+									{/* Digest */}
+									<div className="mb-4 space-y-3">
+										<div className="rounded-lg border bg-muted/10">
+											<div className="p-3">
+												<p className="text-muted-foreground text-xs leading-relaxed">
+													{summaryData.spokenDigest}
+												</p>
+											</div>
+										</div>
+									</div>
+
+									{/* Top Developers Section */}
+									<div className="w-full space-y-3">
+										<div className="mb-2 flex items-center gap-2">
+											<Trophy className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
+											<h2 className="font-medium text-sm">Top Developers</h2>
+										</div>
+
+										<div className="grid grid-cols-1 gap-2">
+											{summaryData.topDevelopers.slice(0, 3).map((dev, i) => {
+												const topMetric = getTopMetric(dev);
+												const rankColors = [
+													"bg-amber-500 dark:bg-amber-500/80", // 1st place
+													"bg-slate-400 dark:bg-slate-400/80", // 2nd place
+													"bg-orange-400 dark:bg-orange-400/80", // 3rd place
+												];
+
+												return (
+													<div
+														key={`dev-${dev.username}`}
+														className={cn(
+															"flex items-center rounded-md border bg-card p-2 shadow-sm",
+															i === 0 &&
+																"sm:border-amber-200/70 sm:bg-amber-50/50 dark:sm:border-amber-800/30 dark:sm:bg-amber-950/20",
+															i === 1 &&
+																"sm:border-slate-200/70 sm:bg-slate-50/50 dark:sm:border-slate-800/30 dark:sm:bg-slate-950/20",
+															i === 2 &&
+																"sm:border-orange-200/70 sm:bg-orange-50/50 dark:sm:border-orange-800/30 dark:sm:bg-orange-950/20",
+														)}
+													>
+														{/* Rank Badge */}
+														<div className="mr-2 flex-shrink-0">
+															<div
+																className={cn(
+																	"flex h-6 w-6 items-center justify-center rounded-full font-semibold text-[10px] text-white",
+																	rankColors[i],
+																)}
+															>
+																{i + 1}
+																{i === 0 ? "st" : i === 1 ? "nd" : "rd"}
+															</div>
+														</div>
+
+														<div className="flex-1 overflow-hidden">
+															<div className="overflow-hidden">
+																<p className="truncate font-medium text-xs">
+																	{dev.fullname || dev.username}
+																</p>
+																<p className="truncate text-[10px] text-muted-foreground">
+																	@{dev.username}
+																</p>
+															</div>
+														</div>
+
+														<div className="flex flex-col items-end border-l pl-2 text-right">
+															<div className="flex items-center gap-1">
+																{topMetric.icon}
+																<span className="font-medium text-xs">
+																	{topMetric.value}
+																</span>
+															</div>
+															<span className="text-[10px] text-muted-foreground">
+																{topMetric.name}
+															</span>
+														</div>
+													</div>
+												);
+											})}
+										</div>
+									</div>
+								</>
+							) : (
+								<div className="p-3 text-center text-muted-foreground text-xs">
+									No summary available
 								</div>
 							)}
-						</div>
+						</CardContent>
 					</div>
-				) : (
-					<div className="p-4 text-center text-muted-foreground">
-						No summary data available
+
+					{/* Mask overlay for entire card content */}
+					{!expanded && summaryData && !loading && (
+						<div
+							className="absolute inset-0 bg-gradient-to-b"
+							style={{
+								background:
+									"linear-gradient(to bottom, transparent 10%, var(--background) 95%)",
+								pointerEvents: "none",
+							}}
+							aria-hidden="true"
+						/>
+					)}
+
+					{/* Clickable overlay for expanding */}
+					{!expanded && summaryData && !loading && (
+						<div
+							className="absolute inset-0 cursor-pointer"
+							onClick={() => setExpanded(true)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									setExpanded(true);
+								}
+							}}
+							role="button"
+							tabIndex={0}
+							aria-label="Expand summary"
+						/>
+					)}
+
+					{/* Expand/collapse toggle */}
+					<div className="absolute right-0 bottom-0 left-0 flex justify-center pb-2">
+						<Button
+							variant="ghost"
+							size="sm"
+							className="z-10 h-7 w-7 rounded-full border bg-background/90 p-0 shadow-sm backdrop-blur-sm"
+							onClick={() => setExpanded(!expanded)}
+						>
+							{expanded ? (
+								<ChevronUp className="h-3.5 w-3.5" />
+							) : (
+								<ChevronDown className="h-3.5 w-3.5" />
+							)}
+						</Button>
 					</div>
-				)}
-			</CardContent>
-		</Card>
+				</div>
+			</Card>
+		</>
 	);
 }
