@@ -1,8 +1,8 @@
 import { getSubscription } from "@/lib/get-suscription";
-import { ElevenLabsClient } from "elevenlabs";
+import { ElevenLabsClient, ElevenLabsError } from "elevenlabs";
 import type { NextRequest } from "next/server";
 
-export const runtime = "edge";
+export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
 	try {
@@ -56,7 +56,11 @@ export async function POST(request: NextRequest) {
 			},
 		});
 	} catch (error) {
-		console.error("Error generating audio:", error);
+		if (error instanceof ElevenLabsError) {
+			console.log(error.name);
+			console.log(error.message);
+		}
+		console.log(error);
 		return new Response("Failed to generate audio", { status: 500 });
 	}
 }
