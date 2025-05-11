@@ -2,7 +2,7 @@ import { getQueryParams } from "@/app/search/[slug]/get-query-params";
 import { queryUsers } from "@/app/search/[slug]/query-users";
 import { redis } from "@/redis";
 import { openai } from "@ai-sdk/openai";
-import { simulateReadableStream, streamText } from "ai";
+import { streamText } from "ai";
 import { nanoid } from "nanoid";
 import type { NextRequest } from "next/server";
 
@@ -37,18 +37,19 @@ export async function POST(request: NextRequest) {
 				'd:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":0}}\n',
 			);
 
-			const simulated = simulateReadableStream({
-				chunks: chunks,
-				chunkDelayInMs: 0,
-				initialDelayInMs: 0,
+			const encoder = new TextEncoder();
+			const simulated = new ReadableStream({
+				start(controller) {
+					for (const chunk of chunks) {
+						controller.enqueue(encoder.encode(chunk)); // encode string to bytes
+					}
+					controller.close();
+				},
 			});
 
 			return new Response(simulated, {
 				headers: {
 					"Content-Type": "text/plain; charset=utf-8",
-					"Cache-Control": "public, max-age=0, must-revalidate",
-					"X-Vercel-AI-Data-Stream": "v1",
-					"Strict-Transport-Security": "max-age=63072000",
 				},
 			});
 		}
