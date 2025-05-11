@@ -1,4 +1,5 @@
 import type { RepoOfUser, UserMetadata } from "@/core/models/user";
+import { ROLES } from "@/lib/constants/roles";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -10,42 +11,22 @@ export class UserMetadataExtractor {
 	): Promise<UserMetadata> {
 		const response = await generateObject({
 			model: openai("gpt-4o-mini"),
-			prompt: `
-			You are a helpful assistant that is given a list of repositories and a user's username.
-			You need to generate a list of potential roles for the user based on the repositories. 
-      The roles should be common roles in the tech industry.
-      Examples of roles:
-      - Software Engineer
-      - Full Stack Developer
-      - Frontend Developer
-			- Design Engineer
-			- Web Developer
-			- Web UI Developer
-      - Backend Developer
-      - DevOps Engineer
-      - Data Engineer
-      - Cloud Engineer
-      - Security Engineer
-      - AI Engineer
-      - Machine Learning Engineer
-      - DevOps Engineer
-			- Game Developer
-			- Mobile Developer
-      - DevOps Engineer
-
-      These are some examples of roles, you may decide to use some of them or create your own.
-      Provide 4-6 roles.
-      
-      Also, you need to generate a short description of the user based on the repositories.
-
-      Here is the user's username:
-      ${username}
-
-			Here is the list of repositories:
-			${this.formatRepos(repos)}
-			`,
+			prompt: `Given the following repos, determine the role and stack of the user:
+    ${this.formatRepos(repos)}
+    The role should be a single role that the user is most likely to be.
+    Avoid the generic role "software engineer".
+    The stack should be a list of technologies that the user is most likely to be using.
+    The repos with more contributions to the repo should be given more weight.
+    Use the one of the following roles:
+    ${ROLES.join(", ")}  
+    The about should be a short description of the user. Avoid generalities. Make it short like a tweet size message.
+    Avoid word like "versatile" or "polyglot". Just describe their skills and expertise.
+    Dont include the name of the user in the about. Just start with the role and stack.
+    `,
 			schema: z.object({
-				roles: z.array(z.string()),
+				role: z.string(),
+				alternativeNamesForRole: z.array(z.string()),
+				stack: z.array(z.string()),
 				about: z.string(),
 			}),
 		});
@@ -55,8 +36,17 @@ export class UserMetadataExtractor {
 		}
 
 		return {
-			roles: response.object.roles.map((role) => role.trim().toLowerCase()),
+			roles: [
+				response.object.role.trim().toLowerCase(),
+				...response.object.alternativeNamesForRole.map((role) =>
+					role.trim().toLowerCase(),
+				),
+				"software engineer",
+				"programmer",
+				"developer",
+			],
 			about: response.object.about,
+			stack: response.object.stack.map((tech) => tech.trim().toLowerCase()),
 		};
 	}
 

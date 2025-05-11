@@ -1,28 +1,11 @@
 import fs from "node:fs/promises";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
+import { ROLES } from "@/lib/constants/roles";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { eq, not } from "drizzle-orm";
 import { z } from "zod";
-const roles = [
-	"Full Stack Developer",
-	"Frontend Developer",
-	"Backend Developer",
-	"DevOps Engineer",
-	"Cloud Engineer",
-	"Data Engineer",
-	"AI Engineer",
-	"Security Engineer",
-	"Blockchain Developer",
-	"Game Developer",
-	"Mobile Developer",
-	"QA Engineer",
-	"Design Engineer",
-	"UI Developer",
-	"Software Engineer",
-	"Machine Learning Engineer",
-];
 
 const users = await db.query.user.findMany({
 	where: (user) => not(eq(user.repos, [])),
@@ -42,17 +25,16 @@ await Promise.all(
 				prompt: `Given the following repos, determine the role and stack of the user:
     ${formatRepos(user.repos)}
     The role should be a single role that the user is most likely to be.
-    Avoid the generic role "Software Engineer".
+    Avoid the generic role "software engineer".
     The stack should be a list of technologies that the user is most likely to be using.
     The repos with more contributions to the repo should be given more weight.
     Use the one of the following roles:
-    ${roles.join(", ")}  
+    ${ROLES.join(", ")}  
     The about should be a short description of the user. Avoid generalities. Make it short like a tweet size message.
     Avoid word like "versatile" or "polyglot". Just describe their skills and expertise.
     Dont include the name of the user in the about. Just start with the role and stack.
     `,
 			});
-			console.log(response.object);
 
 			await db
 				.update(userTable)

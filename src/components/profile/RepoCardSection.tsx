@@ -14,7 +14,7 @@ export const RepoCardSection = ({
 	isDuplicateRepo,
 }: RepoCardSectionProps) => {
 	return (
-		<section className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
+		<section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 			{repositories.map((repo) => {
 				const repoName = repo.fullName.split("/")[1];
 				const repoOwner = repo.fullName.split("/")[0];

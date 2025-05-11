@@ -1,9 +1,18 @@
+import { sql } from "drizzle-orm";
+import { z } from "zod";
+
 import { db } from "@/db";
 import { type UserSelect, user } from "@/db/schema";
-import { sql } from "drizzle-orm";
+
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
+
 import type { SearchParams } from "./types";
 
-export async function queryUsers(searchParams: SearchParams) {
+export async function queryUsers(
+	slug: string,
+	searchParams: SearchParams,
+	pageIndex: number,
+) {
 	const query = sql.empty();
 
 	// Base query
@@ -37,12 +46,9 @@ export async function queryUsers(searchParams: SearchParams) {
 	}
 
 	// Use array overlap for tech stack too
-	if (
-		searchParams.primaryTechStack &&
-		searchParams.primaryTechStack.length > 0
-	) {
+	if (searchParams.techStack && searchParams.techStack.length > 0) {
 		query.append(sql` AND ${user.stack} && ARRAY[`);
-		const techArray = searchParams.primaryTechStack.map((tech) => sql`${tech}`);
+		const techArray = searchParams.techStack.map((tech) => sql`${tech.tech}`);
 		query.append(sql.join(techArray, sql`, `));
 		query.append(sql`]`);
 	}
@@ -70,17 +76,15 @@ export async function queryUsers(searchParams: SearchParams) {
 		let score = user.followers * 5 + user.following * 2 + user.repositories;
 
 		for (const repo of user.repos) {
-			const amountOfPrimaryTechStackThatMatch = repo.techStack.filter((tech) =>
-				searchParams.primaryTechStack.includes(tech),
-			).length;
-
-			if (amountOfPrimaryTechStackThatMatch > 0) {
-				score +=
-					Math.log(repo.stars + 1) *
-					(repo.contribution.commitsCount +
-						repo.contribution.issuesCount * 0.5 +
-						repo.contribution.pullRequestsCount * 2) *
-					amountOfPrimaryTechStackThatMatch;
+			for (const tech of searchParams.techStack) {
+				if (repo.techStack.includes(tech.tech)) {
+					score +=
+						Math.log(repo.stars + 1) *
+						(repo.contribution.commitsCount +
+							repo.contribution.issuesCount * 0.5 +
+							repo.contribution.pullRequestsCount * 2) *
+						tech.relevance;
+				}
 			}
 		}
 
@@ -96,6 +100,11 @@ export async function queryUsers(searchParams: SearchParams) {
 			updated_at: Date;
 		})[]
 	)
+		.filter((u) =>
+			searchParams.techStack
+				.filter((t) => t.relevance > 80)
+				.every((t) => u.stack.includes(t.tech)),
+		)
 		.map(
 			(u) =>
 				({
@@ -137,5 +146,39 @@ export async function queryUsers(searchParams: SearchParams) {
 		)
 		.sort((a, b) => b.score - a.score);
 
-	return usersSorted;
+	// Get paginated users
+	const startIndex = (pageIndex - 1) * SEARCH_RESULTS_PER_PAGE;
+	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
+	const paginatedUsers = usersSorted.slice(startIndex, endIndex);
+
+	return {
+		paginatedUsers,
+		totalUsers: usersSorted.length,
+		totalPages: Math.ceil(usersSorted.length / SEARCH_RESULTS_PER_PAGE),
+	};
 }
+
+// Define the structure for our search summary
+export const SearchSummarySchema = z.object({
+	totalDevelopers: z.number(),
+	location: z.string().nullable(),
+	techStack: z.array(z.string()),
+	roleInfo: z.object({
+		primary: z.string(),
+		alternatives: z.array(z.string()),
+	}),
+	topDevelopers: z.array(
+		z.object({
+			username: z.string(),
+			fullname: z.string().nullable(),
+			location: z.string().nullable(),
+			stars: z.number(),
+			followers: z.number(),
+			repositories: z.number(),
+			avatarUrl: z.string().nullable(),
+		}),
+	),
+	spokenDigest: z.string(),
+});
+
+export type SearchSummaryData = z.infer<typeof SearchSummarySchema>;

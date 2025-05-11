@@ -21,6 +21,7 @@ export const PinnedRepoOfUserSchema = z.object({
 export const UserMetadata = z.object({
 	roles: z.array(z.string()),
 	about: z.string(),
+	stack: z.array(z.string()),
 });
 
 export const UserSchema = z.object({

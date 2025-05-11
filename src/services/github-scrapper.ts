@@ -146,13 +146,21 @@ export class GithubService {
 				const response = await generateObject({
 					model: openai("gpt-4o"),
 					schema: z.object({
-						city: z.string(),
-						country: z.string(),
+						city: z.string().nullable(),
+						country: z.string().nullable(),
 					}),
-					prompt: `Extract the city and country from the following location: ${data.location}`,
+					prompt: `Extract the city and country from the following location: ${data.location}.
+					Make you best to extract the country if only the city is provided.
+					If no city is found, return null. If no country is found, return null.`,
 				});
-				city = response.object.city;
-				country = response.object.country;
+				city =
+					response.object.city === "" || response.object.city === "null"
+						? null
+						: response.object.city?.toLowerCase() || null;
+				country =
+					response.object.country === "" || response.object.country === "null"
+						? null
+						: response.object.country?.toLowerCase() || null;
 			}
 
 			return {

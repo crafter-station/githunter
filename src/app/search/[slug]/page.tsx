@@ -1,3 +1,17 @@
+import {
+	ArrowLeft,
+	BarChart,
+	Code2,
+	ExternalLink,
+	GitFork,
+	Star,
+	Terminal,
+	Trophy,
+	Users,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+
 import { EmptyState } from "@/components/EmptyState";
 import { Footer } from "@/components/footer";
 import GitHunterLogo from "@/components/githunter-logo";
@@ -7,49 +21,23 @@ import {
 	GitHubSadFaceIcon,
 } from "@/components/icons/EmptyStateIcons";
 import { SearchBox } from "@/components/search";
+import { SpokenDigest } from "@/components/search/SpokenDigest";
 import { CountryFlag } from "@/components/ui/CountryFlag";
+import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
-import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
-import {
-	ArrowLeft,
-	BarChart,
-	Code2,
-	ExternalLink,
-	GitFork,
-	MapPin,
-	Sparkles,
-	Star,
-	Users,
-	Wrench,
-} from "lucide-react";
-import type { Metadata } from "next";
-import Link from "next/link";
+
+import { CollapsibleSummary } from "@/components/search/CollapsibleSummary";
 import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
 
 export const revalidate = 300;
 export const dynamic = "force-static";
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-	// Use scan with a pattern match to get all search keys
-	const searchKeys = [];
-	let cursor = "0";
-
-	do {
-		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
-		cursor = nextCursor;
-		searchKeys.push(...keys);
-	} while (cursor !== "0");
-
-	// Extract the slug from each key (remove the "search:" prefix)
-	return searchKeys.map((key) => ({
-		slug: key.replace("search:", ""),
-	}));
-}
 
 export default async function SearchPage({
 	params,
@@ -86,29 +74,41 @@ export default async function SearchPage({
 		);
 	}
 
-	const allUsers = await queryUsers(searchParams);
-
-	// Calculate pagination values
-	const totalUsers = allUsers.length;
-	const totalPages = Math.max(
+	const { paginatedUsers, totalUsers, totalPages } = await queryUsers(
+		slug,
+		searchParams,
 		1,
-		Math.ceil(totalUsers / SEARCH_RESULTS_PER_PAGE),
 	);
 
-	// Ensure pageIndex is within valid range
-	const currentPage = 1;
-
-	// Get paginated users
-	const startIndex = (currentPage - 1) * SEARCH_RESULTS_PER_PAGE;
-	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
-	const paginatedUsers = allUsers.slice(startIndex, endIndex);
+	await Promise.all(
+		paginatedUsers.map(
+			(user, index) =>
+				index < 10 &&
+				redis.hset(`rank:${user.username}`, {
+					[slug]: index + 1,
+				}),
+		),
+	);
 
 	// Format for display
 	const formattedQuery = slug.replace(/-/g, " ");
-	const locationText =
-		searchParams.city && searchParams.country
-			? `${searchParams.city}, ${searchParams.country}`
-			: searchParams.city || searchParams.country || null;
+
+	// Get top developers for summary
+	const topDevelopers = paginatedUsers.slice(0, 3).map((user) => ({
+		username: user.username,
+		fullname: user.fullname || user.username,
+		stars: user.stars,
+		repositories: user.repos?.length || 0,
+		followers: user.followers,
+	}));
+
+	// Get tech stack from all users
+	const techStack = Array.from(
+		new Set(paginatedUsers.flatMap((user) => user.stack || []).filter(Boolean)),
+	).slice(0, 5);
+
+	// Get location if available
+	const location = paginatedUsers[0]?.country || null;
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-[#121212]">
@@ -135,40 +135,135 @@ export default async function SearchPage({
 			</div>
 
 			<main className="container mx-auto min-h-[calc(100dvh-10rem)] px-4 py-4">
-				{/* Search metadata/filters */}
-				<div className="mb-4 border-b pb-3 text-muted-foreground text-sm">
-					<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-						<div className="flex items-center">
-							<span className="mr-2 font-medium text-foreground">
-								{totalUsers} results
-							</span>
-							<span>for developers</span>
-						</div>
+				{/* Search Summary - AI generated overview of results */}
+				<div className="mb-4 border-border/40 border-b py-3">
+					<div className="flex flex-wrap items-center gap-1.5">
+						<Badge
+							variant="secondary"
+							className="flex items-center gap-1 px-2 py-0.5 text-xs"
+						>
+							<Users className="h-3 w-3" />
+							{totalUsers} developers
+						</Badge>
 
-						{locationText && (
-							<div className="flex items-center gap-1.5">
-								<MapPin className="size-3.5" />
-								{locationText}
-							</div>
+						{location && (
+							<Badge
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
+							>
+								<svg
+									width="12"
+									height="12"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									aria-hidden="true"
+									aria-label="Location"
+								>
+									<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+									<circle cx="12" cy="10" r="3" />
+								</svg>
+								{location}
+							</Badge>
 						)}
 
-						{searchParams.primaryTechStack.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Wrench className="size-3.5" />
-								{searchParams.primaryTechStack.slice(0, 2).join(", ")}
-								{searchParams.primaryTechStack.length > 2 &&
-									` +${searchParams.primaryTechStack.length - 2}`}
-							</div>
-						)}
+						{techStack.slice(0, 3).map((tech) => (
+							<Badge
+								key={`tech-${tech}`}
+								variant="outline"
+								className="flex items-center gap-1 px-2 py-0.5 text-xs"
+							>
+								<Terminal className="h-3 w-3" />
+								{tech}
+							</Badge>
+						))}
 
-						{searchParams.role.length > 0 && (
-							<div className="flex items-center gap-1.5">
-								<Sparkles className="size-3.5" />
-								{searchParams.role}
-							</div>
+						{techStack.length > 3 && (
+							<Badge variant="outline" className="px-2 py-0.5 text-xs">
+								+{techStack.length - 3} more
+							</Badge>
 						)}
 					</div>
 				</div>
+
+				{/* Summary Card */}
+				<CollapsibleSummary>
+					{/* Spoken Digest */}
+					<SpokenDigest slug={slug} />
+
+					{/* Top Developers Section */}
+					<div className="w-full space-y-3">
+						<div className="mb-2 flex items-center gap-2">
+							<Trophy className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
+							<h2 className="font-medium text-sm">Top Developers</h2>
+						</div>
+
+						<div className="grid grid-cols-1 gap-2">
+							{topDevelopers.map((dev, i) => {
+								const topMetric = getTopMetric(dev);
+								const rankColors = [
+									"bg-amber-500 dark:bg-amber-500/80", // 1st place
+									"bg-slate-400 dark:bg-slate-400/80", // 2nd place
+									"bg-orange-400 dark:bg-orange-400/80", // 3rd place
+								];
+
+								return (
+									<div
+										key={`dev-${dev.username}`}
+										className={cn(
+											"flex items-center rounded-md border bg-card p-2 shadow-sm",
+											i === 0 &&
+												"sm:border-amber-200/70 sm:bg-amber-50/50 dark:sm:border-amber-800/30 dark:sm:bg-amber-950/20",
+											i === 1 &&
+												"sm:border-slate-200/70 sm:bg-slate-50/50 dark:sm:border-slate-800/30 dark:sm:bg-slate-950/20",
+											i === 2 &&
+												"sm:border-orange-200/70 sm:bg-orange-50/50 dark:sm:border-orange-800/30 dark:sm:bg-orange-950/20",
+										)}
+									>
+										{/* Rank Badge */}
+										<div className="mr-2 flex-shrink-0">
+											<div
+												className={cn(
+													"flex h-6 w-6 items-center justify-center rounded-full font-semibold text-[10px] text-white",
+													rankColors[i],
+												)}
+											>
+												{i + 1}
+												{i === 0 ? "st" : i === 1 ? "nd" : "rd"}
+											</div>
+										</div>
+
+										<div className="flex-1 overflow-hidden">
+											<div className="overflow-hidden">
+												<p className="truncate font-medium text-xs">
+													{dev.fullname}
+												</p>
+												<p className="truncate text-[10px] text-muted-foreground">
+													@{dev.username}
+												</p>
+											</div>
+										</div>
+
+										<div className="flex flex-col items-end border-l pl-2 text-right">
+											<div className="flex items-center gap-1">
+												{topMetric.icon}
+												<span className="font-medium text-xs">
+													{topMetric.value}
+												</span>
+											</div>
+											<span className="text-[10px] text-muted-foreground">
+												{topMetric.name}
+											</span>
+										</div>
+									</div>
+								);
+							})}
+						</div>
+					</div>
+				</CollapsibleSummary>
 
 				{/* Results List */}
 				{paginatedUsers.length > 0 ? (
@@ -423,4 +518,55 @@ export async function generateMetadata({
 		},
 		keywords: formattedQuery.split(" ").filter(Boolean),
 	};
+}
+
+export async function generateStaticParams() {
+	// Use scan with a pattern match to get all search keys
+	const searchKeys = [];
+	let cursor = "0";
+
+	do {
+		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
+		cursor = nextCursor;
+		searchKeys.push(...keys);
+	} while (cursor !== "0");
+
+	// Extract the slug from each key (remove the "search:" prefix)
+	return searchKeys.map((key) => ({
+		slug: key.replace("search:", ""),
+	}));
+}
+
+// Helper function to determine top metric for each developer
+function getTopMetric(dev: {
+	stars: number;
+	repositories: number;
+	followers: number;
+}) {
+	// Compare metrics to find the highest relative to typical values
+	const metrics = [
+		{
+			name: "stars",
+			value: dev.stars,
+			icon: <Star className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />,
+			threshold: 100,
+		},
+		{
+			name: "repositories",
+			value: dev.repositories,
+			icon: <GitFork className="h-3.5 w-3.5 text-green-500" />,
+			threshold: 30,
+		},
+		{
+			name: "followers",
+			value: dev.followers,
+			icon: <Users className="h-3.5 w-3.5 text-blue-500" />,
+			threshold: 50,
+		},
+	];
+
+	// Sort by value relative to typical threshold
+	return metrics.sort(
+		(a, b) => b.value / b.threshold - a.value / a.threshold,
+	)[0];
 }

@@ -14,24 +14,20 @@ export const PRICING_PLANS = [
 		popular: false,
 		buttonText: "Get Started",
 		buttonVariant: "default" as ButtonVariant,
-		features: ["20 searches per day"],
+		features: ["Unlimited developer searches"],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "2",
 		name: "Pro",
 		description: "For recruiters",
 		price: 5,
 		popular: true,
 		buttonText: "Subscribe",
 		buttonVariant: "default" as ButtonVariant,
-		features: [
-			"Unlimited searches",
-			"Advanced search filters",
-			"Voice summaries",
-		],
+		features: ["Advanced search filters", "Voice summaries"],
 	},
 	{
-		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "",
+		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "3",
 		name: "Plus",
 		description: "For companies hiring at scale",
 		price: 20,
@@ -40,4 +36,4 @@ export const PRICING_PLANS = [
 		buttonVariant: "outline" as ButtonVariant,
 		features: ["Everything in Pro tier", "Index new users"],
 	},
-];
+] as const;
