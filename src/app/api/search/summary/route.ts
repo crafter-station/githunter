@@ -3,6 +3,7 @@ import { queryUsers } from "@/app/search/[slug]/query-users";
 import { redis } from "@/redis";
 import { openai } from "@ai-sdk/openai";
 import { simulateReadableStream, streamText } from "ai";
+import { nanoid } from "nanoid";
 import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
 				});
 
 			// Add the initial message ID
-			chunks.unshift('f:{"messageId":"msg-cached-summary"}\n');
+			chunks.unshift(`f:{"messageId":"msg-${nanoid()}"}\n`);
 
 			// Add the end markers
 			chunks.push(
@@ -46,8 +47,10 @@ export async function POST(request: NextRequest) {
 			return new Response(simulated, {
 				headers: {
 					"Content-Type": "text/event-stream",
-					"Cache-Control": "no-cache",
+					"Cache-Control": "no-cache, no-transform",
 					Connection: "keep-alive",
+					"Transfer-Encoding": "chunked",
+					"X-Accel-Buffering": "no",
 				},
 			});
 		}
