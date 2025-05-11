@@ -496,11 +496,12 @@ export default async function AdvancedSearchResultsPage({
 }
 
 export async function generateMetadata({
-	params,
+	params: nextParams,
 }: {
-	params: { params: string[] };
+	params: Promise<{ params: string[] }>;
 }): Promise<Metadata> {
-	const searchParams = parseAdvancedSearchParams(params.params);
+	const { params } = await nextParams;
+	const searchParams = parseAdvancedSearchParams(params);
 
 	const techsString = searchParams.technologies.map((t) => t.tech).join(", ");
 
@@ -517,7 +518,7 @@ export async function generateMetadata({
 		openGraph: {
 			title,
 			description,
-			url: `/search/advanced/${params.params.join("/")}`,
+			url: `/search/advanced/${params.join("/")}`,
 			siteName: "GitHunter",
 			type: "website",
 		},
