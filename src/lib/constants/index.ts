@@ -15,6 +15,8 @@ export const PRICING_PLANS = [
 		buttonText: "Get Started",
 		buttonVariant: "default" as ButtonVariant,
 		features: ["Unlimited developer searches"],
+		discount: undefined,
+		discountCode: undefined,
 	},
 	{
 		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "2",
@@ -25,6 +27,8 @@ export const PRICING_PLANS = [
 		buttonText: "Subscribe",
 		buttonVariant: "default" as ButtonVariant,
 		features: ["Advanced search filters", "Voice summaries"],
+		discount: 100,
+		discountCode: "H4CK4TH0NPRO",
 	},
 	{
 		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "3",
@@ -39,5 +43,7 @@ export const PRICING_PLANS = [
 			"Index new users",
 			"Re-index existing users",
 		],
+		discount: 100,
+		discountCode: "H4CK4TH0NPLUS",
 	},
 ] as const;

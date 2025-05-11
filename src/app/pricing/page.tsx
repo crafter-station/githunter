@@ -27,8 +27,8 @@ export default function PricingPage() {
 	}, [user]);
 
 	const getLink = React.useCallback(
-		(planId: string) => {
-			if (planId === "free") {
+		(plan: (typeof PRICING_PLANS)[number]) => {
+			if (plan.id === "free") {
 				return "/";
 			}
 
@@ -41,8 +41,9 @@ export default function PricingPage() {
 			}
 
 			const urlSearchParams = new URLSearchParams();
-			urlSearchParams.set("products", planId);
+			urlSearchParams.set("products", plan.id);
 			urlSearchParams.set("customerExternalId", user.id);
+			urlSearchParams.set("customer_external_id", user.id);
 
 			if (user.emailAddresses[0].emailAddress) {
 				urlSearchParams.set(
@@ -52,6 +53,10 @@ export default function PricingPage() {
 			}
 			if (user.fullName) {
 				urlSearchParams.set("customerName", user.fullName);
+			}
+
+			if (plan.discountCode) {
+				urlSearchParams.set("discount_code", plan.discountCode);
 			}
 
 			return `/checkout?${urlSearchParams.toString()}`;
@@ -101,7 +106,7 @@ export default function PricingPage() {
 									</div>
 
 									<Link
-										href={getLink(plan.id)}
+										href={getLink(plan)}
 										className={cn(
 											buttonVariants({
 												variant: plan.buttonVariant,
@@ -111,7 +116,7 @@ export default function PricingPage() {
 												"bg-primary text-primary-foreground hover:bg-primary/90",
 										)}
 										target={
-											getLink(plan.id).includes("portal") ? "_blank" : undefined
+											getLink(plan).includes("portal") ? "_blank" : undefined
 										}
 									>
 										{currentPlan?.id === plan.id
@@ -133,6 +138,18 @@ export default function PricingPage() {
 								</div>
 							</Card>
 						))}
+					</div>
+					<div className="mx-auto mt-4 flex w-max flex-col gap-1">
+						<p className="text-muted-foreground text-sm">
+							* Get 1 month free with the discount codes{" "}
+							{PRICING_PLANS.filter((plan) => plan.name !== "Free")
+								.map((plan) => plan.discountCode)
+								.join(" and ")}
+							. Valid for launch week only.
+						</p>
+						<p className="text-muted-foreground text-sm">
+							** All plans are billed monthly
+						</p>
 					</div>
 				</div>
 			</section>
