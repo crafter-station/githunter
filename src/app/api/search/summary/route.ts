@@ -45,9 +45,10 @@ export async function POST(request: NextRequest) {
 
 			return new Response(simulated, {
 				headers: {
-					"Content-Type": "text/event-stream",
-					"Cache-Control": "no-cache, no-transform",
-					"X-Accel-Buffering": "no",
+					"Content-Type": "text/plain; charset=utf-8",
+					"Cache-Control": "public, max-age=0, must-revalidate",
+					"X-Vercel-AI-Data-Stream": "v1",
+					"Strict-Transport-Security": "max-age=63072000",
 				},
 			});
 		}
