@@ -39,9 +39,11 @@ export async function POST(request: NextRequest) {
 
 			const encoder = new TextEncoder();
 			const simulated = new ReadableStream({
-				start(controller) {
+				async start(controller) {
 					for (const chunk of chunks) {
-						controller.enqueue(encoder.encode(chunk)); // encode string to bytes
+						controller.enqueue(encoder.encode(chunk));
+						// Wait 30ms between chunks (adjust as needed)
+						await new Promise((resolve) => setTimeout(resolve, 30));
 					}
 					controller.close();
 				},
