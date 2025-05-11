@@ -35,28 +35,22 @@ export const dynamic = "force-static";
 export const dynamicParams = true;
 
 export default async function AdvancedSearchResultsPage({
-	params,
-	searchParams,
+	params: nextParams,
 }: {
-	params: { params: string[] };
-	searchParams: { description?: string };
+	params: Promise<{ params: string[] }>;
 }) {
+	const { params } = await nextParams;
 	// Parse URL parameters
-	const advancedSearchParams = parseAdvancedSearchParams(params.params);
-
-	// Get any job description from the query parameters
-	const jobDescription = searchParams.description || "";
+	const advancedSearchParams = parseAdvancedSearchParams(params);
 
 	// Query the database with our advanced search parameters
 	const { users, totalUsers, totalPages } =
 		await queryUsersAdvanced(advancedSearchParams);
 
 	// Build the base URL for pagination
-	const baseUrl = `/search/advanced/${params.params[0]}`;
+	const baseUrl = `/search/advanced/${params[0]}`;
 	const locationPart =
-		params.params.length > 2 && params.params[1] === "in"
-			? `/in/${params.params[2]}`
-			: "";
+		params.length > 2 && params[1] === "in" ? `/in/${params[2]}` : "";
 	const paginationBaseUrl = `${baseUrl}${locationPart}/p`;
 	const firstPageUrl = `${baseUrl}${locationPart}`;
 
@@ -89,11 +83,6 @@ export default async function AdvancedSearchResultsPage({
 			</div>
 		);
 	}
-
-	// Format search parameters for display
-	const formattedTechs = advancedSearchParams.technologies
-		.map((tech) => `${tech.tech} (${tech.relevance}%)`)
-		.join(", ");
 
 	const formattedLocation = [
 		advancedSearchParams.city,
