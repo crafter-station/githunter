@@ -7,12 +7,19 @@ import { Card } from "@/components/ui/card";
 import { PRICING_PLANS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
-import { Check } from "lucide-react";
+import { Check, CheckCircle, Copy } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 export default function PricingPage() {
 	const { user } = useUser();
+	const [copiedCode, setCopiedCode] = React.useState<string | null>(null);
+
+	const copyToClipboard = React.useCallback((code: string) => {
+		navigator.clipboard.writeText(code);
+		setCopiedCode(code);
+		setTimeout(() => setCopiedCode(null), 2000);
+	}, []);
 
 	const currentPlan = React.useMemo(() => {
 		if (user?.publicMetadata.subscriptionStatus === "active") {
@@ -72,7 +79,7 @@ export default function PricingPage() {
 			{/* Pricing Section */}
 			<section className="flex min-h-[80dvh] items-center justify-center border-border border-t border-dashed py-20">
 				<div className="container mx-auto px-4">
-					<h2 className="mb-6 text-center font-medium text-2xl">
+					<h2 className="mb-6 text-center font-semibold text-2xl">
 						Choose Your Perfect Plan
 					</h2>
 					<p className="mx-auto mb-12 max-w-xl text-center text-muted-foreground">
@@ -86,23 +93,79 @@ export default function PricingPage() {
 								key={plan.id}
 								className={`border-border ${
 									plan.popular ? "border-[#e0e26c] dark:border-[#E6E7A4]" : ""
-								} relative bg-card p-6 transition-shadow hover:shadow-md`}
+								} relative h-full bg-card p-6 transition-shadow hover:shadow-md`}
 							>
 								{plan.popular && (
 									<div className="absolute top-0 right-0 rounded-tr-md rounded-bl-md bg-[#e0e26c] px-3 py-1 font-medium text-black text-xs dark:bg-[#E6E7A4]">
 										Popular
 									</div>
 								)}
-								<div className="flex flex-col gap-4">
-									<h3 className="font-medium text-lg">{plan.name}</h3>
-									<p className="text-muted-foreground text-sm">
-										{plan.description}
-									</p>
-									<div className="flex items-baseline gap-1">
-										<span className="font-bold text-3xl">${plan.price}</span>
-										<span className="text-muted-foreground text-sm">
-											/month
-										</span>
+								<div className="flex h-full flex-col justify-between gap-4">
+									<div className="flex flex-col gap-4">
+										<h3 className="font-medium text-lg">{plan.name}</h3>
+										<p className="text-muted-foreground text-sm">
+											{plan.description}
+										</p>
+										<div className="flex items-baseline gap-1">
+											<span className="font-bold text-3xl">${plan.price}</span>
+											<span className="text-muted-foreground text-sm">
+												/month
+											</span>
+										</div>
+
+										<div className="mt-3 mb-2 space-y-3">
+											{plan.features.map((feature, idx) => (
+												<div
+													key={`${plan.id}-feature-${idx}`}
+													className="flex items-start gap-2"
+												>
+													<Check className="h-5 w-5 flex-shrink-0 text-[#54ada5]" />
+													<p className="text-sm">{feature}</p>
+												</div>
+											))}
+										</div>
+
+										{plan.discountCode && (
+											<div className="group mt-2">
+												<button
+													type="button"
+													className="flex w-full items-center justify-between rounded-md border border-yellow-300 border-dashed bg-yellow-50/20 p-2 transition-all hover:shadow-sm dark:border-yellow-500 dark:bg-yellow-900/10"
+													onClick={() =>
+														plan.discountCode &&
+														copyToClipboard(plan.discountCode)
+													}
+													onKeyDown={(e) => {
+														if (
+															(e.key === "Enter" || e.key === " ") &&
+															plan.discountCode
+														) {
+															copyToClipboard(plan.discountCode);
+														}
+													}}
+													aria-label={`Copy discount code ${plan.discountCode || ""}`}
+												>
+													<div className="flex flex-col">
+														<span className="font-semibold text-xs text-yellow-700 dark:text-yellow-500">
+															100% OFF First Month!
+														</span>
+														<span className="flex items-center gap-1 font-mono text-xs">
+															{plan.discountCode}
+														</span>
+													</div>
+													{copiedCode === plan.discountCode ? (
+														<div className="flex items-center gap-1 font-medium text-green-500 text-xs">
+															<CheckCircle className="h-3.5 w-3.5" />
+															<span>Copied</span>
+														</div>
+													) : (
+														<div className="flex items-center gap-1 text-muted-foreground/70 text-xs">
+															<span>Click to copy</span>
+															<Copy className="h-3.5 w-3.5" />
+														</div>
+													)}
+												</button>
+											</div>
+										)}
 									</div>
 
 									<Link
@@ -111,7 +174,7 @@ export default function PricingPage() {
 											buttonVariants({
 												variant: plan.buttonVariant,
 											}),
-											"mt-4 w-full",
+											"mt-6 w-full",
 											plan.popular &&
 												"bg-primary text-primary-foreground hover:bg-primary/90",
 										)}
@@ -123,31 +186,19 @@ export default function PricingPage() {
 											? "Manage Subscription"
 											: plan.buttonText}
 									</Link>
-
-									<div className="mt-6 space-y-3">
-										{plan.features.map((feature, idx) => (
-											<div
-												key={`${plan.id}-feature-${idx}`}
-												className="flex items-start gap-2"
-											>
-												<Check className="h-5 w-5 flex-shrink-0 text-[#54ada5]" />
-												<p className="text-sm">{feature}</p>
-											</div>
-										))}
-									</div>
 								</div>
 							</Card>
 						))}
 					</div>
-					<div className="mx-auto mt-4 flex w-max flex-col gap-1">
-						<p className="text-muted-foreground text-sm">
+					<div className="mx-auto mt-8 flex w-max flex-col gap-1">
+						<p className="text-muted-foreground text-xs">
 							* Get 1 month free with the discount codes{" "}
 							{PRICING_PLANS.filter((plan) => plan.name !== "Free")
 								.map((plan) => plan.discountCode)
 								.join(" and ")}
 							. Valid for launch week only.
 						</p>
-						<p className="text-muted-foreground text-sm">
+						<p className="text-muted-foreground text-xs">
 							** All plans are billed monthly
 						</p>
 					</div>

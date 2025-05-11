@@ -1,4 +1,4 @@
-import { HelpCircle } from "lucide-react";
+import { MousePointerClick } from "lucide-react";
 import Link from "next/link";
 import type { GitHubUserProfileProps } from "../GitHubUserProfile";
 import { Footer } from "../footer";
@@ -13,7 +13,7 @@ export function HeroSection({ featuredUsers }: HeroSectionProps) {
 	return (
 		<>
 			<section className="flex min-h-[80dvh] items-center justify-center">
-				<div className="container mx-auto flex flex-col items-center gap-8 px-4 py-12">
+				<div className="container mx-auto flex flex-col items-center gap-4 px-4 py-8 lg:gap-8 lg:py-12">
 					<div className="flex flex-col items-center gap-4">
 						<AnimatedBadge />
 						<Link
@@ -21,6 +21,9 @@ export function HeroSection({ featuredUsers }: HeroSectionProps) {
 							className="inline-flex items-center rounded-full border border-transparent bg-primary px-2.5 py-0.5 font-semibold text-primary-foreground text-xs transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 						>
 							100% OFF in PRO and PLUS plans for launch week
+							<span className="ml-1.5">
+								<MousePointerClick className="h-4 w-4" />
+							</span>
 						</Link>
 						<h1 className="max-w-3xl text-center font-light text-3xl md:text-4xl">
 							What kind of{" "}
@@ -35,16 +38,7 @@ export function HeroSection({ featuredUsers }: HeroSectionProps) {
 					<SearchSection featuredUsers={featuredUsers} />
 				</div>
 			</section>
-
 			<Footer />
-
-			{/* FAB Button */}
-			<button
-				type="button"
-				className="fixed right-4 bottom-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
-			>
-				<HelpCircle className="h-5 w-5" />
-			</button>
 		</>
 	);
 }
