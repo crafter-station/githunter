@@ -14,7 +14,7 @@ export const PRICING_PLANS = [
 		popular: false,
 		buttonText: "Get Started",
 		buttonVariant: "default" as ButtonVariant,
-		features: ["20 searches per day"],
+		features: ["Unlimited developer searches"],
 	},
 	{
 		id: process.env.NEXT_PUBLIC_POLAR_PRO_PLAN_PRODUCT_ID || "",
@@ -24,11 +24,7 @@ export const PRICING_PLANS = [
 		popular: true,
 		buttonText: "Subscribe",
 		buttonVariant: "default" as ButtonVariant,
-		features: [
-			"Unlimited searches",
-			"Advanced search filters",
-			"Voice summaries",
-		],
+		features: ["Advanced search filters", "Voice summaries"],
 	},
 	{
 		id: process.env.NEXT_PUBLIC_POLAR_PLUS_PLAN_PRODUCT_ID || "",
