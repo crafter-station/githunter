@@ -1,11 +1,14 @@
 "use client";
-
-import { createGithubProfileAction } from "@/actions/create-github-profile";
 import { ArrowRight } from "lucide-react";
 import { Github } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { useFormStatus } from "react-dom";
+
+import { createGithubProfileAction } from "@/actions/create-github-profile";
+import { buttonVariants } from "@/components/ui/button";
+import { useSubscription } from "@/lib/hooks/useSuscription";
+import Link from "next/link";
 
 interface FormState {
 	error: string | null;
@@ -56,6 +59,20 @@ export function Form() {
 
 function SubmitButton() {
 	const { pending } = useFormStatus();
+	const { currentPlan } = useSubscription();
+
+	if (currentPlan?.name !== "Plus") {
+		return (
+			<div className="flex w-full justify-center">
+				<Link
+					href="/pricing"
+					className={buttonVariants({ variant: "secondary" })}
+				>
+					Upgrade to Pro to generate profiles
+				</Link>
+			</div>
+		);
+	}
 
 	return (
 		<button

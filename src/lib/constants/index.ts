@@ -40,4 +40,4 @@ export const PRICING_PLANS = [
 		buttonVariant: "outline" as ButtonVariant,
 		features: ["Everything in Pro tier", "Index new users"],
 	},
-];
+] as const;
