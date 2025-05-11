@@ -125,7 +125,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 		<div className="flex min-h-screen flex-col bg-background">
 			<Header />
 			<main className="flex-1">
-				<div className="mx-auto w-full px-10 py-8">
+				<div className="mx-auto w-full px-4 py-2 lg:px-10 lg:py-8">
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-12">
 						{/* Left column - Profile sidebar */}
 						<div className="md:col-span-3">
