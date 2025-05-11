@@ -10,7 +10,6 @@ import { SearchBox } from "@/components/search";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Pagination } from "@/components/ui/pagination";
 import { UserButton } from "@/components/user-button";
-import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { getCountryCode } from "@/lib/country-codes";
 import {
 	ArrowLeft,
@@ -81,25 +80,11 @@ export default async function SearchPagePaginated({
 		);
 	}
 
-	const allUsers = await queryUsers({
-		searchParams,
+	const { paginatedUsers, totalUsers, totalPages } = await queryUsers(
 		slug,
-	});
-
-	// Calculate pagination values
-	const totalUsers = allUsers.length;
-	const totalPages = Math.max(
-		1,
-		Math.ceil(totalUsers / SEARCH_RESULTS_PER_PAGE),
+		searchParams,
+		pageIndex,
 	);
-
-	// Ensure pageIndex is within valid range
-	const currentPage = Math.min(Math.max(1, pageIndex), totalPages);
-
-	// Get paginated users
-	const startIndex = (currentPage - 1) * SEARCH_RESULTS_PER_PAGE;
-	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
-	const paginatedUsers = allUsers.slice(startIndex, endIndex);
 
 	// Format for display
 	const formattedQuery = slug.replace(/-/g, " ");
@@ -143,7 +128,7 @@ export default async function SearchPagePaginated({
 							<span>for developers</span>
 							{totalPages > 1 && (
 								<span className="ml-2">
-									(Page {currentPage} of {totalPages})
+									(Page {pageIndex} of {totalPages})
 								</span>
 							)}
 						</div>
@@ -383,7 +368,7 @@ export default async function SearchPagePaginated({
 				{totalPages > 1 && (
 					<div className="mt-8 flex justify-center">
 						<Pagination
-							currentPage={currentPage}
+							currentPage={pageIndex}
 							totalPages={totalPages}
 							baseUrl={`/search/${slug}/p`}
 							firstPageUrl={`/search/${slug}`}

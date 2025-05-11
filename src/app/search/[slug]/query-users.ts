@@ -1,17 +1,17 @@
 import { db } from "@/db";
 import { type UserSelect, user } from "@/db/schema";
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 import type { SearchParams } from "./types";
 
-interface QueryUsersProps {
-	searchParams: SearchParams;
-	slug: string;
-}
-
-export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
+export async function queryUsers(
+	slug: string,
+	searchParams: SearchParams,
+	pageIndex: number,
+) {
 	const query = sql.empty();
 
 	// Base query
@@ -145,9 +145,16 @@ export async function queryUsers({ searchParams, slug }: QueryUsersProps) {
 		)
 		.sort((a, b) => b.score - a.score);
 
-	// At this point we have the users sorted by score
+	// Get paginated users
+	const startIndex = (pageIndex - 1) * SEARCH_RESULTS_PER_PAGE;
+	const endIndex = startIndex + SEARCH_RESULTS_PER_PAGE;
+	const paginatedUsers = usersSorted.slice(startIndex, endIndex);
 
-	return usersSorted;
+	return {
+		paginatedUsers,
+		totalUsers: usersSorted.length,
+		totalPages: Math.ceil(usersSorted.length / SEARCH_RESULTS_PER_PAGE),
+	};
 }
 
 // Define the structure for our search summary

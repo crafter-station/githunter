@@ -30,9 +30,14 @@ import SimilarProfileCard from "./SimilarProfileCard";
 interface UserProfileProps {
 	user: UserSelect;
 	similarUsers?: UserSelect[];
+	rank: Record<string, number>;
 }
 
-export default function UserProfile({ user, similarUsers }: UserProfileProps) {
+export default function UserProfile({
+	user,
+	similarUsers,
+	rank,
+}: UserProfileProps) {
 	const [showAllTech, setShowAllTech] = useState(false);
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [visibleReposCount, setVisibleReposCount] = useState(6);
@@ -468,6 +473,35 @@ export default function UserProfile({ user, similarUsers }: UserProfileProps) {
 										currentUserStack={user.stack || []}
 									/>
 								))}
+							</div>
+						</div>
+					)}
+
+					{!!rank && Object.keys(rank).length > 0 && (
+						<div className="rounded-lg border border-border/50 bg-muted/20 p-6 shadow-sm">
+							<h2 className="mb-4 flex items-center font-medium text-lg">
+								<Users className="mr-2 h-5 w-5 text-[#2300A7] dark:text-[#75A9FF]" />
+								Rank
+							</h2>
+							<div className="flex flex-col gap-2">
+								{Object.entries(rank)
+									.sort(([, a], [, b]) => a - b)
+									.map(([key, value]) => (
+										<Link key={key} href={`/search/${key}`}>
+											<span className="text-muted-foreground text-sm">
+												#{value}{" "}
+											</span>
+											{key
+												.split("-")
+												.map((word) => {
+													if (["in", "at", "on", "en", "with"].includes(word)) {
+														return word;
+													}
+													return word.charAt(0).toUpperCase() + word.slice(1);
+												})
+												.join(" ")}
+										</Link>
+									))}
 							</div>
 						</div>
 					)}

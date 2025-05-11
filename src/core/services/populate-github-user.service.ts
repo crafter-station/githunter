@@ -59,7 +59,6 @@ export class PopulateGithubUser {
 			userProfile,
 			userRepos,
 			metadata,
-			techStackSet,
 			pinnedOrTopRepos,
 		);
 

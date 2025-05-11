@@ -47,6 +47,7 @@ export async function getQueryParams(slug: string) {
 	 - Ensure you return just technologies, not roles
 	 - Return an array of objects with the technology and its relevance to the role
 	 - The relevance should be a number between 0 and 100
+	 - If the query is generic, return an empty array or technologies with low relevance
 
 	 Example: "nextjs frontend developer" → [{
 		tech: "nextjs",

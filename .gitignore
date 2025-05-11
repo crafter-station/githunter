@@ -46,6 +46,6 @@ next-env.d.ts
 /github-cache
 
 # clerk configuration (can include secrets)
-/.clerk/
+.clerk/
 
 package-lock.json

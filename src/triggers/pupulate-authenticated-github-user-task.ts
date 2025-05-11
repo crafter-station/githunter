@@ -1,8 +1,4 @@
-import {
-	mapReposOfUser,
-	mapTechStackFromRepos,
-	mapUser,
-} from "@/core/models/mappers";
+import { mapReposOfUser, mapUser } from "@/core/models/mappers";
 import type { RepoOfUser } from "@/core/models/user";
 import { type User, clerkClient } from "@clerk/nextjs/server";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
@@ -43,8 +39,6 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 		const { userInfo, reposSummaries } = await getUserInfoWithTopRepos();
 		const repos = await getReposOfUser(reposSummaries, username);
 		const userMetadata = await extractMetadata();
-		const techStackSet = mapTechStackFromRepos(repos);
-		logger.info(`Stack: ${Array.from(techStackSet)}`);
 		const pinnedRepos = await getPinnedRepos();
 
 		const userRecord = mapUser(
@@ -52,7 +46,6 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			userInfo,
 			repos,
 			userMetadata,
-			techStackSet,
 			pinnedRepos,
 		);
 

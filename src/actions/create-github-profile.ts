@@ -1,5 +1,6 @@
 "use server";
 
+import { getCurrentPlan } from "@/lib/get-plan";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 
@@ -11,6 +12,16 @@ export async function createGithubProfileAction(
 	prevState: { error: string | null },
 	formData: FormData,
 ) {
+	const currentPlan = await getCurrentPlan();
+
+	if (!currentPlan) {
+		return { error: "Unauthorized" };
+	}
+
+	if (currentPlan?.name !== "Plus") {
+		return { error: "Unauthorized" };
+	}
+
 	// Validate form data
 	const username = formData.get("username");
 

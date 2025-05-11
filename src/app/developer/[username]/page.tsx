@@ -2,6 +2,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { UserProfile } from "@/components/profile";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
+import { redis } from "@/redis";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -29,14 +30,22 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 		notFound();
 	}
 
+	const rank =
+		(await redis.hgetall<Record<string, number>>(`rank:${username}`)) || {};
+
 	return (
 		<div className="flex min-h-screen flex-col bg-background">
 			<Header />
 			<main className="flex-1">
 				<div className="container mx-auto px-4 py-8">
-					<UserProfile user={userData} similarUsers={similarUsers} />
+					<UserProfile
+						user={userData}
+						similarUsers={similarUsers}
+						rank={rank}
+					/>
 				</div>
 			</main>
+
 			<Footer />
 		</div>
 	);
