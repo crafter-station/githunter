@@ -463,6 +463,8 @@ export function SearchBox({
 								isCompact ? "" : "absolute right-4 bottom-2",
 							)}
 						>
+							{/* Add Advanced Search Dialog */}
+							<AdvancedSearchDialog variant="ghost" />
 							<Button
 								variant="ghost"
 								size="icon"
@@ -518,10 +520,6 @@ export function SearchBox({
 					sideOffset={0}
 				>
 					<div className="flex flex-col items-stretch">
-						{/* Add Advanced Search Dialog */}
-						<div className="mb-4 px-2">
-							<AdvancedSearchDialog />
-						</div>
 						{/* Query suggestions based on search - new section */}
 						{isSearching ? (
 							<div className="py-0.5">
