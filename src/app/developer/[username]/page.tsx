@@ -317,7 +317,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 								{/* Left column - About and Tech Stack stacked vertically */}
 								<div className="flex flex-col gap-6">
 									{/* About section */}
-									<Card className="flex-1">
+									<Card className="flex-1 gap-0">
 										<CardHeader className="pb-2">
 											<CardTitle className="font-medium text-lg">
 												About
