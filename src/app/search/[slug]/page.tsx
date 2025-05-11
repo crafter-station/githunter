@@ -25,6 +25,7 @@ import {
 	Wrench,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
@@ -99,6 +100,11 @@ export default async function SearchPage({
 					[slug]: index + 1,
 				}),
 		),
+	);
+
+	paginatedUsers.map(
+		(user, index) =>
+			index < 10 && revalidatePath(`/developer/${user.username}`),
 	);
 
 	// Format for display
