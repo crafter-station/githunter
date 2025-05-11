@@ -31,6 +31,8 @@ import { cn } from "@/lib/utils";
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
 
+import { CompareFloatingPanel } from "@/components/compare-floating-panel";
+import { CompareSelectButton } from "@/components/compare-select-button";
 import { CollapsibleSummary } from "@/components/search/CollapsibleSummary";
 import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
@@ -276,117 +278,127 @@ export default async function SearchPage({
 								key={user.id}
 								className="group border-border/40 border-b pb-6"
 							>
+								{/* Grid layout */}
 								<div className="grid grid-cols-1 gap-6 md:grid-cols-4">
-									{/* Main content (3/4 width on md+ screens) */}
+									{/* Contenido del usuario (3/4 width on md+ screens) */}
 									<div className="md:col-span-3">
-										<div className="flex items-start gap-3">
-											{/* Avatar */}
-											<Link
-												href={`/developer/${user.username}`}
-												className="flex-shrink-0"
-											>
-												<div className="h-10 w-10 overflow-hidden rounded-full border border-border">
-													<img
-														src={user.avatarUrl}
-														alt={`${user.username}'s avatar`}
-														className="h-full w-full object-cover"
-													/>
-												</div>
-											</Link>
+										<div className="group relative">
+											{/* Avatar y contenido */}
+											<div className="flex items-start gap-3">
+												{/* Avatar */}
+												<Link
+													href={`/developer/${user.username}`}
+													className="flex-shrink-0"
+												>
+													<div className="h-10 w-10 overflow-hidden rounded-full border border-border">
+														<img
+															src={user.avatarUrl}
+															alt={`${user.username}'s avatar`}
+															className="h-full w-full object-cover"
+														/>
+													</div>
+												</Link>
 
-											{/* Content */}
-											<div className="min-w-0 flex-1">
-												{/* Title row with name & country */}
-												<div className="mb-1 flex items-center gap-2">
-													<Link
-														href={`/developer/${user.username}`}
-														className="font-medium text-[#2300A7] text-xl hover:underline dark:text-[#75A9FF]"
-													>
-														{user.fullname || user.username}
-													</Link>
-													{user.country && (
-														<span className="flex items-center">
-															<CountryFlag
-																countryCode={
-																	getCountryCode(user.country) || "us"
-																}
-																size="sm"
-															/>
-														</span>
-													)}
-												</div>
-
-												{/* GitHub username */}
-												<div className="mb-1 text-[#008080] text-sm dark:text-[#98FEE3]">
-													<Link
-														href={`https://github.com/${user.username}`}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="flex max-w-max items-center gap-1 font-medium hover:underline"
-													>
-														github.com/{user.username}
-														<ExternalLink className="h-3 w-3 text-muted-foreground" />
-													</Link>
-												</div>
-
-												{/* About section instead of tech stack */}
-												{user.about && (
-													<p className="mb-2 line-clamp-2 overflow-hidden text-ellipsis text-foreground text-sm">
-														{user.about}
-													</p>
-												)}
-
-												{/* Tech stack as small pills */}
-												{user.stack && user.stack.length > 0 && (
-													<div className="mb-2 flex flex-wrap gap-1">
-														{user.stack.slice(0, 4).map((tech) => (
-															<span
-																key={tech}
-																className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300"
-															>
-																{tech}
-															</span>
-														))}
-														{user.stack.length > 4 && (
-															<span className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300">
-																+{user.stack.length - 4}
+												{/* Content */}
+												<div className="min-w-0 flex-1">
+													{/* Title row with name & country */}
+													<div className="mb-1 flex items-center gap-2">
+														<Link
+															href={`/developer/${user.username}`}
+															className="font-medium text-[#2300A7] text-xl hover:underline dark:text-[#75A9FF]"
+														>
+															{user.fullname || user.username}
+														</Link>
+														{user.country && (
+															<span className="flex items-center">
+																<CountryFlag
+																	countryCode={
+																		getCountryCode(user.country) || "us"
+																	}
+																	size="sm"
+																/>
 															</span>
 														)}
 													</div>
-												)}
 
-												{/* Stats row */}
-												<div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
-													{user.stars > 0 && (
-														<div className="flex items-center gap-1">
-															<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
-															<span>{user.stars.toLocaleString()} stars</span>
+													{/* GitHub username */}
+													<div className="mb-1 text-[#008080] text-sm dark:text-[#98FEE3]">
+														<Link
+															href={`https://github.com/${user.username}`}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="flex max-w-max items-center gap-1 font-medium hover:underline"
+														>
+															github.com/{user.username}
+															<ExternalLink className="h-3 w-3 text-muted-foreground" />
+														</Link>
+													</div>
+
+													{/* About section */}
+													{user.about && (
+														<p className="mb-2 line-clamp-2 overflow-hidden text-ellipsis text-foreground text-sm">
+															{user.about}
+														</p>
+													)}
+
+													{/* Tech stack as small pills */}
+													{user.stack && user.stack.length > 0 && (
+														<div className="mb-2 flex flex-wrap gap-1">
+															{user.stack.slice(0, 4).map((tech) => (
+																<span
+																	key={tech}
+																	className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300"
+																>
+																	{tech}
+																</span>
+															))}
+															{user.stack.length > 4 && (
+																<span className="inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-gray-700 text-xs dark:bg-gray-800 dark:text-gray-300">
+																	+{user.stack.length - 4}
+																</span>
+															)}
 														</div>
 													)}
-													{user.followers > 0 && (
-														<div className="flex items-center gap-1">
-															<Users className="h-3.5 w-3.5" />
-															<span>
-																{user.followers.toLocaleString()} followers
-															</span>
-														</div>
-													)}
-													{user.contributions > 0 && (
-														<div className="flex items-center gap-1">
-															<BarChart className="h-3.5 w-3.5" />
-															<span>
-																{user.contributions.toLocaleString()}{" "}
-																contributions
-															</span>
-														</div>
-													)}
+
+													{/* Stats row */}
+													<div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
+														{user.stars > 0 && (
+															<div className="flex items-center gap-1">
+																<Star className="h-3.5 w-3.5 text-[#E87701] dark:text-[#FFC799]" />
+																<span>{user.stars.toLocaleString()} stars</span>
+															</div>
+														)}
+														{user.followers > 0 && (
+															<div className="flex items-center gap-1">
+																<Users className="h-3.5 w-3.5" />
+																<span>
+																	{user.followers.toLocaleString()} followers
+																</span>
+															</div>
+														)}
+														{user.contributions > 0 && (
+															<div className="flex items-center gap-1">
+																<BarChart className="h-3.5 w-3.5" />
+																<span>
+																	{user.contributions.toLocaleString()}{" "}
+																	contributions
+																</span>
+															</div>
+														)}
+													</div>
 												</div>
 											</div>
+
+											{/* Botón de comparación con posición absoluta */}
+											<CompareSelectButton
+												username={user.username}
+												fullname={user.fullname || user.username}
+											/>
 										</div>
 									</div>
 
 									{/* Repository column (1/4 width on md+ screens) */}
-									<div className="flex flex-col md:col-span-1">
+									<div className="md:col-span-1">
 										{user.repos && user.repos.length > 0 ? (
 											<div className="space-y-2">
 												<h3 className="mb-1 font-medium text-muted-foreground text-xs uppercase">
@@ -481,6 +493,9 @@ export default async function SearchPage({
 						/>
 					</div>
 				)}
+
+				{/* Panel flotante para comparar */}
+				<CompareFloatingPanel />
 			</main>
 
 			{/* Footer */}
