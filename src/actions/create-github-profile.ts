@@ -1,7 +1,6 @@
 "use server";
 
-import { PRICING_PLANS } from "@/lib/constants";
-import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentPlan } from "@/lib/get-plan";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 
@@ -13,19 +12,11 @@ export async function createGithubProfileAction(
 	prevState: { error: string | null },
 	formData: FormData,
 ) {
-	const user = await currentUser();
+	const currentPlan = await getCurrentPlan();
 
-	if (!user) {
+	if (!currentPlan) {
 		return { error: "Unauthorized" };
 	}
-
-	if (user.publicMetadata.subscriptionStatus !== "active") {
-		return { error: "Unauthorized" };
-	}
-
-	const currentPlan = PRICING_PLANS.find(
-		(plan) => plan.id === user.publicMetadata.subscriptionPlanId,
-	);
 
 	if (currentPlan?.name !== "Plus") {
 		return { error: "Unauthorized" };
