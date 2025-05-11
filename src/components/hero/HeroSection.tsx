@@ -2,6 +2,7 @@ import { HelpCircle } from "lucide-react";
 import type { GitHubUserProfileProps } from "../GitHubUserProfile";
 import { Footer } from "../footer";
 import { SearchSection } from "../search/SearchSection";
+import { AnimatedBadge } from "./AnimatedBadge";
 
 interface HeroSectionProps {
 	featuredUsers: Omit<GitHubUserProfileProps, "key">[];
@@ -13,6 +14,7 @@ export function HeroSection({ featuredUsers }: HeroSectionProps) {
 			<section className="flex min-h-[80dvh] items-center justify-center">
 				<div className="container mx-auto flex flex-col items-center gap-8 px-4 py-12">
 					<div className="flex flex-col items-center gap-4">
+						<AnimatedBadge />
 						<h1 className="max-w-3xl text-center font-light text-3xl md:text-4xl">
 							What kind of{" "}
 							<span className="font-medium">open-source developer</span> are you
@@ -23,7 +25,7 @@ export function HeroSection({ featuredUsers }: HeroSectionProps) {
 						</p>
 					</div>
 
-					<SearchSection users={featuredUsers} />
+					<SearchSection featuredUsers={featuredUsers} />
 				</div>
 			</section>
 

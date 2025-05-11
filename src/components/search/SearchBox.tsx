@@ -528,7 +528,7 @@ export function SearchBox({
 					</div>
 				</PopoverTrigger>
 				<PopoverContent
-					className="rounded-t-none border-t-0 p-2 shadow-md"
+					className="z-[999] rounded-t-none border-t-0 p-2 shadow-md"
 					align="start"
 					sideOffset={0}
 				>

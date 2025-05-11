@@ -64,78 +64,36 @@ export function GitHubUserProfile({
 
 	if (compact) {
 		return (
-			<Card className="group border-border bg-card p-3 transition-all hover:border-primary/20 hover:shadow-sm">
-				<div className="flex items-center gap-3">
-					<Link
-						href={profileUrl}
-						className="h-10 w-10 overflow-hidden rounded-full border border-border bg-muted"
-					>
-						<Image
-							src={avatarUrl}
-							alt={username}
-							width={40}
-							height={40}
-							className="h-full w-full object-cover transition-transform group-hover:scale-105"
-						/>
-					</Link>
-					<div className="flex-1 overflow-hidden">
-						<div className="flex items-center justify-between">
-							<Link
-								href={profileUrl}
-								className="truncate font-medium text-sm transition-colors hover:text-primary"
-							>
-								{username}
-							</Link>
-							<Button
-								variant="ghost"
-								size="icon"
-								className="size-6 cursor-pointer text-muted-foreground hover:text-primary"
-								onClick={() => window.open(githubProfileUrl, "_blank")}
-								title="View GitHub Profile"
-							>
-								<ExternalLink className="size-3" />
-							</Button>
+			<Link
+				href={profileUrl}
+				className="flex items-center gap-3 rounded-lg border border-border/50 bg-card/50 p-2 transition-colors hover:bg-muted/20"
+			>
+				<div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-border/50">
+					<Image
+						src={avatarUrl}
+						alt={`${fullname || username}'s profile picture`}
+						width={48}
+						height={48}
+						className="h-full w-full object-cover"
+					/>
+				</div>
+				<div className="min-w-0 flex-1">
+					<div className="flex items-center justify-between">
+						<h3 className="truncate font-medium text-sm">
+							{fullname || username}
+						</h3>
+						<div className="flex items-center gap-1 text-muted-foreground text-xs">
+							<Star className="h-3 w-3 text-[#E87701] dark:text-[#FFC799]" />
+							<span>{stars}</span>
 						</div>
-						<div className="flex items-center gap-2 text-muted-foreground text-xs">
-							<div className="flex items-center gap-1">
-								<Star className="h-3 w-3 text-[#E87701] dark:text-[#FFC799]" />
-								<span>{stars}</span>
-							</div>
-							<div className="flex items-center gap-1">
-								<Users className="h-3 w-3 text-[#2300A7] dark:text-[#75A9FF]" />
-								<span>{followers}</span>
-							</div>
-						</div>
-						{city && country && (
-							<div className="mt-1 flex items-center gap-1 text-muted-foreground text-xs">
-								<MapPin className="h-3 w-3" />
-								<span className="truncate">{`${city}, ${country}`}</span>
-							</div>
-						)}
-						{userStack.length > 0 && (
-							<div className="mt-2 flex flex-wrap gap-1">
-								{userStack.slice(0, 2).map((tech) => (
-									<Badge
-										key={tech}
-										variant="outline"
-										className="h-4 bg-primary/5 px-1.5 py-0 font-normal text-[10px]"
-									>
-										{tech}
-									</Badge>
-								))}
-								{userStack.length > 2 && (
-									<Badge
-										variant="outline"
-										className="h-4 bg-muted px-1.5 py-0 font-normal text-[10px]"
-									>
-										+{userStack.length - 2}
-									</Badge>
-								)}
-							</div>
-						)}
+					</div>
+					<div className="mt-1 flex items-center gap-2">
+						<p className="truncate text-muted-foreground text-xs">
+							@{username}
+						</p>
 					</div>
 				</div>
-			</Card>
+			</Link>
 		);
 	}
 
