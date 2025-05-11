@@ -2,7 +2,12 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { db } from "@/db";
-import { type UserSelect, user } from "@/db/schema";
+import {
+	type RawUserSelect,
+	type ScoredUserSelect,
+	type UserSelect,
+	user,
+} from "@/db/schema";
 
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 
@@ -91,15 +96,7 @@ export async function queryUsers(
 		return score;
 	}
 
-	const usersSorted = (
-		usersFirstFilter.rows as (UserSelect & {
-			potential_roles: string[];
-			clerk_id: string;
-			avatar_url: string;
-			created_at: Date;
-			updated_at: Date;
-		})[]
-	)
+	const usersSorted = (usersFirstFilter.rows as RawUserSelect[])
 		.filter((u) =>
 			searchParams.techStack
 				.filter((t) => t.relevance > 80)
@@ -140,9 +137,7 @@ export async function queryUsers(
 
 					createdAt: u.created_at,
 					updatedAt: u.updated_at,
-				}) satisfies UserSelect & {
-					score: number;
-				},
+				}) satisfies ScoredUserSelect,
 		)
 		.sort((a, b) => b.score - a.score);
 

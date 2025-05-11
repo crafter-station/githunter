@@ -30,6 +30,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CountryFlag } from "../ui/CountryFlag";
+import { AdvancedSearchDialog } from "./AdvancedSearchDialog";
 
 // Función para obtener el código de país para la bandera
 type SuggestedQuery = {
@@ -390,6 +391,7 @@ export function SearchBox({
 				"w-full",
 				!isCompact && "max-w-3xl rounded-lg bg-background",
 				open && "rounded-b-none",
+				"flex space-x-2",
 			)}
 		>
 			<Popover open={open} onOpenChange={setOpen}>
@@ -516,6 +518,10 @@ export function SearchBox({
 					sideOffset={0}
 				>
 					<div className="flex flex-col items-stretch">
+						{/* Add Advanced Search Dialog */}
+						<div className="mb-4 px-2">
+							<AdvancedSearchDialog />
+						</div>
 						{/* Query suggestions based on search - new section */}
 						{isSearching ? (
 							<div className="py-0.5">
@@ -997,6 +1003,7 @@ export function SearchBox({
 					</div>
 				</PopoverContent>
 			</Popover>
+			<AdvancedSearchDialog />
 			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
 		</div>
 	);

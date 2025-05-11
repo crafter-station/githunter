@@ -119,3 +119,19 @@ export const user = pgTable(
 );
 
 export type UserSelect = typeof user.$inferSelect;
+
+export type RawUserSelect = UserSelect & {
+	potential_roles: string[];
+	clerk_id: string;
+	avatar_url: string;
+	created_at: Date;
+	updated_at: Date;
+	pinned_repos: PinnedRepo[];
+	repos: Repo[];
+};
+
+export type ScoredUserSelect = UserSelect & {
+	score: number;
+	pinnedRepos: PinnedRepo[];
+	repos: Repo[];
+};
