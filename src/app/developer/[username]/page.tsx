@@ -420,15 +420,13 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
 									</Card>
 								)}
 
-								{/* Recent Repositories */}
-
-								{/* Contributed Recent Repositories */}
+								{/* Recent Repositories Contributions */}
 								{visibleRepos.length > 0 && (
 									<Card className="w-full">
 										<CardHeader>
 											<CardTitle className="flex items-center font-medium text-lg">
 												<BookCopy className="mr-2 h-4 w-4 text-primary" />
-												Contributed Recent Repositories
+												Recent Repositories Contributions
 											</CardTitle>
 										</CardHeader>
 										<CardContent>
