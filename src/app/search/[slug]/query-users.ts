@@ -1,10 +1,11 @@
-import { db } from "@/db";
-import { type UserSelect, user } from "@/db/schema";
-import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
-import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
+
+import { db } from "@/db";
+import { type UserSelect, user } from "@/db/schema";
+
+import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
+
 import type { SearchParams } from "./types";
 
 export async function queryUsers(
@@ -181,71 +182,3 @@ export const SearchSummarySchema = z.object({
 });
 
 export type SearchSummaryData = z.infer<typeof SearchSummarySchema>;
-
-/**
- * Generate a structured summary of the search results
- */
-export async function generateSearchSummary(
-	users: UserSelect[],
-	searchParams: SearchParams,
-): Promise<SearchSummaryData> {
-	// Extract top 5 users for the summary
-	const topUsers = users.slice(0, 5);
-
-	// Create a compact representation of the search parameters and results
-	const searchSummary = {
-		query: {
-			role: searchParams.role,
-			alternativeRoles: searchParams.alternativeNamesForRole,
-			techStack: searchParams.techStack.map((t) => t.tech),
-			location: searchParams.city
-				? `${searchParams.city}${searchParams.country ? `, ${searchParams.country}` : ""}`
-				: searchParams.country || "Any location",
-			minStars: searchParams.minStars,
-			minRepos: searchParams.minRepos,
-		},
-		results: {
-			totalFound: users.length,
-			topUsers: topUsers.map((user) => ({
-				username: user.username,
-				fullname: user.fullname,
-				location:
-					user.city && user.country
-						? `${user.city}, ${user.country}`
-						: user.city || user.country || "Unknown location",
-				stars: user.stars,
-				followers: user.followers,
-				repositories: user.repositories,
-				contributions: user.contributions,
-				stack: user.stack?.slice(0, 5) || [],
-			})),
-		},
-	};
-
-	// Use Vercel AI SDK generateObject to create a structured response
-	const { object } = await generateObject({
-		model: openai("gpt-4o-mini"),
-		schema: SearchSummarySchema,
-		system: `You are an AI assistant that creates high-quality search result summaries.
-		Create concise, informative summaries that highlight key information.
-		Be professional but conversational in tone.
-		Focus on providing the most useful information about the developers found in the search..`,
-		prompt: `Generate a structured summary of the search results for GitHub developers.
-		The search was for: ${searchParams.role} developers${searchParams.city ? ` in ${searchParams.city}` : ""}${searchParams.country ? `, ${searchParams.country}` : ""}.
-		
-		Here is the detailed search information and results:
-		${JSON.stringify(searchSummary, null, 2)}
-		
-		Create a well-formatted summary with these key components:
-		- Information about the total number of developers found
-		- Details about the top ${Math.min(5, topUsers.length)} developers with their key metrics
-		- A comprehensive spoken digest that explains the search results in a clear, conversational manner
-		- A markdown summary that includes a table of top developers
-		
-		Focus on making the spokenDigest detailed and informative, including information about common technologies and any notable metrics from the developers.
-		If location is provided in the query, include the location in the summary.
-		Keep the entire summary concise but informative.`,
-	});
-
-	return object;
-}
