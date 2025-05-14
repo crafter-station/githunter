@@ -1001,7 +1001,6 @@ export function SearchBox({
 					</div>
 				</PopoverContent>
 			</Popover>
-			<AdvancedSearchDialog />
 			{error && <div className="mt-2 text-red-500 text-sm">{error}</div>}
 		</div>
 	);
