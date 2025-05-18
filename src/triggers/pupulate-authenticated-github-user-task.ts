@@ -1,5 +1,6 @@
 import { mapReposOfUser, mapUser } from "@/core/models/mappers";
 import type { RepoOfUser } from "@/core/models/user";
+import { vector } from "@/vector";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 import type {
@@ -46,8 +47,32 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			throw new Error("Failed to save into database");
 		}
 
-		// Final progress update
-		metadata.set("progress", "completed");
+		const user = result.output;
+
+		await vector.upsert([
+			{
+				id: `user-username-${user.id}`,
+				data: user.username,
+				metadata: {
+					username: user.username,
+					fullname: user.fullname,
+					avatarUrl: user.avatarUrl,
+					country: user.country,
+					field: "username",
+				},
+			},
+			{
+				id: `user-fullname-${user.id}`,
+				data: user.fullname,
+				metadata: {
+					username: user.username,
+					fullname: user.fullname,
+					avatarUrl: user.avatarUrl,
+					country: user.country,
+					field: "fullname",
+				},
+			},
+		]);
 
 		return {
 			username,
