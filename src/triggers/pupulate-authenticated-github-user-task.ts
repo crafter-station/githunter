@@ -1,6 +1,5 @@
 import { mapReposOfUser, mapUser } from "@/core/models/mappers";
 import type { RepoOfUser } from "@/core/models/user";
-import { vector } from "@/vector";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 import type {
@@ -14,6 +13,7 @@ import { getRepoDetailsTask } from "./get-repo-details-task";
 import { getContributedReposInLastMonthTask } from "./get-top-repos-task";
 import { getUserInfoTask } from "./get-user-info-task";
 import { getUserMetadata } from "./get-user-metadata";
+import { ingestUserToVectorDb } from "./ingest-user-vector-db";
 import { insertUserToDbTask } from "./insert-user-to-db-task";
 
 export const pupulateAuthenticatedGithubUserTask = schemaTask({
@@ -49,30 +49,13 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 
 		const user = result.output;
 
-		await vector.upsert([
-			{
-				id: `user-username-${user.id}`,
-				data: user.username,
-				metadata: {
-					username: user.username,
-					fullname: user.fullname,
-					avatarUrl: user.avatarUrl,
-					country: user.country,
-					field: "username",
-				},
-			},
-			{
-				id: `user-fullname-${user.id}`,
-				data: user.fullname,
-				metadata: {
-					username: user.username,
-					fullname: user.fullname,
-					avatarUrl: user.avatarUrl,
-					country: user.country,
-					field: "fullname",
-				},
-			},
-		]);
+		await ingestUserToVectorDb.triggerAndWait({
+			id: user.id,
+			username: user.username,
+			fullname: user.fullname,
+			avatarUrl: user.avatarUrl,
+			country: user.country,
+		});
 
 		return {
 			username,
