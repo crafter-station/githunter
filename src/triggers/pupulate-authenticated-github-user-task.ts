@@ -1,6 +1,5 @@
 import { mapReposOfUser, mapUser } from "@/core/models/mappers";
 import type { RepoOfUser } from "@/core/models/user";
-import { type User, clerkClient } from "@clerk/nextjs/server";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 import type {
@@ -14,6 +13,7 @@ import { getRepoDetailsTask } from "./get-repo-details-task";
 import { getContributedReposInLastMonthTask } from "./get-top-repos-task";
 import { getUserInfoTask } from "./get-user-info-task";
 import { getUserMetadata } from "./get-user-metadata";
+import { ingestUserToVectorDb } from "./ingest-user-vector-db";
 import { insertUserToDbTask } from "./insert-user-to-db-task";
 
 export const pupulateAuthenticatedGithubUserTask = schemaTask({
@@ -24,14 +24,6 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 	}),
 	run: async ({ username, userId }) => {
 		logger.info(`Starting GitHub profile generation for ${username}`);
-
-		const clerk = await clerkClient();
-
-		let clerkUser: User | null = null;
-
-		if (userId) {
-			clerkUser = await clerk.users.getUser(userId);
-		}
 
 		// Add metadata for tracking this task
 		metadata.set("username", username);
@@ -55,8 +47,15 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			throw new Error("Failed to save into database");
 		}
 
-		// Final progress update
-		metadata.set("progress", "completed");
+		const user = result.output;
+
+		await ingestUserToVectorDb.triggerAndWait({
+			id: user.id,
+			username: user.username,
+			fullname: user.fullname,
+			avatarUrl: user.avatarUrl,
+			country: user.country,
+		});
 
 		return {
 			username,

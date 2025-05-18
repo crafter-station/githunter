@@ -14,5 +14,6 @@ export const insertUserToDbTask = schemaTask({
 		} else {
 			await userRepo.insert(user);
 		}
+		return user;
 	},
 });
