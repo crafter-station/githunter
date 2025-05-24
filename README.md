@@ -15,6 +15,7 @@ Hunt the git.
    - Add the following variables to your `.env`:
      - `UPSTASH_VECTOR_REST_URL`
      - `UPSTASH_VECTOR_REST_TOKEN`
+5. Go to [Mistral Console](https://console.mistral.ai/home) and generate your api key, then replace the `MISTRAL_API_KEY` in your `.env` file.
 5. Replace all variables in a `.env` file.
 
 ## Development
