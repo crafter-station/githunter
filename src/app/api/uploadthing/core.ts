@@ -1,9 +1,8 @@
+import { currentUser } from "@clerk/nextjs/server";
 import { type FileRouter, createUploadthing } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
-
-const auth = (req: Request) => ({ id: "fakeId" }); // Fake auth function
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
@@ -17,11 +16,19 @@ export const ourFileRouter = {
 			maxFileSize: "8MB",
 			maxFileCount: 1,
 		},
+		"application/msword": {
+			maxFileSize: "8MB",
+			maxFileCount: 1,
+		},
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+			maxFileSize: "8MB",
+			maxFileCount: 1,
+		},
 	})
 		// Set permissions and file types for this FileRoute
-		.middleware(async ({ req }) => {
+		.middleware(async () => {
 			// This code runs on your server before upload
-			const user = await auth(req);
+			const user = await currentUser();
 
 			// If you throw, the user will not be able to upload
 			if (!user) throw new UploadThingError("Unauthorized");

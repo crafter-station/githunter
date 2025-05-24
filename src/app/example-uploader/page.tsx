@@ -73,7 +73,7 @@ export default function FileUploadUploadThingDemo() {
 
 	return (
 		<FileUpload
-			accept="application/pdf"
+			accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 			maxFiles={1}
 			maxSize={8 * 1024 * 1024}
 			className="w-full max-w-md"
@@ -87,9 +87,10 @@ export default function FileUploadUploadThingDemo() {
 					<div className="flex items-center justify-center rounded-full border p-2.5">
 						<Upload className="size-6 text-muted-foreground" />
 					</div>
-					<p className="font-medium text-sm">Drag & drop your CV in PDF here</p>
+					<p className="font-medium text-sm">Drag & drop your CV here</p>
 					<p className="text-muted-foreground text-xs">
-						Or click to browse (max 1 file, up to 8MB)
+						Or click to browse (max 1 file, up to 8MB, PDF and Word files are
+						supported)
 					</p>
 				</div>
 				<FileUploadTrigger asChild>
