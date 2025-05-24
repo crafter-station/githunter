@@ -97,6 +97,7 @@ export async function queryUsersAdvanced(params: {
 					pinnedRepos: u.pinnedRepos,
 					createdAt: u.created_at,
 					updatedAt: u.updated_at,
+					curriculumVitae: u.curriculumVitae,
 				}) satisfies ScoredUserSelect,
 		)
 		.sort((a, b) => b.score - a.score);
