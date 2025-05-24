@@ -29,15 +29,15 @@ export const pinnedRepoSchema = z.object({
 });
 
 export const curriculumVitaeSchema = z.object({
-	fullName: z.string().min(3),
-	email: z.string().email(),
+	fullName: z.string(),
+	email: z.string(),
 	phone: z.string().optional(),
-	location: z.string().optional(), // city, country
-	linkedin: z.string().url().optional(),
-	github: z.string().url().optional(),
-	portfolio: z.string().url().optional(),
+	location: z.string().optional(),
+	linkedin: z.string().optional(),
+	github: z.string().optional(),
+	portfolio: z.string().optional(),
 
-	summary: z.string().max(400).optional(),
+	summary: z.string().optional(),
 
 	experience: z.array(
 		z.object({
@@ -75,7 +75,7 @@ export const curriculumVitaeSchema = z.object({
 		.array(
 			z.object({
 				name: z.string(),
-				description: z.string().max(300),
+				description: z.string(),
 				techStack: z.array(z.string()).optional(),
 				link: z.string().url().optional(),
 			}),
