@@ -28,8 +28,64 @@ export const pinnedRepoSchema = z.object({
 	stars: z.number(),
 });
 
+export const curriculumVitaeSchema = z.object({
+	fullName: z.string().min(3),
+	email: z.string().email(),
+	phone: z.string().optional(),
+	location: z.string().optional(), // city, country
+	linkedin: z.string().url().optional(),
+	github: z.string().url().optional(),
+	portfolio: z.string().url().optional(),
+
+	summary: z.string().max(400).optional(),
+
+	experience: z.array(
+		z.object({
+			title: z.string(),
+			company: z.string(),
+			location: z.string().optional(),
+			startDate: z.string(), // ISO 8601 o "MMM YYYY"
+			endDate: z.string().optional(), // "Present" o "MMM YYYY"
+			descriptions: z.array(z.string()).optional(), // ej. as a list of bullet points
+			keywords: z.array(z.string()).optional(), // ej. ['React', 'TypeScript']
+		}),
+	),
+
+	education: z.array(
+		z.object({
+			degree: z.string(),
+			institution: z.string(),
+			location: z.string().optional(),
+			graduationYear: z.string().length(4),
+		}),
+	),
+
+	skills: z.array(z.string()),
+
+	certifications: z
+		.array(
+			z.object({
+				name: z.string(),
+				year: z.string().length(4),
+			}),
+		)
+		.optional(),
+
+	projects: z
+		.array(
+			z.object({
+				name: z.string(),
+				description: z.string().max(300),
+				techStack: z.array(z.string()).optional(),
+				link: z.string().url().optional(),
+			}),
+		)
+		.optional(),
+});
+
 export type Repo = z.infer<typeof repoSchema>;
 export type PinnedRepo = z.infer<typeof pinnedRepoSchema>;
+export type CurriculumVitae = z.infer<typeof curriculumVitaeSchema>;
 
 export const user = pgTable(
 	"user",
@@ -81,6 +137,11 @@ export const user = pgTable(
 			.notNull()
 			.default([])
 			.$type<PinnedRepo[]>(),
+
+		curriculumVitae: jsonb("curriculum_vitae")
+			.notNull()
+			.default(sql`'{}'::jsonb`)
+			.$type<CurriculumVitae>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns

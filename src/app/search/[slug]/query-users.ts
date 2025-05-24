@@ -137,6 +137,8 @@ export async function queryUsers(
 
 					createdAt: u.created_at,
 					updatedAt: u.updated_at,
+
+					curriculumVitae: u.curriculumVitae,
 				}) satisfies ScoredUserSelect,
 		)
 		.sort((a, b) => b.score - a.score);

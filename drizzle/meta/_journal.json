@@ -64,6 +64,13 @@
 			"when": 1746830000927,
 			"tag": "0008_create-user-subscription",
 			"breakpoints": true
+		},
+		{
+			"idx": 9,
+			"version": "7",
+			"when": 1748059458015,
+			"tag": "0009_add_curriculum_vitae_into_users",
+			"breakpoints": true
 		}
 	]
 }
