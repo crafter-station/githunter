@@ -141,7 +141,7 @@ export const user = pgTable(
 		curriculumVitae: jsonb("curriculum_vitae")
 			.notNull()
 			.default(sql`'{}'::jsonb`)
-			.$type<CurriculumVitae[]>(),
+			.$type<CurriculumVitae>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns
