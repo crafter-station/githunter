@@ -97,6 +97,7 @@ async function ocrProcess(
 		documentAnnotationFormat: responseFormatFromZodObject(
 			curriculumSchemaForAI,
 		),
+		imageLimit: 0, // to load docx
 	});
 
 	if (!result.documentAnnotation) {
@@ -163,7 +164,7 @@ export async function extractCurriculumVitaeFromFile(
 
 // Test
 if (require.main === module) {
-	extractCurriculumVitaeFromFile("cv_example.pdf")
+	extractCurriculumVitaeFromFile("cueva.docx")
 		.then((cv) => console.log("Extracted CV:", cv))
 		.catch((error) => console.error("Error:", error));
 }
