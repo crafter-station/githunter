@@ -49,9 +49,9 @@ export async function createCurriculumVitae(
 	}
 
 	async function findUserById(id: string): Promise<UserSelect | undefined> {
-		return await db.query.user.findFirst({
+		return (await db.query.user.findFirst({
 			where: eq(userTable.id, id),
-		});
+		})) as UserSelect | undefined;
 	}
 
 	async function updateUserCurriculumVitae(
