@@ -1,4 +1,3 @@
--- ✨ UP
 CREATE TABLE IF NOT EXISTS "subscription_plan" (
   "id"               varchar     PRIMARY KEY,
   "name"             varchar     NOT NULL,
@@ -16,6 +15,3 @@ CREATE INDEX IF NOT EXISTS "subscription_plan_price_idx"
   ON "subscription_plan" ("polar_price_id");
 CREATE INDEX IF NOT EXISTS "subscription_plan_sandbox_idx"
   ON "subscription_plan" ("is_sandbox");
-
--- 🔄 DOWN
-DROP TABLE IF EXISTS "subscription_plan";

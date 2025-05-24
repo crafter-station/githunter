@@ -1,28 +1,29 @@
+import { eq } from "drizzle-orm";
+import { nanoid } from "nanoid";
+
+import {
+	type RecentRepo,
+	type UserInsert,
+	type UserSelect,
+	db,
+	user as userTable,
+} from "@/db";
+
+import { GithubService } from "@/services/github-scrapper";
+import type { RepoContribution, RepoSummary } from "@/services/github-scrapper";
 import { RepoAnalyzer } from "@/services/repo-analyzer";
 import { UserMetadataExtractor } from "@/services/user-metadata-extractor";
-import { GithubService } from "../../services/github-scrapper";
-import type {
-	RepoContribution,
-	RepoSummary,
-} from "../../services/github-scrapper";
-import {
-	mapReposOfUser,
-	mapTechStackFromRepos,
-	mapUser,
-} from "../models/mappers";
-import type { RepoOfUser } from "../models/user";
-import { UserRepository } from "../repositories/user-repository";
+
+import { mapRecentRepos, mapTechStack } from "@/lib/mappers";
 
 export class PopulateGithubUser {
 	private githubService: GithubService;
 	private repoAnalyzer: RepoAnalyzer;
-	private userRepository: UserRepository;
 	private userMetadataExtractor: UserMetadataExtractor;
 
 	constructor() {
 		this.githubService = new GithubService();
 		this.repoAnalyzer = new RepoAnalyzer();
-		this.userRepository = new UserRepository();
 		this.userMetadataExtractor = new UserMetadataExtractor();
 	}
 
@@ -44,7 +45,7 @@ export class PopulateGithubUser {
 			userRepos,
 		);
 
-		const techStackSet = mapTechStackFromRepos(userRepos);
+		const techStackSet = mapTechStack(userRepos);
 
 		if (defaultCountry) {
 			userProfile.country = defaultCountry;
@@ -54,27 +55,47 @@ export class PopulateGithubUser {
 			userProfile.twitterUsername = defaultTwitter;
 		}
 
-		const userRecord = mapUser(
+		const userRecord: UserInsert = {
+			id: nanoid(),
 			username,
-			userProfile,
-			userRepos,
-			metadata,
-			pinnedOrTopRepos,
-		);
+			fullname: userProfile.name ?? "",
+			avatarUrl: userProfile.avatarUrl,
+			stars: userProfile.starsCount,
+			followers: userProfile.followers,
+			following: userProfile.following,
+			repositories: userProfile.publicRepos,
+			contributions: userProfile.contributionCount,
+			country: userProfile.country ?? null,
+			city: userProfile.city ?? null,
+			website: userProfile.websiteUrl ?? null,
+			twitter: userProfile.twitterUsername ?? null,
+			linkedin: userProfile.linkedinUrl ?? null,
+			about: metadata.about,
+			stack: Array.from(techStackSet),
+			potentialRoles: metadata.roles,
+			repos: userRepos,
+			pinnedRepos: pinnedOrTopRepos,
+			curriculumVitae: null,
+		};
 
-		const existingUser = await this.userRepository.findByUsername(username);
+		const existingUser = (await db.query.user.findFirst({
+			where: (table, { eq }) => eq(table.username, username),
+		})) as UserSelect;
 		if (existingUser) {
 			userRecord.id = existingUser.id;
-			await this.userRepository.update(userRecord);
+			await db
+				.update(userTable)
+				.set(userRecord)
+				.where(eq(userTable.id, existingUser.id));
 		} else {
-			await this.userRepository.insert(userRecord);
+			await db.insert(userTable).values(userRecord);
 		}
 	}
 
 	private async extractRepoDetails(
 		topRepos: RepoSummary[],
 		username: string,
-	): Promise<RepoOfUser[]> {
+	): Promise<RecentRepo[]> {
 		const topReposDetails = new Map<
 			string,
 			{ fullName: string; techStack: string[]; description: string }
@@ -103,6 +124,6 @@ export class PopulateGithubUser {
 				);
 			repoContributions.set(repo.fullName, contribution);
 		}
-		return mapReposOfUser(topRepos, topReposDetails, repoContributions);
+		return mapRecentRepos(topRepos, topReposDetails, repoContributions);
 	}
 }

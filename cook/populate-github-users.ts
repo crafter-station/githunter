@@ -1,8 +1,10 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as readline from "node:readline";
-import { UserRepository } from "@/core/repositories/user-repository";
-import { PopulateGithubUser } from "@/core/services/populate-github-user.service";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
+import { PopulateGithubUser } from "@/services/populate-github-user.service";
+import { eq } from "drizzle-orm";
 
 async function main() {
 	const filePath = path.resolve(__dirname, "../users.txt");
@@ -22,8 +24,9 @@ async function main() {
 
 		const [country, username, _] = line.split(",");
 		try {
-			const userRepository = new UserRepository();
-			const existingUser = await userRepository.findByUsername(username);
+			const existingUser = await db.query.user.findFirst({
+				where: eq(userTable.username, username),
+			});
 			if (existingUser) {
 				console.log(
 					`github username ${username} already processed with id ${existingUser.id}, skipping`,

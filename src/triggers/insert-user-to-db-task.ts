@@ -1,18 +1,20 @@
-import { UserSchema } from "@/core/models/user";
-import { UserRepository } from "@/core/repositories/user-repository";
 import { schemaTask } from "@trigger.dev/sdk/v3";
+import { eq } from "drizzle-orm";
+
+import { UserInsertSchema, db, user as userTable } from "@/db";
 
 export const insertUserToDbTask = schemaTask({
 	id: "insert-user-to-db",
-	schema: UserSchema,
+	schema: UserInsertSchema,
 	run: async (user) => {
-		const userRepo = new UserRepository();
-		const existingUser = await userRepo.findByUsername(user.username);
+		const existingUser = await db.query.user.findFirst({
+			where: (table, { eq }) => eq(table.username, user.username),
+		});
 		if (existingUser) {
 			user.id = existingUser.id;
-			await userRepo.update(user);
+			await db.update(userTable).set(user).where(eq(userTable.id, user.id));
 		} else {
-			await userRepo.insert(user);
+			await db.insert(userTable).values(user);
 		}
 		return user;
 	},

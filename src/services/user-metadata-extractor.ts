@@ -1,14 +1,18 @@
-import type { RepoOfUser, UserMetadata } from "@/core/models/user";
-import { ROLES } from "@/lib/constants/roles";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
 
+import type { RecentRepo, UserSelect } from "@/db";
+import { ROLES } from "@/lib/constants";
 export class UserMetadataExtractor {
 	public async extract(
 		username: string,
-		repos: RepoOfUser[],
-	): Promise<UserMetadata> {
+		repos: RecentRepo[],
+	): Promise<
+		Pick<UserSelect, "stack" | "about"> & {
+			roles: UserSelect["potentialRoles"];
+		}
+	> {
 		const response = await generateObject({
 			model: openai("gpt-4o-mini"),
 			prompt: `Given the following repos, determine the role and stack of the user:
@@ -50,7 +54,7 @@ export class UserMetadataExtractor {
 		};
 	}
 
-	formatRepos(repos: RepoOfUser[]) {
+	formatRepos(repos: RecentRepo[]) {
 		return repos
 			.map(
 				(repo) => `### ${repo.fullName}

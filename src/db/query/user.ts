@@ -144,7 +144,7 @@ export async function getSimilarUsers(
 			}
 
 			return {
-				user: candidate,
+				user: candidate as UserSelect,
 				score,
 			};
 		});

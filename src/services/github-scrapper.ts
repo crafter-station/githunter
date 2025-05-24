@@ -1,12 +1,10 @@
 import { openai } from "@ai-sdk/openai";
+import { clerkClient } from "@clerk/nextjs/server";
 import { Octokit } from "@octokit/rest";
 import { generateObject } from "ai";
-import { z } from "zod";
-
-import { clerkClient } from "@clerk/nextjs/server";
-// Add these imports for HTML scraping
 import axios from "axios";
 import * as cheerio from "cheerio";
+import { z } from "zod";
 
 export class GithubError extends Error {
 	constructor(

@@ -1,4 +1,3 @@
--- ✨ UP
 CREATE TABLE IF NOT EXISTS "user_subscription" (
   "id"                   varchar     PRIMARY KEY,
   "polar_customer_id"    varchar     NOT NULL,
@@ -15,6 +14,3 @@ CREATE INDEX IF NOT EXISTS "user_subscription_plan_idx"
   ON "user_subscription" ("subscription_plan_id");
 CREATE INDEX IF NOT EXISTS "user_subscription_active_idx"
   ON "user_subscription" ("active");
-
--- 🔄 DOWN
-DROP TABLE IF EXISTS "user_subscription";

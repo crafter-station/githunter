@@ -1,0 +1,1 @@
+ALTER TABLE "user" ALTER COLUMN "curriculum_vitae" DROP DEFAULT;
