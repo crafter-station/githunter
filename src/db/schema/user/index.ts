@@ -10,82 +10,14 @@ import {
 } from "drizzle-orm/pg-core";
 import { z } from "zod";
 
-export const repoSchema = z.object({
-	fullName: z.string(),
-	description: z.string(),
-	stars: z.number(),
-	techStack: z.array(z.string()),
-	contribution: z.object({
-		issuesCount: z.number(),
-		pullRequestsCount: z.number(),
-		commitsCount: z.number(),
-	}),
-});
+import {
+	type CurriculumVitae,
+	CurriculumVitaeSchema,
+} from "./curriculum-vitae";
+import { type PinnedRepo, PinnedRepoSchema } from "./pinned-repo";
+import { type RecentRepo, RecentRepoSchema } from "./recent-repo";
 
-export const pinnedRepoSchema = z.object({
-	fullName: z.string(),
-	description: z.string().nullable(),
-	stars: z.number(),
-});
-
-export const curriculumVitaeSchema = z.object({
-	fullName: z.string(),
-	email: z.string(),
-	phone: z.string().optional(),
-	location: z.string().optional(),
-	linkedin: z.string().optional(),
-	github: z.string().optional(),
-	portfolio: z.string().optional(),
-
-	summary: z.string().optional(),
-
-	experience: z.array(
-		z.object({
-			title: z.string(),
-			company: z.string(),
-			location: z.string().optional(),
-			startDate: z.string(), // ISO 8601 o "MMM YYYY"
-			endDate: z.string().optional(), // "Present" o "MMM YYYY"
-			descriptions: z.array(z.string()).optional(), // ej. as a list of bullet points
-			keywords: z.array(z.string()).optional(), // ej. ['React', 'TypeScript']
-		}),
-	),
-
-	education: z.array(
-		z.object({
-			degree: z.string(),
-			institution: z.string(),
-			location: z.string().optional(),
-			graduationYear: z.string().length(4),
-		}),
-	),
-
-	skills: z.array(z.string()),
-
-	certifications: z
-		.array(
-			z.object({
-				name: z.string(),
-				year: z.string().length(4),
-			}),
-		)
-		.optional(),
-
-	projects: z
-		.array(
-			z.object({
-				name: z.string(),
-				description: z.string(),
-				techStack: z.array(z.string()).optional(),
-				link: z.string().url().optional(),
-			}),
-		)
-		.optional(),
-});
-
-export type Repo = z.infer<typeof repoSchema>;
-export type PinnedRepo = z.infer<typeof pinnedRepoSchema>;
-export type CurriculumVitae = z.infer<typeof curriculumVitaeSchema>;
+import type { Prettify } from "@/lib/utils";
 
 export const user = pgTable(
 	"user",
@@ -131,17 +63,14 @@ export const user = pgTable(
 		createdAt: timestamp("created_at").notNull().defaultNow(),
 		updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
-		repos: jsonb("repos").array().notNull().default([]).$type<Repo[]>(),
+		repos: jsonb("repos").array().notNull().default([]).$type<RecentRepo[]>(),
 		pinnedRepos: jsonb("pinned_repos")
 			.array()
 			.notNull()
 			.default([])
 			.$type<PinnedRepo[]>(),
 
-		curriculumVitae: jsonb("curriculum_vitae")
-			.notNull()
-			.default(sql`'{}'::jsonb`)
-			.$type<CurriculumVitae>(),
+		curriculumVitae: jsonb("curriculum_vitae").$type<CurriculumVitae | null>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns
@@ -179,20 +108,79 @@ export const user = pgTable(
 	],
 );
 
-export type UserSelect = typeof user.$inferSelect;
+export const UserInsertSchema = z.object({
+	id: z.string(),
 
-export type RawUserSelect = UserSelect & {
-	potential_roles: string[];
-	clerk_id: string;
-	avatar_url: string;
-	created_at: Date;
-	updated_at: Date;
-	pinned_repos: PinnedRepo[];
-	repos: Repo[];
-};
+	username: z.string(),
+	fullname: z.string(),
+	avatarUrl: z.string(),
 
-export type ScoredUserSelect = UserSelect & {
-	score: number;
-	pinnedRepos: PinnedRepo[];
-	repos: Repo[];
-};
+	stars: z.number(),
+	followers: z.number(),
+	following: z.number(),
+	repositories: z.number(),
+	contributions: z.number(),
+
+	country: z.string().optional().nullable(),
+	city: z.string().optional().nullable(),
+
+	website: z.string().optional().nullable(),
+	twitter: z.string().optional().nullable(),
+	linkedin: z.string().optional().nullable(),
+
+	about: z.string().optional().nullable(),
+
+	stack: z.array(z.string()),
+	potentialRoles: z.array(z.string()),
+	repos: z.array(RecentRepoSchema),
+	pinnedRepos: z.array(PinnedRepoSchema),
+	curriculumVitae: CurriculumVitaeSchema.optional().nullable(),
+});
+
+export type UserInsert = z.infer<typeof UserInsertSchema>;
+
+export type UserSelect = Prettify<
+	typeof user.$inferSelect & {
+		repos: RecentRepo[];
+		pinnedRepos: PinnedRepo[];
+		curriculumVitae: CurriculumVitae;
+	}
+>;
+
+export type RawUserSelect = Prettify<
+	Omit<
+		Omit<
+			Omit<
+				Omit<
+					Omit<
+						Omit<Omit<UserSelect, "potentialRoles">, "pinnedRepos">,
+						"avatarUrl"
+					>,
+					"clerkId"
+				>,
+				"curriculumVitae"
+			>,
+			"createdAt"
+		>,
+		"updatedAt"
+	> & {
+		potential_roles: string[];
+		clerk_id: string;
+		avatar_url: string;
+		created_at: Date;
+		updated_at: Date;
+		pinned_repos: PinnedRepo[];
+		repos: RecentRepo[];
+		curriculum_vitae: CurriculumVitae;
+	}
+>;
+
+export type ScoredUserSelect = Prettify<
+	UserSelect & {
+		score: number;
+	}
+>;
+
+export * from "./recent-repo";
+export * from "./pinned-repo";
+export * from "./curriculum-vitae";

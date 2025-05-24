@@ -1,7 +1,6 @@
-import { mapReposOfUser, mapUser } from "@/core/models/mappers";
-import type { RepoOfUser } from "@/core/models/user";
 import { batch, logger, metadata, schemaTask } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
+
 import type {
 	RepoContribution,
 	RepoSummary,
@@ -16,8 +15,13 @@ import { getUserMetadata } from "./get-user-metadata";
 import { ingestUserToVectorDb } from "./ingest-user-vector-db";
 import { insertUserToDbTask } from "./insert-user-to-db-task";
 
-export const pupulateAuthenticatedGithubUserTask = schemaTask({
-	id: "pupulate-authenticated-github-user",
+import type { RecentRepo, UserInsert } from "@/db/schema";
+
+import { mapRecentRepos, mapTechStack } from "@/lib/mappers";
+import { nanoid } from "@/lib/nanoid";
+
+export const indexGithubUserTask = schemaTask({
+	id: "index-github-user",
 	schema: z.object({
 		username: z.string(),
 		userId: z.string().optional(),
@@ -33,14 +37,28 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 		const userMetadata = await extractMetadata();
 		const pinnedRepos = await getPinnedRepos();
 
-		const userRecord = mapUser(
+		const userRecord: UserInsert = {
+			id: nanoid(),
 			username,
-			userInfo,
+			fullname: userInfo.name ?? "",
+			avatarUrl: userInfo.avatarUrl,
+			stars: userInfo.starsCount,
+			followers: userInfo.followers,
+			following: userInfo.following,
+			repositories: userInfo.publicRepos,
+			contributions: userInfo.contributionCount,
+			country: userInfo.country ?? null,
+			city: userInfo.city ?? null,
+			website: userInfo.websiteUrl ?? null,
+			twitter: userInfo.twitterUsername ?? null,
+			linkedin: userInfo.linkedinUrl ?? null,
+			about: userMetadata.about,
+			stack: Array.from(mapTechStack(repos)),
+			potentialRoles: userMetadata.roles,
 			repos,
-			userMetadata,
-			pinnedRepos,
-		);
-
+			pinnedRepos: Array.from(pinnedRepos),
+			curriculumVitae: null,
+		};
 		metadata.set("progress", "saving_to_database");
 		const result = await insertUserToDbTask.triggerAndWait(userRecord);
 		if (!result.ok) {
@@ -127,7 +145,7 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			repoSummaries: RepoSummary[] | null,
 			username: string,
 		) {
-			const repos: RepoOfUser[] = [];
+			const repos: RecentRepo[] = [];
 
 			if (!repoSummaries) {
 				return repos;
@@ -184,7 +202,7 @@ export const pupulateAuthenticatedGithubUserTask = schemaTask({
 			logger.info(`repoContributions: ${[...repoContributions.entries()]}`);
 			logger.info(`repoDetails: ${[...repoDetails.entries()]}`);
 
-			return mapReposOfUser(repoSummaries, repoDetails, repoContributions);
+			return mapRecentRepos(repoSummaries, repoDetails, repoContributions);
 		}
 
 		async function getPinnedRepos() {

@@ -1,15 +1,14 @@
 import fs from "node:fs/promises";
-import { db } from "@/db";
-import { user as userTable } from "@/db/schema";
-import { ROLES } from "@/lib/constants/roles";
+import { type RecentRepo, type UserSelect, db, user as userTable } from "@/db";
+import { ROLES } from "@/lib/constants";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { eq, not } from "drizzle-orm";
 import { z } from "zod";
 
-const users = await db.query.user.findMany({
+const users = (await db.query.user.findMany({
 	where: (user) => not(eq(user.repos, [])),
-});
+})) as UserSelect[];
 
 await Promise.all(
 	users.map(async (user) => {
@@ -55,14 +54,7 @@ await Promise.all(
 	}),
 );
 
-function formatRepos(
-	repos: {
-		fullName: string;
-		description: string;
-		techStack: string[];
-		stars: number;
-	}[],
-) {
+function formatRepos(repos: RecentRepo[]) {
 	return repos
 		.map(
 			(repo) => `### ${repo.fullName}

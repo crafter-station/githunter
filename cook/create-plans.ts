@@ -1,10 +1,10 @@
-import { SubscriptionPlanRepository } from "@/core/repositories/subscription-plan-repository";
+import { db } from "@/db";
+import { subscriptionPlan as subscriptionPlanTable } from "@/db/schema";
 import { PolarService } from "@/services/polar-service";
 import { nanoid } from "nanoid";
 
 async function main() {
 	const polarService = new PolarService();
-	const subPlanRepo = new SubscriptionPlanRepository();
 
 	const plans = [
 		{ name: "starter", description: "starter plan", amount: 500 },
@@ -14,7 +14,9 @@ async function main() {
 
 	const plansToInsert = [];
 	for (const plan of plans) {
-		const existing = await subPlanRepo.findByName(plan.name);
+		const existing = await db.query.subscriptionPlan.findFirst({
+			where: (table, { eq }) => eq(table.name, plan.name),
+		});
 		if (!existing) {
 			plansToInsert.push(plan);
 		}
@@ -35,9 +37,9 @@ async function main() {
 			amount: createdPlan.config.amount,
 			polarProductId: createdPlan.productId,
 			polarPriceId: createdPlan.priceId,
-			isSandbox: subPlanRepo.isSandbox,
+			isSandbox: process.env.POLAR_SERVER === "sandbox",
 		};
-		await subPlanRepo.insert(plan);
+		await db.insert(subscriptionPlanTable).values(plan);
 		console.log(plan);
 	}
 }

@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://githunter.dev"),
 	title: "GitHunter",
 	description: "Find top GitHub talent",
 };

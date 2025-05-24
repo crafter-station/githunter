@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import type { Repo } from "@/db/schema/user";
+import type { RecentRepo } from "@/db/schema/user";
 import { cn } from "@/lib/utils";
 import {
 	Calendar,
@@ -31,7 +31,7 @@ export interface GitHubUserProfileProps {
 	country?: string | null;
 	city?: string | null;
 	stack: string[] | null;
-	repos: Repo[] | null;
+	repos: RecentRepo[] | null;
 	compact?: boolean;
 }
 

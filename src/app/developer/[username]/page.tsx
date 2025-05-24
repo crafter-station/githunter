@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import UserSkillsRadar from "@/components/user-skills-radar";
-import type { RepoOfUser } from "@/core/models/user";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
+import type { UserSelect } from "@/db/schema";
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
 import {
@@ -46,7 +46,7 @@ interface SocialLink {
 	icon: ReactNode;
 }
 
-function getUserContributions(repos: RepoOfUser[]) {
+function getUserContributions(repos: UserSelect["repos"]) {
 	if (!repos || !repos.length)
 		return { issues: 0, pullRequests: 0, commits: 0 };
 
