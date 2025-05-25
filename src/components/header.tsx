@@ -110,9 +110,9 @@ export function Header({ noSearch = false }: HeaderProps) {
 									asChild
 									className="flex cursor-pointer items-center gap-2 px-3 py-2"
 								>
-									<Link href="/cv" className="flex w-full items-center">
+									<Link href="/cv/edit" className="flex w-full items-center">
 										<FileText className="mr-2 size-4" />
-										<span>CV</span>
+										<span>Edit CV</span>
 									</Link>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
