@@ -18,7 +18,7 @@ export async function updateCurriculumVitae(
 
 		return curriculumVitae;
 	} catch (error) {
-		console.error("Error creating curriculum vitae:", error);
-		throw new Error("Failed to create curriculum vitae", { cause: error });
+		console.error("Error updating curriculum vitae:", error);
+		throw new Error("Failed to update curriculum vitae", { cause: error });
 	}
 }
