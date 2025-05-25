@@ -12,7 +12,7 @@ import {
 import { useSubscription } from "@/lib/hooks/useSuscription";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
-import { ChevronDown, CreditCard, Layers, User } from "lucide-react";
+import { ChevronDown, CreditCard, FileText, Layers, User } from "lucide-react";
 import Link from "next/link";
 import { SearchBox } from "./search";
 import { UserButton } from "./user-button";
@@ -104,6 +104,15 @@ export function Header({ noSearch = false }: HeaderProps) {
 									<Link href="/new" className="flex w-full items-center">
 										<Layers className="mr-2 size-4" />
 										<span>Indexer</span>
+									</Link>
+								</DropdownMenuItem>
+								<DropdownMenuItem
+									asChild
+									className="flex cursor-pointer items-center gap-2 px-3 py-2"
+								>
+									<Link href="/cv" className="flex w-full items-center">
+										<FileText className="mr-2 size-4" />
+										<span>CV</span>
 									</Link>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
