@@ -1,13 +1,7 @@
 "use server";
-
-import { db } from "@/db";
-import {
-	type CurriculumVitae,
-	type UserSelect,
-	user as userTable,
-} from "@/db/schema";
+import type { CurriculumVitae } from "@/db/schema";
 import { extractCurriculumVitaeFromURL } from "@/services/curriculum-vitae-extractor";
-import { eq } from "drizzle-orm";
+import { findUserById, updateUserCurriculumVitae } from "./shared";
 
 export async function createCurriculumVitae(
 	userId: string,
@@ -46,21 +40,5 @@ export async function createCurriculumVitae(
 		if (!response.ok) {
 			throw new Error(`URL not reachable: HTTP ${response.status}`);
 		}
-	}
-
-	async function findUserById(id: string): Promise<UserSelect | undefined> {
-		return (await db.query.user.findFirst({
-			where: eq(userTable.id, id),
-		})) as UserSelect | undefined;
-	}
-
-	async function updateUserCurriculumVitae(
-		id: string,
-		curriculumVitae: CurriculumVitae,
-	): Promise<void> {
-		await db
-			.update(userTable)
-			.set({ curriculumVitae, updatedAt: new Date() })
-			.where(eq(userTable.id, id));
 	}
 }
