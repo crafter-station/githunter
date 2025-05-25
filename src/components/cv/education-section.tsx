@@ -1,13 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
 	DndContext,
 	type DragEndEvent,
@@ -27,27 +19,29 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { format } from "date-fns";
 import { GripVertical, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
-import type { DateRange } from "react-day-picker";
-import CalendarComponent from "../calendar";
 
-interface EducationItem {
-	id: string;
-	degree: string;
-	institution: string;
-	location?: string;
-	dateRange?: DateRange;
-}
+import type { DateRange } from "react-day-picker";
+
+import { useState } from "react";
+
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
+
+import { nanoid } from "@/lib/nanoid";
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface EducationSectionProps {
-	education: EducationItem[];
-	onUpdate: (education: EducationItem[]) => void;
+	education: NonNullable<PersistentCurriculumVitae["education"]>;
+	onUpdate: (
+		education: NonNullable<PersistentCurriculumVitae["education"]>,
+	) => void;
 }
 
 interface SortableEducationItemProps {
-	education: EducationItem;
+	education: NonNullable<PersistentCurriculumVitae["education"]>[number];
 	onUpdate: (field: string, value: string | DateRange | undefined) => void;
 	onRemove: () => void;
 }
@@ -110,47 +104,20 @@ function SortableEducationItem({
 						/>
 					</div>
 					<div>
-						<Popover>
-							<PopoverTrigger asChild>
-								<Button
-									variant="ghost"
-									className="hover:!bg-muted/50 !bg-transparent !h-auto !m-0 min-h-auto w-full cursor-pointer justify-end border-none p-0 text-right font-normal focus-visible:ring-0"
-								>
-									{education.dateRange?.from
-										? education.dateRange.to
-											? (() => {
-													const today = new Date();
-													const isPresent =
-														education.dateRange.to.toDateString() ===
-														today.toDateString();
-													const endDateText = isPresent
-														? "Present"
-														: format(education.dateRange.to, "MMM yyyy");
-													return `${format(education.dateRange.from, "MMM yyyy")} - ${endDateText}`;
-												})()
-											: format(education.dateRange.from, "MMM yyyy")
-										: "Select a date range"}
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className="w-auto p-0" align="end">
-								<CalendarComponent
-									initialDate={education.dateRange}
-									onDateSelect={(range) => {
-										onUpdate("dateRange", range);
-										// Close popover after selection
-										document.dispatchEvent(
-											new KeyboardEvent("keydown", { key: "Escape" }),
-										);
-									}}
-									onCancel={() => {
-										// Close popover on cancel
-										document.dispatchEvent(
-											new KeyboardEvent("keydown", { key: "Escape" }),
-										);
-									}}
-								/>
-							</PopoverContent>
-						</Popover>
+						<Textarea
+							value={education.dateRangeFrom}
+							onChange={(e) => onUpdate("dateRangeFrom", e.target.value)}
+							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
+							placeholder="Start"
+							rows={1}
+						/>
+						<Textarea
+							value={education.dateRangeTo}
+							onChange={(e) => onUpdate("dateRangeTo", e.target.value)}
+							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
+							placeholder="End"
+							rows={1}
+						/>
 					</div>
 				</div>
 
@@ -221,13 +188,14 @@ export function EducationSection({
 	};
 
 	const addEducation = () => {
-		const newEducation: EducationItem = {
-			id: `edu-${Date.now()}`,
+		const newEducation = {
+			id: nanoid(),
 			degree: "",
 			institution: "",
 			location: "",
-			dateRange: undefined,
-		};
+			dateRangeFrom: undefined,
+			dateRangeTo: undefined,
+		} satisfies NonNullable<PersistentCurriculumVitae["education"]>[number];
 		onUpdate([...education, newEducation]);
 	};
 

@@ -1,8 +1,6 @@
-import { extractCurriculumVitaeFromFile } from "@/services/curriculum-vitae-extractor";
+import { processCurriculumVitaeTask } from "@/triggers/process-curriculum-vitae-task";
 
-// Test
-if (require.main === module) {
-	extractCurriculumVitaeFromFile("cueva.docx")
-		.then((cv) => console.log("Extracted CV:", cv))
-		.catch((error) => console.error("Error:", error));
-}
+await processCurriculumVitaeTask.trigger({
+	clerkUserId: "user_2mJ3qzQZ0000000000000000",
+	fileUrl: "https://www.google.com",
+});

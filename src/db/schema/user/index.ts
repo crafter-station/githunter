@@ -11,8 +11,8 @@ import {
 import { z } from "zod";
 
 import {
-	type CurriculumVitae,
-	CurriculumVitaeSchema,
+	type PersistentCurriculumVitae,
+	PersistentCurriculumVitaeSchema,
 } from "./curriculum-vitae";
 import { type PinnedRepo, PinnedRepoSchema } from "./pinned-repo";
 import { type RecentRepo, RecentRepoSchema } from "./recent-repo";
@@ -70,7 +70,9 @@ export const user = pgTable(
 			.default([])
 			.$type<PinnedRepo[]>(),
 
-		curriculumVitae: jsonb("curriculum_vitae").$type<CurriculumVitae | null>(),
+		curriculumVitae: jsonb(
+			"curriculum_vitae",
+		).$type<PersistentCurriculumVitae | null>(),
 	},
 	(table) => [
 		// Individual column indexes - use GIN for arrays, B-tree for regular columns
@@ -134,7 +136,7 @@ export const UserInsertSchema = z.object({
 	potentialRoles: z.array(z.string()),
 	repos: z.array(RecentRepoSchema),
 	pinnedRepos: z.array(PinnedRepoSchema),
-	curriculumVitae: CurriculumVitaeSchema.optional().nullable(),
+	curriculumVitae: PersistentCurriculumVitaeSchema.optional().nullable(),
 });
 
 export type UserInsert = z.infer<typeof UserInsertSchema>;
@@ -143,26 +145,20 @@ export type UserSelect = Prettify<
 	typeof user.$inferSelect & {
 		repos: RecentRepo[];
 		pinnedRepos: PinnedRepo[];
-		curriculumVitae: CurriculumVitae;
+		curriculumVitae: PersistentCurriculumVitae;
 	}
 >;
 
 export type RawUserSelect = Prettify<
 	Omit<
-		Omit<
-			Omit<
-				Omit<
-					Omit<
-						Omit<Omit<UserSelect, "potentialRoles">, "pinnedRepos">,
-						"avatarUrl"
-					>,
-					"clerkId"
-				>,
-				"curriculumVitae"
-			>,
-			"createdAt"
-		>,
-		"updatedAt"
+		UserSelect,
+		| "potentialRoles"
+		| "pinnedRepos"
+		| "avatarUrl"
+		| "clerkId"
+		| "curriculumVitae"
+		| "createdAt"
+		| "updatedAt"
 	> & {
 		potential_roles: string[];
 		clerk_id: string;
@@ -171,7 +167,7 @@ export type RawUserSelect = Prettify<
 		updated_at: Date;
 		pinned_repos: PinnedRepo[];
 		repos: RecentRepo[];
-		curriculum_vitae: CurriculumVitae;
+		curriculum_vitae: PersistentCurriculumVitae;
 	}
 >;
 

@@ -157,7 +157,7 @@ export function RunProgress({
 
 			{run.status === "COMPLETED" ? (
 				<div className="mt-8 space-y-4">
-					<p className="text-center font-medium text-[#008080] text-sm text-sm text-success dark:text-[#98FEE3]">
+					<p className="text-center font-medium text-[#008080] text-sm text-success dark:text-[#98FEE3]">
 						Profile successfully generated!
 					</p>
 					<div className="flex flex-col gap-3">
