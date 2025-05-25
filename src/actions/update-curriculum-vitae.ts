@@ -41,7 +41,10 @@ export async function updateCurriculumVitaeAction(
 			};
 		}
 
-		await updateUserCurriculumVitae(session.userId, curriculumVitaeResult.data);
+		await updateUserCurriculumVitae({
+			clerkUserId: session.userId,
+			curriculumVitae: curriculumVitaeResult.data,
+		});
 
 		return {
 			ok: true,

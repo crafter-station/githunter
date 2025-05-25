@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import {
-	type CurriculumVitae,
+	type PersistentCurriculumVitae,
 	type UserSelect,
 	user as userTable,
 } from "@/db/schema";
@@ -16,10 +16,13 @@ export async function findUserById(
 	})) as UserSelect | undefined;
 }
 
-export async function updateUserCurriculumVitae(
-	clerkUserId: string,
-	curriculumVitae: CurriculumVitae,
-): Promise<void> {
+export async function updateUserCurriculumVitae({
+	clerkUserId,
+	curriculumVitae,
+}: {
+	clerkUserId: string;
+	curriculumVitae: PersistentCurriculumVitae;
+}): Promise<void> {
 	await db
 		.update(userTable)
 		.set({ curriculumVitae, updatedAt: new Date() })
