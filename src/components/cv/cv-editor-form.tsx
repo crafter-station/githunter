@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { useActionState, useEffect, useState } from "react";
+
 import {
 	DndContext,
 	type DragEndEvent,
@@ -12,9 +15,8 @@ import {
 	useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { File, Loader2, Save } from "lucide-react";
-
-import { useActionState, useEffect, useState } from "react";
+import { Eye, Loader2, Save } from "lucide-react";
+import { toast } from "sonner";
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
 
@@ -22,15 +24,16 @@ import { updateCurriculumVitaeAction } from "@/actions/update-curriculum-vitae";
 
 import { CV_PRESETS, type PresetKey } from "@/lib/cv-presets";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
+import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
+import { CVUploader } from "./cv-uploader";
 import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
 import { HeaderSection } from "./header-section";
 import { PresetLoader } from "./preset-loader";
 import { ProjectsSection } from "./projects-section";
-
-import { toast } from "sonner";
 
 interface CVEditorFormProps {
 	initialData?: PersistentCurriculumVitae;
@@ -41,6 +44,8 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 		updateCurriculumVitaeAction,
 		undefined,
 	);
+
+	const { user } = useUser();
 
 	useEffect(() => {
 		if (!state) {
@@ -178,11 +183,6 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 		}
 	};
 
-	const handleSave = () => {
-		console.log("Saving CV data:", cvData);
-	};
-
-	// Render drag overlay content
 	const renderDragOverlay = () => {
 		if (!activeId) return null;
 
@@ -245,12 +245,20 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			onDragEnd={handleDragEnd}
 		>
 			<div className="flex items-center gap-4">
-				<Button variant="outline">
-					<File className="h-4 w-4" />
-					Import Existing CV
-				</Button>
+				<CVUploader />
 				{/* Preset Loader */}
 				<PresetLoader onLoadPreset={loadPreset} />
+				{/* View CV Button */}
+				<Link
+					href={`/developer/${user?.username}/cv`}
+					className={cn(
+						buttonVariants({ variant: "outline", size: "default" }),
+						"flex items-center gap-2",
+					)}
+				>
+					<Eye className="h-4 w-4" />
+					View CV
+				</Link>
 				{/* Save Button */}
 				<form action={formAction}>
 					<input

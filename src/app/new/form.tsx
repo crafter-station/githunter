@@ -65,8 +65,6 @@ function SubmitButton() {
 	const { pending } = useFormStatus();
 	const { currentPlan } = useSubscription();
 
-	const searchParams = useSearchParams();
-
 	if (currentPlan?.name !== "Plus") {
 		return (
 			<div className="flex w-full justify-center">
