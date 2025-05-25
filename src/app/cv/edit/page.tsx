@@ -6,7 +6,7 @@ import { CVEditorForm } from "@/components/cv/cv-editor-form";
 import { Footer } from "@/components/footer/Footer";
 import { Header } from "@/components/header";
 
-import { type CurriculumVitae, db, user as userTable } from "@/db";
+import { type PersistentCurriculumVitae, db, user as userTable } from "@/db";
 
 export default async function CVEditorPage() {
 	const session = await auth();
@@ -28,7 +28,7 @@ export default async function CVEditorPage() {
 	}
 	const user = users[0];
 
-	const cv = (user.cv || {}) as CurriculumVitae;
+	const cv = (user.cv || {}) as PersistentCurriculumVitae;
 
 	return (
 		<div className="flex min-h-screen flex-col">
