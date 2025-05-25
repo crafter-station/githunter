@@ -68,8 +68,15 @@
 		{
 			"idx": 9,
 			"version": "7",
-			"when": 1748059458015,
-			"tag": "0009_add_curriculum_vitae_into_users",
+			"when": 1748075438589,
+			"tag": "0009_free_starjammers",
+			"breakpoints": true
+		},
+		{
+			"idx": 10,
+			"version": "7",
+			"when": 1748075802593,
+			"tag": "0010_certain_forgotten_one",
 			"breakpoints": true
 		}
 	]

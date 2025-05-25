@@ -9,7 +9,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSubscription } from "@/lib/hooks/useSuscription";
+import { useSubscription } from "@/hooks/use-subscription";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { ChevronDown, CreditCard, FileText, Layers, User } from "lucide-react";

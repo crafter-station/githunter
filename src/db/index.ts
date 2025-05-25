@@ -26,3 +26,4 @@ if (!global.db) {
 
 // biome-ignore lint/suspicious/noRedeclare: <explanation>
 export const db = global.db;
+export * from "./schema";

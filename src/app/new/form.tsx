@@ -7,7 +7,7 @@ import { useFormStatus } from "react-dom";
 import { createGithubProfileAction } from "@/actions/create-github-profile";
 import { Github } from "@/components/icons/github";
 import { buttonVariants } from "@/components/ui/button";
-import { useSubscription } from "@/lib/hooks/useSuscription";
+import { useSubscription } from "@/hooks/use-subscription";
 import Link from "next/link";
 
 interface FormState {

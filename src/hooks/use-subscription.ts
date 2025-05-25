@@ -1,7 +1,7 @@
 import { useUser } from "@clerk/nextjs";
 import React from "react";
 
-import { PRICING_PLANS } from "../constants";
+import { PRICING_PLANS } from "../lib/constants";
 
 export function useSubscription() {
 	const { user } = useUser();

@@ -1,8 +1,10 @@
 "use server";
 
-import { getSubscription } from "@/lib/get-suscription";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
+
+import { getSubscription } from "@/lib/get-suscription";
+import type { indexGithubUserTask } from "@/triggers/index-github-user-task";
 
 const formSchema = z.object({
 	username: z.string().min(1, "Username is required"),
@@ -35,8 +37,8 @@ export async function createGithubProfileAction(
 
 	try {
 		// Trigger the GitHub profile population task
-		const handle = await tasks.trigger(
-			"pupulate-github-user",
+		const handle = await tasks.trigger<typeof indexGithubUserTask>(
+			"index-github-user",
 			{
 				username: validatedFields.data.username,
 			},

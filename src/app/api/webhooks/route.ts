@@ -1,4 +1,4 @@
-import { pupulateAuthenticatedGithubUserTask } from "@/triggers/pupulate-authenticated-github-user-task";
+import { indexGithubUserTask } from "@/triggers/index-github-user-task";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 			if (!evt.data.username) {
 				throw new Error("Username not found");
 			}
-			await pupulateAuthenticatedGithubUserTask.trigger({
+			await indexGithubUserTask.trigger({
 				username: evt.data.username,
 				userId: evt.data.id,
 			});

@@ -1,13 +1,7 @@
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
-import { db } from "@/db";
-import {
-	type RawUserSelect,
-	type ScoredUserSelect,
-	type UserSelect,
-	user,
-} from "@/db/schema";
+import { type RawUserSelect, type ScoredUserSelect, db, user } from "@/db";
 
 import { SEARCH_RESULTS_PER_PAGE } from "@/lib/constants";
 
@@ -77,7 +71,7 @@ export async function queryUsers(
 	// Execute the query
 	const usersFirstFilter = await db.execute(query);
 
-	function calculateScore(user: UserSelect & { potential_roles: string[] }) {
+	function calculateScore(user: RawUserSelect) {
 		let score = user.followers * 5 + user.following * 2 + user.repositories;
 
 		for (const repo of user.repos) {
@@ -133,12 +127,12 @@ export async function queryUsers(
 					stack: u.stack,
 					potentialRoles: u.potential_roles,
 					repos: u.repos,
-					pinnedRepos: u.pinnedRepos,
+					pinnedRepos: u.pinned_repos,
 
 					createdAt: u.created_at,
 					updatedAt: u.updated_at,
 
-					curriculumVitae: u.curriculumVitae,
+					curriculumVitae: u.curriculum_vitae,
 				}) satisfies ScoredUserSelect,
 		)
 		.sort((a, b) => b.score - a.score);

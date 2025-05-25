@@ -15,7 +15,7 @@ import remarkGfm from "remark-gfm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSubscription } from "@/lib/hooks/useSuscription";
+import { useSubscription } from "@/hooks/use-subscription";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 interface SpokenDigestProps {
