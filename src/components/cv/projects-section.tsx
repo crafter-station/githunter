@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
 	DndContext,
 	type DragEndEvent,
@@ -23,39 +20,42 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2, X } from "lucide-react";
+import { nanoid } from "nanoid";
+
 import { useState } from "react";
 
-interface ProjectItem {
-	id: string;
-	name: string;
-	description: string;
-	link?: string;
-	techStack?: string[];
-	achievements?: string[];
-}
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
+
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ProjectsSectionProps {
-	projects: ProjectItem[];
-	onUpdate: (projects: ProjectItem[]) => void;
+	projects: NonNullable<PersistentCurriculumVitae["projects"]>;
+	onUpdate: (
+		projects: NonNullable<PersistentCurriculumVitae["projects"]>,
+	) => void;
 }
 
 interface SortableProjectItemProps {
-	project: ProjectItem;
+	project: NonNullable<PersistentCurriculumVitae["projects"]>[number];
 	onUpdate: (field: string, value: string | string[]) => void;
-	onUpdateAchievement: (achIndex: number, value: string) => void;
-	onAddAchievement: () => void;
-	onRemoveAchievement: (achIndex: number) => void;
+	onUpdateBullet: (bulletId: string, value: string) => void;
+	onAddBullet: () => void;
+	onRemoveBullet: (bulletId: string) => void;
 	onRemove: () => void;
 }
 
 function SortableProjectItem({
 	project,
 	onUpdate,
-	onUpdateAchievement,
-	onAddAchievement,
-	onRemoveAchievement,
+	onUpdateBullet,
+	onAddBullet,
+	onRemoveBullet,
 	onRemove,
 }: SortableProjectItemProps) {
+	console.log(project);
 	const {
 		attributes,
 		listeners,
@@ -133,39 +133,35 @@ function SortableProjectItem({
 					/>
 				</div>
 
-				{/* Achievements */}
+				{/* Bullets */}
 				<div className="mt-2 ml-4 space-y-1">
-					{(project.achievements || []).map(
-						(achievement: string, achIndex: number) => (
-							<div
-								key={`${project.id}-ach-${achIndex}`}
-								className="group/ach relative flex items-start"
-							>
-								<div className="relative mr-2">
-									<span className="text-muted-foreground">•</span>
-									<Button
-										onClick={() => onRemoveAchievement(achIndex)}
-										variant="ghost"
-										size="icon"
-										className="!bg-background -left-2 !size-5 !p-1 hover:!bg-[#FEE8E8] dark:hover:!bg-[#231314] absolute top-0.5 cursor-pointer rounded-full text-muted-foreground opacity-0 hover:text-destructive group-hover/ach:opacity-100"
-									>
-										<X className="size-4" />
-									</Button>
-								</div>
-								<Textarea
-									value={achievement}
-									onChange={(e) =>
-										onUpdateAchievement(achIndex, e.target.value)
-									}
-									className="hover:!bg-muted/50 !bg-transparent min-h-auto flex-1 resize-none rounded-none border-none p-0 shadow-none focus-visible:ring-0"
-									placeholder="Write an accomplishment"
-									rows={1}
-								/>
+					{(project.bullets || []).map((bullet) => (
+						<div
+							key={bullet.id}
+							className="group/bullet relative flex items-start"
+						>
+							<div className="relative mr-2">
+								<span className="text-muted-foreground">•</span>
+								<Button
+									onClick={() => onRemoveBullet(bullet.id)}
+									variant="ghost"
+									size="icon"
+									className="!bg-background -left-2 !size-5 !p-1 hover:!bg-[#FEE8E8] dark:hover:!bg-[#231314] absolute top-0.5 cursor-pointer rounded-full text-muted-foreground opacity-0 hover:text-destructive group-hover/ach:opacity-100"
+								>
+									<X className="size-4" />
+								</Button>
 							</div>
-						),
-					)}
+							<Textarea
+								value={bullet.content}
+								onChange={(e) => onUpdateBullet(bullet.id, e.target.value)}
+								className="hover:!bg-muted/50 !bg-transparent min-h-auto flex-1 resize-none rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+								placeholder="Write an accomplishment"
+								rows={1}
+							/>
+						</div>
+					))}
 					<Button
-						onClick={onAddAchievement}
+						onClick={onAddBullet}
 						variant="ghost"
 						size="sm"
 						className="h-6 cursor-pointer text-muted-foreground hover:text-foreground"
@@ -217,14 +213,14 @@ export function ProjectsSection({ projects, onUpdate }: ProjectsSectionProps) {
 	};
 
 	const addProject = () => {
-		const newProject: ProjectItem = {
-			id: `proj-${Date.now()}`,
+		const newProject = {
+			id: nanoid(),
 			name: "",
 			description: "",
 			link: "",
 			techStack: [],
-			achievements: [],
-		};
+			bullets: [],
+		} satisfies NonNullable<PersistentCurriculumVitae["projects"]>[number];
 		onUpdate([...projects, newProject]);
 	};
 
@@ -239,17 +235,13 @@ export function ProjectsSection({ projects, onUpdate }: ProjectsSectionProps) {
 		onUpdate(updated);
 	};
 
-	const updateProjectAchievement = (
-		id: string,
-		achIndex: number,
-		value: string,
-	) => {
+	const updateProjectBullet = (id: string, bulletId: string, value: string) => {
 		const updated = projects.map((project) =>
 			project.id === id
 				? {
 						...project,
-						achievements: (project.achievements || []).map((ach, ai) =>
-							ai === achIndex ? value : ach,
+						bullets: (project.bullets || []).map((bullet, bi) =>
+							bullet.id === bulletId ? { ...bullet, content: value } : bullet,
 						),
 					}
 				: project,
@@ -257,25 +249,33 @@ export function ProjectsSection({ projects, onUpdate }: ProjectsSectionProps) {
 		onUpdate(updated);
 	};
 
-	const addProjectAchievement = (id: string) => {
+	const addProjectBullet = (projectId: string) => {
 		const updated = projects.map((project) =>
-			project.id === id
-				? {
+			project.id === projectId
+				? ({
 						...project,
-						achievements: [...(project.achievements || []), ""],
-					}
+						bullets: [
+							...(project.bullets || []),
+							{
+								id: nanoid(),
+								content: "",
+							},
+						],
+					} satisfies NonNullable<
+						PersistentCurriculumVitae["projects"]
+					>[number])
 				: project,
 		);
 		onUpdate(updated);
 	};
 
-	const removeProjectAchievement = (id: string, achIndex: number) => {
+	const removeProjectBullet = (id: string, bulletId: string) => {
 		const updated = projects.map((project) =>
 			project.id === id
 				? {
 						...project,
-						achievements: (project.achievements || []).filter(
-							(_, ai) => ai !== achIndex,
+						bullets: (project.bullets || []).filter(
+							(bullet) => bullet.id !== bulletId,
 						),
 					}
 				: project,
@@ -328,12 +328,12 @@ export function ProjectsSection({ projects, onUpdate }: ProjectsSectionProps) {
 								onUpdate={(field, value) =>
 									updateProject(proj.id, field, value)
 								}
-								onUpdateAchievement={(achIndex, value) =>
-									updateProjectAchievement(proj.id, achIndex, value)
+								onUpdateBullet={(bulletId, value) =>
+									updateProjectBullet(proj.id, bulletId, value)
 								}
-								onAddAchievement={() => addProjectAchievement(proj.id)}
-								onRemoveAchievement={(achIndex) =>
-									removeProjectAchievement(proj.id, achIndex)
+								onAddBullet={() => addProjectBullet(proj.id)}
+								onRemoveBullet={(bulletId) =>
+									removeProjectBullet(proj.id, bulletId)
 								}
 								onRemove={() => removeProject(proj.id)}
 							/>
@@ -358,9 +358,9 @@ export function ProjectsSection({ projects, onUpdate }: ProjectsSectionProps) {
 						<SortableProjectItem
 							project={activeItem}
 							onUpdate={() => {}} // No-op for overlay
-							onUpdateAchievement={() => {}} // No-op for overlay
-							onAddAchievement={() => {}} // No-op for overlay
-							onRemoveAchievement={() => {}} // No-op for overlay
+							onUpdateBullet={() => {}} // No-op for overlay
+							onAddBullet={() => {}} // No-op for overlay
+							onRemoveBullet={() => {}} // No-op for overlay
 							onRemove={() => {}} // No-op for overlay
 						/>
 					) : null}

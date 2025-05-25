@@ -3,7 +3,6 @@ import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Eye, FileText, Plus } from "lucide-react";
 import Link from "next/link";
-import { Form } from "./form";
 
 export default function CVGeneratorPage() {
 	return (
@@ -33,7 +32,7 @@ export default function CVGeneratorPage() {
 							<p className="mb-4 text-muted-foreground text-sm">
 								Upload your existing CV and let AI extract the information
 							</p>
-							<Form />
+							<div>XD</div>
 						</div>
 
 						{/* Right column with two sections */}

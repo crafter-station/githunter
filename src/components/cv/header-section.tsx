@@ -1,17 +1,13 @@
 "use client";
 
+import type { AIGeneratedCurriculumVitae } from "@/db/schema/user";
+
 import { Textarea } from "@/components/ui/textarea";
 
-interface HeaderData {
-	fullName: string;
-	email: string;
-	phone: string;
-	location?: string;
-	linkedin?: string;
-	github?: string;
-	portfolio?: string;
-	summary?: string;
-}
+type HeaderData = Omit<
+	AIGeneratedCurriculumVitae,
+	"education" | "experience" | "projects" | "skills" | "certifications"
+>;
 
 interface HeaderSectionProps {
 	data: HeaderData;
@@ -53,24 +49,24 @@ export function HeaderSection({ data, onUpdate }: HeaderSectionProps) {
 						/>
 						<span className="text-muted-foreground">•</span>
 						<Textarea
-							value={data.portfolio || ""}
-							onChange={(e) => onUpdate("portfolio", e.target.value)}
+							value={data.websiteUrl || ""}
+							onChange={(e) => onUpdate("websiteUrl", e.target.value)}
 							className="!bg-transparent min-h-auto w-auto resize-none rounded-none border-none p-0 [field-sizing:content] focus-visible:ring-0"
 							placeholder="yourwebsite.com"
 							rows={1}
 						/>
 						<span className="text-muted-foreground">•</span>
 						<Textarea
-							value={data.linkedin || ""}
-							onChange={(e) => onUpdate("linkedin", e.target.value)}
+							value={data.linkedInHandle || ""}
+							onChange={(e) => onUpdate("linkedInHandle", e.target.value)}
 							className="!bg-transparent min-h-auto w-auto resize-none rounded-none border-none p-0 [field-sizing:content] focus-visible:ring-0"
 							placeholder="linkedin.com/in/username"
 							rows={1}
 						/>
 						<span className="text-muted-foreground">•</span>
 						<Textarea
-							value={data.github || ""}
-							onChange={(e) => onUpdate("github", e.target.value)}
+							value={data.githubHandle || ""}
+							onChange={(e) => onUpdate("githubHandle", e.target.value)}
 							className="!bg-transparent min-h-auto w-auto resize-none rounded-none border-none p-0 [field-sizing:content] focus-visible:ring-0"
 							placeholder="github.com/username"
 							rows={1}

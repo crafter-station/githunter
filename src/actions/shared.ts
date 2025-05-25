@@ -17,11 +17,11 @@ export async function findUserById(
 }
 
 export async function updateUserCurriculumVitae(
-	id: string,
+	clerkUserId: string,
 	curriculumVitae: CurriculumVitae,
 ): Promise<void> {
 	await db
 		.update(userTable)
 		.set({ curriculumVitae, updatedAt: new Date() })
-		.where(eq(userTable.id, id));
+		.where(eq(userTable.clerkId, clerkUserId));
 }

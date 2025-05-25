@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import type { CurriculumVitae } from "@/db/schema/user";
-import { CV_PRESETS, type PresetKey } from "@/lib/cv-presets";
 import {
 	DndContext,
 	type DragEndEvent,
@@ -15,95 +12,53 @@ import {
 	useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { Save } from "lucide-react";
-import { useId, useState } from "react";
-import type { DateRange } from "react-day-picker";
+import { File, Loader2, Save } from "lucide-react";
+
+import { useActionState, useEffect, useState } from "react";
+
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
+
+import { updateCurriculumVitaeAction } from "@/actions/update-curriculum-vitae";
+
+import { CV_PRESETS, type PresetKey } from "@/lib/cv-presets";
+
+import { Button } from "@/components/ui/button";
 
 import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
 import { HeaderSection } from "./header-section";
-// Import section components
 import { PresetLoader } from "./preset-loader";
 import { ProjectsSection } from "./projects-section";
-import { SkillsSection } from "./skills-section";
+
+import { toast } from "sonner";
 
 interface CVEditorFormProps {
-	initialData?: CurriculumVitae;
-}
-
-interface SkillCategory {
-	category: string;
-	skills: string[];
-}
-
-interface EducationItem {
-	id: string;
-	degree: string;
-	institution: string;
-	location?: string;
-	dateRange?: DateRange;
-}
-
-interface ExperienceItem {
-	id?: string;
-	title: string;
-	company: string;
-	location?: string;
-	startDate: string;
-	endDate?: string;
-	descriptions?: string[];
-	keywords?: string[];
-}
-
-interface ProjectItem {
-	id?: string;
-	name: string;
-	description: string;
-	link?: string;
-	techStack?: string[];
-	achievements?: string[];
-}
-
-interface HeaderData {
-	fullName: string;
-	email: string;
-	phone: string;
-	location?: string;
-	linkedin?: string;
-	github?: string;
-	portfolio?: string;
-	summary?: string;
-}
-
-interface ExtendedCurriculumVitae
-	extends Omit<CurriculumVitae, "projects" | "education" | "experience"> {
-	education?: EducationItem[];
-	experience?: ExperienceItem[];
-	projects?: ProjectItem[];
-	skillCategories?: SkillCategory[];
+	initialData?: PersistentCurriculumVitae;
 }
 
 export function CVEditorForm({ initialData }: CVEditorFormProps) {
-	const baseId = useId();
+	const [state, formAction, isSubmitting] = useActionState(
+		updateCurriculumVitaeAction,
+		undefined,
+	);
 
-	const [cvData, setCVData] = useState<ExtendedCurriculumVitae>(
-		(initialData as unknown as ExtendedCurriculumVitae) || {
-			id: "",
-			fullName: "",
-			email: "youremail@gmail.com",
-			phone: "",
-			location: "",
-			linkedin: "linkedin.com/in/username",
-			github: "github.com/username",
-			portfolio: "yourwebsite.com",
-			summary: "",
-			experience: [],
-			education: [],
-			skills: [],
-			certifications: [],
-			projects: [],
-			skillCategories: [],
-		},
+	useEffect(() => {
+		if (!state) {
+			return;
+		}
+
+		if (!isSubmitting) {
+			if (state?.ok) {
+				setCVData(state.curriculumVitae);
+				toast.success("CV updated successfully");
+			} else {
+				toast.error("Failed to update CV");
+			}
+		}
+	}, [state, isSubmitting]);
+
+	const [cvData, setCVData] = useState<PersistentCurriculumVitae>(
+		initialData ?? {},
 	);
 
 	const [activeId, setActiveId] = useState<string | null>(null);
@@ -118,41 +73,43 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 
 	const loadPreset = (presetKey: PresetKey) => {
 		const preset = CV_PRESETS[presetKey];
-		setCVData(preset as unknown as ExtendedCurriculumVitae);
+		setCVData(preset);
 	};
 
-	const handleHeaderUpdate = (field: keyof HeaderData, value: string) => {
+	const handleHeaderUpdate = (
+		field: keyof PersistentCurriculumVitae,
+		value: string,
+	) => {
 		setCVData((prev) => ({
 			...prev,
 			[field]: value,
 		}));
 	};
 
-	const handleEducationUpdate = (education: EducationItem[]) => {
+	const handleEducationUpdate = (
+		education: PersistentCurriculumVitae["education"],
+	) => {
 		setCVData((prev) => ({
 			...prev,
 			education,
 		}));
 	};
 
-	const handleExperienceUpdate = (experience: ExperienceItem[]) => {
+	const handleExperienceUpdate = (
+		experience: PersistentCurriculumVitae["experience"],
+	) => {
 		setCVData((prev) => ({
 			...prev,
 			experience,
 		}));
 	};
 
-	const handleProjectsUpdate = (projects: ProjectItem[]) => {
+	const handleProjectsUpdate = (
+		projects: PersistentCurriculumVitae["projects"],
+	) => {
 		setCVData((prev) => ({
 			...prev,
 			projects,
-		}));
-	};
-
-	const handleSkillsUpdate = (skillCategories: SkillCategory[]) => {
-		setCVData((prev) => ({
-			...prev,
-			skillCategories,
 		}));
 	};
 
@@ -287,8 +244,39 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
 		>
-			{/* Preset Loader */}
-			<PresetLoader onLoadPreset={loadPreset} />
+			<div className="flex items-center gap-4">
+				<Button variant="outline">
+					<File className="h-4 w-4" />
+					Import Existing CV
+				</Button>
+				{/* Preset Loader */}
+				<PresetLoader onLoadPreset={loadPreset} />
+				{/* Save Button */}
+				<form action={formAction}>
+					<input
+						type="hidden"
+						name="curriculumVitae"
+						value={JSON.stringify(cvData)}
+					/>
+					<Button
+						type="submit"
+						disabled={isSubmitting}
+						className="flex items-center gap-2"
+					>
+						{isSubmitting ? (
+							<Loader2 className="h-4 w-4 animate-spin" />
+						) : (
+							<Save className="h-4 w-4" />
+						)}
+						Save CV
+					</Button>
+				</form>
+			</div>
+			{state?.ok && (
+				<div className="text-muted-foreground text-sm">
+					Last updated: {new Date(state.updatedAt).toLocaleString()}
+				</div>
+			)}
 			<div className="mx-auto mt-8 max-w-4xl space-y-8 border bg-background py-8 pr-8 pl-6 md:pl-12">
 				{/* Header & Summary */}
 				<HeaderSection
@@ -297,9 +285,9 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 						email: cvData.email || "",
 						phone: cvData.phone || "",
 						location: cvData.location,
-						linkedin: cvData.linkedin,
-						github: cvData.github,
-						portfolio: cvData.portfolio,
+						linkedInHandle: cvData.linkedInHandle,
+						githubHandle: cvData.githubHandle,
+						websiteUrl: cvData.websiteUrl,
 						summary: cvData.summary,
 					}}
 					onUpdate={handleHeaderUpdate}
@@ -307,47 +295,21 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 
 				{/* Education */}
 				<EducationSection
-					education={(cvData.education || []).map((edu) => ({
-						...edu,
-						id: edu.id || `edu-${Date.now()}-${Math.random()}`,
-					}))}
+					education={cvData.education || []}
 					onUpdate={handleEducationUpdate}
 				/>
 
 				{/* Experience */}
 				<ExperienceSection
-					experience={(cvData.experience || []).map((exp) => ({
-						...exp,
-						id: exp.id || `exp-${Date.now()}-${Math.random()}`,
-					}))}
+					experience={cvData.experience || []}
 					onUpdate={handleExperienceUpdate}
 				/>
 
 				{/* Projects */}
 				<ProjectsSection
-					projects={(cvData.projects || []).map((proj) => ({
-						...proj,
-						id: proj.id || `proj-${Date.now()}-${Math.random()}`,
-					}))}
+					projects={cvData.projects || []}
 					onUpdate={handleProjectsUpdate}
 				/>
-
-				{/* Additional Skills */}
-				<SkillsSection
-					skillCategories={(cvData.skillCategories || []).map((cat) => ({
-						...cat,
-						id: `skill-${Date.now()}-${Math.random()}`,
-					}))}
-					onUpdate={handleSkillsUpdate}
-				/>
-
-				{/* Save Button */}
-				<div className="flex justify-end pt-8">
-					<Button onClick={handleSave} className="flex items-center gap-2">
-						<Save className="h-4 w-4" />
-						Save CV
-					</Button>
-				</div>
 			</div>
 
 			{/* Drag Overlay with Ghost Effect */}

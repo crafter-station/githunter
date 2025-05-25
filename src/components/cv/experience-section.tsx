@@ -1,8 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
 	DndContext,
 	type DragEndEvent,
@@ -23,39 +20,39 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2, X } from "lucide-react";
+
 import { useState } from "react";
 
-interface ExperienceItem {
-	id: string;
-	title: string;
-	company: string;
-	location?: string;
-	startDate: string;
-	endDate?: string;
-	descriptions?: string[];
-	keywords?: string[];
-}
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
+
+import { nanoid } from "@/lib/nanoid";
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ExperienceSectionProps {
-	experience: ExperienceItem[];
-	onUpdate: (experience: ExperienceItem[]) => void;
+	experience: NonNullable<PersistentCurriculumVitae["experience"]>;
+	onUpdate: (
+		experience: NonNullable<PersistentCurriculumVitae["experience"]>,
+	) => void;
 }
 
 interface SortableExperienceItemProps {
-	experience: ExperienceItem;
+	experience: NonNullable<PersistentCurriculumVitae["experience"]>[number];
 	onUpdate: (field: string, value: string | string[]) => void;
-	onUpdateDescription: (descIndex: number, value: string) => void;
-	onAddDescription: () => void;
-	onRemoveDescription: (descIndex: number) => void;
+	onUpdateBullet: (bulletId: string, value: string) => void;
+	onAddBullet: () => void;
+	onRemoveBullet: (bulletId: string) => void;
 	onRemove: () => void;
 }
 
 function SortableExperienceItem({
 	experience,
 	onUpdate,
-	onUpdateDescription,
-	onAddDescription,
-	onRemoveDescription,
+	onUpdateBullet,
+	onAddBullet,
+	onRemoveBullet,
 	onRemove,
 }: SortableExperienceItemProps) {
 	const {
@@ -112,8 +109,8 @@ function SortableExperienceItem({
 					</div>
 					<div className="">
 						<Textarea
-							value={experience.startDate}
-							onChange={(e) => onUpdate("startDate", e.target.value)}
+							value={experience.dateRangeFrom}
+							onChange={(e) => onUpdate("dateRangeFrom", e.target.value)}
 							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
 							placeholder="Start - End"
 							rows={1}
@@ -143,39 +140,35 @@ function SortableExperienceItem({
 					</div>
 				</div>
 
-				{/* Descriptions */}
+				{/* Bullets */}
 				<div className="mt-2 ml-4 space-y-1">
-					{(experience.descriptions || []).map(
-						(desc: string, descIndex: number) => (
-							<div
-								key={`${experience.id}-desc-${descIndex}`}
-								className="group/desc relative flex items-start"
-							>
-								<div className="relative mr-2">
-									<span className="text-muted-foreground">•</span>
-									<Button
-										onClick={() => onRemoveDescription(descIndex)}
-										variant="ghost"
-										size="icon"
-										className="!bg-background -left-2 !size-5 !p-1 hover:!bg-[#FEE8E8] dark:hover:!bg-[#231314] absolute top-0.5 cursor-pointer rounded-full text-muted-foreground opacity-0 hover:text-destructive group-hover/desc:opacity-100"
-									>
-										<X className="size-4" />
-									</Button>
-								</div>
-								<Textarea
-									value={desc}
-									onChange={(e) =>
-										onUpdateDescription(descIndex, e.target.value)
-									}
-									className="hover:!bg-muted/50 !bg-transparent min-h-auto flex-1 resize-none rounded-none border-none p-0 shadow-none focus-visible:ring-0"
-									placeholder="Write an accomplishment"
-									rows={1}
-								/>
+					{(experience.bullets || []).map((bullet) => (
+						<div
+							key={bullet.id}
+							className="group/bullet relative flex items-start"
+						>
+							<div className="relative mr-2">
+								<span className="text-muted-foreground">•</span>
+								<Button
+									onClick={() => onRemoveBullet(bullet.id)}
+									variant="ghost"
+									size="icon"
+									className="!bg-background -left-2 !size-5 !p-1 hover:!bg-[#FEE8E8] dark:hover:!bg-[#231314] absolute top-0.5 cursor-pointer rounded-full text-muted-foreground opacity-0 hover:text-destructive group-hover/bullet:opacity-100"
+								>
+									<X className="size-4" />
+								</Button>
 							</div>
-						),
-					)}
+							<Textarea
+								value={bullet.content}
+								onChange={(e) => onUpdateBullet(bullet.id, e.target.value)}
+								className="hover:!bg-muted/50 !bg-transparent min-h-auto flex-1 resize-none rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+								placeholder="Write an accomplishment"
+								rows={1}
+							/>
+						</div>
+					))}
 					<Button
-						onClick={onAddDescription}
+						onClick={onAddBullet}
 						variant="ghost"
 						size="sm"
 						className="h-6 text-muted-foreground hover:text-foreground"
@@ -223,23 +216,29 @@ export function ExperienceSection({
 			return;
 		}
 
-		const oldIndex = experience.findIndex((item) => item.id === active.id);
-		const newIndex = experience.findIndex((item) => item.id === over.id);
+		const oldIndex = experience.findIndex(
+			(experienceItem) => experienceItem?.id === active.id,
+		);
+		const newIndex = experience.findIndex(
+			(experienceItem) => experienceItem?.id === over.id,
+		);
+
 		const reordered = arrayMove(experience, oldIndex, newIndex);
+
 		onUpdate(reordered);
 	};
 
 	const addExperience = () => {
-		const newExperience: ExperienceItem = {
-			id: `exp-${Date.now()}`,
+		const newExperience = {
+			id: nanoid(),
 			title: "",
 			company: "",
 			location: "",
-			startDate: "",
-			endDate: "",
-			descriptions: [],
-			keywords: [],
-		};
+			dateRangeFrom: "",
+			dateRangeTo: "",
+			bullets: [],
+			techStack: [],
+		} satisfies NonNullable<PersistentCurriculumVitae["experience"]>[number];
 		onUpdate([...experience, newExperience]);
 	};
 
@@ -254,17 +253,17 @@ export function ExperienceSection({
 		onUpdate(updated);
 	};
 
-	const updateExperienceDescription = (
+	const updateExperienceBullet = (
 		id: string,
-		descIndex: number,
+		bulletId: string,
 		value: string,
 	) => {
 		const updated = experience.map((exp) =>
 			exp.id === id
 				? {
 						...exp,
-						descriptions: (exp.descriptions || []).map((desc, di) =>
-							di === descIndex ? value : desc,
+						bullets: (exp.bullets || []).map((bullet) =>
+							bullet.id === bulletId ? { ...bullet, content: value } : bullet,
 						),
 					}
 				: exp,
@@ -272,25 +271,27 @@ export function ExperienceSection({
 		onUpdate(updated);
 	};
 
-	const addExperienceDescription = (id: string) => {
+	const addExperienceBullet = (experienceId: string) => {
 		const updated = experience.map((exp) =>
-			exp.id === id
-				? {
+			exp.id === experienceId
+				? ({
 						...exp,
-						descriptions: [...(exp.descriptions || []), ""],
-					}
+						bullets: [...(exp.bullets || []), { id: nanoid(), content: "" }],
+					} satisfies NonNullable<
+						PersistentCurriculumVitae["experience"]
+					>[number])
 				: exp,
 		);
 		onUpdate(updated);
 	};
 
-	const removeExperienceDescription = (id: string, descIndex: number) => {
+	const removeExperienceBullet = (id: string, bulletId: string) => {
 		const updated = experience.map((exp) =>
 			exp.id === id
 				? {
 						...exp,
-						descriptions: (exp.descriptions || []).filter(
-							(_, di) => di !== descIndex,
+						bullets: (exp.bullets || []).filter(
+							(bullet) => bullet.id !== bulletId,
 						),
 					}
 				: exp,
@@ -343,12 +344,12 @@ export function ExperienceSection({
 								onUpdate={(field, value) =>
 									updateExperience(exp.id, field, value)
 								}
-								onUpdateDescription={(descIndex, value) =>
-									updateExperienceDescription(exp.id, descIndex, value)
+								onUpdateBullet={(bulletId, value) =>
+									updateExperienceBullet(exp.id, bulletId, value)
 								}
-								onAddDescription={() => addExperienceDescription(exp.id)}
-								onRemoveDescription={(descIndex) =>
-									removeExperienceDescription(exp.id, descIndex)
+								onAddBullet={() => addExperienceBullet(exp.id)}
+								onRemoveBullet={(bulletId) =>
+									removeExperienceBullet(exp.id, bulletId)
 								}
 								onRemove={() => removeExperience(exp.id)}
 							/>
@@ -373,9 +374,9 @@ export function ExperienceSection({
 						<SortableExperienceItem
 							experience={activeItem}
 							onUpdate={() => {}} // No-op for overlay
-							onUpdateDescription={() => {}} // No-op for overlay
-							onAddDescription={() => {}} // No-op for overlay
-							onRemoveDescription={() => {}} // No-op for overlay
+							onUpdateBullet={() => {}} // No-op for overlay
+							onAddBullet={() => {}} // No-op for overlay
+							onRemoveBullet={() => {}} // No-op for overlay
 							onRemove={() => {}} // No-op for overlay
 						/>
 					) : null}

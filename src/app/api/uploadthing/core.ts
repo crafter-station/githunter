@@ -1,3 +1,4 @@
+import { processCurriculumVitaeTask } from "@/triggers/process-curriculum-vitae-task";
 import { currentUser } from "@clerk/nextjs/server";
 import { type FileRouter, createUploadthing } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
@@ -41,6 +42,11 @@ export const ourFileRouter = {
 			console.log("Upload complete for userId:", metadata.userId);
 
 			console.log("file url", file.ufsUrl);
+
+			await processCurriculumVitaeTask.trigger({
+				clerkUserId: metadata.userId,
+				fileUrl: file.ufsUrl,
+			});
 
 			// !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
 			return { uploadedBy: metadata.userId };

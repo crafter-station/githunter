@@ -1,10 +1,11 @@
 "use client";
 
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
+
 import { Badge } from "@/components/ui/badge";
-import type { CurriculumVitae } from "@/db/schema/user";
 
 interface CVPreviewProps {
-	cvData: CurriculumVitae;
+	cvData: PersistentCurriculumVitae;
 	className?: string;
 }
 
@@ -37,19 +38,24 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
-						{cvData.portfolio && (
+						{cvData.websiteUrl && (
 							<>
-								<span>{cvData.portfolio}</span>
+								<span>{cvData.websiteUrl}</span>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
-						{cvData.linkedin && (
+						{cvData.linkedInHandle && (
 							<>
-								<span>{cvData.linkedin}</span>
+								<span>{cvData.linkedInHandle}</span>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
-						{cvData.github && <span>{cvData.github}</span>}
+						{cvData.githubHandle && (
+							<>
+								<span>{cvData.githubHandle}</span>
+								<span className="text-muted-foreground">•</span>
+							</>
+						)}
 					</div>
 				</div>
 			</div>
@@ -85,7 +91,11 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 									</div>
 								</div>
 								<div className="text-right text-muted-foreground text-sm">
-									<div>{edu.graduationYear || "Select a date range"}</div>
+									<div>
+										{edu.dateRangeFrom && edu.dateRangeTo
+											? `${edu.dateRangeFrom} - ${edu.dateRangeTo}`
+											: "Select a date range"}
+									</div>
 									<div className="italic">{edu.location || "Location"}</div>
 								</div>
 							</div>
@@ -100,11 +110,8 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 					<h2 className="border-border border-b pb-1 font-semibold text-lg">
 						EXPERIENCE
 					</h2>
-					{cvData.experience.map((exp, expIndex) => (
-						<div
-							key={`experience-${exp.company}-${exp.title}-${expIndex}`}
-							className="space-y-2"
-						>
+					{cvData.experience.map((exp) => (
+						<div key={exp.id} className="space-y-2">
 							<div className="flex items-start justify-between">
 								<div className="flex-1">
 									<div className="font-medium">{exp.title}</div>
@@ -114,40 +121,30 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 								</div>
 								<div className="text-right text-muted-foreground text-sm">
 									<div>
-										{exp.startDate && exp.endDate
-											? `${exp.startDate} - ${exp.endDate}`
+										{exp.dateRangeFrom && exp.dateRangeTo
+											? `${exp.dateRangeFrom} - ${exp.dateRangeTo}`
 											: "Select a date range"}
 									</div>
 									<div className="italic">{exp.location || "Location"}</div>
 								</div>
 							</div>
 
-							{exp.descriptions && exp.descriptions.length > 0 && (
+							{exp.bullets && exp.bullets.length > 0 && (
 								<div className="ml-4 space-y-1">
-									{exp.descriptions.map((desc, descIndex) => (
-										<div
-											key={`desc-${expIndex}-${desc.slice(0, 20)}-${descIndex}`}
-											className="flex items-start"
-										>
+									{exp.bullets.map((bullet) => (
+										<div key={bullet.id} className="flex items-start">
 											<span className="mr-2 text-muted-foreground">•</span>
-											<span className="text-sm">{desc}</span>
+											<span className="text-sm">{bullet.content}</span>
 										</div>
 									))}
 								</div>
 							)}
 
-							{exp.keywords && exp.keywords.length > 0 && (
+							{exp.techStack && exp.techStack.length > 0 && (
 								<div className="mt-2 ml-4 flex flex-wrap gap-1">
-									{exp.keywords.map((keyword, keywordIndex) => (
-										<Badge
-											key={`keyword-${expIndex}-${keyword}-${
-												// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-												keywordIndex
-											}`}
-											variant="outline"
-											className="text-xs"
-										>
-											{keyword}
+									{exp.techStack.map((tech) => (
+										<Badge key={tech.id} variant="outline" className="text-xs">
+											{tech.content}
 										</Badge>
 									))}
 								</div>
@@ -196,7 +193,7 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 											className="flex items-start"
 										>
 											<span className="mr-2 text-muted-foreground">•</span>
-											<span className="text-sm">{tech}</span>
+											<span className="text-sm">{tech.content}</span>
 										</div>
 									))}
 							</div>

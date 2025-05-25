@@ -1,5 +1,9 @@
 "use client";
 
+import { LayoutTemplate } from "lucide-react";
+
+import { PRESET_NAMES, type PresetKey } from "@/lib/cv-presets";
+
 import { Card } from "@/components/ui/card";
 import {
 	Select,
@@ -8,8 +12,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { PRESET_NAMES, type PresetKey } from "@/lib/cv-presets";
-import { LayoutTemplate } from "lucide-react";
 
 interface PresetLoaderProps {
 	onLoadPreset: (presetKey: PresetKey) => void;

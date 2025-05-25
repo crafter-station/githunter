@@ -1,469 +1,451 @@
-import type { CurriculumVitae } from "@/db/schema/user";
+import type { PersistentCurriculumVitae } from "@/db/schema/user";
 
-export const CV_PRESETS: Record<string, CurriculumVitae> = {
+export const CV_PRESETS: Record<string, PersistentCurriculumVitae> = {
 	"anthony-cueva": {
-		fullName: "Anthony Cueva",
 		email: "hi@cueva.io",
-		phone: "+51 912 851 377",
+		phone: "+51 912851377",
+		summary: "",
+		fullName: "Anthony Cueva",
 		location: "Lima, Peru",
-		linkedin: "linkedin.com/in/cuevaio",
-		github: "github.com/cuevaio",
-		portfolio: "www.cueva.io",
-		summary:
-			"Product Engineer with experience in software development, team leadership, and open-source contributions. Proficient in various technologies and passionate about leveraging AI and code to improve lives.",
+		education: [
+			{
+				id: "snjFfeZXxG4G",
+				degree: "B.Sc. Civil Engineering",
+				location: "Lima, Peru",
+				dateRangeTo: "2024",
+				institution: "UTEC",
+				dateRangeFrom: "2019",
+			},
+			{
+				id: "0JkhvKct1kze",
+				degree: "React.js course",
+				dateRangeTo: "Feb. 2023",
+				institution: "Josh W Comeau | The Joy of React",
+				dateRangeFrom: "Jan. 2023",
+			},
+			{
+				id: "q1RmlJMPe0md",
+				degree: "Computer Science",
+				dateRangeTo: "Sep. 2021",
+				institution: "Harvard University | CS50: Introduction to",
+				dateRangeFrom: "Jul. 2021",
+			},
+		],
+		interests: [
+			{
+				id: "tt3g3v7vT8t8",
+				content: "Computer Science",
+			},
+			{
+				id: "bwzNEEJo5t0O",
+				content: "Software Engineering",
+			},
+			{
+				id: "lWFM7Y7EkQPk",
+				content: "Open Source",
+			},
+			{
+				id: "SWcaKdtidNNq",
+				content: "AI",
+			},
+			{
+				id: "KnzHF8Tvdhxf",
+				content: "LLMs",
+			},
+			{
+				id: "REIuey7dwsJL",
+				content: "Computer Vision",
+			},
+			{
+				id: "4W11u6RvRUm9",
+				content: "Databases",
+			},
+			{
+				id: "5cumJEKrGyNE",
+				content: "DX",
+			},
+			{
+				id: "RL1jyRmK1Bn8",
+				content: "UX",
+			},
+			{
+				id: "CI5Ca6dbcp5I",
+				content: "Web Development",
+			},
+			{
+				id: "OHxko1XZt5MF",
+				content: "A11y",
+			},
+			{
+				id: "HP15FfWxdEX2",
+				content: "A/B Testing",
+			},
+			{
+				id: "tJQ1RzqSACAt",
+				content: "Product Teams",
+			},
+			{
+				id: "HgLAlEFrx815",
+				content: "Startups",
+			},
+		],
 		experience: [
 			{
+				id: "8ti6aZDF6pJL",
 				title: "Software Engineer",
+				bullets: [
+					{
+						id: "lNz3VZ5m7C89",
+						content:
+							"Collaborated with Business Analyst to define software requirements of Customer Partner Portal and Inputs Management Portal, two new products of PCI that require real time and collaborative data management",
+					},
+					{
+						id: "Ik4CjPKtOgTz",
+						content:
+							"Led a team of two backend and two frontend engineers and shipped two web applications, and provided support to 1 more",
+					},
+					{
+						id: "mrkvH5MmiLmp",
+						content:
+							"Built PCILink, an internal link management tool to manage confluence pages efficiently. Implemented semantic search powered by AI, making the avg time-to-doc search 4x faster",
+					},
+				],
 				company: "PCI Energy Solutions",
 				location: "Remote, US",
-				startDate: "Jan. 2024",
-				endDate: "",
-				descriptions: [
-					"Collaborated with Business Analyst to define software requirements of Customer Partner Portal and Inputs Management Portal.",
-					"Led a team of two backend and two frontend engineers and shipped two web applications, and provided support to 1 more.",
-					"Built PCILink, an internal link management tool to manage confluence pages efficiently. Implemented semantic search powered by AI, making the avg time-to-doc search 4x faster.",
+				techStack: [
+					{
+						id: "yZahoJsiLogU",
+						content: "TypeScript",
+					},
+					{
+						id: "0Aj41cvCcm10",
+						content: "React",
+					},
+					{
+						id: "HGepYCFt3QR3",
+						content: "Next.js",
+					},
+					{
+						id: "b191wQudNE5a",
+						content: "Java",
+					},
+					{
+						id: "hgrHT3Vf2U6o",
+						content: "Spring Boot",
+					},
+					{
+						id: "YHizWCpn392h",
+						content: "AWS S3",
+					},
+					{
+						id: "y5RIz98n2l1o",
+						content: "Auth0",
+					},
+					{
+						id: "ZK1FjJrN4SCm",
+						content: "PostgreSQL",
+					},
+					{
+						id: "kad1ktrQN5HS",
+						content: "Redis",
+					},
+					{
+						id: "5br0g0hHh5rX",
+						content: "Docker",
+					},
+					{
+						id: "lQsq9LgT68md",
+						content: "OpenAI",
+					},
 				],
-				keywords: [
-					"TypeScript",
-					"React",
-					"Next.js",
-					"Java",
-					"Spring Boot",
-					"AWS S3",
-					"Auth0",
-					"PostgreSQL",
-					"Redis",
-					"Docker",
-					"OpenAI",
-				],
+				dateRangeTo: "Present",
+				dateRangeFrom: "Jan. 2024",
 			},
 			{
+				id: "DyU0fMr3wXU6",
 				title: "Co-founder",
+				bullets: [
+					{
+						id: "2BlPtmYGb4N3",
+						content:
+							"Created Semantik Studio, an AI Powered Database assistant. Connect with your database in seconds and start asking questions in natural language: 'how many users joined this week'? Internally, our AI Agent will generate the SQL query to obtain the data you want to see. 100% open source, 100% secure and privacy friendly.",
+					},
+					{
+						id: "aBgI5gTyxpvQ",
+						content:
+							"Built Gradual, a platform that turns any learning material into an AI-powered, optimized course using spaced repetition.",
+					},
+					{
+						id: "XuU5080stsSb",
+						content:
+							"Won 1st place in the 2025 Global Next.js Hackathon with text0.dev. Prize: trip to Vercel San Francisco office.",
+					},
+					{
+						id: "djL6YCLuFbCh",
+						content:
+							"Built GitHunter.dev, a tech talent search engine. Indexed over 10k github open source contributors and created a fast search engine with premium features.",
+					},
+				],
 				company: "Crafter Station",
 				location: "Remote, Peru",
-				startDate: "Nov. 2023",
-				endDate: "",
-				descriptions: [
-					"Created Semantik Studio, an AI Powered Database assistant.",
-					"Developed Gradual, a platform that turns any learning material into an AI-powered, optimized course using spaced repetition.",
-					"Won 1st place in the 2025 Global Next.js Hackathon with text0.dev.",
-					"Built GitHunter.dev, a tech talent search engine.",
+				techStack: [
+					{
+						id: "shyIdqvYTPZE",
+						content: "SQL",
+					},
+					{
+						id: "rUCmETpqKHmC",
+						content: "Python",
+					},
+					{
+						id: "kXPzuoy2GOZe",
+						content: "TypeScript",
+					},
+					{
+						id: "9WRVDvswH50m",
+						content: "Go",
+					},
+					{
+						id: "56r3mWb16xG0",
+						content: "React",
+					},
+					{
+						id: "a2A7tyUMU1UD",
+						content: "Next.js",
+					},
+					{
+						id: "7hmEthxDagSp",
+						content: "React Email",
+					},
+					{
+						id: "r6LV9vi4alzw",
+						content: "PostgreSQL",
+					},
+					{
+						id: "ogSLGanpBOhA",
+						content: "Drizzle",
+					},
+					{
+						id: "7C3Av3H9lUlg",
+						content: "Xata",
+					},
+					{
+						id: "iTwb6Bdv9XBV",
+						content: "Supabase",
+					},
+					{
+						id: "Ag5GXYFgQT1L",
+						content: "Neon",
+					},
+					{
+						id: "TgIC5pSd1iyd",
+						content: "Upstash Redis",
+					},
+					{
+						id: "hDfcmYs9eHXB",
+						content: "Trigger.dev",
+					},
+					{
+						id: "icFGR9BzRU7A",
+						content: "Clerk",
+					},
+					{
+						id: "0ov4tX6JfKwq",
+						content: "Polar.sh",
+					},
+					{
+						id: "UmKK25udTMc5",
+						content: "OpenAI",
+					},
+					{
+						id: "vzX0a48dWKKR",
+						content: "DeepSeek",
+					},
 				],
-				keywords: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"Go",
-					"React",
-					"Next.js",
-					"React Email",
-					"PostgreSQL",
-					"Drizzle",
-					"Xata",
-					"Supabase",
-					"Neon",
-					"Upstash Redis",
-					"Trigger.dev",
-					"Clerk",
-					"Polar.sh",
-					"OpenAI",
-					"DeepSeek",
-				],
+				dateRangeTo: "Present",
+				dateRangeFrom: "Nov. 2023",
 			},
 			{
+				id: "QpZaPfbRTRtw",
 				title: "Full Stack Developer",
+				bullets: [
+					{
+						id: "qHSMytEPvjek",
+						content:
+							"Built a unified platform to manage and automate hiring requests and processes while keeping stakeholders informed. Features include creating hiring requests, approvals, managing the recruiting funnel, updating information, evaluating finalists, and logging actions.",
+					},
+				],
 				company: "Primax",
 				location: "Remote, Peru",
-				startDate: "Feb. 2023",
-				endDate: "Aug. 2023",
-				descriptions: [
-					"Built a unified platform to manage and automate hiring requests and processes while keeping stakeholders informed.",
+				techStack: [
+					{
+						id: "fLR76xtx04dh",
+						content: "SQL",
+					},
+					{
+						id: "YyLt9QdZq2Au",
+						content: "Python",
+					},
+					{
+						id: "XeoGnrS8H5pO",
+						content: "TypeScript",
+					},
+					{
+						id: "UmLocjX0zvgS",
+						content: "React",
+					},
+					{
+						id: "Uy0yQTUULtIj",
+						content: "Next.js",
+					},
+					{
+						id: "gmhq8jtwzfXo",
+						content: "React Email",
+					},
+					{
+						id: "ttOXAMi4R8hV",
+						content: "SharePoint",
+					},
+					{
+						id: "5JU3mgRiZUaz",
+						content: "PostgreSQL",
+					},
 				],
-				keywords: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"React",
-					"Next.js",
-					"React Email",
-					"SharePoint",
-					"PostgreSQL",
-				],
+				dateRangeTo: "Aug. 2023",
+				dateRangeFrom: "Feb. 2023",
 			},
 			{
+				id: "CVxALXITE5eB",
 				title: "Full Stack Developer",
+				bullets: [
+					{
+						id: "YRUSRmFhaSWY",
+						content:
+							"Built an API with utilities to handle database migrations of service orders 400% faster",
+					},
+					{
+						id: "XuzGwk9jaKYh",
+						content:
+							"Built web pages for internal dashboards for the Marketing and Sales departments",
+					},
+					{
+						id: "sNC5GQkiGRx4",
+						content:
+							"Created reports extracting insights from the databases with SQL queries",
+					},
+				],
 				company: "Hunter Lojack",
 				location: "Lima, Peru",
-				startDate: "Jul. 2022",
-				endDate: "Dec. 2022",
-				descriptions: [
-					"Built an API with utilities to handle database migrations of service orders 400% faster.",
-					"Built web pages for internal dashboards for the Marketing and Sales departments.",
-					"Created reports extracting insights from the databases with SQL queries.",
+				techStack: [
+					{
+						id: "srTN2qWejVqo",
+						content: "Python",
+					},
+					{
+						id: "qtASidFaJZPQ",
+						content: "JavaScript",
+					},
+					{
+						id: "FTNrZKwpA5UU",
+						content: "SQL",
+					},
+					{
+						id: "NiaQFRsECfme",
+						content: "PHP",
+					},
+					{
+						id: "F9NU5UcEnQMt",
+						content: "React",
+					},
+					{
+						id: "wqRXvEbQyIGV",
+						content: "Next.js",
+					},
+					{
+						id: "ppHyz02eE8io",
+						content: "Laravel",
+					},
+					{
+						id: "jxCutFyK80MB",
+						content: "Node.js",
+					},
+					{
+						id: "uhtXzMlmrovD",
+						content: "Express.js",
+					},
+					{
+						id: "zt88IZ1Zk2os",
+						content: "Microsoft SQL Server",
+					},
+					{
+						id: "mUjUE2B61vep",
+						content: "cPanel",
+					},
+					{
+						id: "K8wOxDdFUzEf",
+						content: "Microsoft Excel",
+					},
 				],
-				keywords: [
-					"Python",
-					"JavaScript",
-					"SQL",
-					"PHP",
-					"React",
-					"Next.js",
-					"Laravel",
-					"Node.js",
-					"Express.js",
-					"Microsoft SQL Server",
-					"cPanel",
-					"Microsoft Excel",
-				],
+				dateRangeTo: "Dec. 2022",
+				dateRangeFrom: "Jul. 2022",
 			},
 			{
+				id: "guEm1vtlMuTa",
 				title: "UI Developer",
+				bullets: [
+					{
+						id: "jCTZdNVCnYIq",
+						content:
+							"Create landing pages for AquaXtreme swimming school, Pitagoras pre-college academy, and more",
+					},
+				],
 				company: "Independent",
 				location: "Lima, Peru",
-				startDate: "Nov. 2021",
-				endDate: "Feb. 2022",
-				descriptions: [
-					"Created landing pages for AquaXtreme swimming school, Pitagoras pre-college academy, and more.",
+				techStack: [
+					{
+						id: "dUZdcioyPRWX",
+						content: "HTML",
+					},
+					{
+						id: "6kLGX32mDXfE",
+						content: "CSS",
+					},
+					{
+						id: "zNb9mdCWJ5iZ",
+						content: "JavaScript",
+					},
+					{
+						id: "qYeKplA34uFz",
+						content: "React",
+					},
 				],
-				keywords: ["HTML", "CSS", "JavaScript", "React"],
+				dateRangeTo: "Feb. 2022",
+				dateRangeFrom: "Nov. 2021",
 			},
 		],
-		education: [
-			{
-				degree: "B.Sc. Civil Engineering",
-				institution: "UTEC (University of Engineering and Technology)",
-				location: "Lima, Peru",
-				graduationYear: "2024",
-			},
-			{
-				degree: "The Joy of React",
-				institution: "Josh W Comeau",
-				location: "",
-				graduationYear: "Feb. 2023",
-			},
-			{
-				degree: "CS50's Web Programming with Python and JavaScript",
-				institution: "Harvard University",
-				location: "",
-				graduationYear: "Dec. 2021",
-			},
-			{
-				degree: "CS50: Introduction to Computer Science",
-				institution: "Harvard University",
-				location: "",
-				graduationYear: "Sep. 2021",
-			},
-		],
-		skills: [
-			"TypeScript",
-			"React",
-			"Next.js",
-			"Java",
-			"Spring Boot",
-			"AWS S3",
-			"Auth0",
-			"PostgreSQL",
-			"Redis",
-			"Docker",
-			"OpenAI",
-			"SQL",
-			"Python",
-			"Go",
-			"React Email",
-			"Drizzle",
-			"Xata",
-			"Supabase",
-			"Neon",
-			"Upstash Redis",
-			"Trigger.dev",
-			"Clerk",
-			"Polar.sh",
-			"DeepSeek",
-			"HTML",
-			"CSS",
-			"JavaScript",
-			"PHP",
-			"Laravel",
-			"Node.js",
-			"Express.js",
-			"Microsoft SQL Server",
-			"cPanel",
-			"Microsoft Excel",
-			"SharePoint",
-		],
-		certifications: [],
 		projects: [
 			{
-				name: "Semantik Studio",
-				description:
-					"An AI Powered Database assistant. Connect with your database in seconds and start asking questions in natural language.",
-				techStack: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"Go",
-					"React",
-					"Next.js",
-					"React Email",
-					"PostgreSQL",
-					"Drizzle",
-					"Xata",
-					"Supabase",
-					"Neon",
-					"Upstash Redis",
-					"Trigger.dev",
-					"Clerk",
-					"Polar.sh",
-					"OpenAI",
-					"DeepSeek",
+				id: "1",
+				name: "Project 1",
+				bullets: [
+					{
+						id: "1",
+						content: "Bullet 1",
+					},
+					{
+						id: "2",
+						content: "Bullet 2",
+					},
+					{
+						id: "3",
+						content: "Bullet 3",
+					},
 				],
-				link: "www.crafter-station.com",
-			},
-			{
-				name: "Gradual",
-				description:
-					"A platform that turns any learning material into an AI-powered, optimized course using spaced repetition.",
-				techStack: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"Go",
-					"React",
-					"Next.js",
-					"React Email",
-					"PostgreSQL",
-					"Drizzle",
-					"Xata",
-					"Supabase",
-					"Neon",
-					"Upstash Redis",
-					"Trigger.dev",
-					"Clerk",
-					"Polar.sh",
-					"OpenAI",
-					"DeepSeek",
-				],
-				link: "www.crafter-station.com",
-			},
-			{
-				name: "text0.dev",
-				description: "Won 1st place in the 2025 Global Next.js Hackathon.",
-				techStack: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"Go",
-					"React",
-					"Next.js",
-					"React Email",
-					"PostgreSQL",
-					"Drizzle",
-					"Xata",
-					"Supabase",
-					"Neon",
-					"Upstash Redis",
-					"Trigger.dev",
-					"Clerk",
-					"Polar.sh",
-					"OpenAI",
-					"DeepSeek",
-				],
-				link: "www.crafter-station.com",
-			},
-			{
-				name: "GitHunter.dev",
-				description:
-					"A tech talent search engine. Indexed over 10k github open source contributors and created a blazingly fast search engine with premium features.",
-				techStack: [
-					"SQL",
-					"Python",
-					"TypeScript",
-					"Go",
-					"React",
-					"Next.js",
-					"React Email",
-					"PostgreSQL",
-					"Drizzle",
-					"Xata",
-					"Supabase",
-					"Neon",
-					"Upstash Redis",
-					"Trigger.dev",
-					"Clerk",
-					"Polar.sh",
-					"OpenAI",
-					"DeepSeek",
-				],
-				link: "www.crafter-station.com",
 			},
 		],
-	},
-
-	"railly-hugo": {
-		fullName: "Railly Hugo",
-		email: "raillyhugo@gmail.com",
-		phone: "+51 963 422 021",
-		location: "Lima, Peru",
-		linkedin: "in/railly-hugo",
-		github: "github.com/Railly",
-		portfolio: "raillyhugo.com",
-		summary:
-			"Design-driven Frontend Engineer with 4+ years of experience specializing in React, TypeScript, and Next.js, with a passion for building polished UIs and scalable design systems. Recognized as a Vercel Hackathon Winner for innovative open-source contributions. Experienced in bridging the gap between design and engineering to create accessible, high-performance user experiences that drive adoption and engagement.",
-		experience: [
-			{
-				title: "SSR Adv Full Stack Developer",
-				company: "Globant - Disney Insights Engineering",
-				location: "Remote",
-				startDate: "January 2024",
-				endDate: "Present",
-				descriptions: [
-					"Spearheaded the development of design system components, ensuring accessibility and performance for global streaming platforms.",
-					"Built a responsive UI framework using React, TypeScript, and TailwindCSS, improving cross-team consistency and scalability.",
-					"Developed a real-time incident management feature, keeping support teams updated on ServiceNow incidents, increasing operational efficiency.",
-					"Authored comprehensive documentation and wikis for reusable components, enabling faster onboarding and better collaboration.",
-				],
-				keywords: [
-					"React",
-					"TypeScript",
-					"TailwindCSS",
-					"Design Systems",
-					"Accessibility",
-					"Performance",
-				],
-			},
-			{
-				title: "Full Stack Developer - Freelance",
-				company: "Midudev | Tech Content & Developer Community",
-				location: "Remote",
-				startDate: "February 2025",
-				endDate: "Present",
-				descriptions: [
-					"Automated course generation, converting MP4 files into MDX with transcriptions, HLS (m3u8) streaming, and Cloudflare R2 storage for optimized delivery.",
-					"Developed Stripe-powered subscription models and payment integrations, enabling monetization for educational content.",
-					"Built and maintained frontend components for mars.codes and La Velada V's website, ensuring high-performance, scalable UI/UX.",
-					"Created interactive, scalable design systems with React, TypeScript, and TailwindCSS, improving accessibility and performance.",
-				],
-				keywords: [
-					"React",
-					"TypeScript",
-					"TailwindCSS",
-					"Stripe",
-					"Cloudflare",
-					"MDX",
-				],
-			},
-			{
-				title: "Associate Software UI Developer",
-				company: "PCI Energy Solutions",
-				location: "Hybrid: 2 Remote / 3 In-Person",
-				startDate: "January 2023",
-				endDate: "February 2024",
-				descriptions: [
-					"Designed and implemented reusable UI components with React and TypeScript, contributing to a scalable design system.",
-					"Created a type-safe API client using OpenAPI specifications, streamlining communication between UI and backend teams.",
-					"Established a contract testing framework with Playwright, aligning development cycles and reducing deployment bugs.",
-					"Led frontend modernization efforts, refactoring codebases and integrating new tools like Redux Toolkit for better state management.",
-				],
-				keywords: [
-					"React",
-					"TypeScript",
-					"OpenAPI",
-					"Playwright",
-					"Redux Toolkit",
-					"Frontend Modernization",
-				],
-			},
-			{
-				title: "Mid-Level Frontend Developer",
-				company: "ID Business Intelligence",
-				location: "Fully Remote",
-				startDate: "January 2022",
-				endDate: "December 2022",
-				descriptions: [
-					"Built and open-sourced @idbi/components, a TypeScript-based component library, deployed with a live Storybook instance for designer-developer collaboration.",
-					"Designed and delivered the company's SSO authentication UI, improving user retention and session continuity.",
-					"Transitioned the global state management system to Redux, reducing technical debt and enhancing scalability.",
-					"Revamped development workflows, introducing automated testing and improved CI/CD pipelines.",
-				],
-				keywords: ["React", "TypeScript", "Redux", "Storybook", "SSO", "CI/CD"],
-			},
-		],
-		education: [
-			{
-				degree: "Bachelor's Degree in Software Engineering",
-				institution: "National University of San Marcos",
-				location: "Lima, Peru",
-				graduationYear: "July 2023",
-			},
-			{
-				degree: "Master's Degree in Artificial Intelligence",
-				institution: "International University of La Rioja",
-				location: "México",
-				graduationYear: "July 2025",
-			},
-		],
-		skills: [
-			"JavaScript",
-			"TypeScript",
-			"Python",
-			"Golang",
-			"Node.js",
-			"React",
-			"Next.js",
-			"Redux",
-			"TailwindCSS",
-			"PostgreSQL",
-			"FastAPI",
-			"Docker",
-			"Styled Components",
-			"Playwright",
-			"Jest",
-			"Turborepo",
-			"React Testing Library",
-			"Supabase",
-			"Vercel Platform",
-			"GitLab",
-			"GitHub",
-			"Xata",
-			"Inngest",
-			"GraphQL",
-			"Turso",
-			"Vercel AI SDK",
-			"Upstash",
-			"Redis",
-			"Resend",
-			"Cloudflare",
-			"Stripe",
-		],
-		certifications: [],
-		projects: [
-			{
-				name: "Tinte",
-				description:
-					"Built a theme customization tool for VS Code and Shadcn/UI using Next.js and the Vercel AI SDK, enabling developers to create and share themes seamlessly. Implemented real-time previews, AI-assisted generation, and exportable configurations, enhancing user engagement. Drove community adoption with polished UX, intuitive controls, and responsive design principles.",
-				techStack: [
-					"Next.js",
-					"Vercel Platform",
-					"TailwindCSS",
-					"Vercel AI SDK",
-				],
-				link: "",
-			},
-			{
-				name: "One Hunter Theme",
-				description:
-					"Designed and built a VS Code Theme inspired by Vercel Theme and One Dark Pro, crafted with precision in TypeScript.",
-				techStack: ["TypeScript"],
-				link: "",
-			},
-			{
-				name: "Shadcn/ui Customizer",
-				description:
-					"Extended the theme customizer of shadcn-ui library by integrating color pickers to generate and export tailored color palettes in CSS.",
-				techStack: ["React", "TailwindCSS", "Next.js"],
-				link: "",
-			},
-		],
+		websiteUrl: "www.cueva.io",
+		githubHandle: "github.com/cuevaio",
+		linkedInHandle: "linkedin.com/in/cuevaio",
 	},
 };
 
