@@ -1,7 +1,7 @@
 "use server";
 
 import type { CurriculumVitae } from "@/db/schema/user";
-import { extractCurriculumVitaeFromFile } from "../../cook/extract-cv";
+import { extractCurriculumVitaeFromFile } from "@/services/curriculum-vitae-extractor";
 
 interface ProcessCVState {
 	error: string | null;

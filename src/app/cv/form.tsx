@@ -8,7 +8,7 @@ import { useFormStatus } from "react-dom";
 import { processCVAction } from "@/actions/process-cv";
 import { buttonVariants } from "@/components/ui/button";
 import Dropzone from "@/components/ui/dropzone";
-import { useSubscription } from "@/lib/hooks/useSuscription";
+import { useSubscription } from "@/hooks/use-subscription";
 import Link from "next/link";
 
 interface FormState {
