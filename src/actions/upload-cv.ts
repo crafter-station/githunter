@@ -4,7 +4,6 @@ import { auth } from "@clerk/nextjs/server";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { z } from "zod";
 
-import { getSubscription } from "@/lib/get-suscription";
 import type { processCurriculumVitaeTask } from "@/triggers/process-curriculum-vitae-task";
 
 const formSchema = z.object({
@@ -15,16 +14,7 @@ export async function uploadCVAction(
 	prevState: { error: string | null },
 	formData: FormData,
 ) {
-	const currentPlan = await getSubscription();
 	const session = await auth();
-
-	if (!currentPlan) {
-		return { error: "Unauthorized" };
-	}
-
-	if (currentPlan?.name !== "Plus") {
-		return { error: "Unauthorized" };
-	}
 
 	if (!session.userId) {
 		return { error: "Unauthorized" };
