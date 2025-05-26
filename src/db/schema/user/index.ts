@@ -112,6 +112,7 @@ export const user = pgTable(
 
 export const UserInsertSchema = z.object({
 	id: z.string(),
+	clerkId: z.string().optional(),
 
 	username: z.string(),
 	fullname: z.string(),
