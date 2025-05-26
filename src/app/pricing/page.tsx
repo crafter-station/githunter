@@ -74,7 +74,7 @@ export default function PricingPage() {
 	return (
 		<div className="flex min-h-screen flex-col bg-background text-foreground">
 			{/* Header */}
-			<Header />
+			<Header noSearch />
 
 			{/* Pricing Section */}
 			<section className="flex min-h-[80dvh] items-center justify-center border-border border-t border-dashed py-20">

@@ -21,6 +21,7 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2 } from "lucide-react";
 
+import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 
 import { useState } from "react";
@@ -30,7 +31,13 @@ import type { PersistentCurriculumVitae } from "@/db/schema/user";
 import { nanoid } from "@/lib/nanoid";
 import { cn } from "@/lib/utils";
 
+import CalendarComponent from "@/components/calendar";
 import { Button } from "@/components/ui/button";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 
 interface EducationSectionProps {
@@ -51,6 +58,8 @@ function SortableEducationItem({
 	onUpdate,
 	onRemove,
 }: SortableEducationItemProps) {
+	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
 	const {
 		attributes,
 		listeners,
@@ -70,6 +79,61 @@ function SortableEducationItem({
 		transform: CSS.Transform.toString(transform),
 		transition: isDragging ? "none" : transition,
 		zIndex: isDragging ? 9999 : "auto",
+	};
+
+	// Convert string dates to Date objects for calendar
+	const getDateRange = (): DateRange | undefined => {
+		const fromDate = education.dateRangeFrom
+			? new Date(education.dateRangeFrom)
+			: undefined;
+
+		// If dateRangeTo is "Present", treat it as today's date for calendar
+		const toDate =
+			education.dateRangeTo && education.dateRangeTo !== "Present"
+				? new Date(education.dateRangeTo)
+				: education.dateRangeTo === "Present"
+					? new Date()
+					: undefined;
+
+		if (fromDate && toDate) {
+			return { from: fromDate, to: toDate };
+		}
+		if (fromDate) {
+			return { from: fromDate, to: undefined };
+		}
+		return undefined;
+	};
+
+	const handleDateSelect = (dateRange: DateRange | undefined) => {
+		if (dateRange?.from) {
+			onUpdate("dateRangeFrom", format(dateRange.from, "MMM yyyy"));
+		}
+
+		if (dateRange?.to) {
+			// Check if the selected end date is today (meaning "Present" was checked)
+			const today = new Date();
+			const isToday = dateRange.to.toDateString() === today.toDateString();
+
+			if (isToday) {
+				onUpdate("dateRangeTo", "Present");
+			} else {
+				onUpdate("dateRangeTo", format(dateRange.to, "MMM yyyy"));
+			}
+		} else if (dateRange?.from && !dateRange?.to) {
+			// If no end date selected, don't set anything for dateRangeTo
+			onUpdate("dateRangeTo", undefined);
+		}
+		setIsCalendarOpen(false);
+	};
+
+	const formatDateDisplay = () => {
+		if (education.dateRangeFrom && education.dateRangeTo) {
+			return `${education.dateRangeFrom} - ${education.dateRangeTo}`;
+		}
+		if (education.dateRangeFrom) {
+			return `${education.dateRangeFrom} - Present`;
+		}
+		return "Select dates";
 	};
 
 	return (
@@ -104,20 +168,26 @@ function SortableEducationItem({
 						/>
 					</div>
 					<div>
-						<Textarea
-							value={education.dateRangeFrom}
-							onChange={(e) => onUpdate("dateRangeFrom", e.target.value)}
-							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
-							placeholder="Start"
-							rows={1}
-						/>
-						<Textarea
-							value={education.dateRangeTo}
-							onChange={(e) => onUpdate("dateRangeTo", e.target.value)}
-							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
-							placeholder="End"
-							rows={1}
-						/>
+						<Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+							<PopoverTrigger asChild>
+								<Button
+									variant="ghost"
+									className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto justify-end rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
+								>
+									<span className="text-muted-foreground text-sm">
+										{formatDateDisplay()}
+									</span>
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent className="w-auto p-0" align="end">
+								<CalendarComponent
+									initialDate={getDateRange()}
+									onDateSelect={handleDateSelect}
+									onCancel={() => setIsCalendarOpen(false)}
+									presentText="I'm currently studying here"
+								/>
+							</PopoverContent>
+						</Popover>
 					</div>
 				</div>
 

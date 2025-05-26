@@ -21,6 +21,9 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2, X } from "lucide-react";
 
+import { format } from "date-fns";
+import type { DateRange } from "react-day-picker";
+
 import { useState } from "react";
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
@@ -28,7 +31,13 @@ import type { PersistentCurriculumVitae } from "@/db/schema/user";
 import { nanoid } from "@/lib/nanoid";
 import { cn } from "@/lib/utils";
 
+import CalendarComponent from "@/components/calendar";
 import { Button } from "@/components/ui/button";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ExperienceSectionProps {
@@ -40,7 +49,11 @@ interface ExperienceSectionProps {
 
 interface SortableExperienceItemProps {
 	experience: NonNullable<PersistentCurriculumVitae["experience"]>[number];
-	onUpdate: (field: string, value: string | string[]) => void;
+	onUpdate: (
+		field: string,
+		value: string | string[] | DateRange | undefined,
+	) => void;
+	onUpdateDateRange: (fromValue: string, toValue: string) => void;
 	onUpdateBullet: (bulletId: string, value: string) => void;
 	onAddBullet: () => void;
 	onRemoveBullet: (bulletId: string) => void;
@@ -50,11 +63,14 @@ interface SortableExperienceItemProps {
 function SortableExperienceItem({
 	experience,
 	onUpdate,
+	onUpdateDateRange,
 	onUpdateBullet,
 	onAddBullet,
 	onRemoveBullet,
 	onRemove,
 }: SortableExperienceItemProps) {
+	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
 	const {
 		attributes,
 		listeners,
@@ -74,6 +90,98 @@ function SortableExperienceItem({
 		transform: CSS.Transform.toString(transform),
 		transition: isDragging ? "none" : transition,
 		zIndex: isDragging ? 9999 : "auto",
+	};
+
+	// Convert string dates to Date objects for calendar
+	const getDateRange = (): DateRange | undefined => {
+		const parseDate = (dateStr: string): Date | undefined => {
+			if (!dateStr || dateStr.trim() === "") return undefined;
+
+			// Handle "MMM yyyy" format like "January 2024"
+			const parsed = new Date(`${dateStr} 01`); // Add day to make it parseable
+			return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+		};
+
+		const fromDate = parseDate(experience.dateRangeFrom || "");
+
+		// If dateRangeTo is "Present", treat it as today's date for calendar
+		const toDate =
+			experience.dateRangeTo && experience.dateRangeTo !== "Present"
+				? parseDate(experience.dateRangeTo)
+				: experience.dateRangeTo === "Present"
+					? new Date()
+					: undefined;
+
+		console.log("getDateRange for", experience.company, {
+			dateRangeFrom: experience.dateRangeFrom,
+			dateRangeTo: experience.dateRangeTo,
+			fromDate,
+			toDate,
+			result: fromDate || toDate ? { from: fromDate, to: toDate } : undefined,
+		});
+
+		// Return range even if only one date is available
+		if (fromDate || toDate) {
+			return { from: fromDate, to: toDate };
+		}
+
+		return undefined;
+	};
+
+	const handleDateSelect = (dateRange: DateRange | undefined) => {
+		console.log("handleDateSelect called with:", { dateRange });
+		console.log(
+			"Experience ID:",
+			experience.id,
+			"Company:",
+			experience.company,
+		);
+
+		// Calculate both date values first
+		let fromValue = "";
+		let toValue = "";
+
+		if (dateRange?.from) {
+			fromValue = format(dateRange.from, "MMM yyyy");
+			console.log("Setting dateRangeFrom to:", fromValue);
+		} else {
+			console.log("Clearing dateRangeFrom");
+		}
+
+		if (dateRange?.to) {
+			// Check if the selected end date is today (meaning "Present" was checked)
+			const today = new Date();
+			const isToday = dateRange.to.toDateString() === today.toDateString();
+
+			if (isToday) {
+				toValue = "Present";
+				console.log("Setting dateRangeTo to Present");
+			} else {
+				toValue = format(dateRange.to, "MMM yyyy");
+				console.log("Setting dateRangeTo to:", toValue);
+			}
+		} else {
+			console.log("Clearing dateRangeTo");
+		}
+
+		// Call a special update function that handles both fields at once
+		onUpdateDateRange(fromValue, toValue);
+
+		setIsCalendarOpen(false);
+	};
+
+	const formatDateDisplay = () => {
+		console.log(experience.company, {
+			dateRangeFrom: experience.dateRangeFrom,
+			dateRangeTo: experience.dateRangeTo,
+		});
+		if (experience.dateRangeFrom && experience.dateRangeTo) {
+			return `${experience.dateRangeFrom} - ${experience.dateRangeTo}`;
+		}
+		if (experience.dateRangeFrom) {
+			return `${experience.dateRangeFrom} - Present`;
+		}
+		return "Select dates";
 	};
 
 	return (
@@ -100,21 +208,34 @@ function SortableExperienceItem({
 				<div className="flex items-start justify-between gap-4">
 					<div className="flex-1">
 						<Textarea
-							value={experience.company}
-							onChange={(e) => onUpdate("company", e.target.value)}
+							value={experience.title}
+							onChange={(e) => onUpdate("title", e.target.value)}
+							placeholder="Job Position"
 							className="hover:!bg-muted/50 !bg-transparent min-h-auto w-full resize-none rounded-none border-none p-0 font-medium shadow-none focus-visible:ring-0 md:text-base"
-							placeholder="Company Name"
 							rows={1}
 						/>
 					</div>
-					<div className="">
-						<Textarea
-							value={experience.dateRangeFrom}
-							onChange={(e) => onUpdate("dateRangeFrom", e.target.value)}
-							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
-							placeholder="Start - End"
-							rows={1}
-						/>
+					<div>
+						<Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+							<PopoverTrigger asChild>
+								<Button
+									variant="ghost"
+									className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto justify-end rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
+								>
+									<span className="text-muted-foreground text-sm">
+										{formatDateDisplay()}
+									</span>
+								</Button>
+							</PopoverTrigger>
+							<PopoverContent className="w-auto bg-card p-0" align="end">
+								<CalendarComponent
+									initialDate={getDateRange()}
+									onDateSelect={handleDateSelect}
+									onCancel={() => setIsCalendarOpen(false)}
+									presentText="I'm currently working here"
+								/>
+							</PopoverContent>
+						</Popover>
 					</div>
 				</div>
 
@@ -122,10 +243,10 @@ function SortableExperienceItem({
 				<div className="flex items-start justify-between">
 					<div className="flex-1">
 						<Textarea
-							value={experience.title}
-							onChange={(e) => onUpdate("title", e.target.value)}
+							value={experience.company}
+							onChange={(e) => onUpdate("company", e.target.value)}
+							placeholder="Company Name"
 							className="hover:!bg-muted/50 !bg-transparent min-h-auto resize-none rounded-none border-none p-0 text-muted-foreground italic shadow-none focus-visible:ring-0 md:text-base"
-							placeholder="Job Position"
 							rows={1}
 						/>
 					</div>
@@ -245,11 +366,32 @@ export function ExperienceSection({
 	const updateExperience = (
 		id: string,
 		field: string,
-		value: string | string[],
+		value: string | string[] | DateRange | undefined,
 	) => {
+		console.log("updateExperience called:", { id, field, value });
 		const updated = experience.map((exp) =>
 			exp.id === id ? { ...exp, [field]: value } : exp,
 		);
+		console.log("Updated experience array:", updated);
+		onUpdate(updated);
+	};
+
+	const updateExperienceDateRange = (
+		id: string,
+		fromValue: string,
+		toValue: string,
+	) => {
+		console.log("updateExperienceDateRange called:", {
+			id,
+			fromValue,
+			toValue,
+		});
+		const updated = experience.map((exp) =>
+			exp.id === id
+				? { ...exp, dateRangeFrom: fromValue, dateRangeTo: toValue }
+				: exp,
+		);
+		console.log("Updated experience array:", updated);
 		onUpdate(updated);
 	};
 
@@ -344,6 +486,9 @@ export function ExperienceSection({
 								onUpdate={(field, value) =>
 									updateExperience(exp.id, field, value)
 								}
+								onUpdateDateRange={(fromValue, toValue) =>
+									updateExperienceDateRange(exp.id, fromValue, toValue)
+								}
 								onUpdateBullet={(bulletId, value) =>
 									updateExperienceBullet(exp.id, bulletId, value)
 								}
@@ -374,6 +519,7 @@ export function ExperienceSection({
 						<SortableExperienceItem
 							experience={activeItem}
 							onUpdate={() => {}} // No-op for overlay
+							onUpdateDateRange={() => {}} // No-op for overlay
 							onUpdateBullet={() => {}} // No-op for overlay
 							onAddBullet={() => {}} // No-op for overlay
 							onRemoveBullet={() => {}} // No-op for overlay

@@ -7,9 +7,9 @@ import { db, user as userTable } from "@/db";
 import { buttonVariants } from "@/components/ui/button";
 
 import { CVPreview } from "@/components/cv/cv-preview";
-import { Footer } from "@/components/footer/Footer";
 import { Header } from "@/components/header";
 
+import { Footer } from "@/components/footer/Footer";
 import { cn } from "@/lib/utils";
 
 export default async function CVPreviewPage({
@@ -34,14 +34,14 @@ export default async function CVPreviewPage({
 	const cv = users[0].cv;
 
 	return (
-		<div className="flex min-h-screen flex-col bg-background">
+		<div className="flex min-h-[100dvh] flex-col bg-muted/50">
 			<Header />
 
 			<main className="flex flex-1 flex-col py-8">
 				<div className="mx-auto w-full max-w-4xl px-4">
 					{/* CV Preview - Clean Design */}
 					<div className="mb-8 rounded-lg border border-border bg-background p-8 shadow-sm">
-						<CVPreview cvData={cv || {}} />
+						<CVPreview cvData={cv || {}} showToolbar={true} />
 					</div>
 
 					{/* Minimal Call to Action */}
@@ -67,7 +67,6 @@ export default async function CVPreviewPage({
 					</div>
 				</div>
 			</main>
-
 			<Footer />
 		</div>
 	);

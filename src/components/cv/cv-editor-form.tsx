@@ -1,8 +1,4 @@
 "use client";
-
-import Link from "next/link";
-import { useActionState, useEffect, useState } from "react";
-
 import {
 	DndContext,
 	type DragEndEvent,
@@ -15,7 +11,7 @@ import {
 	useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { Eye, Loader2, Save } from "lucide-react";
+// import { FileText } from "lucide-react";
 import { toast } from "sonner";
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
@@ -24,16 +20,17 @@ import { updateCurriculumVitaeAction } from "@/actions/update-curriculum-vitae";
 
 import { CV_PRESETS, type PresetKey } from "@/lib/cv-presets";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-
-import { cn } from "@/lib/utils";
+import { useCVHistoryStore } from "@/stores/cv-history-store";
 import { useUser } from "@clerk/nextjs";
+import { useActionState, useEffect, useState } from "react";
 import { CVUploader } from "./cv-uploader";
 import { EducationSection } from "./education-section";
 import { ExperienceSection } from "./experience-section";
+import { FloatingCVToolbar } from "./floating-cv-toolbar";
 import { HeaderSection } from "./header-section";
-import { PresetLoader } from "./preset-loader";
+import { InterestsSection } from "./interests-section";
 import { ProjectsSection } from "./projects-section";
+import { SkillsSection } from "./skills-section";
 
 interface CVEditorFormProps {
 	initialData?: PersistentCurriculumVitae;
@@ -46,6 +43,17 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 	);
 
 	const { user } = useUser();
+	const { updateCV, getCurrentCV, reset } = useCVHistoryStore();
+
+	// Initialize the store with initial data
+	useEffect(() => {
+		if (initialData) {
+			reset(initialData);
+		}
+	}, [initialData, reset]);
+
+	// Get current CV data from store
+	const cvData = getCurrentCV();
 
 	useEffect(() => {
 		if (!state) {
@@ -54,19 +62,33 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 
 		if (!isSubmitting) {
 			if (state?.ok) {
-				setCVData(state.curriculumVitae);
+				updateCV(() => state.curriculumVitae);
 				toast.success("CV updated successfully");
 			} else {
 				toast.error("Failed to update CV");
 			}
 		}
-	}, [state, isSubmitting]);
-
-	const [cvData, setCVData] = useState<PersistentCurriculumVitae>(
-		initialData ?? {},
-	);
+	}, [state, isSubmitting, updateCV]);
 
 	const [activeId, setActiveId] = useState<string | null>(null);
+
+	// Visibility state for header fields and sections
+	const [headerFieldsVisibility, setHeaderFieldsVisibility] = useState({
+		phone: true,
+		email: true,
+		website: true,
+		linkedin: true,
+		github: true,
+	});
+
+	const [sectionsVisibility, setSectionsVisibility] = useState({
+		education: true,
+		summary: true,
+		experience: true,
+		projects: true,
+		skills: true,
+		interests: true,
+	});
 
 	// Drag and drop sensors
 	const sensors = useSensors(
@@ -78,14 +100,14 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 
 	const loadPreset = (presetKey: PresetKey) => {
 		const preset = CV_PRESETS[presetKey];
-		setCVData(preset);
+		updateCV(() => preset);
 	};
 
 	const handleHeaderUpdate = (
 		field: keyof PersistentCurriculumVitae,
 		value: string,
 	) => {
-		setCVData((prev) => ({
+		updateCV((prev) => ({
 			...prev,
 			[field]: value,
 		}));
@@ -94,7 +116,7 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 	const handleEducationUpdate = (
 		education: PersistentCurriculumVitae["education"],
 	) => {
-		setCVData((prev) => ({
+		updateCV((prev) => ({
 			...prev,
 			education,
 		}));
@@ -103,7 +125,7 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 	const handleExperienceUpdate = (
 		experience: PersistentCurriculumVitae["experience"],
 	) => {
-		setCVData((prev) => ({
+		updateCV((prev) => ({
 			...prev,
 			experience,
 		}));
@@ -112,9 +134,40 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 	const handleProjectsUpdate = (
 		projects: PersistentCurriculumVitae["projects"],
 	) => {
-		setCVData((prev) => ({
+		updateCV((prev) => ({
 			...prev,
 			projects,
+		}));
+	};
+
+	const handleSkillsUpdate = (skills: PersistentCurriculumVitae["skills"]) => {
+		updateCV((prev) => ({
+			...prev,
+			skills,
+		}));
+	};
+
+	const handleInterestsUpdate = (
+		interests: PersistentCurriculumVitae["interests"],
+	) => {
+		updateCV((prev) => ({
+			...prev,
+			interests,
+		}));
+	};
+
+	// Visibility toggle handlers
+	const handleHeaderFieldToggle = (field: string, enabled: boolean) => {
+		setHeaderFieldsVisibility((prev) => ({
+			...prev,
+			[field]: enabled,
+		}));
+	};
+
+	const handleSectionToggle = (section: string, enabled: boolean) => {
+		setSectionsVisibility((prev) => ({
+			...prev,
+			[section]: enabled,
 		}));
 	};
 
@@ -181,6 +234,36 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 				handleProjectsUpdate(reordered);
 			}
 		}
+
+		// Handle skills reordering
+		if (activeId.startsWith("skill-") && overId.startsWith("skill-")) {
+			const activeIndex = Number.parseInt(activeId.split("-")[1]);
+			const overIndex = Number.parseInt(overId.split("-")[1]);
+
+			if (activeIndex !== overIndex) {
+				const reordered = arrayMove(
+					cvData.skills || [],
+					activeIndex,
+					overIndex,
+				);
+				handleSkillsUpdate(reordered);
+			}
+		}
+
+		// Handle interests reordering
+		if (activeId.startsWith("interest-") && overId.startsWith("interest-")) {
+			const activeIndex = Number.parseInt(activeId.split("-")[1]);
+			const overIndex = Number.parseInt(overId.split("-")[1]);
+
+			if (activeIndex !== overIndex) {
+				const reordered = arrayMove(
+					cvData.interests || [],
+					activeIndex,
+					overIndex,
+				);
+				handleInterestsUpdate(reordered);
+			}
+		}
 	};
 
 	const renderDragOverlay = () => {
@@ -234,6 +317,32 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			);
 		}
 
+		if (activeId.startsWith("skill-")) {
+			const index = Number.parseInt(activeId.split("-")[1]);
+			const skill = cvData.skills?.[index];
+			if (!skill) return null;
+
+			return (
+				<div className="rotate-3 scale-105 transform rounded-lg border-2 border-primary/50 bg-background/95 p-4 shadow-2xl backdrop-blur-sm transition-all duration-200">
+					<div className="font-medium text-foreground">{skill.content}</div>
+					<div className="mt-1 text-primary text-xs">🛠️ Skill</div>
+				</div>
+			);
+		}
+
+		if (activeId.startsWith("interest-")) {
+			const index = Number.parseInt(activeId.split("-")[1]);
+			const interest = cvData.interests?.[index];
+			if (!interest) return null;
+
+			return (
+				<div className="rotate-3 scale-105 transform rounded-lg border-2 border-primary/50 bg-background/95 p-4 shadow-2xl backdrop-blur-sm transition-all duration-200">
+					<div className="font-medium text-foreground">{interest.content}</div>
+					<div className="mt-1 text-primary text-xs">🎯 Interest</div>
+				</div>
+			);
+		}
+
 		return null;
 	};
 
@@ -244,47 +353,27 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			onDragStart={handleDragStart}
 			onDragEnd={handleDragEnd}
 		>
-			<div className="flex items-center gap-4">
-				<CVUploader />
-				{/* Preset Loader */}
-				<PresetLoader onLoadPreset={loadPreset} />
-				{/* View CV Button */}
-				<Link
-					href={`/developer/${user?.username}/cv`}
-					className={cn(
-						buttonVariants({ variant: "outline", size: "default" }),
-						"flex items-center gap-2",
-					)}
-				>
-					<Eye className="h-4 w-4" />
-					View CV
-				</Link>
-				{/* Save Button */}
-				<form action={formAction}>
-					<input
-						type="hidden"
-						name="curriculumVitae"
-						value={JSON.stringify(cvData)}
-					/>
-					<Button
-						type="submit"
-						disabled={isSubmitting}
-						className="flex items-center gap-2"
-					>
-						{isSubmitting ? (
-							<Loader2 className="h-4 w-4 animate-spin" />
-						) : (
-							<Save className="h-4 w-4" />
-						)}
-						Save CV
-					</Button>
-				</form>
-			</div>
-			{state?.ok && (
-				<div className="text-muted-foreground text-sm">
-					Last updated: {new Date(state.updatedAt).toLocaleString()}
+			{/* Header Section with Icon and Actions */}
+			{/* <div className="text-center">
+				<div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary/10 p-3 text-primary">
+					<FileText className="h-6 w-6" />
 				</div>
-			)}
+				<h1 className="font-semibold text-2xl tracking-tight">CV Editor</h1>
+				<p className="mt-2 text-muted-foreground text-sm">
+					Create and customize your professional curriculum vitae
+				</p>
+			</div> */}
+
+			{/* <div className="flex flex-col items-center gap-4 mt-2">
+				{state?.ok && (
+					<div className="flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-green-700 text-sm dark:bg-green-950/20 dark:text-green-400">
+						<div className="h-2 w-2 rounded-full bg-green-500" />
+						Last updated: {new Date(state.updatedAt).toLocaleString()}
+					</div>
+				)}
+			</div> */}
+
+			{/* CV Content */}
 			<div className="mx-auto mt-8 max-w-4xl space-y-8 border bg-background py-8 pr-8 pl-6 md:pl-12">
 				{/* Header & Summary */}
 				<HeaderSection
@@ -299,25 +388,60 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 						summary: cvData.summary,
 					}}
 					onUpdate={handleHeaderUpdate}
+					visibility={{
+						phone: headerFieldsVisibility.phone,
+						email: headerFieldsVisibility.email,
+						website: headerFieldsVisibility.website,
+						linkedin: headerFieldsVisibility.linkedin,
+						github: headerFieldsVisibility.github,
+						summary: sectionsVisibility.summary,
+					}}
 				/>
 
 				{/* Education */}
-				<EducationSection
-					education={cvData.education || []}
-					onUpdate={handleEducationUpdate}
-				/>
+				{sectionsVisibility.education && (
+					<EducationSection
+						education={cvData.education || []}
+						onUpdate={handleEducationUpdate}
+					/>
+				)}
 
 				{/* Experience */}
-				<ExperienceSection
-					experience={cvData.experience || []}
-					onUpdate={handleExperienceUpdate}
-				/>
+				{sectionsVisibility.experience && (
+					<ExperienceSection
+						experience={cvData.experience || []}
+						onUpdate={handleExperienceUpdate}
+					/>
+				)}
 
 				{/* Projects */}
-				<ProjectsSection
-					projects={cvData.projects || []}
-					onUpdate={handleProjectsUpdate}
-				/>
+				{sectionsVisibility.projects && (
+					<ProjectsSection
+						projects={cvData.projects || []}
+						onUpdate={handleProjectsUpdate}
+					/>
+				)}
+
+				{/* Skills */}
+				{sectionsVisibility.skills && (
+					<SkillsSection
+						skills={cvData.skills || []}
+						onUpdate={handleSkillsUpdate}
+					/>
+				)}
+
+				{/* Interests */}
+				{sectionsVisibility.interests && (
+					<InterestsSection
+						interests={cvData.interests || []}
+						onUpdate={handleInterestsUpdate}
+					/>
+				)}
+			</div>
+
+			{/* Hidden CV Uploader */}
+			<div style={{ display: "none" }}>
+				<CVUploader />
 			</div>
 
 			{/* Drag Overlay with Ghost Effect */}
@@ -330,6 +454,64 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			>
 				{renderDragOverlay()}
 			</DragOverlay>
+
+			{/* Hidden form for server action */}
+			<form
+				action={formAction}
+				style={{ display: "none" }}
+				ref={(form) => {
+					if (form) {
+						form.setAttribute("data-cv-form", "true");
+					}
+				}}
+			>
+				<input
+					type="hidden"
+					name="curriculumVitae"
+					value={JSON.stringify(cvData)}
+				/>
+			</form>
+
+			{/* Floating Toolbar */}
+			<FloatingCVToolbar
+				onPreview={() =>
+					window.open(`/developer/${user?.username}/cv`, "_blank")
+				}
+				onSave={() => {
+					// Update the hidden form with current CV data and submit
+					const form = document.querySelector(
+						"form[data-cv-form]",
+					) as HTMLFormElement;
+					if (form) {
+						const input = form.querySelector(
+							'input[name="curriculumVitae"]',
+						) as HTMLInputElement;
+						if (input) {
+							input.value = JSON.stringify(cvData);
+						}
+						form.requestSubmit();
+					}
+				}}
+				onUpload={() => {
+					// Trigger CV uploader
+					const uploadButton = document.querySelector(
+						"[data-cv-uploader]",
+					) as HTMLButtonElement;
+					if (uploadButton) {
+						uploadButton.click();
+					}
+				}}
+				onTemplateSelect={(presetKey) => {
+					const preset = CV_PRESETS[presetKey];
+					updateCV(() => preset);
+					toast.success("Template loaded successfully");
+				}}
+				isSaving={isSubmitting}
+				headerFields={headerFieldsVisibility}
+				sections={sectionsVisibility}
+				onHeaderFieldToggle={handleHeaderFieldToggle}
+				onSectionToggle={handleSectionToggle}
+			/>
 		</DndContext>
 	);
 }

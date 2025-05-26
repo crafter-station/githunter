@@ -113,7 +113,7 @@ function SortableProjectItem({
 							value={project.link || ""}
 							onChange={(e) => onUpdate("link", e.target.value)}
 							className={cn(
-								"hover:!bg-muted/50 !bg-transparent min-h-auto cursor-pointer resize-none rounded-none border-none p-0 text-right text-blue-700 shadow-none focus-visible:ring-0 dark:text-blue-400",
+								"hover:!bg-muted/50 !bg-transparent min-h-auto cursor-pointer resize-none rounded-none border-none p-0 text-right text-[#2300A7] shadow-none focus-visible:ring-0 dark:text-[#75A9FF]",
 								project.link && "underline",
 							)}
 							placeholder="Insert External Link"

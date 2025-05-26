@@ -447,11 +447,103 @@ export const CV_PRESETS: Record<string, PersistentCurriculumVitae> = {
 		githubHandle: "github.com/cuevaio",
 		linkedInHandle: "linkedin.com/in/cuevaio",
 	},
+	"railly-hugo": {
+		fullName: "Railly Hugo",
+		email: "railly.hugo@example.com",
+		phone: "+51 987654321",
+		location: "Lima, Peru",
+		linkedInHandle: "linkedin.com/in/raillyhugo",
+		githubHandle: "github.com/raillyhugo",
+		websiteUrl: "raillyhugo.dev",
+		summary:
+			"Frontend Engineer passionate about creating exceptional user experiences with modern web technologies. Specialized in React, Next.js, and TypeScript.",
+		education: [
+			{
+				id: "edu1",
+				degree: "Computer Science",
+				institution: "Universidad Nacional de Ingeniería",
+				location: "Lima, Peru",
+				dateRangeFrom: "2018",
+				dateRangeTo: "2022",
+			},
+		],
+		experience: [
+			{
+				id: "exp1",
+				title: "Frontend Engineer",
+				company: "GitHunter",
+				location: "Remote, Peru",
+				dateRangeFrom: "2023",
+				dateRangeTo: "Present",
+				bullets: [
+					{
+						id: "bullet1",
+						content:
+							"Built responsive web applications using React and Next.js",
+					},
+					{
+						id: "bullet2",
+						content: "Implemented modern UI/UX designs with Tailwind CSS",
+					},
+				],
+				techStack: [
+					{ id: "tech1", content: "React" },
+					{ id: "tech2", content: "Next.js" },
+					{ id: "tech3", content: "TypeScript" },
+					{ id: "tech4", content: "Tailwind CSS" },
+				],
+			},
+		],
+		projects: [
+			{
+				id: "proj1",
+				name: "GitHunter Platform",
+				bullets: [
+					{
+						id: "projbullet1",
+						content: "Frontend development for developer search platform",
+					},
+				],
+				techStack: [
+					{ id: "projtech1", content: "Next.js" },
+					{ id: "projtech2", content: "React" },
+				],
+			},
+		],
+		skills: [
+			{ id: "skill1", content: "React" },
+			{ id: "skill2", content: "Next.js" },
+			{ id: "skill3", content: "TypeScript" },
+			{ id: "skill4", content: "Tailwind CSS" },
+			{ id: "skill5", content: "JavaScript" },
+		],
+		interests: [
+			{ id: "int1", content: "Frontend Development" },
+			{ id: "int2", content: "UI/UX Design" },
+			{ id: "int3", content: "Web Performance" },
+		],
+	},
+	"empty-template": {
+		fullName: "",
+		email: "",
+		phone: "",
+		location: "",
+		linkedInHandle: "",
+		githubHandle: "",
+		websiteUrl: "",
+		summary: "",
+		education: [],
+		experience: [],
+		projects: [],
+		skills: [],
+		interests: [],
+	},
 };
 
 export const PRESET_NAMES = {
 	"anthony-cueva": "Anthony Cueva - Product Engineer",
 	"railly-hugo": "Railly Hugo - Frontend Engineer",
+	"empty-template": "Empty Template",
 } as const;
 
 export type PresetKey = keyof typeof CV_PRESETS;
