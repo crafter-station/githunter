@@ -2,7 +2,7 @@
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
 
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 
 interface CVPreviewProps {
 	cvData: PersistentCurriculumVitae;
@@ -28,31 +28,66 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 					<div className="flex flex-wrap gap-2 text-sm">
 						{cvData.email && (
 							<>
-								<span className="text-primary underline">{cvData.email}</span>
+								<a
+									href={`mailto:${cvData.email}`}
+									className="text-[#2300A7] underline dark:text-[#75A9FF]"
+								>
+									{cvData.email}
+								</a>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
 						{cvData.phone && (
 							<>
-								<span>{cvData.phone}</span>
+								<a
+									href={`tel:${cvData.phone}`}
+									className="text-[#2300A7] underline dark:text-[#75A9FF]"
+								>
+									{cvData.phone}
+								</a>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
 						{cvData.websiteUrl && (
 							<>
-								<span>{cvData.websiteUrl}</span>
+								<a
+									href={
+										cvData.websiteUrl.startsWith("http")
+											? cvData.websiteUrl
+											: `https://${cvData.websiteUrl}`
+									}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#2300A7] underline dark:text-[#75A9FF]"
+								>
+									{cvData.websiteUrl}
+								</a>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
 						{cvData.linkedInHandle && (
 							<>
-								<span>{cvData.linkedInHandle}</span>
+								<a
+									href={`https://linkedin.com/${cvData.linkedInHandle.startsWith("in/") ? cvData.linkedInHandle : `in/${cvData.linkedInHandle}`}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#2300A7] underline dark:text-[#75A9FF]"
+								>
+									{cvData.linkedInHandle}
+								</a>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
 						{cvData.githubHandle && (
 							<>
-								<span>{cvData.githubHandle}</span>
+								<a
+									href={`https://${cvData.githubHandle.startsWith("github.com/") ? cvData.githubHandle : `github.com/${cvData.githubHandle}`}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-[#2300A7] underline dark:text-[#75A9FF]"
+								>
+									{cvData.githubHandle}
+								</a>
 								<span className="text-muted-foreground">•</span>
 							</>
 						)}
@@ -66,9 +101,7 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 					<h2 className="border-border border-b pb-1 font-semibold text-lg">
 						SUMMARY
 					</h2>
-					<p className="text-muted-foreground leading-relaxed">
-						{cvData.summary}
-					</p>
+					<p className="">{cvData.summary}</p>
 				</div>
 			)}
 
@@ -140,7 +173,7 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 								</div>
 							)}
 
-							{exp.techStack && exp.techStack.length > 0 && (
+							{/* {exp.techStack && exp.techStack.length > 0 && (
 								<div className="mt-2 ml-4 flex flex-wrap gap-1">
 									{exp.techStack.map((tech) => (
 										<Badge key={tech.id} variant="outline" className="text-xs">
@@ -148,7 +181,7 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 										</Badge>
 									))}
 								</div>
-							)}
+							)} */}
 						</div>
 					))}
 				</div>
@@ -160,61 +193,81 @@ export function CVPreview({ cvData, className }: CVPreviewProps) {
 					<h2 className="border-border border-b pb-1 font-semibold text-lg">
 						PROJECTS
 					</h2>
-					{cvData.projects.map((project, projIndex) => (
-						<div
-							key={`project-${project.name}-${projIndex}`}
-							className="space-y-2"
-						>
+					{cvData.projects.map((project) => (
+						<div key={project.id} className="space-y-2">
 							<div className="flex items-start justify-between">
 								<div className="flex-1">
-									<div className="flex items-center gap-2">
-										<span className="font-medium">{project.name}</span>
-										<span className="text-muted-foreground">|</span>
-										<span className="text-muted-foreground italic">
-											{project.description}
-										</span>
-									</div>
+									<div className="font-medium">{project.name}</div>
 								</div>
 								<div className="text-right text-muted-foreground text-sm">
-									Select a date range
+									{project.dateRangeFrom && project.dateRangeTo && (
+										<div>
+											{project.dateRangeFrom} - {project.dateRangeTo}
+										</div>
+									)}
+									{project.link && (
+										<div className="text-[#2300A7] italic underline dark:text-[#75A9FF]">
+											{project.link}
+										</div>
+									)}
 								</div>
 							</div>
+							<div className="text-muted-foreground italic">
+								{project.description}
+							</div>
 
-							{/* Project achievements or tech stack as bullets */}
-							<div className="ml-4 space-y-1">
-								{project.techStack &&
-									project.techStack.length > 0 &&
-									project.techStack.map((tech, techIndex) => (
-										<div
-											key={`tech-bullet-${projIndex}-${tech}-${
-												// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-												techIndex
-											}`}
-											className="flex items-start"
-										>
+							{project.bullets && project.bullets.length > 0 && (
+								<div className="ml-4 space-y-1">
+									{project.bullets.map((bullet) => (
+										<div key={bullet.id} className="flex items-start">
 											<span className="mr-2 text-muted-foreground">•</span>
-											<span className="text-sm">{tech.content}</span>
+											<span className="text-sm">{bullet.content}</span>
 										</div>
 									))}
-							</div>
+								</div>
+							)}
+
+							{/* {project.techStack && project.techStack.length > 0 && (
+								<div className="mt-2 ml-4 flex flex-wrap gap-1">
+									{project.techStack.map((tech) => (
+										<Badge key={tech.id} variant="outline" className="text-xs">
+											{tech.content}
+										</Badge>
+									))}
+								</div>
+							)} */}
 						</div>
 					))}
 				</div>
 			)}
 
-			{/* Skills/Additional */}
+			{/* Skills */}
 			{cvData.skills && cvData.skills.length > 0 && (
 				<div className="space-y-3">
 					<h2 className="border-border border-b pb-1 font-semibold text-lg">
-						ADDITIONAL
+						SKILLS
 					</h2>
-					<div className="space-y-1">
-						<div className="flex items-center gap-2">
-							<span className="w-32 font-medium">Skills</span>
-							<span>:</span>
-							<span className="flex-1">{cvData.skills.join(", ")}</span>
-						</div>
-					</div>
+					<p className="text-sm leading-relaxed">
+						{cvData.skills
+							.map((skill) => skill.content)
+							.filter(Boolean)
+							.join(", ")}
+					</p>
+				</div>
+			)}
+
+			{/* Interests */}
+			{cvData.interests && cvData.interests.length > 0 && (
+				<div className="space-y-3">
+					<h2 className="border-border border-b pb-1 font-semibold text-lg">
+						INTERESTS
+					</h2>
+					<p className="text-sm leading-relaxed">
+						{cvData.interests
+							.map((interest) => interest.content)
+							.filter(Boolean)
+							.join(", ")}
+					</p>
 				</div>
 			)}
 		</div>

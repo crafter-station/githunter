@@ -401,7 +401,7 @@ export function SearchBox({
 						className={cn(
 							"relative flex w-full border border-border bg-input/30 text-left shadow-sm",
 							isCompact
-								? "items-center rounded-lg px-3 py-1.5"
+								? "items-center rounded-lg px-3"
 								: "items-end rounded-lg p-2",
 							open && "rounded-b-none",
 							isLoading && "opacity-75",

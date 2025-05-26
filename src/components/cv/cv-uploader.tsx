@@ -103,14 +103,19 @@ export function CVUploader() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline" size="sm">
-					<Upload className="mr-2 h-4 w-4" />
+				<Button
+					variant="outline"
+					size="default"
+					className="flex items-center gap-2 transition-all hover:shadow-sm"
+					data-cv-uploader
+				>
+					<Upload className="h-4 w-4" />
 					Upload CV
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Upload your CV</DialogTitle>
+					<DialogTitle>Import your CV</DialogTitle>
 				</DialogHeader>
 				<FileUpload
 					accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"

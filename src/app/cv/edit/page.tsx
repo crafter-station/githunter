@@ -15,6 +15,8 @@ export default async function CVEditorPage() {
 		redirect("/sign-in");
 	}
 
+	console.log("user id", session.userId);
+
 	const users = await db
 		.select({
 			cv: userTable.curriculumVitae,
@@ -22,6 +24,8 @@ export default async function CVEditorPage() {
 		.from(userTable)
 		.where(eq(userTable.clerkId, session.userId))
 		.limit(1);
+
+	console.log({ users });
 
 	if (!users.length) {
 		redirect("/sign-in");
@@ -31,14 +35,14 @@ export default async function CVEditorPage() {
 	const cv = (user.cv || {}) as PersistentCurriculumVitae;
 
 	return (
-		<div className="flex min-h-screen flex-col">
-			<Header />
+		<div className="flex min-h-[100dvh] flex-col bg-muted/50">
+			<Header noSearch />
 
-			<main className="flex flex-1 flex-col items-center justify-center py-12">
+			<main className="flex flex-1 flex-col items-center justify-center">
 				<CVEditorForm initialData={cv} />
 			</main>
 
-			<Footer />
+			<Footer className="pb-24" />
 		</div>
 	);
 }

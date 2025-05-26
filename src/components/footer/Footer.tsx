@@ -1,8 +1,18 @@
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export function Footer() {
+interface FooterProps {
+	className?: string;
+}
+
+export function Footer({ className }: FooterProps) {
 	return (
-		<footer className="mt-auto border-border border-t border-dashed py-8">
+		<footer
+			className={cn(
+				"mt-auto border-border border-t border-dashed py-8",
+				className,
+			)}
+		>
 			<div className="container mx-auto flex items-center justify-center gap-6">
 				<Link
 					href="/about"

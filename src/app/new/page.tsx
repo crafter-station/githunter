@@ -8,7 +8,7 @@ import { Form } from "./form";
 export default async function NewProfilePage() {
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Header />
+			<Header noSearch />
 
 			<main className="flex flex-1 flex-col items-center justify-center py-12">
 				<div className="w-full max-w-md px-4">
