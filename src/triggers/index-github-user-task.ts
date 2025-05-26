@@ -39,6 +39,7 @@ export const indexGithubUserTask = schemaTask({
 
 		const userRecord: UserInsert = {
 			id: nanoid(),
+			clerkId: userId,
 			username,
 			fullname: userInfo.name ?? "",
 			avatarUrl: userInfo.avatarUrl,
