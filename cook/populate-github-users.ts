@@ -2,9 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import * as readline from "node:readline";
 import { db } from "@/db";
-import { user as userTable } from "@/db/schema";
 import { PopulateGithubUser } from "@/services/populate-github-user.service";
-import { eq } from "drizzle-orm";
 
 async function main() {
 	const filePath = path.resolve(__dirname, "../users.txt");
@@ -25,7 +23,7 @@ async function main() {
 		const [country, username, _] = line.split(",");
 		try {
 			const existingUser = await db.query.user.findFirst({
-				where: eq(userTable.username, username),
+				where: (table, { ilike }) => ilike(table.username, username),
 			});
 			if (existingUser) {
 				console.log(

@@ -1,7 +1,5 @@
 import { db } from "@/db";
-import { user as userTable } from "@/db/schema";
 import { PopulateGithubUser } from "@/services/populate-github-user.service";
-import { eq } from "drizzle-orm";
 
 if (require.main === module) {
 	(async () => {
@@ -25,7 +23,7 @@ if (require.main === module) {
 			}
 
 			const existingUser = await db.query.user.findFirst({
-				where: eq(userTable.username, username),
+				where: (table, { ilike }) => ilike(table.username, username),
 			});
 			if (existingUser) {
 				console.log(

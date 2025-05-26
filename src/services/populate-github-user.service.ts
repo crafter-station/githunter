@@ -79,7 +79,7 @@ export class PopulateGithubUser {
 		};
 
 		const existingUser = (await db.query.user.findFirst({
-			where: (table, { eq }) => eq(table.username, username),
+			where: (table, { ilike }) => ilike(table.username, username),
 		})) as UserSelect;
 		if (existingUser) {
 			userRecord.id = existingUser.id;
