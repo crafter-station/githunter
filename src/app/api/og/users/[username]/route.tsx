@@ -1,8 +1,6 @@
 import { db } from "@/db";
-import { user } from "@/db/schema";
 import { getTechIcon, getValidatedStack } from "@/lib/tech-icons";
 import { ImageResponse } from "@vercel/og";
-import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
 
@@ -15,7 +13,7 @@ export async function GET(
 	const { username } = await params;
 
 	const userData = await db.query.user.findFirst({
-		where: eq(user.username, username),
+		where: (table, { ilike }) => ilike(table.username, username),
 	});
 
 	if (!userData) {

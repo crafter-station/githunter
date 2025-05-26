@@ -24,7 +24,7 @@ export default async function CVPreviewPage({
 			cv: userTable.curriculumVitae,
 		})
 		.from(userTable)
-		.where(ilike(userTable.username, `%${username}%`))
+		.where(ilike(userTable.username, username))
 		.limit(1);
 
 	if (!users.length) {

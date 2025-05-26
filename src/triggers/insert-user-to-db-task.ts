@@ -8,7 +8,7 @@ export const insertUserToDbTask = schemaTask({
 	schema: UserInsertSchema,
 	run: async (user) => {
 		const existingUser = await db.query.user.findFirst({
-			where: (table, { eq }) => eq(table.username, user.username),
+			where: (table, { ilike }) => ilike(table.username, user.username),
 		});
 		if (existingUser) {
 			user.id = existingUser.id;
