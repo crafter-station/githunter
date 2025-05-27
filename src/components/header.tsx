@@ -105,7 +105,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 									<DropdownMenuTrigger asChild>
 										<button
 											type="button"
-											className="ml-2 flex items-center gap-1 rounded-md border border-border bg-background px-2 py-2.5 transition-colors hover:bg-accent/40 sm:gap-2 sm:px-3"
+											className="ml-2 flex items-center gap-1 rounded-md border border-border bg-background px-2 py-2.5 transition-colors hover:bg-accent/40 sm:gap-2 sm:px-3 md:py-1.5"
 										>
 											<Settings className="size-4 text-muted-foreground" />
 											<span className="hidden font-medium text-sm sm:block">
