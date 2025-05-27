@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import {
 	ArrowRight,
+	Bug,
 	ChevronDown,
 	CreditCard,
 	Crown,
@@ -29,6 +30,7 @@ import {
 import Link from "next/link";
 import { SearchBox } from "./search";
 import { UserButton } from "./user-button";
+
 interface HeaderProps {
 	noSearch?: boolean;
 }
@@ -51,7 +53,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 
 	const getPlanClassNames = () => {
 		if (!currentPlan)
-			return "bg-slate-300 text-slate-700 shadow-lg border-b-4 border-slate-400 hover:bg-slate-400 hover:border-slate-500 active:translate-y-1 active:border-b-2 transition-all";
+			return "bg-stone-200 text-stone-700 shadow-lg border-b-4 border-stone-300 hover:bg-stone-300 hover:border-stone-400  active:translate-y-1 active:border-b-2 transition-all";
 		switch (currentPlan.name) {
 			case "Pro":
 				return "bg-blue-500 text-white shadow-lg border-b-4 border-blue-700 hover:bg-blue-600 hover:border-blue-800 active:translate-y-1 active:border-b-2 transition-all";
@@ -84,6 +86,25 @@ export function Header({ noSearch = false }: HeaderProps) {
 					<div className="flex items-center gap-2 sm:gap-3">
 						{user && (
 							<>
+								{/* Bug Report Button - visible only on desktop */}
+								<Button
+									variant="outline"
+									size="sm"
+									asChild
+									className="hidden md:flex"
+								>
+									<Link
+										href="https://github.com/crafter-station/githunter/issues/new?template=feature---issue-request.md"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="flex items-center gap-2"
+									>
+										<Bug className="size-4" />
+										<span>Report Bug</span>
+										<ExternalLink className="size-3 opacity-60" />
+									</Link>
+								</Button>
+
 								{/* Plan Badge - visible only on desktop */}
 								<Link
 									href={currentPlan ? "/portal" : "/pricing"}
@@ -154,11 +175,14 @@ export function Header({ noSearch = false }: HeaderProps) {
 											className="flex cursor-pointer items-center gap-2 px-3 py-2"
 										>
 											<Link
-												href="/cv/edit"
+												href="https://github.com/crafter-station/githunter/issues/new?template=feature---issue-request.md"
+												target="_blank"
+												rel="noopener noreferrer"
 												className="flex w-full items-center"
 											>
-												<FileText className="mr-2 size-4" />
-												<span>Edit CV</span>
+												<Bug className="mr-2 size-4" />
+												<span>Report Bug</span>
+												<ExternalLink className="ml-auto size-3 opacity-60" />
 											</Link>
 										</DropdownMenuItem>
 										<DropdownMenuSeparator />
@@ -181,6 +205,18 @@ export function Header({ noSearch = false }: HeaderProps) {
 											<Link href="/new" className="flex w-full items-center">
 												<Layers className="mr-2 size-4" />
 												<span>Indexer</span>
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											asChild
+											className="flex cursor-pointer items-center gap-2 px-3 py-2"
+										>
+											<Link
+												href="/cv/edit"
+												className="flex w-full items-center"
+											>
+												<FileText className="mr-2 size-4" />
+												<span>CV Editor</span>
 											</Link>
 										</DropdownMenuItem>
 										<DropdownMenuSeparator />
@@ -261,6 +297,19 @@ export function Header({ noSearch = false }: HeaderProps) {
 								<span>CV Editor</span>
 							</Link>
 						</Button>
+
+						<Button variant="ghost" size="sm" asChild>
+							<Link
+								href="https://github.com/crafter-station/githunter/issues/new?template=feature---issue-request.md"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2"
+							>
+								<Bug className="size-4" />
+								<span>Report Bug</span>
+								<ExternalLink className="size-3 opacity-60" />
+							</Link>
+						</Button>
 					</div>
 				</div>
 
@@ -301,8 +350,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 									className="flex items-center gap-1 px-2 sm:gap-2 sm:px-3"
 								>
 									<User className="size-4" />
-									<span className="hidden sm:block">View Profile</span>
-									<ExternalLink className="hidden size-3 opacity-60 sm:block" />
+									<span className="hidden sm:block">Profile</span>
 								</Link>
 							</Button>
 						</>

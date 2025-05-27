@@ -9,7 +9,7 @@ interface FeaturedProfilesProps {
 
 export function FeaturedProfiles({ featuredUsers }: FeaturedProfilesProps) {
 	return (
-		<div className="mt-24 w-full max-w-2xl lg:mt-8">
+		<div className="mt-10 w-full max-w-2xl lg:mt-8">
 			{featuredUsers.length > 0 ? (
 				<>
 					{/* First row - 3 profiles */}
