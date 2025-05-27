@@ -69,8 +69,8 @@ export function Header({ noSearch = false }: HeaderProps) {
 				<div className="mx-auto flex h-12 w-full items-center justify-between px-4 md:h-14 md:px-10">
 					<div className="flex w-full items-center gap-2 md:gap-12">
 						<Link href="/" className="flex items-center gap-2">
-							<div className="rounded-sm border border-border p-2">
-								<GitHunterLogo className="size-5" />
+							<div className="rounded-sm border border-border p-2 md:p-1.5">
+								<GitHunterLogo className="size-5 md:size-4" />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
 								GitHunter
