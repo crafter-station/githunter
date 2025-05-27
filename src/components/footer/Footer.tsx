@@ -43,7 +43,7 @@ export function Footer({ className }: FooterProps) {
 					LinkedIn
 				</a>
 				<a
-					href="https://discord.gg/7MfrzBAX"
+					href="https://discord.gg/W5sRKxqxH8"
 					rel="noopener noreferrer"
 					target="_blank"
 					className="text-muted-foreground text-sm hover:text-primary"
