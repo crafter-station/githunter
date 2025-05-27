@@ -112,14 +112,6 @@ function SortableExperienceItem({
 					? new Date()
 					: undefined;
 
-		console.log("getDateRange for", experience.company, {
-			dateRangeFrom: experience.dateRangeFrom,
-			dateRangeTo: experience.dateRangeTo,
-			fromDate,
-			toDate,
-			result: fromDate || toDate ? { from: fromDate, to: toDate } : undefined,
-		});
-
 		// Return range even if only one date is available
 		if (fromDate || toDate) {
 			return { from: fromDate, to: toDate };
@@ -129,23 +121,12 @@ function SortableExperienceItem({
 	};
 
 	const handleDateSelect = (dateRange: DateRange | undefined) => {
-		console.log("handleDateSelect called with:", { dateRange });
-		console.log(
-			"Experience ID:",
-			experience.id,
-			"Company:",
-			experience.company,
-		);
-
 		// Calculate both date values first
 		let fromValue = "";
 		let toValue = "";
 
 		if (dateRange?.from) {
 			fromValue = format(dateRange.from, "MMM yyyy");
-			console.log("Setting dateRangeFrom to:", fromValue);
-		} else {
-			console.log("Clearing dateRangeFrom");
 		}
 
 		if (dateRange?.to) {
@@ -155,13 +136,9 @@ function SortableExperienceItem({
 
 			if (isToday) {
 				toValue = "Present";
-				console.log("Setting dateRangeTo to Present");
 			} else {
 				toValue = format(dateRange.to, "MMM yyyy");
-				console.log("Setting dateRangeTo to:", toValue);
 			}
-		} else {
-			console.log("Clearing dateRangeTo");
 		}
 
 		// Call a special update function that handles both fields at once
@@ -171,10 +148,6 @@ function SortableExperienceItem({
 	};
 
 	const formatDateDisplay = () => {
-		console.log(experience.company, {
-			dateRangeFrom: experience.dateRangeFrom,
-			dateRangeTo: experience.dateRangeTo,
-		});
 		if (experience.dateRangeFrom && experience.dateRangeTo) {
 			return `${experience.dateRangeFrom} - ${experience.dateRangeTo}`;
 		}
@@ -368,11 +341,9 @@ export function ExperienceSection({
 		field: string,
 		value: string | string[] | DateRange | undefined,
 	) => {
-		console.log("updateExperience called:", { id, field, value });
 		const updated = experience.map((exp) =>
 			exp.id === id ? { ...exp, [field]: value } : exp,
 		);
-		console.log("Updated experience array:", updated);
 		onUpdate(updated);
 	};
 
@@ -381,17 +352,11 @@ export function ExperienceSection({
 		fromValue: string,
 		toValue: string,
 	) => {
-		console.log("updateExperienceDateRange called:", {
-			id,
-			fromValue,
-			toValue,
-		});
 		const updated = experience.map((exp) =>
 			exp.id === id
 				? { ...exp, dateRangeFrom: fromValue, dateRangeTo: toValue }
 				: exp,
 		);
-		console.log("Updated experience array:", updated);
 		onUpdate(updated);
 	};
 

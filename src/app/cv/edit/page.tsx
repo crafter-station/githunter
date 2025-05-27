@@ -15,8 +15,6 @@ export default async function CVEditorPage() {
 		redirect("/sign-in");
 	}
 
-	console.log("user id", session.userId);
-
 	const users = await db
 		.select({
 			cv: userTable.curriculumVitae,
@@ -24,8 +22,6 @@ export default async function CVEditorPage() {
 		.from(userTable)
 		.where(eq(userTable.clerkId, session.userId))
 		.limit(1);
-
-	console.log({ users });
 
 	if (!users.length) {
 		redirect("/sign-in");

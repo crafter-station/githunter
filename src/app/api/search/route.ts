@@ -119,12 +119,6 @@ async function searchUsers(query: string, limit = 10): Promise<SearchResult[]> {
 		// Combine and return results
 		const combinedResults: SearchResult[] = [...users, ...queries];
 
-		console.log({
-			totalResults: combinedResults.length,
-			userResults: users.length,
-			queryResults: queries.length,
-		});
-
 		return combinedResults;
 	} catch (error) {
 		console.error("Error querying vector database:", error);

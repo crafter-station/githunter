@@ -144,12 +144,10 @@ export function DragDropAdvancedTest() {
 
 	const handleDragStart = (event: DragStartEvent) => {
 		setActiveId(event.active.id as string);
-		console.log("🚀 Drag started:", event.active.id);
 	};
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
-		console.log("🎯 Drag ended:", { active: active.id, over: over?.id });
 		setActiveId(null);
 
 		if (!over || active.id === over.id) {
@@ -159,7 +157,6 @@ export function DragDropAdvancedTest() {
 		setItems((items) => {
 			const oldIndex = items.findIndex((item) => item.id === active.id);
 			const newIndex = items.findIndex((item) => item.id === over.id);
-			console.log("📊 Moving from index", oldIndex, "to", newIndex);
 
 			return arrayMove(items, oldIndex, newIndex);
 		});

@@ -92,10 +92,6 @@ export function SearchBox({
 		retry: false,
 	});
 
-	console.log({
-		searchData,
-	});
-
 	// Extract search results from the API response
 	const getThreshold = (queryLength: number): number => {
 		if (queryLength < 10) return 0.8;

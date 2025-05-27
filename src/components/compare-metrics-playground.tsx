@@ -220,7 +220,6 @@ export default function CompareMetricsPlayground({
 				// Fetch data for each developer in parallel
 				const promises = usernames.map((username) => fetchUserData(username));
 				const developers = await Promise.all(promises);
-				console.log({ developers });
 
 				// Filter out any null results (developers not found)
 				const validDevelopers = developers.filter(Boolean) as Developer[];

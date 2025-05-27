@@ -152,7 +152,6 @@ export default function AdvancedSearchPage() {
 			}
 
 			const data = await response.json();
-			console.log("API Response:", data); // Debug log
 
 			if (data.object.technologies && Array.isArray(data.object.technologies)) {
 				// Sort by importance (highest first)

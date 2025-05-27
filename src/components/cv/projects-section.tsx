@@ -55,7 +55,6 @@ function SortableProjectItem({
 	onRemoveBullet,
 	onRemove,
 }: SortableProjectItemProps) {
-	console.log(project);
 	const {
 		attributes,
 		listeners,
