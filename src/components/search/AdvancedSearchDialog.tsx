@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { TelescopeIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface AdvancedSearchDialogProps {
@@ -18,8 +18,12 @@ export function AdvancedSearchDialog({
 	};
 
 	return (
-		<Button variant={variant} className="w-max gap-2" onClick={handleClick}>
-			<Sparkles className="h-4 w-4" />
+		<Button
+			variant={variant}
+			className="group hidden size-7 w-max gap-2 rounded-full md:flex"
+			onClick={handleClick}
+		>
+			<TelescopeIcon className="group-hover:!text-foreground h-4 w-4 text-muted-foreground" />
 		</Button>
 	);
 }

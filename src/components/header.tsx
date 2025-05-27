@@ -14,6 +14,7 @@ import { useSubscription } from "@/hooks/use-subscription";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import {
+	ArrowRight,
 	ChevronDown,
 	CreditCard,
 	Crown,
@@ -28,7 +29,6 @@ import {
 import Link from "next/link";
 import { SearchBox } from "./search";
 import { UserButton } from "./user-button";
-
 interface HeaderProps {
 	noSearch?: boolean;
 }
@@ -49,19 +49,16 @@ export function Header({ noSearch = false }: HeaderProps) {
 		}
 	};
 
-	const getPlanColor = ():
-		| "default"
-		| "secondary"
-		| "destructive"
-		| "outline" => {
-		if (!currentPlan) return "secondary";
+	const getPlanClassNames = () => {
+		if (!currentPlan)
+			return "bg-slate-300 text-slate-700 shadow-lg border-b-4 border-slate-400 hover:bg-slate-400 hover:border-slate-500 active:translate-y-1 active:border-b-2 transition-all";
 		switch (currentPlan.name) {
 			case "Pro":
-				return "default";
+				return "bg-blue-500 text-white shadow-lg border-b-4 border-blue-700 hover:bg-blue-600 hover:border-blue-800 active:translate-y-1 active:border-b-2 transition-all";
 			case "Plus":
-				return "destructive";
+				return "bg-gradient-to-t from-orange-600 to-orange-400 text-white shadow-lg border-b-4 border-orange-700 hover:from-orange-700 hover:to-orange-500 hover:border-orange-800 active:translate-y-1 active:border-b-2 transition-all";
 			default:
-				return "secondary";
+				return "bg-slate-300 text-slate-700 shadow-lg border-b-4 border-slate-400 hover:bg-slate-400 hover:border-slate-500 active:translate-y-1 active:border-b-2 transition-all";
 		}
 	};
 
@@ -72,8 +69,8 @@ export function Header({ noSearch = false }: HeaderProps) {
 				<div className="mx-auto flex h-12 w-full items-center justify-between px-4 md:h-14 md:px-10">
 					<div className="flex w-full items-center gap-2 md:gap-12">
 						<Link href="/" className="flex items-center gap-2">
-							<div className="rounded-sm border border-border p-1.5">
-								<GitHunterLogo className="size-4 " />
+							<div className="rounded-sm border border-border p-2 md:p-1.5">
+								<GitHunterLogo className="size-5 md:size-4" />
 							</div>
 							<span className="hidden font-medium text-lg tracking-tight md:block">
 								GitHunter
@@ -84,28 +81,22 @@ export function Header({ noSearch = false }: HeaderProps) {
 							<SearchBox initialQuery="" variant="compact" />
 						</div>
 					</div>
-					<div className="flex items-center gap-3">
+					<div className="flex items-center gap-2 sm:gap-3">
 						{user && (
 							<>
-								{/* Plan Badge - Separate clickable element */}
+								{/* Plan Badge - visible only on desktop */}
 								<Link
 									href={currentPlan ? "/portal" : "/pricing"}
-									className="transition-transform hover:scale-105"
+									className="hidden transition-transform hover:scale-105 md:block"
 								>
 									<Badge
-										variant={getPlanColor()}
 										className={cn(
-											"flex cursor-pointer items-center gap-1.5 px-3 py-1.5 font-medium text-xs",
-											currentPlan && "shadow-sm",
+											"flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1 font-semibold text-xs",
+											getPlanClassNames(),
 										)}
 									>
 										{getPlanIcon()}
-										{currentPlan ? currentPlan.name : "Free"}
-										{currentPlan && (
-											<span className="text-xs opacity-75">
-												${currentPlan.price}/mo
-											</span>
-										)}
+										{currentPlan ? `${currentPlan.name} Plan` : "Free Plan"}
 									</Badge>
 								</Link>
 
@@ -114,7 +105,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 									<DropdownMenuTrigger asChild>
 										<button
 											type="button"
-											className="flex items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 transition-colors hover:bg-accent/40"
+											className="ml-2 flex items-center gap-1 rounded-md border border-border bg-background px-2 py-2.5 transition-colors hover:bg-accent/40 sm:gap-2 sm:px-3 md:py-1.5"
 										>
 											<Settings className="size-4 text-muted-foreground" />
 											<span className="hidden font-medium text-sm sm:block">
@@ -124,6 +115,28 @@ export function Header({ noSearch = false }: HeaderProps) {
 										</button>
 									</DropdownMenuTrigger>
 									<DropdownMenuContent className="z-50 w-56" align="end">
+										{/* Plan Badge in dropdown - only visible on mobile */}
+										<DropdownMenuItem
+											asChild
+											className="flex cursor-pointer items-center gap-2 px-3 py-2 md:hidden"
+										>
+											<Link
+												href={currentPlan ? "/portal" : "/pricing"}
+												className="flex w-full items-center"
+											>
+												{getPlanIcon()}
+												<span className="ml-2">Your plan</span>
+												<Badge
+													className={cn(
+														"ml-auto flex cursor-pointer items-center gap-1 rounded-md px-2 py-0.5 font-semibold text-xs",
+														getPlanClassNames(),
+													)}
+												>
+													{currentPlan ? currentPlan.name : "Free"}
+												</Badge>
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuSeparator className="md:hidden" />
 										<DropdownMenuItem
 											asChild
 											className="flex cursor-pointer items-center gap-2 px-3 py-2"
@@ -153,6 +166,18 @@ export function Header({ noSearch = false }: HeaderProps) {
 											asChild
 											className="flex cursor-pointer items-center gap-2 px-3 py-2"
 										>
+											<Link
+												href="/search/advanced"
+												className="flex w-full items-center"
+											>
+												<Telescope className="mr-2 size-4" />
+												<span>Advanced Search</span>
+											</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											asChild
+											className="flex cursor-pointer items-center gap-2 px-3 py-2"
+										>
 											<Link href="/new" className="flex w-full items-center">
 												<Layers className="mr-2 size-4" />
 												<span>Indexer</span>
@@ -161,16 +186,32 @@ export function Header({ noSearch = false }: HeaderProps) {
 										<DropdownMenuSeparator />
 										<DropdownMenuItem
 											asChild
-											className="flex cursor-pointer items-center gap-2 px-3 py-2"
+											className={cn(
+												"flex cursor-pointer items-center gap-2 px-3 py-2",
+												!currentPlan &&
+													"bg-orange-50 hover:bg-orange-100 dark:bg-orange-950/30 dark:hover:bg-orange-950/50",
+											)}
 										>
 											<Link
 												href={currentPlan ? "/portal" : "/pricing"}
 												className="flex w-full items-center"
 											>
-												<CreditCard className="mr-2 size-4" />
-												<span>
-													{currentPlan ? "Manage subscription" : "Upgrade plan"}
-												</span>
+												{currentPlan ? (
+													<>
+														<CreditCard className="mr-2 size-4" />
+														<span>Manage subscription</span>
+													</>
+												) : (
+													<>
+														<Crown className="mr-2 size-4 text-orange-600" />
+														<span className="font-semibold text-orange-600">
+															Upgrade to
+														</span>
+														<Badge className="ml-auto rounded-md border-orange-700 border-b-4 bg-gradient-to-t from-orange-600 to-orange-400 px-2 py-0.5 font-semibold text-white text-xs shadow-lg">
+															PLUS
+														</Badge>
+													</>
+												)}
 											</Link>
 										</DropdownMenuItem>
 									</DropdownMenuContent>
@@ -198,37 +239,32 @@ export function Header({ noSearch = false }: HeaderProps) {
 						</span>
 					</Link>
 
-					{user && (
-						<div className="hidden items-center gap-4 lg:flex">
-							{/* All features as direct buttons */}
-							<Button variant="ghost" size="sm" asChild>
-								<Link
-									href="/search/advanced"
-									className="flex items-center gap-2"
-								>
-									<Telescope className="size-4" />
-									<span>Advanced Search</span>
-								</Link>
-							</Button>
+					<div className="hidden items-center gap-4 lg:flex">
+						{/* All features as direct buttons */}
+						<Button variant="ghost" size="sm" asChild>
+							<Link href="/search/advanced" className="flex items-center gap-2">
+								<Telescope className="size-4" />
+								<span>Advanced Search</span>
+							</Link>
+						</Button>
 
-							<Button variant="ghost" size="sm" asChild>
-								<Link href="/new" className="flex items-center gap-2">
-									<Layers className="size-4" />
-									<span>Indexer</span>
-								</Link>
-							</Button>
+						<Button variant="ghost" size="sm" asChild>
+							<Link href="/new" className="flex items-center gap-2">
+								<Layers className="size-4" />
+								<span>Indexer</span>
+							</Link>
+						</Button>
 
-							<Button variant="ghost" size="sm" asChild>
-								<Link href="/cv/edit" className="flex items-center gap-2">
-									<FileText className="size-4" />
-									<span>CV Editor</span>
-								</Link>
-							</Button>
-						</div>
-					)}
+						<Button variant="ghost" size="sm" asChild>
+							<Link href="/cv/edit" className="flex items-center gap-2">
+								<FileText className="size-4" />
+								<span>CV Editor</span>
+							</Link>
+						</Button>
+					</div>
 				</div>
 
-				<div className="flex items-center gap-3">
+				<div className="flex items-center gap-2 sm:gap-3">
 					{user && (
 						<>
 							{/* Plan Badge with upgrade CTA */}
@@ -237,21 +273,21 @@ export function Header({ noSearch = false }: HeaderProps) {
 								className="transition-transform hover:scale-105"
 							>
 								<Badge
-									variant={getPlanColor()}
 									className={cn(
-										"flex cursor-pointer items-center gap-2 px-4 py-2 font-medium text-sm",
-										currentPlan && "shadow-sm",
-										!currentPlan && "animate-pulse",
+										"flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 font-semibold text-xs sm:gap-2 sm:rounded-lg sm:px-3 sm:text-sm",
+										getPlanClassNames(),
 									)}
 								>
 									{getPlanIcon()}
-									<span>{currentPlan ? currentPlan.name : "Free Plan"}</span>
-									{currentPlan ? (
-										<span className="text-sm opacity-75">
-											${currentPlan.price}/mo
-										</span>
-									) : (
-										<span className="font-semibold text-xs opacity-90">
+									<span className="hidden sm:inline">
+										{currentPlan ? `${currentPlan.name} Plan` : "Free Plan"}
+									</span>
+									<span className="sm:hidden">
+										{currentPlan ? currentPlan.name : "Free"}
+									</span>
+									{!currentPlan && (
+										<span className="hidden items-center gap-1 font-semibold text-xs opacity-90 md:flex">
+											<ArrowRight className="size-4" />
 											Upgrade Now
 										</span>
 									)}
@@ -262,11 +298,11 @@ export function Header({ noSearch = false }: HeaderProps) {
 							<Button variant="outline" size="sm" asChild>
 								<Link
 									href={`/developer/${user.username}`}
-									className="flex items-center gap-2"
+									className="flex items-center gap-1 px-2 sm:gap-2 sm:px-3"
 								>
 									<User className="size-4" />
 									<span className="hidden sm:block">View Profile</span>
-									<ExternalLink className="size-3 opacity-60" />
+									<ExternalLink className="hidden size-3 opacity-60 sm:block" />
 								</Link>
 							</Button>
 						</>
