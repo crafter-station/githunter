@@ -374,7 +374,7 @@ export function CVEditorForm({ initialData }: CVEditorFormProps) {
 			</div> */}
 
 			{/* CV Content */}
-			<div className="mx-auto mt-8 max-w-4xl space-y-8 border bg-background py-8 pr-8 pl-6 md:pl-12">
+			<div className="mx-auto mt-8 w-full max-w-4xl space-y-8 border bg-background py-8 pr-8 pl-6 md:pl-12">
 				{/* Header & Summary */}
 				<HeaderSection
 					data={{
