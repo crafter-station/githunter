@@ -401,7 +401,7 @@ export function SearchBox({
 						className={cn(
 							"relative flex w-full border border-border bg-input/30 text-left shadow-sm",
 							isCompact
-								? "items-center rounded-lg px-3"
+								? "items-center rounded-lg px-3 py-0.5"
 								: "items-end rounded-lg p-2",
 							open && "rounded-b-none",
 							isLoading && "opacity-75",
@@ -463,7 +463,7 @@ export function SearchBox({
 								isCompact ? "" : "absolute right-4 bottom-2",
 							)}
 						>
-							{/* Add Advanced Search Dialog */}
+							{/* Add Advanced Search Dialog - only show in full variant and desktop */}
 							<AdvancedSearchDialog variant="ghost" />
 							<Button
 								variant="ghost"
