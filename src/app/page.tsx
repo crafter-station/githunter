@@ -8,6 +8,7 @@ const FEATURED_USER_IDS = [
 	"0itHKXlYtqM7byKLrbKSm",
 	"QSIRMargHGOl",
 	"olNsPeCQZ3MQ",
+	"u4Vs8hOtr8UAjogvS9jFA",
 ];
 
 export default async function Home() {
