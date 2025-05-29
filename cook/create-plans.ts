@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { subscriptionPlan as subscriptionPlanTable } from "@/db/schema";
+import { nanoid } from "@/lib/nanoid";
 import { PolarService } from "@/services/polar-service";
-import { nanoid } from "nanoid";
 
 async function main() {
 	const polarService = new PolarService();

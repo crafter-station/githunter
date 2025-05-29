@@ -1,5 +1,6 @@
 "use client";
 
+import { nanoid } from "@/lib/nanoid";
 import {
 	DndContext,
 	type DragEndEvent,
@@ -20,7 +21,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2, X } from "lucide-react";
-import { nanoid } from "nanoid";
 
 import { useState } from "react";
 

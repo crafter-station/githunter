@@ -1,5 +1,5 @@
+import { nanoid } from "@/lib/nanoid";
 import { eq } from "drizzle-orm";
-import { nanoid } from "nanoid";
 
 import {
 	type RecentRepo,

@@ -1,9 +1,9 @@
 import { getQueryParams } from "@/app/search/[slug]/get-query-params";
 import { queryUsers } from "@/app/search/[slug]/query-users";
+import { nanoid } from "@/lib/nanoid";
 import { redis } from "@/redis";
 import { openai } from "@ai-sdk/openai";
 import { streamText } from "ai";
-import { nanoid } from "nanoid";
 import type { NextRequest } from "next/server";
 
 export const runtime = "edge";
