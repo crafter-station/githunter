@@ -21,9 +21,6 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2 } from "lucide-react";
 
-import { format } from "date-fns";
-import type { DateRange } from "react-day-picker";
-
 import { useState } from "react";
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
@@ -31,13 +28,8 @@ import type { PersistentCurriculumVitae } from "@/db/schema/user";
 import { nanoid } from "@/lib/nanoid";
 import { cn } from "@/lib/utils";
 
-import CalendarComponent from "@/components/calendar";
+import { DatePickerDialog } from "@/app/test/date-picker-dialog";
 import { Button } from "@/components/ui/button";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 
 interface EducationSectionProps {
@@ -49,16 +41,19 @@ interface EducationSectionProps {
 
 interface SortableEducationItemProps {
 	education: NonNullable<PersistentCurriculumVitae["education"]>[number];
-	onUpdate: (field: string, value: string | DateRange | undefined) => void;
+	onUpdate: (field: string, value: string) => void;
+	onUpdateDateRange: (fromValue: string, toValue: string) => void;
 	onRemove: () => void;
 }
 
 function SortableEducationItem({
 	education,
 	onUpdate,
+	onUpdateDateRange,
 	onRemove,
 }: SortableEducationItemProps) {
-	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+	const [isStartDateDialogOpen, setIsStartDateDialogOpen] = useState(false);
+	const [isEndDateDialogOpen, setIsEndDateDialogOpen] = useState(false);
 
 	const {
 		attributes,
@@ -81,49 +76,74 @@ function SortableEducationItem({
 		zIndex: isDragging ? 9999 : "auto",
 	};
 
-	// Convert string dates to Date objects for calendar
-	const getDateRange = (): DateRange | undefined => {
-		const fromDate = education.dateRangeFrom
-			? new Date(education.dateRangeFrom)
-			: undefined;
-
-		// If dateRangeTo is "Present", treat it as today's date for calendar
-		const toDate =
-			education.dateRangeTo && education.dateRangeTo !== "Present"
-				? new Date(education.dateRangeTo)
-				: education.dateRangeTo === "Present"
-					? new Date()
-					: undefined;
-
-		if (fromDate && toDate) {
-			return { from: fromDate, to: toDate };
+	// Parse date string to get month and year for date picker
+	const parseDateString = (dateStr: string | undefined) => {
+		if (!dateStr || dateStr.trim() === "" || dateStr === "Present") {
+			return { month: "null", year: "null" };
 		}
-		if (fromDate) {
-			return { from: fromDate, to: undefined };
+
+		// Handle "MMM yyyy" format like "January 2024"
+		const parts = dateStr.trim().split(" ");
+		if (parts.length === 2) {
+			const [monthName, yearStr] = parts;
+			const monthIndex = new Date(`${monthName} 1, 2000`).getMonth() + 1;
+			return {
+				month: monthIndex.toString(),
+				year: yearStr,
+			};
 		}
-		return undefined;
+
+		return { month: "null", year: "null" };
 	};
 
-	const handleDateSelect = (dateRange: DateRange | undefined) => {
-		if (dateRange?.from) {
-			onUpdate("dateRangeFrom", format(dateRange.from, "MMM yyyy"));
-		}
+	// Format month and year back to date string
+	const formatDateString = (month: string, year: string) => {
+		if (year === "null") return "";
+		if (month === "null") return year;
 
-		if (dateRange?.to) {
-			// Check if the selected end date is today (meaning "Present" was checked)
-			const today = new Date();
-			const isToday = dateRange.to.toDateString() === today.toDateString();
+		const monthNames = [
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December",
+		];
 
-			if (isToday) {
-				onUpdate("dateRangeTo", "Present");
-			} else {
-				onUpdate("dateRangeTo", format(dateRange.to, "MMM yyyy"));
-			}
-		} else if (dateRange?.from && !dateRange?.to) {
-			// If no end date selected, don't set anything for dateRangeTo
-			onUpdate("dateRangeTo", undefined);
-		}
-		setIsCalendarOpen(false);
+		const monthIndex = Number.parseInt(month) - 1;
+		return `${monthNames[monthIndex]} ${year}`;
+	};
+
+	// Handle start date selection
+	const handleStartDateConfirm = (
+		selectedMonth: string,
+		selectedYear: string,
+	) => {
+		const fromValue = formatDateString(selectedMonth, selectedYear);
+		onUpdateDateRange(fromValue, education.dateRangeTo || "");
+		setIsStartDateDialogOpen(false);
+	};
+
+	// Handle end date selection
+	const handleEndDateConfirm = (
+		selectedMonth: string,
+		selectedYear: string,
+	) => {
+		const toValue = formatDateString(selectedMonth, selectedYear);
+		onUpdateDateRange(education.dateRangeFrom || "", toValue);
+		setIsEndDateDialogOpen(false);
+	};
+
+	// Handle "Present" selection for end date
+	const handlePresentToggle = () => {
+		const newToValue = education.dateRangeTo === "Present" ? "" : "Present";
+		onUpdateDateRange(education.dateRangeFrom || "", newToValue);
 	};
 
 	const formatDateDisplay = () => {
@@ -135,6 +155,9 @@ function SortableEducationItem({
 		}
 		return "Select dates";
 	};
+
+	const startDateData = parseDateString(education.dateRangeFrom);
+	const endDateData = parseDateString(education.dateRangeTo);
 
 	return (
 		<div
@@ -167,27 +190,45 @@ function SortableEducationItem({
 							rows={1}
 						/>
 					</div>
-					<div>
-						<Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-							<PopoverTrigger asChild>
-								<Button
-									variant="ghost"
-									className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto justify-end rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
-								>
-									<span className="text-muted-foreground text-sm">
-										{formatDateDisplay()}
-									</span>
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className="w-auto p-0" align="end">
-								<CalendarComponent
-									initialDate={getDateRange()}
-									onDateSelect={handleDateSelect}
-									onCancel={() => setIsCalendarOpen(false)}
-									presentText="I'm currently studying here"
-								/>
-							</PopoverContent>
-						</Popover>
+					<div className="flex flex-col items-end gap-1">
+						{/* Date display and controls */}
+						<div className="flex items-center gap-2">
+							<Button
+								variant="ghost"
+								onClick={() => setIsStartDateDialogOpen(true)}
+								className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+							>
+								<span className="text-muted-foreground text-sm">
+									{education.dateRangeFrom || "Start Date"}
+								</span>
+							</Button>
+							<span className="text-muted-foreground text-sm">-</span>
+							<Button
+								variant="ghost"
+								onClick={() => setIsEndDateDialogOpen(true)}
+								className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+							>
+								<span className="text-muted-foreground text-sm">
+									{education.dateRangeTo || "End Date"}
+								</span>
+							</Button>
+						</div>
+
+						{/* Present toggle */}
+						<Button
+							variant="ghost"
+							onClick={handlePresentToggle}
+							className={cn(
+								"hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 text-xs shadow-none focus-visible:ring-0",
+								education.dateRangeTo === "Present"
+									? "text-blue-600"
+									: "text-muted-foreground",
+							)}
+						>
+							{education.dateRangeTo === "Present"
+								? "✓ Present"
+								: "Currently Studying"}
+						</Button>
 					</div>
 				</div>
 
@@ -222,6 +263,23 @@ function SortableEducationItem({
 			>
 				<Trash2 className="h-4 w-4" />
 			</Button>
+
+			{/* Date Picker Dialogs */}
+			<DatePickerDialog
+				isOpen={isStartDateDialogOpen}
+				initialMonth={startDateData.month}
+				initialYear={startDateData.year}
+				onConfirm={handleStartDateConfirm}
+				onCancel={() => setIsStartDateDialogOpen(false)}
+			/>
+
+			<DatePickerDialog
+				isOpen={isEndDateDialogOpen}
+				initialMonth={endDateData.month}
+				initialYear={endDateData.year}
+				onConfirm={handleEndDateConfirm}
+				onCancel={() => setIsEndDateDialogOpen(false)}
+			/>
 		</div>
 	);
 }
@@ -263,19 +321,28 @@ export function EducationSection({
 			degree: "",
 			institution: "",
 			location: "",
-			dateRangeFrom: undefined,
-			dateRangeTo: undefined,
+			dateRangeFrom: "",
+			dateRangeTo: "",
 		} satisfies NonNullable<PersistentCurriculumVitae["education"]>[number];
 		onUpdate([...education, newEducation]);
 	};
 
-	const updateEducation = (
-		id: string,
-		field: string,
-		value: string | DateRange | undefined,
-	) => {
+	const updateEducation = (id: string, field: string, value: string) => {
 		const updated = education.map((edu) =>
 			edu.id === id ? { ...edu, [field]: value } : edu,
+		);
+		onUpdate(updated);
+	};
+
+	const updateEducationDateRange = (
+		id: string,
+		fromValue: string,
+		toValue: string,
+	) => {
+		const updated = education.map((edu) =>
+			edu.id === id
+				? { ...edu, dateRangeFrom: fromValue, dateRangeTo: toValue }
+				: edu,
 		);
 		onUpdate(updated);
 	};
@@ -325,6 +392,9 @@ export function EducationSection({
 								onUpdate={(field, value) =>
 									updateEducation(edu.id, field, value)
 								}
+								onUpdateDateRange={(fromValue, toValue) =>
+									updateEducationDateRange(edu.id, fromValue, toValue)
+								}
 								onRemove={() => removeEducation(edu.id)}
 							/>
 						))}
@@ -348,6 +418,7 @@ export function EducationSection({
 						<SortableEducationItem
 							education={activeItem}
 							onUpdate={() => {}} // No-op for overlay
+							onUpdateDateRange={() => {}} // No-op for overlay
 							onRemove={() => {}} // No-op for overlay
 						/>
 					) : null}
