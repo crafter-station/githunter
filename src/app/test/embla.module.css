@@ -1,0 +1,96 @@
+.embla {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 22.2rem;
+	max-width: 30rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+.embla:before,
+.embla:after {
+	position: absolute;
+	left: 0;
+	right: 0;
+	content: "";
+	display: block;
+	height: calc(50% - 32px / 2);
+	z-index: 1;
+	pointer-events: none;
+}
+.embla:before {
+	top: -0.5px;
+	border-bottom: 0.5px solid oklch(var(--border) / 0.65);
+	background: linear-gradient(
+		to top,
+		oklch(var(--background) / 0.65) 0%,
+		oklch(var(--background) / 1) 100%
+	);
+}
+.embla:after {
+	bottom: -0.5px;
+	border-top: 0.5px solid oklch(var(--border) / 0.65);
+	background: linear-gradient(
+		to bottom,
+		oklch(var(--background) / 0.65) 0%,
+		oklch(var(--background) / 1) 100%
+	);
+}
+.emblaIosPicker {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	min-width: 50%;
+	justify-content: center;
+	line-height: 1;
+	font-size: 1.8rem;
+}
+.emblaIosPickerScene {
+	min-width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	touch-action: pan-x;
+}
+.emblaIosPickerViewport {
+	height: 32px;
+	width: 100%;
+	perspective: 1000px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+.emblaIosPickerViewportPerspectiveLeft {
+	perspective-origin: calc(50% + 130px) 50%;
+	transform: translateX(27px);
+}
+.emblaIosPickerViewportPerspectiveRight {
+	perspective-origin: calc(50% - 130px) 50%;
+	transform: translateX(-27px);
+}
+.emblaIosPickerContainer {
+	height: 100%;
+	width: 100%;
+	transform-style: preserve-3d;
+	will-change: transform;
+}
+.emblaIosPickerSlide {
+	width: 100%;
+	height: 100%;
+	font-size: 19px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	backface-visibility: hidden;
+	opacity: 0;
+}
+.emblaIosPickerLabel {
+	font-weight: 700;
+	transform: translateX(-55px);
+	pointer-events: none;
+}
