@@ -21,9 +21,6 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2, X } from "lucide-react";
 
-import { format } from "date-fns";
-import type { DateRange } from "react-day-picker";
-
 import { useState } from "react";
 
 import type { PersistentCurriculumVitae } from "@/db/schema/user";
@@ -31,13 +28,8 @@ import type { PersistentCurriculumVitae } from "@/db/schema/user";
 import { nanoid } from "@/lib/nanoid";
 import { cn } from "@/lib/utils";
 
-import CalendarComponent from "@/components/calendar";
+import { DatePickerDialog } from "@/app/test/date-picker-dialog";
 import { Button } from "@/components/ui/button";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ExperienceSectionProps {
@@ -49,10 +41,7 @@ interface ExperienceSectionProps {
 
 interface SortableExperienceItemProps {
 	experience: NonNullable<PersistentCurriculumVitae["experience"]>[number];
-	onUpdate: (
-		field: string,
-		value: string | string[] | DateRange | undefined,
-	) => void;
+	onUpdate: (field: string, value: string | string[]) => void;
 	onUpdateDateRange: (fromValue: string, toValue: string) => void;
 	onUpdateBullet: (bulletId: string, value: string) => void;
 	onAddBullet: () => void;
@@ -69,7 +58,8 @@ function SortableExperienceItem({
 	onRemoveBullet,
 	onRemove,
 }: SortableExperienceItemProps) {
-	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+	const [isStartDateDialogOpen, setIsStartDateDialogOpen] = useState(false);
+	const [isEndDateDialogOpen, setIsEndDateDialogOpen] = useState(false);
 
 	const {
 		attributes,
@@ -92,89 +82,77 @@ function SortableExperienceItem({
 		zIndex: isDragging ? 9999 : "auto",
 	};
 
-	// Convert string dates to Date objects for calendar
-	const getDateRange = (): DateRange | undefined => {
-		const parseDate = (dateStr: string): Date | undefined => {
-			if (!dateStr || dateStr.trim() === "") return undefined;
-
-			// Handle "MMM yyyy" format like "January 2024"
-			const parsed = new Date(`${dateStr} 01`); // Add day to make it parseable
-			return Number.isNaN(parsed.getTime()) ? undefined : parsed;
-		};
-
-		const fromDate = parseDate(experience.dateRangeFrom || "");
-
-		// If dateRangeTo is "Present", treat it as today's date for calendar
-		const toDate =
-			experience.dateRangeTo && experience.dateRangeTo !== "Present"
-				? parseDate(experience.dateRangeTo)
-				: experience.dateRangeTo === "Present"
-					? new Date()
-					: undefined;
-
-		console.log("getDateRange for", experience.company, {
-			dateRangeFrom: experience.dateRangeFrom,
-			dateRangeTo: experience.dateRangeTo,
-			fromDate,
-			toDate,
-			result: fromDate || toDate ? { from: fromDate, to: toDate } : undefined,
-		});
-
-		// Return range even if only one date is available
-		if (fromDate || toDate) {
-			return { from: fromDate, to: toDate };
+	// Parse date string to get month and year for date picker
+	const parseDateString = (dateStr: string) => {
+		if (!dateStr || dateStr.trim() === "" || dateStr === "Present") {
+			return { month: "null", year: "null" };
 		}
 
-		return undefined;
+		// Handle "MMM yyyy" format like "January 2024"
+		const parts = dateStr.trim().split(" ");
+		if (parts.length === 2) {
+			const [monthName, yearStr] = parts;
+			const monthIndex = new Date(`${monthName} 1, 2000`).getMonth() + 1;
+			return {
+				month: monthIndex.toString(),
+				year: yearStr,
+			};
+		}
+
+		return { month: "null", year: "null" };
 	};
 
-	const handleDateSelect = (dateRange: DateRange | undefined) => {
-		console.log("handleDateSelect called with:", { dateRange });
-		console.log(
-			"Experience ID:",
-			experience.id,
-			"Company:",
-			experience.company,
-		);
+	// Format month and year back to date string
+	const formatDateString = (month: string, year: string) => {
+		if (year === "null") return "";
+		if (month === "null") return year;
 
-		// Calculate both date values first
-		let fromValue = "";
-		let toValue = "";
+		const monthNames = [
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December",
+		];
 
-		if (dateRange?.from) {
-			fromValue = format(dateRange.from, "MMM yyyy");
-			console.log("Setting dateRangeFrom to:", fromValue);
-		} else {
-			console.log("Clearing dateRangeFrom");
-		}
+		const monthIndex = Number.parseInt(month) - 1;
+		return `${monthNames[monthIndex]} ${year}`;
+	};
 
-		if (dateRange?.to) {
-			// Check if the selected end date is today (meaning "Present" was checked)
-			const today = new Date();
-			const isToday = dateRange.to.toDateString() === today.toDateString();
+	// Handle start date selection
+	const handleStartDateConfirm = (
+		selectedMonth: string,
+		selectedYear: string,
+	) => {
+		const fromValue = formatDateString(selectedMonth, selectedYear);
+		onUpdateDateRange(fromValue, experience.dateRangeTo || "");
+		setIsStartDateDialogOpen(false);
+	};
 
-			if (isToday) {
-				toValue = "Present";
-				console.log("Setting dateRangeTo to Present");
-			} else {
-				toValue = format(dateRange.to, "MMM yyyy");
-				console.log("Setting dateRangeTo to:", toValue);
-			}
-		} else {
-			console.log("Clearing dateRangeTo");
-		}
+	// Handle end date selection
+	const handleEndDateConfirm = (
+		selectedMonth: string,
+		selectedYear: string,
+	) => {
+		const toValue = formatDateString(selectedMonth, selectedYear);
+		onUpdateDateRange(experience.dateRangeFrom || "", toValue);
+		setIsEndDateDialogOpen(false);
+	};
 
-		// Call a special update function that handles both fields at once
-		onUpdateDateRange(fromValue, toValue);
-
-		setIsCalendarOpen(false);
+	// Handle "Present" selection for end date
+	const handlePresentToggle = () => {
+		const newToValue = experience.dateRangeTo === "Present" ? "" : "Present";
+		onUpdateDateRange(experience.dateRangeFrom || "", newToValue);
 	};
 
 	const formatDateDisplay = () => {
-		console.log(experience.company, {
-			dateRangeFrom: experience.dateRangeFrom,
-			dateRangeTo: experience.dateRangeTo,
-		});
 		if (experience.dateRangeFrom && experience.dateRangeTo) {
 			return `${experience.dateRangeFrom} - ${experience.dateRangeTo}`;
 		}
@@ -183,6 +161,9 @@ function SortableExperienceItem({
 		}
 		return "Select dates";
 	};
+
+	const startDateData = parseDateString(experience.dateRangeFrom || "");
+	const endDateData = parseDateString(experience.dateRangeTo || "");
 
 	return (
 		<div
@@ -215,27 +196,45 @@ function SortableExperienceItem({
 							rows={1}
 						/>
 					</div>
-					<div>
-						<Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-							<PopoverTrigger asChild>
-								<Button
-									variant="ghost"
-									className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto justify-end rounded-none border-none p-0 text-right shadow-none focus-visible:ring-0"
-								>
-									<span className="text-muted-foreground text-sm">
-										{formatDateDisplay()}
-									</span>
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent className="w-auto bg-card p-0" align="end">
-								<CalendarComponent
-									initialDate={getDateRange()}
-									onDateSelect={handleDateSelect}
-									onCancel={() => setIsCalendarOpen(false)}
-									presentText="I'm currently working here"
-								/>
-							</PopoverContent>
-						</Popover>
+					<div className="flex flex-col items-end gap-1">
+						{/* Date display and controls */}
+						<div className="flex items-center gap-2">
+							<Button
+								variant="ghost"
+								onClick={() => setIsStartDateDialogOpen(true)}
+								className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+							>
+								<span className="text-muted-foreground text-sm">
+									{experience.dateRangeFrom || "Start Date"}
+								</span>
+							</Button>
+							<span className="text-muted-foreground text-sm">-</span>
+							<Button
+								variant="ghost"
+								onClick={() => setIsEndDateDialogOpen(true)}
+								className="hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 shadow-none focus-visible:ring-0"
+							>
+								<span className="text-muted-foreground text-sm">
+									{experience.dateRangeTo || "End Date"}
+								</span>
+							</Button>
+						</div>
+
+						{/* Present toggle */}
+						<Button
+							variant="ghost"
+							onClick={handlePresentToggle}
+							className={cn(
+								"hover:!bg-muted/50 !bg-transparent h-auto min-h-auto rounded-none border-none p-0 text-xs shadow-none focus-visible:ring-0",
+								experience.dateRangeTo === "Present"
+									? "text-blue-600"
+									: "text-muted-foreground",
+							)}
+						>
+							{experience.dateRangeTo === "Present"
+								? "✓ Present"
+								: "Mark as Present"}
+						</Button>
 					</div>
 				</div>
 
@@ -308,6 +307,23 @@ function SortableExperienceItem({
 			>
 				<Trash2 className="h-4 w-4" />
 			</Button>
+
+			{/* Date Picker Dialogs */}
+			<DatePickerDialog
+				isOpen={isStartDateDialogOpen}
+				initialMonth={startDateData.month}
+				initialYear={startDateData.year}
+				onConfirm={handleStartDateConfirm}
+				onCancel={() => setIsStartDateDialogOpen(false)}
+			/>
+
+			<DatePickerDialog
+				isOpen={isEndDateDialogOpen}
+				initialMonth={endDateData.month}
+				initialYear={endDateData.year}
+				onConfirm={handleEndDateConfirm}
+				onCancel={() => setIsEndDateDialogOpen(false)}
+			/>
 		</div>
 	);
 }
@@ -366,7 +382,7 @@ export function ExperienceSection({
 	const updateExperience = (
 		id: string,
 		field: string,
-		value: string | string[] | DateRange | undefined,
+		value: string | string[],
 	) => {
 		console.log("updateExperience called:", { id, field, value });
 		const updated = experience.map((exp) =>
