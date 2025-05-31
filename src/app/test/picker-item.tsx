@@ -360,6 +360,54 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
 		}
 	};
 
+	// Prevent wheel events from bubbling up to the drawer
+	const handleWheel = (event: React.WheelEvent) => {
+		// Stop the wheel event from bubbling up to prevent drawer from closing
+		event.stopPropagation();
+	};
+
+	// Prevent touch events from bubbling up to the drawer
+	const handleTouchStart = (event: React.TouchEvent) => {
+		// Allow the touch event to work normally within the picker but prevent bubbling
+		// Only stop propagation if touch is within the picker area
+		event.stopPropagation();
+	};
+
+	const handleTouchMove = (event: React.TouchEvent) => {
+		// Prevent touch move from bubbling up to the drawer only if it's a vertical gesture
+		// that could be interpreted as a drawer close gesture
+		if (event.touches.length === 1) {
+			event.stopPropagation();
+		}
+	};
+
+	const handleTouchEnd = (event: React.TouchEvent) => {
+		// Prevent touch end from bubbling up to the drawer
+		event.stopPropagation();
+	};
+
+	// Prevent pointer events from bubbling when they're part of picker interaction
+	const handlePointerDown = (event: React.PointerEvent) => {
+		// Stop propagation to prevent drawer from detecting this as a close gesture
+		event.stopPropagation();
+	};
+
+	const handlePointerMove = (event: React.PointerEvent) => {
+		// Only stop propagation if we're actively dragging within the picker
+		if (emblaApi) {
+			const { target, location } = emblaApi.internalEngine();
+			const isActiveDrag = target.get() !== location.get();
+			if (isActiveDrag) {
+				event.stopPropagation();
+			}
+		}
+	};
+
+	const handlePointerUp = (event: React.PointerEvent) => {
+		// Stop propagation to prevent drawer from detecting this as a close gesture
+		event.stopPropagation();
+	};
+
 	return (
 		<div
 			className={styles.emblaIosPicker}
@@ -368,6 +416,13 @@ export const IosPickerItem: React.FC<PropType> = (props) => {
 			tabIndex={0}
 			style={{ outline: "none" }}
 			onKeyDown={handleKeyDown}
+			onWheel={handleWheel}
+			onTouchStart={handleTouchStart}
+			onTouchMove={handleTouchMove}
+			onTouchEnd={handleTouchEnd}
+			onPointerDown={handlePointerDown}
+			onPointerMove={handlePointerMove}
+			onPointerUp={handlePointerUp}
 		>
 			<div className={styles.emblaIosPickerScene}>
 				<div
