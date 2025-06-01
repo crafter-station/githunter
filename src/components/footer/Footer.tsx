@@ -1,3 +1,4 @@
+import { DISCORD_INVITATION_PERMALINK } from "@/lib/constants/discord";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -43,7 +44,7 @@ export function Footer({ className }: FooterProps) {
 					LinkedIn
 				</a>
 				<a
-					href="https://discord.gg/W5sRKxqxH8"
+					href={DISCORD_INVITATION_PERMALINK}
 					rel="noopener noreferrer"
 					target="_blank"
 					className="text-muted-foreground text-sm hover:text-primary"
