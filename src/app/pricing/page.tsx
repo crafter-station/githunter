@@ -146,7 +146,7 @@ export default function PricingPage() {
 												>
 													<div className="flex flex-col">
 														<span className="font-semibold text-xs text-yellow-700 dark:text-yellow-500">
-															100% OFF First Month!
+															{plan.discount}% OFF First Month!
 														</span>
 														<span className="flex items-center gap-1 font-mono text-xs">
 															{plan.discountCode}
