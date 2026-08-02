@@ -1,5 +1,5 @@
-import { Header } from "@/components/header";
 import { LatamSignalField } from "@/components/home/latam-signal-field";
+import { PublicHeader } from "@/components/public-header";
 import { buildSignalProfiles } from "@/rankings/signals";
 import { getRankingSnapshot } from "@/rankings/store";
 import { ArrowRight } from "lucide-react";
@@ -8,12 +8,20 @@ import Link from "next/link";
 import styles from "./home.module.css";
 
 export const revalidate = 3600;
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-	title: "GitHub rankings across Latin America | GitHunter",
+	title: { absolute: "GitHunter | GitHub Rankings Across Latin America" },
 	description:
-		"Transparent, versioned views of public GitHub work across Latin America, starting with Peru.",
+		"Explore transparent, versioned GitHub rankings for developers across Latin America, built from public work, collaboration, and open source impact.",
 	alternates: { canonical: "/" },
+	openGraph: {
+		title: "GitHunter | GitHub Rankings Across Latin America",
+		description:
+			"Explore transparent, versioned GitHub rankings for developers across Latin America, starting with Peru.",
+		url: "/",
+		type: "website",
+	},
 };
 
 export default async function Home() {
@@ -30,7 +38,7 @@ export default async function Home() {
 			<a className="vbg-skip-link" href="#main">
 				Skip to content
 			</a>
-			<Header noSearch />
+			<PublicHeader />
 			<main id="main" className={styles.main}>
 				<section className={styles.hero}>
 					<div className={styles.copy}>

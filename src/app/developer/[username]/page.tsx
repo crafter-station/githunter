@@ -555,10 +555,27 @@ export async function generateMetadata({
 
 	if (rankingProfile) {
 		const profile = rankingProfile.profile;
+		const title = `${profile.name || profile.login} GitHub Ranking in Peru | GitHunter`;
+		const description = `See ${profile.name || profile.login}'s position across Peru's GitHub rankings, with transparent scores for public work, collaboration, momentum, and open source impact.`;
 		return {
-			title: `${profile.name || profile.login} GitHub rankings | GitHunter`,
-			description: `View ${profile.name || profile.login}'s positions across GitHunter's transparent public GitHub ranking lenses.`,
+			title: { absolute: title },
+			description,
 			alternates: { canonical: `/developer/${profile.login}` },
+			openGraph: {
+				title,
+				description,
+				url: `/developer/${profile.login}`,
+				type: "profile",
+				images: [
+					{ url: profile.avatarUrl, alt: profile.name || profile.login },
+				],
+			},
+			twitter: {
+				card: "summary",
+				title,
+				description,
+				images: [profile.avatarUrl],
+			},
 		};
 	}
 
@@ -571,21 +588,23 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
+		title: {
+			absolute: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
+		},
 		description: `View ${userData.fullname || userData.username}'s GitHub profile, repositories, tech stack and more on GitHunter.`,
 		openGraph: {
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
 			images: [`/api/og/users/${username}`],
-			url: `https://githunter.dev/api/og/users/${username}`,
+			url: `/developer/${username}`,
 			siteName: "GitHunter",
-			type: "website",
+			type: "profile",
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [`/developer/${username}/opengraph-image`],
+			images: [`/api/og/users/${username}`],
 		},
 		keywords: ["dev", "user", "github", "githunter"],
 	};

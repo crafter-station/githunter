@@ -8,7 +8,7 @@ import type { LensId, RankingEntry } from "@/rankings/types";
 import { ArrowUpRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 function compactNumber(value: number) {
 	return new Intl.NumberFormat("en", {
@@ -24,14 +24,52 @@ function confidenceLabel(confidence: number) {
 }
 
 export function RankingTable({
-	entries,
+	initialEntries,
 	lensId,
+	lensName,
+	scope,
+	scopeName,
+	total,
 }: {
-	entries: RankingEntry[];
+	initialEntries: RankingEntry[];
 	lensId: LensId;
+	lensName: string;
+	scope: string;
+	scopeName: string;
+	total: number;
 }) {
+	const [entries, setEntries] = useState(initialEntries);
 	const [query, setQuery] = useState("");
 	const [visible, setVisible] = useState(50);
+	const [loadedAll, setLoadedAll] = useState(initialEntries.length >= total);
+	const [loading, setLoading] = useState(false);
+	const [loadError, setLoadError] = useState("");
+	const loadingPromise = useRef<Promise<void> | null>(null);
+
+	const loadAll = () => {
+		if (loadedAll) return Promise.resolve();
+		if (loadingPromise.current) return loadingPromise.current;
+		setLoading(true);
+		setLoadError("");
+		loadingPromise.current = fetch(`/api/rankings/${scope}/${lensId}`)
+			.then((response) => {
+				if (!response.ok) throw new Error("Unable to load the full ranking");
+				return response.json() as Promise<{ entries: RankingEntry[] }>;
+			})
+			.then((snapshot) => {
+				setEntries(snapshot.entries);
+				setLoadedAll(true);
+			})
+			.catch(() => {
+				setLoadError("The full ranking could not be loaded. Try again.");
+			})
+			.finally(() => {
+				setLoading(false);
+				loadingPromise.current = null;
+			});
+		return loadingPromise.current;
+	};
+
 	const filtered = useMemo(() => {
 		const normalized = query.trim().toLowerCase();
 		if (!normalized) return entries;
@@ -45,11 +83,17 @@ export function RankingTable({
 	const shown = filtered.slice(0, visible);
 
 	return (
-		<section aria-labelledby="full-ranking" className={styles.rankingSection}>
+		<section
+			id="ranking"
+			aria-labelledby="full-ranking"
+			className={styles.rankingSection}
+		>
 			<div className={styles.rankingHeading}>
 				<div>
-					<p className={styles.sectionLabel}>Full cohort</p>
-					<h2 id="full-ranking">All ranked developers</h2>
+					<p className={styles.sectionLabel}>{total} public profiles</p>
+					<h2 id="full-ranking">
+						{scopeName} {lensName} ranking
+					</h2>
 				</div>
 				<label htmlFor="ranking-filter" className={styles.search}>
 					<span className="sr-only">Filter developers</span>
@@ -58,10 +102,12 @@ export function RankingTable({
 						id="ranking-filter"
 						value={query}
 						onChange={(event) => {
-							setQuery(event.target.value);
+							const value = event.target.value;
+							setQuery(value);
 							setVisible(50);
+							if (value.trim()) void loadAll();
 						}}
-						placeholder="Search name or location"
+						placeholder="Search this ranking"
 						className={styles.searchInput}
 					/>
 				</label>
@@ -183,17 +229,22 @@ export function RankingTable({
 				)}
 			</div>
 
-			{shown.length < filtered.length && (
+			{(shown.length < filtered.length || !loadedAll) && (
 				<div className={styles.showMore}>
 					<Button
 						variant="outline"
 						className={styles.showMoreButton}
-						onClick={() => setVisible((value) => value + 50)}
+						disabled={loading}
+						onClick={async () => {
+							await loadAll();
+							setVisible((value) => value + 50);
+						}}
 					>
-						Show 50 more
+						{loading ? "Loading ranking…" : "Show 50 more"}
 					</Button>
 				</div>
 			)}
+			{loadError && <output className={styles.loadError}>{loadError}</output>}
 		</section>
 	);
 }

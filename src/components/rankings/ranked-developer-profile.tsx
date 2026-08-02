@@ -1,8 +1,9 @@
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { PublicHeader } from "@/components/public-header";
 import { Badge } from "@/components/ui/badge";
 import { metricLabels } from "@/rankings/lenses";
 import type { BundledRankingProfile } from "@/rankings/profile";
+import { siteUrl } from "@/rankings/seo";
 import type { RankingMetric } from "@/rankings/types";
 import {
 	ArrowLeft,
@@ -38,13 +39,30 @@ export function RankedDeveloperProfile({
 }) {
 	const { profile, rankings } = data;
 	const metrics = Object.entries(profile.metrics) as [RankingMetric, number][];
+	const personSchema = {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: profile.name || profile.login,
+		url: new URL(`/developer/${profile.login}`, siteUrl).toString(),
+		image: profile.avatarUrl,
+		sameAs: [`https://github.com/${profile.login}`],
+		homeLocation: profile.location
+			? {
+					"@type": "Place",
+					name: profile.location,
+				}
+			: undefined,
+	};
 
 	return (
 		<div className="min-h-screen bg-background text-foreground">
-			<Header noSearch />
+			<PublicHeader />
 			<main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+				<script type="application/ld+json">
+					{JSON.stringify(personSchema)}
+				</script>
 				<Link
-					href="/rankings/peru/balanced"
+					href="/peru"
 					className="inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-foreground"
 				>
 					<ArrowLeft className="size-4" />
@@ -110,7 +128,9 @@ export function RankedDeveloperProfile({
 						{rankings.map(({ lens, entry }) => (
 							<Link
 								key={lens.id}
-								href={`/rankings/peru/${lens.id}`}
+								href={
+									lens.id === "balanced" ? "/peru" : `/rankings/peru/${lens.id}`
+								}
 								className="hover:-translate-y-0.5 rounded-2xl border bg-card p-5 transition hover:shadow-sm"
 							>
 								<p className="text-muted-foreground text-sm">

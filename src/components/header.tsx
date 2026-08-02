@@ -262,7 +262,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 							<Link href="/peru">Peru</Link>
 						</Button>
 						<Button variant="ghost" size="sm" asChild>
-							<Link href="/rankings/peru/balanced">Rankings</Link>
+							<Link href="/peru">Rankings</Link>
 						</Button>
 						<Button variant="ghost" size="sm" asChild>
 							<Link href="/peru#methodology">Methodology</Link>
@@ -298,7 +298,7 @@ export function Header({ noSearch = false }: HeaderProps) {
 								<Link href="/peru">Peru</Link>
 							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
-								<Link href="/rankings/peru/balanced">Rankings</Link>
+								<Link href="/peru">Rankings</Link>
 							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
 								<Link href="/peru#methodology">Methodology</Link>

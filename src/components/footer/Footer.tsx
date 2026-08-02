@@ -34,10 +34,10 @@ export function Footer({ className }: FooterProps) {
 						Reproducible JSON
 					</a>
 					<Link
-						href="/pricing"
+						href="/rankings/peru/rising"
 						className="text-muted-foreground text-sm hover:text-primary"
 					>
-						Pricing
+						Rising ranking
 					</Link>
 					<a
 						href="https://github.com/crafter-station/githunter"

@@ -136,8 +136,10 @@ export function selectFreshestSnapshot(snapshots: RankingSnapshot[]) {
 
 export async function getRankingSnapshot(scope: RankingScope, lensId: LensId) {
 	const fallback = bundledSnapshot(scope, lensId);
-	const redisSnapshot = await getRedisSnapshot(scope, lensId);
-	const databaseSnapshot = await getDatabaseSnapshot(scope, lensId);
+	const [redisSnapshot, databaseSnapshot] = await Promise.all([
+		getRedisSnapshot(scope, lensId),
+		getDatabaseSnapshot(scope, lensId),
+	]);
 	const candidates = [fallback, redisSnapshot, databaseSnapshot].filter(
 		(snapshot): snapshot is RankingSnapshot => snapshot !== null,
 	);
