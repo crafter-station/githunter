@@ -134,6 +134,7 @@
 .field {
 	--focus-x: 56%;
 	--focus-y: 52%;
+	--focus-size: 13px;
 	position: relative;
 	min-inline-size: 0;
 	width: 100%;
@@ -206,7 +207,7 @@
 	border-color: var(--vbg-surface-primary);
 	box-shadow: 0 0 0 1px #1d4eff, 0 0 0 5px
 		color-mix(in srgb, #1d4eff 12%, transparent);
-	scale: 1.45;
+	scale: 1;
 }
 
 .axisX,
@@ -262,11 +263,11 @@
 	position: absolute;
 	top: var(--focus-y);
 	left: var(--focus-x);
-	width: 27px;
-	height: 27px;
+	width: var(--focus-size);
+	height: var(--focus-size);
 	border: 1px solid #1d4eff;
-	background: color-mix(in srgb, #1d4eff 5%, transparent);
-	box-shadow: 0 0 0 6px color-mix(in srgb, #1d4eff 8%, transparent);
+	background: transparent;
+	box-shadow: 0 0 0 4px color-mix(in srgb, #1d4eff 10%, transparent);
 	pointer-events: none;
 	translate: -50% -50%;
 	transition: left 100ms linear, top 100ms linear;
@@ -274,12 +275,21 @@
 
 .fieldCoordinates {
 	position: absolute;
-	top: 18%;
-	right: 25%;
+	top: var(--focus-y);
+	left: calc(var(--focus-x) + 18px);
 	z-index: 3;
 	color: #1d4eff;
 	font-family: var(--font-geist-mono), monospace;
 	font-size: 10px;
+	pointer-events: none;
+	translate: 0 -50%;
+	transition: right 100ms linear, left 100ms linear, top 100ms linear;
+	white-space: nowrap;
+}
+
+.fieldCoordinates[data-side="left"] {
+	right: calc(100% - var(--focus-x) + 18px);
+	left: auto;
 }
 
 .fieldDetail {
@@ -558,8 +568,8 @@
 	}
 
 	.focusNode {
-		width: 21px;
-		height: 21px;
+		width: var(--focus-size);
+		height: var(--focus-size);
 	}
 
 	.fieldDetail {

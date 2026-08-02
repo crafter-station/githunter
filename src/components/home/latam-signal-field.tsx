@@ -6,8 +6,8 @@ import type { SignalProfile } from "@/rankings/signals";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
-import { useState } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 const COLUMNS = 27;
 const ROWS = 22;
@@ -62,31 +62,98 @@ export function LatamSignalField({
 	profiles: SignalProfile[];
 }) {
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [focusGeometry, setFocusGeometry] = useState<{
+		x: number;
+		y: number;
+		size: number;
+		fieldWidth: number;
+	} | null>(null);
+	const fieldRef = useRef<HTMLFieldSetElement>(null);
+	const profileRefs = useRef<Array<HTMLButtonElement | null>>([]);
+	const profileCenters = useRef<Array<{ x: number; y: number } | null>>([]);
 	const availableProfiles = profiles.slice(0, profileSlots.length);
 	const activeProfile = availableProfiles[activeIndex] ?? availableProfiles[0];
-	const activeSlot = profileSlots[activeIndex] ?? profileSlots[0];
-	const focusX = 1 + (activeSlot.column / (COLUMNS - 1)) * 98;
-	const focusY = 7 + (activeSlot.row / (ROWS - 1)) * 88;
 	const profileByCell = new Map(
 		availableProfiles.map((profile, index) => [
 			profileSlots[index].index,
 			{ profile, profileIndex: index },
 		]),
 	);
+	const updateFocusGeometry = useCallback(() => {
+		const field = fieldRef.current;
+		const activeNode = profileRefs.current[activeIndex];
+		if (!field || !activeNode) return;
+		const fieldRect = field.getBoundingClientRect();
+		const nodeRect = activeNode.getBoundingClientRect();
+		profileCenters.current = profileRefs.current.map((node) => {
+			if (!node) return null;
+			const rect = node.getBoundingClientRect();
+			return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+		});
+		setFocusGeometry({
+			x: nodeRect.left - fieldRect.left + nodeRect.width / 2,
+			y: nodeRect.top - fieldRect.top + nodeRect.height / 2,
+			size: nodeRect.width,
+			fieldWidth: fieldRect.width,
+		});
+	}, [activeIndex]);
+
+	useLayoutEffect(() => {
+		updateFocusGeometry();
+		const field = fieldRef.current;
+		const activeNode = profileRefs.current[activeIndex];
+		if (!field || !activeNode) return;
+		const observer = new ResizeObserver(updateFocusGeometry);
+		observer.observe(field);
+		observer.observe(activeNode);
+		return () => observer.disconnect();
+	}, [activeIndex, updateFocusGeometry]);
+
+	const handlePointerMove = (event: ReactPointerEvent<HTMLFieldSetElement>) => {
+		if (event.pointerType !== "mouse") return;
+		if (event.target instanceof Element && event.target.closest("a")) return;
+		let nearestIndex = activeIndex;
+		let nearestDistance = Number.POSITIVE_INFINITY;
+		for (const [index, center] of profileCenters.current.entries()) {
+			if (!center) continue;
+			const distance =
+				(center.x - event.clientX) ** 2 + (center.y - event.clientY) ** 2;
+			if (distance < nearestDistance) {
+				nearestDistance = distance;
+				nearestIndex = index;
+			}
+		}
+		if (nearestIndex !== activeIndex) setActiveIndex(nearestIndex);
+	};
+
+	const detailSide =
+		focusGeometry && focusGeometry.x > focusGeometry.fieldWidth * 0.62
+			? "left"
+			: "right";
 
 	return (
 		<fieldset
+			ref={fieldRef}
 			className={cn(styles.field, className)}
+			onPointerMove={handlePointerMove}
+			data-signal-field
 			style={
-				{
-					"--focus-x": `${focusX}%`,
-					"--focus-y": `${focusY}%`,
-				} as CSSProperties
+				focusGeometry
+					? ({
+							"--focus-x": `${focusGeometry.x}px`,
+							"--focus-y": `${focusGeometry.y}px`,
+							"--focus-size": `${focusGeometry.size}px`,
+						} as CSSProperties)
+					: undefined
 			}
 		>
 			<legend className="sr-only">Explore public GitHub profiles</legend>
 			{activeProfile && (
-				<div className={styles.fieldCoordinates}>
+				<div
+					className={styles.fieldCoordinates}
+					data-side={detailSide}
+					data-coordinate-label
+				>
 					@{activeProfile.login} · #{activeProfile.rank}
 				</div>
 			)}
@@ -110,11 +177,15 @@ export function LatamSignalField({
 					}
 					return (
 						<button
+							ref={(element) => {
+								profileRefs.current[node.profileIndex] = element;
+							}}
 							key={cell.index}
 							type="button"
 							className={cn(styles.cell, styles.profileCell)}
 							data-tone="accent"
 							data-selected={node.profileIndex === activeIndex}
+							data-profile-login={node.profile.login}
 							style={cellStyle}
 							onPointerEnter={() => setActiveIndex(node.profileIndex)}
 							onFocus={() => setActiveIndex(node.profileIndex)}
@@ -130,11 +201,12 @@ export function LatamSignalField({
 			<div className={styles.focusRing} aria-hidden="true">
 				<span />
 			</div>
-			<div className={styles.focusNode} aria-hidden="true" />
+			<div className={styles.focusNode} data-focus-node aria-hidden="true" />
 			{activeProfile && (
 				<div
 					className={styles.fieldDetail}
-					data-side={focusX > 60 ? "left" : "right"}
+					data-side={detailSide}
+					data-profile-card
 					aria-live="polite"
 				>
 					<div className={styles.detailIdentity}>
