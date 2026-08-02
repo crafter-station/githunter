@@ -9,13 +9,14 @@ export async function GET(
 	{ params }: { params: Promise<{ scope: string; season: string }> },
 ) {
 	const { scope, season } = await params;
+	const seasonId = season.toUpperCase();
 	const lens = new URL(request.url).searchParams.get("lens") ?? "balanced";
-	if (!isRankingScope(scope) || !isSeasonId(season) || !isLensId(lens)) {
+	if (!isRankingScope(scope) || !isSeasonId(seasonId) || !isLensId(lens)) {
 		return NextResponse.json({ error: "Season not found" }, { status: 404 });
 	}
 	const leaderboard = await getSeasonLeaderboard({
 		scope,
-		seasonId: season,
+		seasonId,
 		lensId: lens,
 	});
 	if (!leaderboard) {
