@@ -4,6 +4,7 @@ import { Github } from "@/components/icons/github";
 import { Linkedin } from "@/components/icons/linkedin";
 import { Twitter } from "@/components/icons/twitter";
 import { RepoCardSection } from "@/components/profile/RepoCardSection";
+import { RankedDeveloperProfile } from "@/components/rankings/ranked-developer-profile";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import UserSkillsRadar from "@/components/user-skills-radar";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
 import type { UserSelect } from "@/db/schema";
 import { getCountryCode } from "@/lib/country-codes";
+import { getBundledRankingProfile } from "@/rankings/profile";
 import { redis } from "@/redis";
 import {
 	BarChart,
@@ -67,6 +69,11 @@ export async function generateStaticParams() {
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
 	const { username } = await params;
+	const rankingProfile = getBundledRankingProfile(username);
+
+	if (rankingProfile) {
+		return <RankedDeveloperProfile data={rankingProfile} />;
+	}
 
 	const userData = await getUserByUsername(username);
 
@@ -544,6 +551,16 @@ export async function generateMetadata({
 	params,
 }: DeveloperPageProps): Promise<Metadata> {
 	const { username } = await params;
+	const rankingProfile = getBundledRankingProfile(username);
+
+	if (rankingProfile) {
+		const profile = rankingProfile.profile;
+		return {
+			title: `${profile.name || profile.login} GitHub rankings | GitHunter`,
+			description: `View ${profile.name || profile.login}'s positions across GitHunter's transparent public GitHub ranking lenses.`,
+			alternates: { canonical: `/developer/${profile.login}` },
+		};
+	}
 
 	const userData = await getUserByUsername(username);
 

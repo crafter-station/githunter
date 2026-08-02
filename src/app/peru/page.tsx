@@ -10,11 +10,6 @@ export const metadata: Metadata = {
 	alternates: { canonical: "/peru" },
 };
 
-export default async function ScopeRankingPage({
-	params,
-}: {
-	params: Promise<{ scope: string }>;
-}) {
-	const { scope } = await params;
-	return <HistoricalRecordPage scope={scope} />;
+export default function PeruPage() {
+	return <HistoricalRecordPage scope="peru" />;
 }

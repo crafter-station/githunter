@@ -11,15 +11,14 @@ export default function NotFound() {
 				</div>
 				<h1 className="mb-2 font-bold text-4xl">User Not Found</h1>
 				<p className="mb-8 max-w-md text-muted-foreground">
-					The GitHub user you're looking for doesn't exist in our database or
-					hasn't been indexed yet.
+					This developer is not part of the current public ranking cohort.
 				</p>
 				<div className="flex gap-4">
 					<Button asChild variant="default">
 						<Link href="/">Go Home</Link>
 					</Button>
 					<Button asChild variant="outline">
-						<Link href="/new">Add a GitHub User</Link>
+						<Link href="/legacy">Legacy tools</Link>
 					</Button>
 				</div>
 			</div>

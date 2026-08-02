@@ -1,7 +1,6 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { RankingTable } from "@/components/rankings/ranking-table";
-import { Badge } from "@/components/ui/badge";
 import { isRankingScope } from "@/rankings/data";
 import { isLensId, metricLabels, rankingLenses } from "@/rankings/lenses";
 import { getRankingSnapshot } from "@/rankings/store";
@@ -14,12 +13,12 @@ import {
 	Github,
 	Info,
 	ShieldCheck,
-	Sparkles,
 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import styles from "./ranking-page.module.css";
 
 export const revalidate = 3600;
 
@@ -44,50 +43,44 @@ function TopDeveloper({ entry }: { entry: RankingEntry }) {
 		.sort((left, right) => right.points - left.points)
 		.slice(0, 2);
 	return (
-		<a
-			href={`https://github.com/${entry.profile.login}`}
-			target="_blank"
-			rel="noreferrer"
-			aria-label={`${entry.profile.name || entry.profile.login} on GitHub, opens in a new tab`}
-			className="group hover:-translate-y-0.5 relative overflow-hidden rounded-2xl border bg-card p-5 shadow-sm transition hover:shadow-md"
+		<Link
+			href={`/developer/${entry.profile.login}`}
+			aria-label={`View ${entry.profile.name || entry.profile.login} ranking profile`}
+			className={styles.topDeveloper}
 		>
-			<div className="absolute top-0 right-0 rounded-bl-2xl border-b border-l bg-amber-300 px-4 py-2 font-bold font-mono text-amber-950 text-lg">
-				#{entry.rank}
+			<span className={styles.topRank}>#{entry.rank}</span>
+			<div className={styles.topIdentity}>
+				<Image
+					src={entry.profile.avatarUrl}
+					alt=""
+					width={56}
+					height={56}
+					className={styles.avatar}
+					priority={entry.rank === 1}
+				/>
+				<div>
+					<h3>
+						{entry.profile.name || entry.profile.login}
+						<ArrowUpRight aria-hidden="true" />
+					</h3>
+					<p>@{entry.profile.login}</p>
+				</div>
 			</div>
-			<Image
-				src={entry.profile.avatarUrl}
-				alt=""
-				width={64}
-				height={64}
-				className="rounded-2xl border bg-muted"
-				priority={entry.rank === 1}
-			/>
-			<div className="mt-4">
-				<h2 className="flex items-center gap-1 font-semibold text-lg group-hover:underline">
-					{entry.profile.name || entry.profile.login}
-					<ArrowUpRight className="size-4 text-muted-foreground" />
-				</h2>
-				<p className="text-muted-foreground text-sm">@{entry.profile.login}</p>
-			</div>
-			<div className="mt-5 flex items-end justify-between gap-4 border-t pt-4">
-				<div className="flex flex-wrap gap-2">
+			<div className={styles.topFooter}>
+				<div className={styles.topSignals}>
 					{strongest.map((metric) => (
-						<span key={metric.metric} className="text-muted-foreground text-xs">
+						<span key={metric.metric}>
 							{metricLabels[metric.metric]}{" "}
-							<strong className="text-foreground">
-								{compactNumber(metric.raw)}
-							</strong>
+							<strong>{compactNumber(metric.raw)}</strong>
 						</span>
 					))}
 				</div>
-				<div className="text-right">
-					<p className="font-mono font-semibold text-2xl tabular-nums">
-						{entry.score.toFixed(2)}
-					</p>
-					<p className="text-muted-foreground text-xs">score</p>
+				<div className={styles.topScore}>
+					<strong>{entry.score.toFixed(2)}</strong>
+					<span>score</span>
 				</div>
 			</div>
-		</a>
+		</Link>
 	);
 }
 
@@ -120,122 +113,96 @@ export default async function RankingPage({
 	);
 
 	return (
-		<div className="min-h-screen bg-background text-foreground">
+		<div className={`vbg-report ${styles.report}`}>
+			<link
+				rel="stylesheet"
+				href="https://vercel.com/geist/vercel-brand.css"
+				precedence="vbg"
+			/>
+			<a className="vbg-skip-link" href="#main">
+				Skip to content
+			</a>
 			<Header noSearch />
-			<main>
-				<section className="relative overflow-hidden border-b">
-					<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(250,204,21,0.2),transparent_36%),radial-gradient(circle_at_80%_15%,rgba(99,102,241,0.16),transparent_30%)]" />
-					<div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-						<div className="max-w-3xl">
-							<Badge className="border-amber-300 bg-amber-100 text-amber-950 hover:bg-amber-100">
-								Public beta · Peru
-							</Badge>
-							<h1 className="mt-5 text-balance font-semibold text-4xl tracking-tight sm:text-6xl">
-								Public work. Explicit rules.
-							</h1>
-							<p className="mt-5 max-w-2xl text-balance text-lg text-muted-foreground sm:text-xl">
+			<main id="main">
+				<section className={styles.hero}>
+					<div className={`${styles.content} ${styles.heroGrid}`}>
+						<div>
+							<div className={styles.signalLabel}>
+								<span aria-hidden="true" />
+								Peru / {snapshot.lens.shortName}
+							</div>
+							<h1>Public work. Explicit rules.</h1>
+							<p className={styles.heroCopy}>
 								GitHunter ranks observable GitHub work through versioned lenses,
 								not a hidden universal score.
 							</p>
 						</div>
-						<div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-							<span className="flex items-center gap-2">
-								<Database className="size-4 text-indigo-600" />
-								{snapshot.cohort.scored} public profiles
-							</span>
-							<span className="flex items-center gap-2">
-								<CalendarDays className="size-4 text-indigo-600" />
-								Updated {formatDate(snapshot.generatedAt)}
-							</span>
-							<span className="flex items-center gap-2">
-								<ShieldCheck className="size-4 text-indigo-600" />
-								Lens v{snapshot.lens.version}
-							</span>
+						<div className={styles.heroMeta}>
+							<div>
+								<Database aria-hidden="true" />
+								<span>Public cohort</span>
+								<strong>{snapshot.cohort.scored} profiles</strong>
+							</div>
+							<div>
+								<CalendarDays aria-hidden="true" />
+								<span>Last generated</span>
+								<strong>{formatDate(snapshot.generatedAt)}</strong>
+							</div>
+							<div>
+								<ShieldCheck aria-hidden="true" />
+								<span>Method version</span>
+								<strong>Lens v{snapshot.lens.version}</strong>
+							</div>
 						</div>
 					</div>
 				</section>
 
-				<div className="mx-auto max-w-7xl space-y-14 px-4 py-10 sm:px-6 lg:px-8">
-					<nav aria-label="Ranking lenses" className="flex flex-wrap gap-2">
+				<div className={`${styles.content} ${styles.body}`}>
+					<nav aria-label="Ranking lenses" className={styles.lensNav}>
 						{Object.values(rankingLenses).map((definition) => (
 							<Link
 								key={definition.id}
 								href={`/rankings/${scope}/${definition.id}`}
 								aria-current={definition.id === lens ? "page" : undefined}
-								className={
-									definition.id === lens
-										? "rounded-full bg-foreground px-4 py-2 font-medium text-background text-sm"
-										: "rounded-full border bg-background px-4 py-2 font-medium text-sm transition hover:bg-muted"
-								}
 							>
 								{definition.shortName}
 							</Link>
 						))}
 					</nav>
 
-					<section
-						aria-labelledby="lens-title"
-						className="grid gap-8 lg:grid-cols-[1fr_340px]"
-					>
-						<div>
-							<p className="font-mono text-indigo-600 text-xs uppercase tracking-[0.18em] dark:text-indigo-300">
-								Current lens
-							</p>
-							<h2
-								id="lens-title"
-								className="mt-2 font-semibold text-3xl tracking-tight"
-							>
-								{snapshot.lens.name}
-							</h2>
-							<p className="mt-3 text-lg text-muted-foreground">
-								{snapshot.lens.question}
-							</p>
-							<p className="mt-2 max-w-2xl text-muted-foreground">
-								{snapshot.lens.description}
-							</p>
+					<section aria-labelledby="lens-title" className={styles.lensIntro}>
+						<div className={styles.reading}>
+							<p className={styles.sectionLabel}>Current lens</p>
+							<h2 id="lens-title">{snapshot.lens.name}</h2>
+							<p className={styles.question}>{snapshot.lens.question}</p>
+							<p>{snapshot.lens.description}</p>
 						</div>
-						<div className="rounded-2xl border bg-muted/30 p-5">
-							<div className="flex items-center gap-2 font-medium">
-								<Sparkles className="size-4 text-amber-500" />
-								Weight profile
-							</div>
-							<div className="mt-4 space-y-2.5">
-								{weights.map(([metric, weight]) => (
-									<div key={metric} className="flex items-center gap-3 text-sm">
-										<span className="w-28 text-muted-foreground">
-											{metricLabels[metric as keyof typeof metricLabels]}
-										</span>
-										<span
-											className="h-1.5 flex-1 overflow-hidden rounded-full bg-border"
-											role="img"
-											aria-label={`${metricLabels[metric as keyof typeof metricLabels]} weight ${(weight ?? 0) * 100} percent`}
-										>
-											<span
-												className="block h-full rounded-full bg-indigo-500"
-												style={{ width: `${(weight ?? 0) * 100}%` }}
-											/>
-										</span>
-										<span className="w-8 text-right font-mono tabular-nums">
-											{(weight ?? 0) * 100}%
-										</span>
-									</div>
-								))}
-							</div>
+						<div className={styles.weights}>
+							<p className={styles.sectionLabel}>Weight profile</p>
+							{weights.map(([metric, weight]) => (
+								<div key={metric} className={styles.weightRow}>
+									<span>
+										{metricLabels[metric as keyof typeof metricLabels]}
+									</span>
+									<span
+										className={styles.weightTrack}
+										role="img"
+										aria-label={`${metricLabels[metric as keyof typeof metricLabels]} weight ${(weight ?? 0) * 100} percent`}
+									>
+										<span style={{ width: `${(weight ?? 0) * 100}%` }} />
+									</span>
+									<strong>{(weight ?? 0) * 100}%</strong>
+								</div>
+							))}
 						</div>
 					</section>
 
-					<section aria-labelledby="leaders-title">
-						<div className="mb-4 flex items-center justify-between">
-							<div>
-								<p className="font-mono text-amber-700 text-xs uppercase tracking-[0.18em] dark:text-amber-300">
-									Leaders
-								</p>
-								<h2 id="leaders-title" className="mt-1 font-semibold text-2xl">
-									Top 3 in {snapshot.scopeName}
-								</h2>
-							</div>
+					<section aria-labelledby="leaders-title" className={styles.leaders}>
+						<div className={styles.sectionHeading}>
+							<p className={styles.sectionLabel}>Leaders</p>
+							<h2 id="leaders-title">Top 3 in {snapshot.scopeName}</h2>
 						</div>
-						<div className="grid gap-4 md:grid-cols-3">
+						<div className={styles.topGrid}>
 							{top.map((entry) => (
 								<TopDeveloper key={entry.profile.login} entry={entry} />
 							))}
@@ -244,25 +211,21 @@ export default async function RankingPage({
 
 					<RankingTable entries={snapshot.entries} lensId={lens} />
 
-					<section className="grid gap-4 lg:grid-cols-2">
-						<div className="rounded-2xl border p-6">
-							<div className="flex items-center gap-2 font-semibold text-lg">
-								<CheckCircle2 className="size-5 text-emerald-600" />
-								How the score works
-							</div>
-							<p className="mt-3 text-muted-foreground text-sm leading-6">
+					<section className={styles.evidenceGrid}>
+						<div>
+							<CheckCircle2 aria-hidden="true" />
+							<h2>How the score works</h2>
+							<p>
 								Each metric is converted to a cohort percentile before applying
 								the published weight. This limits outliers and keeps different
 								units comparable. Confidence reflects the evidence windows
 								available to a lens. An observed zero remains a real zero.
 							</p>
 						</div>
-						<div className="rounded-2xl border p-6">
-							<div className="flex items-center gap-2 font-semibold text-lg">
-								<Info className="size-5 text-indigo-600" />
-								Evidence boundary
-							</div>
-							<p className="mt-3 text-muted-foreground text-sm leading-6">
+						<div>
+							<Info aria-hidden="true" />
+							<h2>Evidence boundary</h2>
+							<p>
 								Public activity runs from {formatDate(snapshot.period.from)} to{" "}
 								{formatDate(snapshot.period.to)}. GitHub location is
 								self-reported, and private work is excluded. The cohort combines
@@ -272,33 +235,28 @@ export default async function RankingPage({
 						</div>
 					</section>
 
-					<details className="rounded-2xl border bg-muted/20 p-6">
-						<summary className="cursor-pointer font-semibold">
-							Sources, limitations, and API
-						</summary>
-						<div className="mt-5 grid gap-6 text-sm md:grid-cols-2">
+					<details className={styles.details}>
+						<summary>Sources, limitations, and API</summary>
+						<div className={styles.detailsGrid}>
 							<div>
-								<h3 className="font-medium">Sources</h3>
-								<ul className="mt-2 space-y-1 text-muted-foreground">
+								<h3>Sources</h3>
+								<ul>
 									{snapshot.sources.map((source) => (
-										<li key={source}>· {source}</li>
+										<li key={source}>{source}</li>
 									))}
 								</ul>
 							</div>
 							<div>
-								<h3 className="font-medium">Limitations</h3>
-								<ul className="mt-2 space-y-1 text-muted-foreground">
+								<h3>Limitations</h3>
+								<ul>
 									{snapshot.limitations.map((limitation) => (
-										<li key={limitation}>· {limitation}</li>
+										<li key={limitation}>{limitation}</li>
 									))}
 								</ul>
 							</div>
 						</div>
-						<a
-							href={`/api/rankings/${scope}/${lens}`}
-							className="mt-5 inline-flex items-center gap-2 font-medium text-indigo-600 hover:underline dark:text-indigo-300"
-						>
-							<Github className="size-4" />
+						<a href={`/api/rankings/${scope}/${lens}`}>
+							<Github aria-hidden="true" />
 							Open the reproducible JSON snapshot
 						</a>
 					</details>
