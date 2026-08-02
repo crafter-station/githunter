@@ -24,6 +24,7 @@ import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
+import { sql } from "drizzle-orm";
 
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
@@ -516,20 +517,26 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-	// Use scan with a pattern match to get all search keys
-	const searchKeys = [];
-	let cursor = "0";
+	try {
+		const { db } = await import("@/db");
+		await db.execute(sql`select 1`);
+		const searchKeys = [];
+		let cursor = "0";
 
-	do {
-		const [nextCursor, keys] = await redis.scan(cursor, { match: "search:*" });
-		cursor = nextCursor;
-		searchKeys.push(...keys);
-	} while (cursor !== "0");
+		do {
+			const [nextCursor, keys] = await redis.scan(cursor, {
+				match: "search:*",
+			});
+			cursor = nextCursor;
+			searchKeys.push(...keys);
+		} while (cursor !== "0");
 
-	// Extract the slug from each key (remove the "search:" prefix)
-	return searchKeys.map((key) => ({
-		slug: key.replace("search:", ""),
-	}));
+		return searchKeys.map((key) => ({
+			slug: key.replace("search:", ""),
+		}));
+	} catch {
+		return [];
+	}
 }
 
 // Helper function to determine top metric for each developer

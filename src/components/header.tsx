@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import {
 	ArrowRight,
+	BarChart3,
 	Bug,
 	ChevronDown,
 	CreditCard,
@@ -82,6 +83,25 @@ export function Header({ noSearch = false }: HeaderProps) {
 						</div>
 					</div>
 					<div className="flex items-center gap-2 sm:gap-3">
+						<Button variant="ghost" size="icon" asChild className="sm:hidden">
+							<Link href="/rankings/peru/balanced" aria-label="Rankings">
+								<BarChart3 className="size-4" />
+							</Link>
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							asChild
+							className="hidden sm:flex"
+						>
+							<Link
+								href="/rankings/peru/balanced"
+								className="flex items-center gap-2"
+							>
+								<BarChart3 className="size-4" />
+								<span>Rankings</span>
+							</Link>
+						</Button>
 						{user && (
 							<>
 								{/* Bug Report Button - visible only on desktop */}
@@ -272,6 +292,15 @@ export function Header({ noSearch = false }: HeaderProps) {
 					</Link>
 
 					<div className="hidden items-center gap-4 lg:flex">
+						<Button variant="ghost" size="sm" asChild>
+							<Link
+								href="/rankings/peru/balanced"
+								className="flex items-center gap-2"
+							>
+								<BarChart3 className="size-4" />
+								<span>Rankings</span>
+							</Link>
+						</Button>
 						{/* All features as direct buttons */}
 						<Button variant="ghost" size="sm" asChild>
 							<Link href="/search/advanced" className="flex items-center gap-2">
@@ -310,6 +339,11 @@ export function Header({ noSearch = false }: HeaderProps) {
 				</div>
 
 				<div className="flex items-center gap-2 sm:gap-3">
+					<Button variant="ghost" size="icon" asChild className="lg:hidden">
+						<Link href="/rankings/peru/balanced" aria-label="Rankings">
+							<BarChart3 className="size-4" />
+						</Link>
+					</Button>
 					{user && (
 						<>
 							{/* Plan Badge with upgrade CTA */}

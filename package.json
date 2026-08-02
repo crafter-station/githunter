@@ -10,7 +10,9 @@
 		"biome:check": "biome check --write --unsafe --config-path=biome.json",
 		"prepare": "husky",
 		"test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"index-users": "ts-node --transpile-only scripts/index-users.ts"
+		"index-users": "ts-node --transpile-only scripts/index-users.ts",
+		"rankings:bundle": "bun scripts/build-ranking-bundle.ts",
+		"rankings:refresh": "bun scripts/refresh-rankings.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/elevenlabs": "^0.0.3",
