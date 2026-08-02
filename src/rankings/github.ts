@@ -66,6 +66,25 @@ export function createEvidenceWindows(now: Date) {
 	};
 }
 
+export function createSeasonEvidenceWindows(now: Date) {
+	const currentDay = utcStartOfDay(now);
+	const quarterMonth = Math.floor(currentDay.getUTCMonth() / 3) * 3;
+	const currentFrom = new Date(
+		Date.UTC(currentDay.getUTCFullYear(), quarterMonth, 1),
+	);
+	const currentTo = new Date(daysBefore(currentDay, -1).getTime() - 1);
+	const previousFrom = new Date(
+		Date.UTC(currentDay.getUTCFullYear(), quarterMonth - 3, 1),
+	);
+	const elapsed = currentTo.getTime() - currentFrom.getTime();
+	const previousTo = new Date(previousFrom.getTime() + elapsed);
+	return {
+		generatedAt: isoDate(now),
+		period: { from: isoDate(currentFrom), to: isoDate(currentTo) },
+		previousPeriod: { from: isoDate(previousFrom), to: isoDate(previousTo) },
+	};
+}
+
 function publicContributions(collection: ContributionCollection) {
 	return Math.max(
 		0,
@@ -235,7 +254,8 @@ export async function collectRankingDataset({
 	onProgress?: (progress: CollectionProgress) => void;
 	now?: Date;
 }): Promise<RankingDataset> {
-	const { generatedAt, period, previousPeriod } = createEvidenceWindows(now);
+	const { generatedAt, period, previousPeriod } =
+		createSeasonEvidenceWindows(now);
 	const currentFrom = period.from;
 	const currentTo = period.to;
 	const previousFrom = previousPeriod.from;
@@ -275,7 +295,8 @@ export async function collectRankingDataset({
 		limitations: [
 			"GitHub location is self-reported.",
 			"Stars, forks, followers, and external repositories are cumulative.",
-			"Activity and collaboration use trailing 365-day public windows.",
+			"Activity and collaboration reset at the start of each calendar quarter.",
+			"Rising compares quarter-to-date activity with the same elapsed window in the preceding quarter.",
 			"Stars and forks cover the 100 most-starred public, non-fork repositories owned by each user.",
 			"Private activity and contribution size are excluded for comparability.",
 		],

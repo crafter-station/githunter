@@ -6,12 +6,15 @@ import type { BundledRankingProfile } from "@/rankings/profile";
 import { siteUrl } from "@/rankings/seo";
 import type { RankingMetric } from "@/rankings/types";
 import {
+	Activity,
 	ArrowLeft,
 	ArrowUpRight,
 	CalendarDays,
 	Github,
 	MapPin,
+	Medal,
 	ShieldCheck,
+	Trophy,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -81,8 +84,8 @@ export function RankedDeveloperProfile({
 								priority
 							/>
 							<div className="min-w-0 flex-1">
-								<Badge className="border-amber-300 bg-amber-100 text-amber-950 hover:bg-amber-100">
-									Ranked public profile
+								<Badge className="border-blue-300 bg-blue-50 text-blue-800 hover:bg-blue-50">
+									GitHub Ladder profile
 								</Badge>
 								<h1 className="mt-3 font-semibold text-3xl tracking-tight sm:text-5xl">
 									{profile.name || profile.login}
@@ -116,6 +119,78 @@ export function RankedDeveloperProfile({
 						</div>
 					</div>
 				</section>
+
+				{data.career && (
+					<section className="mt-10" aria-labelledby="ladder-career">
+						<div className="flex items-center gap-2">
+							<Trophy className="size-5 text-[#1d4eff]" />
+							<h2 id="ladder-career" className="font-semibold text-2xl">
+								Ladder career
+							</h2>
+							{data.career.provisional && (
+								<Badge variant="outline">
+									Projected until first official close
+								</Badge>
+							)}
+						</div>
+						<div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+							<Link
+								href="/peru"
+								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
+							>
+								<CalendarDays className="size-4 text-[#1d4eff]" />
+								<p className="mt-5 text-muted-foreground text-xs uppercase tracking-wider">
+									{data.career.seasonLabel}
+								</p>
+								<p className="mt-1 font-mono font-semibold text-3xl">
+									#{rankings[0]?.entry.rank}
+								</p>
+							</Link>
+							<Link
+								href="/peru/overall"
+								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
+							>
+								<Medal className="size-4 text-[#1d4eff]" />
+								<p className="mt-5 text-muted-foreground text-xs uppercase tracking-wider">
+									All-time
+								</p>
+								<p className="mt-1 font-mono font-semibold text-3xl">
+									#{data.career.allTimeRank}
+								</p>
+								<p className="text-muted-foreground text-xs">
+									{data.career.careerPoints.toFixed(2)} career points
+								</p>
+							</Link>
+							<Link
+								href="/peru/form"
+								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
+							>
+								<Activity className="size-4 text-[#1d4eff]" />
+								<p className="mt-5 text-muted-foreground text-xs uppercase tracking-wider">
+									Four-quarter form
+								</p>
+								<p className="mt-1 font-mono font-semibold text-3xl">
+									#{data.career.formRank}
+								</p>
+								<p className="text-muted-foreground text-xs">
+									{data.career.formScore.toFixed(2)} form score
+								</p>
+							</Link>
+							<div className="rounded-xl border bg-card p-5">
+								<Trophy className="size-4 text-[#1d4eff]" />
+								<p className="mt-5 text-muted-foreground text-xs uppercase tracking-wider">
+									Championships
+								</p>
+								<p className="mt-1 font-mono font-semibold text-3xl">
+									{data.career.championships}
+								</p>
+								<p className="text-muted-foreground text-xs">
+									{data.career.podiums} podiums · {data.career.seasons} seasons
+								</p>
+							</div>
+						</div>
+					</section>
+				)}
 
 				<section className="mt-10" aria-labelledby="ranking-positions">
 					<div className="flex items-center gap-2">

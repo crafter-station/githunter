@@ -1,9 +1,11 @@
 import styles from "@/app/rankings/[scope]/[lens]/ranking-page.module.css";
 import { Footer } from "@/components/footer";
 import { PublicHeader } from "@/components/public-header";
+import { LadderNavigation } from "@/components/rankings/ladder-navigation";
 import { RankingTable } from "@/components/rankings/ranking-table";
 import { isRankingScope } from "@/rankings/data";
 import { metricLabels, rankingLenses } from "@/rankings/lenses";
+import { getSeason } from "@/rankings/seasons";
 import { getRankingCanonical, getRankingSeo, siteUrl } from "@/rankings/seo";
 import { getRankingSnapshot } from "@/rankings/store";
 import type { LensId } from "@/rankings/types";
@@ -36,9 +38,15 @@ export async function RankingReportPage({
 }) {
 	if (!isRankingScope(scope)) notFound();
 	const snapshot = await getRankingSnapshot(scope, lens);
+	const season = getSeason(new Date(snapshot.generatedAt));
 	const seo = getRankingSeo(lens);
 	const canonicalPath = getRankingCanonical(scope, lens);
 	const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+	const heading = lens === "balanced" ? "Peru GitHub Ladder" : seo.heading;
+	const description =
+		lens === "balanced"
+			? `Live ${season.label} standings for public GitHub builders in Peru. Search the complete indexed cohort, track form, and build a season record over time.`
+			: seo.description;
 	const weights = Object.entries(snapshot.lens.weights).sort(
 		([, left], [, right]) => (right ?? 0) - (left ?? 0),
 	);
@@ -46,8 +54,8 @@ export async function RankingReportPage({
 		{
 			"@context": "https://schema.org",
 			"@type": "CollectionPage",
-			name: seo.heading,
-			description: seo.description,
+			name: heading,
+			description,
 			url: canonicalUrl,
 			dateModified: snapshot.generatedAt,
 			isPartOf: {
@@ -128,8 +136,8 @@ export async function RankingReportPage({
 								<span aria-hidden="true" />
 								Peru / {snapshot.lens.shortName}
 							</div>
-							<h1>{seo.heading}</h1>
-							<p className={styles.heroCopy}>{seo.description}</p>
+							<h1>{heading}</h1>
+							<p className={styles.heroCopy}>{description}</p>
 						</div>
 						<div className={styles.heroMeta}>
 							<div>
@@ -139,8 +147,8 @@ export async function RankingReportPage({
 							</div>
 							<div>
 								<CalendarDays aria-hidden="true" />
-								<span>Last generated</span>
-								<strong>{formatDate(snapshot.generatedAt)}</strong>
+								<span>Current season</span>
+								<strong>{season.label}</strong>
 							</div>
 							<div>
 								<ShieldCheck aria-hidden="true" />
@@ -152,6 +160,7 @@ export async function RankingReportPage({
 				</section>
 
 				<div className={`${styles.content} ${styles.body}`}>
+					<LadderNavigation scope={scope} active="current" season={season} />
 					<nav aria-label="Ranking lenses" className={styles.lensNav}>
 						{Object.values(rankingLenses).map((definition) => (
 							<Link
@@ -171,6 +180,7 @@ export async function RankingReportPage({
 						scope={scope}
 						scopeName={snapshot.scopeName}
 						total={snapshot.entries.length}
+						season={season}
 					/>
 
 					<section

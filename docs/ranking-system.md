@@ -22,7 +22,7 @@ Raw volume is capped through percentile normalization, so extreme totals cannot 
 
 ### How should time work?
 
-Activity lenses use a trailing 365-day evidence window. Durable adoption metrics use the current public state, captured in the same dated snapshot. Rising compares recent pace against the preceding equivalent period when both windows are available.
+Activity lenses reset at the beginning of each calendar quarter. Durable adoption metrics use the current public state, captured in the same dated snapshot. Rising compares quarter-to-date activity against the same elapsed window in the preceding quarter.
 
 ### What happens when data is incomplete?
 
@@ -30,7 +30,11 @@ Collection only admits profiles with a complete current evidence window. Rising 
 
 ### How often does it update?
 
-Snapshots refresh daily. Public pages are served from versioned daily snapshots. A successful retry on the same day replaces that day's stable identifier, while snapshots from prior dates remain historical records. A verified bundled snapshot keeps the product available before the first database migration or during an infrastructure outage.
+Live standings refresh daily. Public pages are served from versioned daily snapshots and normalized season results. A successful retry on the same day replaces that day's provisional result. Quarter close freezes the cohort, ruleset, champion, and complete standings. A verified bundled snapshot keeps the product available before the first database migration or during an infrastructure outage.
+
+### How does the ladder work?
+
+Current Season is provisional until quarter close. Form averages the latest four available season scores. All-Time sums official closed-season scores, while championships and podiums remain separate honors. The public table may show a bounded leaderboard, but the index persists every eligible result so a developer can retrieve an exact position within the declared cohort.
 
 ### Can users create arbitrary rankings?
 

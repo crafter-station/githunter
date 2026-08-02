@@ -1,5 +1,6 @@
 import { getBundledDataset } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
+import { getSeason } from "@/rankings/seasons";
 import { getRankingCanonical, siteUrl } from "@/rankings/seo";
 import type { MetadataRoute } from "next";
 
@@ -18,6 +19,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		changeFrequency: "weekly" as const,
 		priority: 0.7,
 	}));
+	const season = getSeason(lastModified);
+	const ladderPages = [
+		{ path: "/peru/form", priority: 0.85 },
+		{ path: "/peru/overall", priority: 0.85 },
+		{ path: `/peru/seasons/${season.id.toLowerCase()}`, priority: 0.8 },
+	].map(({ path, priority }) => ({
+		url: new URL(path, siteUrl).toString(),
+		lastModified,
+		changeFrequency: "daily" as const,
+		priority,
+	}));
 
 	return [
 		{
@@ -27,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.9,
 		},
 		...rankingPages,
+		...ladderPages,
 		...profilePages,
 	];
 }

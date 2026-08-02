@@ -24,7 +24,6 @@ import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Pagination } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
-import { sql } from "drizzle-orm";
 
 import { getCountryCode } from "@/lib/country-codes";
 import { redis } from "@/redis";
@@ -36,7 +35,7 @@ import { getQueryParams } from "./get-query-params";
 import { queryUsers } from "./query-users";
 
 export const revalidate = 300;
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export default async function SearchPage({
@@ -514,29 +513,6 @@ export async function generateMetadata({
 		},
 		keywords: formattedQuery.split(" ").filter(Boolean),
 	};
-}
-
-export async function generateStaticParams() {
-	try {
-		const { db } = await import("@/db");
-		await db.execute(sql`select 1`);
-		const searchKeys = [];
-		let cursor = "0";
-
-		do {
-			const [nextCursor, keys] = await redis.scan(cursor, {
-				match: "search:*",
-			});
-			cursor = nextCursor;
-			searchKeys.push(...keys);
-		} while (cursor !== "0");
-
-		return searchKeys.map((key) => ({
-			slug: key.replace("search:", ""),
-		}));
-	} catch {
-		return [];
-	}
 }
 
 // Helper function to determine top metric for each developer

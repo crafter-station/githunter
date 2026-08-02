@@ -100,3 +100,51 @@ export interface RankingSnapshot {
 	entries: RankingEntry[];
 	cache: "database" | "redis" | "bundled";
 }
+
+export type RankingSeasonStatus = "preseason" | "active" | "closed";
+
+export interface RankingSeason {
+	id: string;
+	label: string;
+	startsAt: string;
+	endsAt: string;
+	status: RankingSeasonStatus;
+	rulesetVersion: string;
+	closedAt: string | null;
+}
+
+export interface RankingSeasonResult {
+	seasonId: string;
+	scope: string;
+	lensId: LensId;
+	lensVersion: string;
+	username: string;
+	rank: number;
+	score: number;
+	confidence: number;
+	cohortSize: number;
+	entry: RankingEntry;
+}
+
+export interface CareerStanding {
+	rank: number;
+	profile: RankingProfile;
+	careerPoints: number;
+	formScore: number;
+	seasons: number;
+	championships: number;
+	podiums: number;
+	currentRank: number | null;
+	currentScore: number | null;
+	provisional: boolean;
+}
+
+export interface RankingCandidateEvaluation {
+	status: "ranked" | "provisional" | "queued" | "ineligible";
+	scope: string;
+	username: string;
+	message: string;
+	profile?: RankingProfile;
+	rankings?: Array<{ lens: LensDefinition; entry: RankingEntry }>;
+	evaluatedAt?: string;
+}

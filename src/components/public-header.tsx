@@ -3,8 +3,9 @@ import { Github, Menu } from "lucide-react";
 import Link from "next/link";
 
 const links = [
-	{ href: "/peru", label: "Peru ranking" },
-	{ href: "/rankings/peru/rising", label: "Rising" },
+	{ href: "/peru", label: "Current season" },
+	{ href: "/peru/form", label: "Form" },
+	{ href: "/peru/overall", label: "All-time" },
 	{ href: "/peru#methodology", label: "Methodology" },
 ];
 

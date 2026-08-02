@@ -121,6 +121,65 @@
 	padding-block: 0 var(--vbg-space-16);
 }
 
+.ladderBar {
+	display: flex;
+	min-height: 64px;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--vbg-space-5);
+	border-bottom: 1px solid var(--vbg-border-subtle);
+}
+
+.ladderNav {
+	display: flex;
+	align-items: center;
+	gap: var(--vbg-space-6);
+}
+
+.ladderNav a {
+	position: relative;
+	display: inline-flex;
+	height: 64px;
+	align-items: center;
+	color: var(--vbg-text-secondary);
+	font-size: 13px;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.ladderNav a[aria-current="page"] {
+	color: var(--vbg-text-primary);
+}
+
+.ladderNav a[aria-current="page"]::after {
+	position: absolute;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	height: 2px;
+	background: #1d4eff;
+	content: "";
+}
+
+.seasonPill {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 9px;
+	border: 1px solid color-mix(in srgb, #1d4eff 35%, transparent);
+	border-radius: 999px;
+	color: #1d4eff;
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 9px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.seasonPill[data-status="closed"] {
+	border-color: var(--vbg-border-default);
+	color: var(--vbg-text-secondary);
+}
+
 .lensNav {
 	display: flex;
 	overflow-x: auto;
@@ -377,6 +436,14 @@
 	letter-spacing: -0.04em;
 }
 
+.rankingCopy {
+	max-width: 650px;
+	margin: var(--vbg-space-3) 0 0;
+	color: var(--vbg-text-secondary);
+	font-size: 13px;
+	line-height: 1.6;
+}
+
 .search {
 	position: relative;
 	display: block;
@@ -472,6 +539,30 @@
 	font-variant-numeric: tabular-nums;
 }
 
+.provisionalLabel {
+	display: block;
+	margin-top: 2px;
+	color: var(--vbg-text-secondary);
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 8px;
+	text-transform: uppercase;
+}
+
+.titleCount {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 12px;
+}
+
+.titleCount svg {
+	width: 13px;
+	height: 13px;
+	color: #1d4eff;
+	stroke-width: 1.5;
+}
+
 .rankNumber {
 	color: #1d4eff;
 }
@@ -544,6 +635,113 @@
 	padding: var(--vbg-space-12);
 	color: var(--vbg-text-secondary);
 	text-align: center;
+}
+
+.rankLookup {
+	display: grid;
+	grid-template-columns: 28px minmax(0, 1fr) auto;
+	align-items: center;
+	gap: var(--vbg-space-4);
+	padding: var(--vbg-space-6);
+}
+
+.rankLookup > svg {
+	width: 20px;
+	height: 20px;
+	color: #1d4eff;
+	stroke-width: 1.4;
+}
+
+.rankLookup strong {
+	display: block;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.rankLookup p {
+	margin: var(--vbg-space-1) 0 0;
+	color: var(--vbg-text-secondary);
+	font-size: 12px;
+}
+
+.rankLookup button {
+	display: inline-flex;
+	gap: var(--vbg-space-2);
+	border-radius: 5px;
+	font-size: 12px;
+}
+
+.rankLookup button svg {
+	width: 14px;
+	height: 14px;
+}
+
+.evaluationCard {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto auto;
+	align-items: center;
+	gap: var(--vbg-space-6);
+	padding: var(--vbg-space-5);
+	border: 1px solid color-mix(in srgb, #1d4eff 32%, var(--vbg-border-subtle));
+	background: color-mix(in srgb, #1d4eff 3%, var(--vbg-surface-primary));
+}
+
+.evaluationCard > div:first-child > span,
+.evaluationRank span,
+.evaluationRank small {
+	display: block;
+	color: #1d4eff;
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 9px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.evaluationCard > div:first-child > strong {
+	display: block;
+	margin-top: var(--vbg-space-1);
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.evaluationCard p {
+	margin: var(--vbg-space-1) 0 0;
+	color: var(--vbg-text-secondary);
+	font-size: 12px;
+}
+
+.evaluationRank {
+	min-width: 92px;
+	text-align: right;
+}
+
+.evaluationRank strong {
+	display: block;
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 28px;
+	font-weight: 500;
+}
+
+.evaluationRank small {
+	color: var(--vbg-text-secondary);
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.evaluationLink {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--vbg-space-2);
+	color: var(--vbg-text-primary);
+	font-size: 12px;
+	font-weight: 500;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.evaluationLink svg {
+	width: 14px;
+	height: 14px;
 }
 
 .showMore {
@@ -727,6 +925,28 @@
 		gap: 0;
 	}
 
+	.ladderBar {
+		align-items: stretch;
+		flex-direction: column-reverse;
+		gap: 0;
+		padding-top: var(--vbg-space-4);
+	}
+
+	.ladderNav {
+		overflow-x: auto;
+		gap: var(--vbg-space-5);
+	}
+
+	.ladderNav a {
+		height: 48px;
+		font-size: 12px;
+		white-space: nowrap;
+	}
+
+	.seasonPill {
+		align-self: flex-start;
+	}
+
 	.lensNav {
 		margin-inline: -1rem;
 		padding-inline: 1rem;
@@ -762,6 +982,23 @@
 
 	.search {
 		width: 100%;
+	}
+
+	.rankLookup,
+	.evaluationCard {
+		grid-template-columns: 1fr;
+	}
+
+	.rankLookup > svg {
+		display: none;
+	}
+
+	.rankLookup button {
+		justify-content: center;
+	}
+
+	.evaluationRank {
+		text-align: left;
 	}
 
 	.topDeveloper {

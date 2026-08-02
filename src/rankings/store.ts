@@ -233,6 +233,9 @@ export async function persistRankingDataset(dataset: RankingDataset) {
 			});
 	}
 
+	const { persistSeasonResults } = await import("./season-store");
+	await persistSeasonResults(snapshots);
+
 	const redis = getRedis();
 	if (redis) {
 		await Promise.allSettled(

@@ -4,8 +4,13 @@ import styles from "@/app/rankings/[scope]/[lens]/ranking-page.module.css";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { metricLabels } from "@/rankings/lenses";
-import type { LensId, RankingEntry } from "@/rankings/types";
-import { ArrowUpRight, Search } from "lucide-react";
+import type {
+	LensId,
+	RankingCandidateEvaluation,
+	RankingEntry,
+	RankingSeason,
+} from "@/rankings/types";
+import { ArrowRight, ArrowUpRight, Search, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
@@ -30,6 +35,7 @@ export function RankingTable({
 	scope,
 	scopeName,
 	total,
+	season,
 }: {
 	initialEntries: RankingEntry[];
 	lensId: LensId;
@@ -37,6 +43,7 @@ export function RankingTable({
 	scope: string;
 	scopeName: string;
 	total: number;
+	season: RankingSeason;
 }) {
 	const [entries, setEntries] = useState(initialEntries);
 	const [query, setQuery] = useState("");
@@ -44,6 +51,9 @@ export function RankingTable({
 	const [loadedAll, setLoadedAll] = useState(initialEntries.length >= total);
 	const [loading, setLoading] = useState(false);
 	const [loadError, setLoadError] = useState("");
+	const [evaluation, setEvaluation] =
+		useState<RankingCandidateEvaluation | null>(null);
+	const [evaluating, setEvaluating] = useState(false);
 	const loadingPromise = useRef<Promise<void> | null>(null);
 
 	const loadAll = () => {
@@ -81,6 +91,30 @@ export function RankingTable({
 		);
 	}, [entries, query]);
 	const shown = filtered.slice(0, visible);
+	const evaluatedRanking = evaluation?.rankings?.find(
+		(item) => item.lens.id === lensId,
+	);
+
+	const evaluateCandidate = async () => {
+		setEvaluating(true);
+		setLoadError("");
+		try {
+			const response = await fetch(`/api/rankings/${scope}/candidates`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username: query }),
+			});
+			const result = (await response.json()) as RankingCandidateEvaluation & {
+				error?: string;
+			};
+			if (!result.status) throw new Error(result.error ?? "Evaluation failed");
+			setEvaluation(result);
+		} catch {
+			setLoadError("This GitHub account could not be evaluated. Try again.");
+		} finally {
+			setEvaluating(false);
+		}
+	};
 
 	return (
 		<section
@@ -90,10 +124,16 @@ export function RankingTable({
 		>
 			<div className={styles.rankingHeading}>
 				<div>
-					<p className={styles.sectionLabel}>{total} public profiles</p>
+					<p className={styles.sectionLabel}>
+						{season.label} · {season.status} · {total} indexed profiles
+					</p>
 					<h2 id="full-ranking">
-						{scopeName} {lensName} ranking
+						Find your position in the {scopeName} ladder
 					</h2>
+					<p className={styles.rankingCopy}>
+						Search every indexed profile, not only the visible leaders. New
+						accounts receive a transparent provisional evaluation.
+					</p>
 				</div>
 				<label htmlFor="ranking-filter" className={styles.search}>
 					<span className="sr-only">Filter developers</span>
@@ -104,10 +144,11 @@ export function RankingTable({
 						onChange={(event) => {
 							const value = event.target.value;
 							setQuery(value);
+							setEvaluation(null);
 							setVisible(50);
 							if (value.trim()) void loadAll();
 						}}
-						placeholder="Search this ranking"
+						placeholder="GitHub username"
 						className={styles.searchInput}
 					/>
 				</label>
@@ -224,10 +265,56 @@ export function RankingTable({
 						</tbody>
 					</table>
 				</div>
-				{shown.length === 0 && (
-					<p className={styles.emptyRanking}>No developers match “{query}”.</p>
+				{shown.length === 0 && query.trim() && (
+					<div className={styles.rankLookup}>
+						<Sparkles aria-hidden="true" />
+						<div>
+							<strong>
+								{loading
+									? "Searching the complete index…"
+									: `@${query.replace(/^@/, "")} is not in the current index`}
+							</strong>
+							<p>
+								Calculate a provisional position against the same cohort and
+								ruleset used by the public ladder.
+							</p>
+						</div>
+						<Button
+							type="button"
+							disabled={loading || evaluating || !loadedAll}
+							onClick={evaluateCandidate}
+						>
+							{evaluating ? "Calculating…" : "Calculate my rank"}
+							<ArrowRight aria-hidden="true" />
+						</Button>
+					</div>
 				)}
 			</div>
+
+			{evaluation && (
+				<div className={styles.evaluationCard} data-status={evaluation.status}>
+					<div>
+						<span>{evaluation.status}</span>
+						<strong>@{evaluation.username}</strong>
+						<p>{evaluation.message}</p>
+					</div>
+					{evaluatedRanking && (
+						<div className={styles.evaluationRank}>
+							<span>{lensName}</span>
+							<strong>#{evaluatedRanking.entry.rank}</strong>
+							<small>{evaluatedRanking.entry.score.toFixed(2)} score</small>
+						</div>
+					)}
+					{evaluation.profile && evaluation.rankings && (
+						<Link
+							href={`/developer/${evaluation.profile.login}`}
+							className={styles.evaluationLink}
+						>
+							Open ladder profile <ArrowUpRight aria-hidden="true" />
+						</Link>
+					)}
+				</div>
+			)}
 
 			{(shown.length < filtered.length || !loadedAll) && (
 				<div className={styles.showMore}>

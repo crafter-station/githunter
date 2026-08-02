@@ -1,4 +1,8 @@
-import { createEvidenceWindows, readBatchProfiles } from "./github";
+import {
+	createEvidenceWindows,
+	createSeasonEvidenceWindows,
+	readBatchProfiles,
+} from "./github";
 
 describe("GitHub ranking evidence windows", () => {
 	it("creates adjacent non-overlapping UTC calendar years", () => {
@@ -15,6 +19,20 @@ describe("GitHub ranking evidence windows", () => {
 		expect(new Date(windows.previousPeriod.to).getTime() + 1).toBe(
 			new Date(windows.period.from).getTime(),
 		);
+	});
+
+	it("creates quarter-to-date and comparable preceding-quarter windows", () => {
+		const windows = createSeasonEvidenceWindows(
+			new Date("2026-08-02T09:05:42.993Z"),
+		);
+		expect(windows.period).toEqual({
+			from: "2026-07-01T00:00:00.000Z",
+			to: "2026-08-02T23:59:59.999Z",
+		});
+		expect(windows.previousPeriod).toEqual({
+			from: "2026-04-01T00:00:00.000Z",
+			to: "2026-05-03T23:59:59.999Z",
+		});
 	});
 
 	it("keeps valid users when GitHub reports a partial batch error", () => {

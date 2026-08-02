@@ -11,10 +11,10 @@ const lensSeo: Record<
 	}
 > = {
 	balanced: {
-		title: "Top GitHub Developers in Peru | GitHunter",
-		heading: "Top GitHub developers in Peru",
+		title: "Peru GitHub Ladder and Seasonal Rankings | GitHunter",
+		heading: "Peru GitHub Ladder",
 		description:
-			"Discover the top GitHub developers in Peru, ranked by public commits, contributions, merged pull requests, stars, forks, reviews, and followers. Updated daily.",
+			"Find your position in Peru's seasonal GitHub ladder, with transparent current, form, and all-time rankings across public work and open source impact.",
 	},
 	builder: {
 		title: "Top GitHub Builders in Peru | GitHunter",
@@ -38,7 +38,7 @@ const lensSeo: Record<
 		title: "Fastest-Rising GitHub Developers in Peru | GitHunter",
 		heading: "Fastest-rising GitHub developers in Peru",
 		description:
-			"See which GitHub developers in Peru are growing fastest, based on year-over-year changes in public commits, contributions, pull requests, and reviews.",
+			"See which GitHub developers in Peru are growing fastest this quarter, compared with the same elapsed window in the preceding quarter.",
 	},
 };
 

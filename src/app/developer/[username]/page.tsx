@@ -14,7 +14,7 @@ import UserSkillsRadar from "@/components/user-skills-radar";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
 import type { UserSelect } from "@/db/schema";
 import { getCountryCode } from "@/lib/country-codes";
-import { getBundledRankingProfile } from "@/rankings/profile";
+import { getRankingProfile } from "@/rankings/profile";
 import { redis } from "@/redis";
 import {
 	BarChart,
@@ -69,7 +69,7 @@ export async function generateStaticParams() {
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
 	const { username } = await params;
-	const rankingProfile = getBundledRankingProfile(username);
+	const rankingProfile = await getRankingProfile(username);
 
 	if (rankingProfile) {
 		return <RankedDeveloperProfile data={rankingProfile} />;
@@ -551,7 +551,7 @@ export async function generateMetadata({
 	params,
 }: DeveloperPageProps): Promise<Metadata> {
 	const { username } = await params;
-	const rankingProfile = getBundledRankingProfile(username);
+	const rankingProfile = await getRankingProfile(username);
 
 	if (rankingProfile) {
 		const profile = rankingProfile.profile;
