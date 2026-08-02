@@ -1,9 +1,13 @@
 import { Header } from "@/components/header";
 import { LatamSignalField } from "@/components/home/latam-signal-field";
+import { buildSignalProfiles } from "@/rankings/signals";
+import { getRankingSnapshot } from "@/rankings/store";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import styles from "./home.module.css";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
 	title: "GitHub rankings across Latin America | GitHunter",
@@ -12,7 +16,10 @@ export const metadata: Metadata = {
 	alternates: { canonical: "/" },
 };
 
-export default function Home() {
+export default async function Home() {
+	const snapshot = await getRankingSnapshot("peru", "balanced");
+	const profiles = buildSignalProfiles(snapshot.entries);
+
 	return (
 		<div className={`vbg-report ${styles.page}`}>
 			<link
@@ -40,7 +47,7 @@ export default function Home() {
 							Explore Peru <ArrowRight aria-hidden="true" />
 						</Link>
 					</div>
-					<LatamSignalField />
+					<LatamSignalField profiles={profiles} />
 				</section>
 				<footer className={styles.signature}>
 					<a

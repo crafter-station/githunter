@@ -135,10 +135,13 @@
 	--focus-x: 56%;
 	--focus-y: 52%;
 	position: relative;
+	min-inline-size: 0;
 	width: 100%;
 	height: min(68vh, 650px);
+	margin: 0;
+	padding: 0;
+	border: 0;
 	overflow: hidden;
-	cursor: crosshair;
 	mask-image: linear-gradient(
 		to right,
 		transparent 0,
@@ -159,13 +162,16 @@
 }
 
 .cell {
+	box-sizing: border-box;
 	width: min(100%, 13px);
 	aspect-ratio: 1;
 	align-self: center;
 	justify-self: center;
+	padding: 0;
 	border: 1px solid color-mix(in srgb, var(--vbg-text-primary) 22%, transparent);
 	background: transparent;
-	transition: border-color 180ms ease, background 180ms ease, scale 180ms ease;
+	transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms
+		ease, scale 180ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .cell[data-tone="solid"] {
@@ -178,8 +184,29 @@
 	background: #1d4eff;
 }
 
-.field:hover .cell[data-tone="accent"] {
-	scale: 1.15;
+.profileCell {
+	position: relative;
+	z-index: 2;
+	display: block;
+	min-height: 0;
+	border-radius: 0;
+	appearance: none;
+	cursor: pointer;
+}
+
+.profileCell:hover,
+.profileCell:focus-visible {
+	border-color: var(--vbg-surface-primary);
+	outline: 1px solid #1d4eff;
+	outline-offset: 3px;
+	scale: 1.35;
+}
+
+.profileCell[data-selected="true"] {
+	border-color: var(--vbg-surface-primary);
+	box-shadow: 0 0 0 1px #1d4eff, 0 0 0 5px
+		color-mix(in srgb, #1d4eff 12%, transparent);
+	scale: 1.45;
 }
 
 .axisX,
@@ -235,10 +262,11 @@
 	position: absolute;
 	top: var(--focus-y);
 	left: var(--focus-x);
-	width: 22px;
-	height: 22px;
-	background: #1d4eff;
-	box-shadow: 0 0 0 6px color-mix(in srgb, #1d4eff 10%, transparent);
+	width: 27px;
+	height: 27px;
+	border: 1px solid #1d4eff;
+	background: color-mix(in srgb, #1d4eff 5%, transparent);
+	box-shadow: 0 0 0 6px color-mix(in srgb, #1d4eff 8%, transparent);
 	pointer-events: none;
 	translate: -50% -50%;
 	transition: left 100ms linear, top 100ms linear;
@@ -248,6 +276,7 @@
 	position: absolute;
 	top: 18%;
 	right: 25%;
+	z-index: 3;
 	color: #1d4eff;
 	font-family: var(--font-geist-mono), monospace;
 	font-size: 10px;
@@ -257,17 +286,17 @@
 	position: absolute;
 	top: calc(var(--focus-y) + 22px);
 	left: calc(var(--focus-x) + 32px);
-	display: flex;
-	min-width: 174px;
-	align-items: flex-start;
-	gap: 12px;
-	padding: 14px;
+	z-index: 5;
+	display: grid;
+	width: 248px;
+	gap: 14px;
+	padding: 16px;
 	border: 1px solid var(--vbg-border-subtle);
 	background: color-mix(in srgb, var(--vbg-surface-primary) 94%, transparent);
 	box-shadow: 0 14px 34px
 		color-mix(in srgb, var(--vbg-text-primary) 7%, transparent);
 	pointer-events: none;
-	transition: left 100ms linear, top 100ms linear;
+	transition: right 100ms linear, left 100ms linear, top 100ms linear;
 }
 
 .fieldDetail::before {
@@ -281,29 +310,84 @@
 	transform-origin: right;
 }
 
-.detailMark {
-	width: 13px;
-	height: 13px;
-	margin-top: 2px;
-	background: #1d4eff;
+.fieldDetail[data-side="left"] {
+	right: calc(100% - var(--focus-x) + 32px);
+	left: auto;
 }
 
-.fieldDetail div {
+.fieldDetail[data-side="left"]::before {
+	right: -42px;
+	left: auto;
+	rotate: -22deg;
+	transform-origin: left;
+}
+
+.detailIdentity {
+	display: flex;
+	min-width: 0;
+	align-items: center;
+	gap: 12px;
+}
+
+.detailAvatar {
+	border: 1px solid var(--vbg-border-default);
+	border-radius: 5px;
+}
+
+.detailIdentity > div {
 	display: grid;
-	gap: 5px;
+	min-width: 0;
+	gap: 3px;
 }
 
-.fieldDetail strong {
-	font-size: 12px;
+.detailIdentity strong {
+	overflow: hidden;
+	font-size: 13px;
 	font-weight: 500;
-	text-transform: uppercase;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-.fieldDetail div span {
+.detailIdentity span {
+	color: var(--vbg-text-secondary);
+	font-size: 11px;
+}
+
+.detailStats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 12px;
+	padding-block: 10px;
+	border-block: 1px solid var(--vbg-border-subtle);
 	color: var(--vbg-text-secondary);
 	font-family: var(--font-geist-mono), monospace;
-	font-size: 9px;
+	font-size: 8px;
 	text-transform: uppercase;
+}
+
+.detailStats span:first-child {
+	color: #1d4eff;
+}
+
+.detailLink {
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	color: var(--vbg-text-primary);
+	font-size: 11px;
+	font-weight: 500;
+	pointer-events: auto;
+	text-decoration: none;
+}
+
+.detailLink:hover {
+	color: #1d4eff;
+}
+
+.detailLink svg {
+	width: 14px;
+	height: 14px;
+	stroke-width: 1.4;
 }
 
 .signature {
@@ -399,6 +483,19 @@
 	}
 
 	.fieldDetail {
+		top: auto;
+		bottom: 8px;
+		left: 50%;
+		width: min(248px, 72%);
+		translate: -50% 0;
+	}
+
+	.fieldDetail[data-side="left"] {
+		right: auto;
+		left: 50%;
+	}
+
+	.fieldDetail::before {
 		display: none;
 	}
 
@@ -461,8 +558,35 @@
 	}
 
 	.focusNode {
-		width: 16px;
-		height: 16px;
+		width: 21px;
+		height: 21px;
+	}
+
+	.fieldDetail {
+		width: min(220px, 68%);
+		gap: 8px;
+		padding: 10px;
+	}
+
+	.detailAvatar {
+		width: 32px;
+		height: 32px;
+	}
+
+	.detailIdentity strong {
+		font-size: 11px;
+	}
+
+	.detailIdentity span {
+		font-size: 9px;
+	}
+
+	.detailStats {
+		display: none;
+	}
+
+	.detailLink {
+		font-size: 9px;
 	}
 
 	.signature {
@@ -529,8 +653,7 @@
 }
 
 [class~="dark"] .cell[data-tone="accent"],
-[class~="dark"] .detailMark,
-[class~="dark"] .focusNode {
+[class~="dark"] .profileCell {
 	background: #6d8cff;
 }
 

@@ -5,6 +5,7 @@ import { LatamSignalField } from "@/components/home/latam-signal-field";
 import { isRankingScope } from "@/rankings/data";
 import { buildHistoricalRecord } from "@/rankings/history";
 import { metricLabels, rankingLenses } from "@/rankings/lenses";
+import { buildSignalProfiles } from "@/rankings/signals";
 import { getRankingSnapshot } from "@/rankings/store";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -37,6 +38,7 @@ export default async function HistoricalRecordPage({
 		profiles: snapshot.entries.map((entry) => entry.profile),
 	});
 	if (!history) notFound();
+	const profiles = buildSignalProfiles(snapshot.entries);
 
 	return (
 		<div className={`vbg-report ${styles.report}`}>
@@ -77,7 +79,10 @@ export default async function HistoricalRecordPage({
 								</Link>
 							</div>
 						</div>
-						<LatamSignalField className={styles.heroField} />
+						<LatamSignalField
+							className={styles.heroField}
+							profiles={profiles}
+						/>
 					</div>
 				</section>
 
