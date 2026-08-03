@@ -158,8 +158,12 @@ export function LadderNavigation({
 							onFocus={prefetchSeasons}
 						>
 							<span className="flex items-center gap-2">
-								<span>{selectedSeason.label}</span>
-								<span className="text-muted-foreground text-xs">
+								<span className="whitespace-nowrap">
+									{selectedSeason.label}
+								</span>
+								<span
+									className={`${styles.filterMeta} text-muted-foreground text-xs`}
+								>
 									{selectedSeason.status}
 								</span>
 							</span>

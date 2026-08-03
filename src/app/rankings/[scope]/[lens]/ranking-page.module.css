@@ -22,6 +22,10 @@
 	padding-block: clamp(1.75rem, 3vw, 2.25rem);
 }
 
+.heroGrid > div:first-child {
+	min-height: 228px;
+}
+
 .signalLabel,
 .sectionLabel {
 	color: #1d4eff;
@@ -142,11 +146,13 @@
 }
 
 .rankingTab {
+	min-width: 0;
 	height: 36px;
 	padding-inline: 12px;
 	border: 0;
 	border-radius: 0;
 	background: transparent;
+	white-space: nowrap;
 }
 
 .rankingTab[data-state="active"] {
@@ -863,6 +869,10 @@
 		padding-block: var(--vbg-space-6);
 	}
 
+	.heroGrid > div:first-child {
+		min-height: 180px;
+	}
+
 	.hero h1 {
 		font-size: clamp(2.4rem, 11vw, 3.25rem);
 	}
@@ -882,10 +892,18 @@
 		padding-block: 8px 12px;
 	}
 
-	.rankingControls > div:first-child > div {
+	.rankingControls > div:first-child {
+		width: 100%;
+	}
+
+	.rankingTabsList {
 		display: grid;
 		width: 100%;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.rankingTab {
+		width: 100%;
 	}
 
 	.rankingFilters {
@@ -896,6 +914,7 @@
 
 	.rankingFilters > button,
 	.rankingFilters > button:nth-of-type(2) {
+		min-width: 0;
 		width: 100%;
 	}
 
@@ -952,5 +971,11 @@
 @media (prefers-reduced-motion: reduce) {
 	.topDeveloper {
 		transition: none;
+	}
+}
+
+@media (max-width: 360px) {
+	.filterMeta {
+		display: none;
 	}
 }

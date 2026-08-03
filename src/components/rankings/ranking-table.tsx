@@ -185,18 +185,23 @@ export function RankingTable({
 				/>
 				<CardContent className="p-0">
 					{shown.length > 0 ? (
-						<Table className="table-fixed lg:table-auto">
+						<Table className="table-fixed">
 							<TableHeader>
 								<TableRow>
-									<TableHead className="w-14 lg:w-20">Rank</TableHead>
-									<TableHead>Developer</TableHead>
-									<TableHead className="hidden lg:table-cell">
+									<TableHead className="w-16 pr-2 pl-4! lg:w-[6%]">
+										Rank
+									</TableHead>
+									<TableHead className="px-2 lg:w-[34%]">Developer</TableHead>
+									<TableHead className="hidden px-2 lg:table-cell lg:w-[32%]">
 										Strongest signals
 									</TableHead>
-									<TableHead className="hidden w-36 lg:table-cell">
+									<TableHead className="hidden px-2 lg:table-cell lg:w-[12%]">
 										Confidence
 									</TableHead>
-									<TableHead className="w-20 text-right lg:w-24">
+									<TableHead className="hidden px-2 lg:table-cell lg:w-[8%]">
+										Movement
+									</TableHead>
+									<TableHead className="w-24 pr-4! pl-2 text-right lg:w-[8%]">
 										Score
 									</TableHead>
 								</TableRow>
@@ -205,25 +210,14 @@ export function RankingTable({
 								{shown.map((entry) => {
 									const strongest = [...entry.breakdown]
 										.sort((left, right) => right.points - left.points)
-										.slice(0, 3);
+										.slice(0, lensId === "rising" ? 2 : 3);
 									const displayName = entry.profile.name || entry.profile.login;
 									return (
 										<TableRow key={`${lensId}-${entry.profile.login}`}>
-											<TableCell className="overflow-hidden">
-												<div className="flex items-baseline gap-2">
-													<strong className="tabular-nums">
-														#{entry.rank}
-													</strong>
-													{entry.rankChange !== null &&
-														entry.rankChange !== 0 && (
-															<span className="text-muted-foreground text-xs tabular-nums">
-																{entry.rankChange > 0 ? "↑" : "↓"}
-																{Math.abs(entry.rankChange)}
-															</span>
-														)}
-												</div>
+											<TableCell className="overflow-hidden pr-2 pl-4!">
+												<strong className="tabular-nums">#{entry.rank}</strong>
 											</TableCell>
-											<TableCell>
+											<TableCell className="overflow-hidden px-2">
 												<Link
 													href={`/developer/${entry.profile.login}`}
 													aria-label={`View ${displayName} ranking profile`}
@@ -248,7 +242,7 @@ export function RankingTable({
 													</span>
 												</Link>
 											</TableCell>
-											<TableCell className="hidden lg:table-cell">
+											<TableCell className="hidden px-2 lg:table-cell">
 												<div className="flex flex-wrap gap-2">
 													{strongest.map((metric) => (
 														<Badge key={metric.metric} variant="outline">
@@ -262,12 +256,17 @@ export function RankingTable({
 													))}
 												</div>
 											</TableCell>
-											<TableCell className="hidden lg:table-cell">
+											<TableCell className="hidden px-2 lg:table-cell">
 												<span className="text-muted-foreground text-xs">
 													{confidenceLabel(entry.confidence)}
 												</span>
 											</TableCell>
-											<TableCell className="text-right">
+											<TableCell className="hidden px-2 text-muted-foreground text-xs tabular-nums lg:table-cell">
+												{entry.rankChange === null || entry.rankChange === 0
+													? "—"
+													: `${entry.rankChange > 0 ? "↑" : "↓"}${Math.abs(entry.rankChange)}`}
+											</TableCell>
+											<TableCell className="pr-4! pl-2 text-right">
 												<strong className="tabular-nums">
 													{entry.score.toFixed(2)}
 												</strong>

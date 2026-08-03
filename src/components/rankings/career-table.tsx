@@ -2,7 +2,8 @@
 
 import { RankingTableToolbar } from "@/components/rankings/ranking-table-toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
 	Empty,
 	EmptyDescription,
@@ -20,7 +21,7 @@ import {
 import type { CareerStanding } from "@/rankings/types";
 import Link from "next/link";
 import { parseAsString, useQueryState } from "nuqs";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 function initials(value: string) {
 	return value
@@ -44,6 +45,12 @@ export function CareerTable({
 			.withDefault("")
 			.withOptions({ history: "replace", clearOnDefault: true }),
 	);
+	const paginationKey = `${mode}:${query}`;
+	const [pagination, setPagination] = useState({
+		key: paginationKey,
+		visible: 50,
+	});
+	const visible = pagination.key === paginationKey ? pagination.visible : 50;
 	const filtered = useMemo(() => {
 		const normalized = query.trim().toLowerCase();
 		if (!normalized) return standings;
@@ -54,6 +61,7 @@ export function CareerTable({
 				.includes(normalized),
 		);
 	}, [query, standings]);
+	const shown = filtered.slice(0, visible);
 	const projected = standings.some((standing) => standing.provisional);
 
 	return (
@@ -79,39 +87,44 @@ export function CareerTable({
 				/>
 				<CardContent className="p-0">
 					{filtered.length > 0 ? (
-						<Table className="table-fixed lg:table-auto">
+						<Table className="table-fixed">
 							<TableHeader>
 								<TableRow>
-									<TableHead className="w-14 lg:w-16">Rank</TableHead>
-									<TableHead>Developer</TableHead>
-									<TableHead className="w-24 text-right lg:w-36 lg:text-left">
-										{mode === "form" ? "Form score" : "Career points"}
+									<TableHead className="w-16 pr-2 pl-4! lg:w-[6%]">
+										Rank
 									</TableHead>
-									<TableHead className="hidden w-32 lg:table-cell">
+									<TableHead className="px-2 lg:w-[34%]">Developer</TableHead>
+									<TableHead className="w-24 px-2 pr-4! text-right lg:w-[32%] lg:pr-3! lg:text-left">
+										<span className="lg:hidden">
+											{mode === "form" ? "Score" : "Points"}
+										</span>
+										<span className="hidden lg:inline">
+											{mode === "form" ? "Form score" : "Career points"}
+										</span>
+									</TableHead>
+									<TableHead className="hidden px-2 lg:table-cell lg:w-[12%]">
 										Seasons
 									</TableHead>
-									<TableHead className="hidden w-24 lg:table-cell">
+									<TableHead className="hidden px-2 lg:table-cell lg:w-[8%]">
 										Titles
 									</TableHead>
-									{mode === "all-time" ? (
-										<TableHead className="hidden w-24 text-right lg:table-cell">
-											Current
-										</TableHead>
-									) : null}
+									<TableHead className="hidden pr-4! pl-2 text-right lg:table-cell lg:w-[8%]">
+										Current
+									</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{filtered.map((standing) => {
+								{shown.map((standing) => {
 									const displayName =
 										standing.profile.name || standing.profile.login;
 									return (
 										<TableRow key={standing.profile.login}>
-											<TableCell>
+											<TableCell className="pr-2 pl-4!">
 												<strong className="tabular-nums">
 													#{standing.rank}
 												</strong>
 											</TableCell>
-											<TableCell className="overflow-hidden">
+											<TableCell className="overflow-hidden px-2">
 												<Link
 													href={`/developer/${standing.profile.login}`}
 													className="flex min-w-0 items-center gap-3"
@@ -135,26 +148,24 @@ export function CareerTable({
 													</span>
 												</Link>
 											</TableCell>
-											<TableCell className="text-right lg:text-left">
+											<TableCell className="px-2 pr-4! text-right lg:pr-3! lg:text-left">
 												<strong className="tabular-nums">
 													{mode === "form"
 														? standing.formScore.toFixed(2)
 														: standing.careerPoints.toFixed(2)}
 												</strong>
 											</TableCell>
-											<TableCell className="hidden tabular-nums lg:table-cell">
+											<TableCell className="hidden px-2 tabular-nums lg:table-cell">
 												{standing.seasons}
 											</TableCell>
-											<TableCell className="hidden tabular-nums lg:table-cell">
+											<TableCell className="hidden px-2 tabular-nums lg:table-cell">
 												{standing.championships}
 											</TableCell>
-											{mode === "all-time" ? (
-												<TableCell className="hidden text-right tabular-nums lg:table-cell">
-													{standing.currentRank
-														? `#${standing.currentRank}`
-														: "—"}
-												</TableCell>
-											) : null}
+											<TableCell className="hidden pr-4! pl-2 text-right tabular-nums lg:table-cell">
+												{standing.currentRank
+													? `#${standing.currentRank}`
+													: "—"}
+											</TableCell>
 										</TableRow>
 									);
 								})}
@@ -171,6 +182,19 @@ export function CareerTable({
 						</Empty>
 					)}
 				</CardContent>
+				{shown.length < filtered.length ? (
+					<CardFooter className="justify-center py-3">
+						<Button
+							size="sm"
+							variant="outline"
+							onClick={() =>
+								setPagination({ key: paginationKey, visible: visible + 50 })
+							}
+						>
+							Show 50 more
+						</Button>
+					</CardFooter>
+				) : null}
 			</Card>
 		</section>
 	);
