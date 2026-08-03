@@ -1,5 +1,6 @@
 "use client";
 
+import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -39,6 +40,7 @@ export function CountrySwitcher({ scope }: { scope?: RankingScope }) {
 					className="gap-2"
 					aria-label={`Country: ${rankingScopes[current].name}`}
 				>
+					<CountryFlag countryCode={rankingScopes[current].code} decorative />
 					{rankingScopes[current].name}
 					<ChevronDown data-icon="inline-end" aria-hidden="true" />
 				</Button>
@@ -52,7 +54,10 @@ export function CountrySwitcher({ scope }: { scope?: RankingScope }) {
 					<DropdownMenuRadioGroup value={current} onValueChange={changeCountry}>
 						{Object.entries(rankingScopes).map(([scope, item]) => (
 							<DropdownMenuRadioItem key={scope} value={scope}>
-								{item.name}
+								<span className="flex items-center gap-2">
+									<CountryFlag countryCode={item.code} decorative />
+									{item.name}
+								</span>
 							</DropdownMenuRadioItem>
 						))}
 					</DropdownMenuRadioGroup>

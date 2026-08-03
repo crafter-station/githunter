@@ -69,6 +69,11 @@ export function LadderNavigation({
 	const selectedLens = rankingLenses[optimisticLens];
 	const isSeasonal =
 		optimisticView === "current" || optimisticView === "season";
+	const formAvailable = seasons.length > 1;
+	const closedSeasons = seasons.filter(
+		(item) => item.status === "closed",
+	).length;
+	const allTimeAvailable = closedSeasons > 0;
 
 	useEffect(() => setOptimisticView(active), [active]);
 	useEffect(() => setOptimisticLens(lensId), [lensId]);
@@ -122,131 +127,140 @@ export function LadderNavigation({
 
 	return (
 		<div className={styles.rankingControls} aria-busy={isPending}>
-			<Tabs
-				value={isSeasonal ? "season" : optimisticView}
-				onValueChange={(value) => changeView(value as RankingView)}
-			>
-				<TabsList
-					variant="line"
-					aria-label="Ranking views"
-					className={styles.rankingTabsList}
-				>
-					<TabsTrigger
-						value="season"
-						className={styles.rankingTab}
-						onPointerEnter={() => prefetchView("current")}
-						onFocus={() => prefetchView("current")}
+			<div className={styles.lensControl}>
+				<div className={styles.controlHeading}>
+					<div>
+						<span>Scoring lens</span>
+						<strong>{selectedLens.question}</strong>
+					</div>
+					<span>v{selectedLens.version}</span>
+				</div>
+				<Tabs value={optimisticLens} onValueChange={changeLens}>
+					<TabsList
+						aria-label="Ranking lens"
+						className={styles.lensTabsList}
+						onPointerEnter={prefetchLenses}
+						onFocus={prefetchLenses}
 					>
-						Seasons
-					</TabsTrigger>
-					<TabsTrigger
-						value="form"
-						className={styles.rankingTab}
-						onPointerEnter={() => prefetchView("form")}
-						onFocus={() => prefetchView("form")}
-					>
-						Form
-					</TabsTrigger>
-					<TabsTrigger
-						value="all-time"
-						className={styles.rankingTab}
-						onPointerEnter={() => prefetchView("all-time")}
-						onFocus={() => prefetchView("all-time")}
-					>
-						All-time
-					</TabsTrigger>
-				</TabsList>
-			</Tabs>
-
-			<div
-				className={styles.rankingFilters}
-				data-seasonal={isSeasonal || undefined}
-			>
-				{isSeasonal ? (
-					<DropdownMenu
-						onOpenChange={(open) => {
-							if (open) prefetchSeasons();
-						}}
-					>
-						<DropdownMenuTrigger asChild>
-							<Button
-								variant="ghost"
-								size="sm"
-								className="min-w-44 justify-between"
-								aria-label={`Season: ${selectedSeason.label}, ${selectedSeason.status}`}
-								onPointerEnter={prefetchSeasons}
-								onFocus={prefetchSeasons}
+						{Object.values(rankingLenses).map((lens) => (
+							<TabsTrigger
+								key={lens.id}
+								value={lens.id}
+								className={styles.lensTab}
 							>
-								<span className="flex items-center gap-2">
-									<span className="whitespace-nowrap">
-										{selectedSeason.label}
-									</span>
-									<span
-										className={`${styles.filterMeta} text-muted-foreground text-xs`}
-									>
-										{selectedSeason.status}
-									</span>
-								</span>
-								<ChevronDown data-icon="inline-end" aria-hidden="true" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" className="w-72">
-							<DropdownMenuGroup>
-								<DropdownMenuLabel>Season</DropdownMenuLabel>
-								<DropdownMenuRadioGroup
-									value={optimisticSeason}
-									onValueChange={changeSeason}
-								>
-									{seasons.map((item) => (
-										<DropdownMenuRadioItem key={item.id} value={item.id}>
-											<span className="flex flex-1 items-center justify-between gap-4">
-												<span>{item.label}</span>
-												<span className="text-muted-foreground text-xs">
-													{item.status}
-												</span>
-											</span>
-										</DropdownMenuRadioItem>
-									))}
-								</DropdownMenuRadioGroup>
-							</DropdownMenuGroup>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				) : null}
+								{lens.shortName}
+							</TabsTrigger>
+						))}
+					</TabsList>
+				</Tabs>
+			</div>
 
-				<DropdownMenu
-					onOpenChange={(open) => {
-						if (open) prefetchLenses();
-					}}
-				>
-					<DropdownMenuTrigger asChild>
-						<Button
-							variant="ghost"
-							size="sm"
-							className="min-w-36 justify-between"
-							aria-label={`Ranking lens: ${selectedLens.shortName}`}
-							onPointerEnter={prefetchLenses}
-							onFocus={prefetchLenses}
+			<div className={styles.timeControl}>
+				<div className={styles.controlHeading}>
+					<div>
+						<span>Time view</span>
+						<strong>
+							{isSeasonal
+								? "One quarter at a time"
+								: optimisticView === "form"
+									? "Latest four available seasons"
+									: "Official closed seasons"}
+						</strong>
+					</div>
+				</div>
+				<div className={styles.timeControlRow}>
+					<Tabs
+						value={isSeasonal ? "season" : optimisticView}
+						onValueChange={(value) => changeView(value as RankingView)}
+					>
+						<TabsList aria-label="Ranking time view">
+							<TabsTrigger
+								value="season"
+								onPointerEnter={() => prefetchView("current")}
+								onFocus={() => prefetchView("current")}
+							>
+								Season
+							</TabsTrigger>
+							<TabsTrigger
+								value="form"
+								disabled={!formAvailable}
+								title={
+									formAvailable
+										? undefined
+										: "Form needs at least two available seasons"
+								}
+								onPointerEnter={() => formAvailable && prefetchView("form")}
+								onFocus={() => formAvailable && prefetchView("form")}
+							>
+								Form
+							</TabsTrigger>
+							<TabsTrigger
+								value="all-time"
+								disabled={!allTimeAvailable}
+								title={
+									allTimeAvailable
+										? undefined
+										: "All-time opens after the first official season closes"
+								}
+								onPointerEnter={() =>
+									allTimeAvailable && prefetchView("all-time")
+								}
+								onFocus={() => allTimeAvailable && prefetchView("all-time")}
+							>
+								All-time
+							</TabsTrigger>
+						</TabsList>
+					</Tabs>
+
+					{isSeasonal ? (
+						<DropdownMenu
+							onOpenChange={(open) => {
+								if (open) prefetchSeasons();
+							}}
 						>
-							{selectedLens.shortName}
-							<ChevronDown data-icon="inline-end" aria-hidden="true" />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align="end" className="w-52">
-						<DropdownMenuGroup>
-							<DropdownMenuLabel>Ranking lens</DropdownMenuLabel>
-							<DropdownMenuRadioGroup
-								value={optimisticLens}
-								onValueChange={changeLens}
-							>
-								{Object.values(rankingLenses).map((lens) => (
-									<DropdownMenuRadioItem key={lens.id} value={lens.id}>
-										{lens.shortName}
-									</DropdownMenuRadioItem>
-								))}
-							</DropdownMenuRadioGroup>
-						</DropdownMenuGroup>
-					</DropdownMenuContent>
-				</DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button
+									variant="outline"
+									size="sm"
+									className="min-w-44 justify-between"
+									aria-label={`Season: ${selectedSeason.label}, ${selectedSeason.status}`}
+									onPointerEnter={prefetchSeasons}
+									onFocus={prefetchSeasons}
+								>
+									<span className="flex items-center gap-2">
+										<span className="whitespace-nowrap">
+											{selectedSeason.label}
+										</span>
+										<span className="text-muted-foreground text-xs">
+											{selectedSeason.status}
+										</span>
+									</span>
+									<ChevronDown data-icon="inline-end" aria-hidden="true" />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end" className="w-72">
+								<DropdownMenuGroup>
+									<DropdownMenuLabel>Season</DropdownMenuLabel>
+									<DropdownMenuRadioGroup
+										value={optimisticSeason}
+										onValueChange={changeSeason}
+									>
+										{seasons.map((item) => (
+											<DropdownMenuRadioItem key={item.id} value={item.id}>
+												<span className="flex flex-1 items-center justify-between gap-4">
+													<span>{item.label}</span>
+													<span className="text-muted-foreground text-xs">
+														{item.status}
+													</span>
+												</span>
+											</DropdownMenuRadioItem>
+										))}
+									</DropdownMenuRadioGroup>
+								</DropdownMenuGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : null}
+				</div>
 			</div>
 			<span className="sr-only" aria-live="polite">
 				{isPending ? "Updating ranking" : "Ranking updated"}

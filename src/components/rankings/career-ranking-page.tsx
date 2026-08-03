@@ -4,10 +4,16 @@ import { PublicHeader } from "@/components/public-header";
 import { CareerTable } from "@/components/rankings/career-table";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
 import { RankingHeroStats } from "@/components/rankings/ranking-hero-stats";
+import {
+	Empty,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { getRankingScope, isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
 import { getLadderStandings } from "@/rankings/season-store";
-import { getSeason } from "@/rankings/seasons";
+import { firstOfficialSeasonId, getSeason } from "@/rankings/seasons";
 import type { LensId } from "@/rankings/types";
 import { notFound } from "next/navigation";
 
@@ -32,14 +38,25 @@ export async function CareerRankingPage({
 	const closedSeasons = seasons.filter(
 		(item) => item.status === "closed",
 	).length;
+	const formUnavailable = mode === "form" && seasons.length < 2;
+	const allTimeUnavailable = mode === "all-time" && closedSeasons === 0;
+	const historyUnavailable = formUnavailable || allTimeUnavailable;
 	const title =
 		mode === "form"
-			? "Who is in form right now?"
-			: `GitHub careers in ${scopeInfo.name}.`;
+			? formUnavailable
+				? "Form needs more than one season."
+				: "Who is in form right now?"
+			: allTimeUnavailable
+				? "The permanent record starts with an official season."
+				: `GitHub careers in ${scopeInfo.name}.`;
 	const description =
 		mode === "form"
-			? "A rolling four-season view that rewards sustained momentum without erasing new challengers."
-			: `Season points, championships, podiums, and the permanent public record of GitHub builders in ${scopeInfo.name}.`;
+			? formUnavailable
+				? `Only one ${scopeInfo.name} season is available. Form will open after another comparable quarter is indexed.`
+				: "A rolling four-season view that rewards sustained momentum without erasing new challengers."
+			: allTimeUnavailable
+				? `Preseason and reconstructed quarters inform Form, but they do not manufacture championships or career points. All-time opens after ${firstOfficialSeasonId} closes.`
+				: `Season points, championships, podiums, and the permanent public record of GitHub builders in ${scopeInfo.name}.`;
 
 	return (
 		<div className={`vbg-report ${styles.report}`}>
@@ -66,8 +83,14 @@ export async function CareerRankingPage({
 						<RankingHeroStats
 							items={[
 								{
-									label: "Leader",
-									value: champion ? `@${champion.profile.login}` : "Open",
+									label: historyUnavailable ? "Status" : "Leader",
+									value: historyUnavailable
+										? formUnavailable
+											? "Needs history"
+											: "Not started"
+										: champion
+											? `@${champion.profile.login}`
+											: "Open",
 								},
 								{ label: "Official seasons", value: String(closedSeasons) },
 								{ label: "Lens", value: rankingLenses[lensId].shortName },
@@ -84,7 +107,36 @@ export async function CareerRankingPage({
 						lensId={lensId}
 						scope={scope}
 					/>
-					<CareerTable standings={standings} mode={mode} />
+					{historyUnavailable ? (
+						<section id="ranking" className="py-6">
+							<Empty className="border">
+								<EmptyHeader>
+									<EmptyTitle>
+										{formUnavailable
+											? "Not enough history for Form"
+											: "No official career standings yet"}
+									</EmptyTitle>
+									<EmptyDescription>
+										{formUnavailable ? (
+											<>
+												Form compares at least two equivalent quarters. Use
+												Season for the current standings while the history is
+												indexed.
+											</>
+										) : (
+											<>
+												The first all-time points will be awarded when{" "}
+												{firstOfficialSeasonId} closes. Until then, use Season
+												for the live quarter or Form for reconstructed momentum.
+											</>
+										)}
+									</EmptyDescription>
+								</EmptyHeader>
+							</Empty>
+						</section>
+					) : (
+						<CareerTable standings={standings} mode={mode} />
+					)}
 				</div>
 			</main>
 			<Footer scope={scope} />

@@ -67,6 +67,18 @@ Each public snapshot contains:
 
 The first release supports nine Latin American countries and five fixed lenses. It uses the latest verified public datasets as bundled baselines, a versioned scoring engine, a cache-ready snapshot store, a public JSON API, an indexable ranking interface, and a daily refresh task. LATAM aggregation and custom lenses follow through the same contracts without changing existing historical snapshots.
 
+## Remaining shaped scope
+
+The original shape is not complete. The next product slices are:
+
+1. Saved, shareable custom lenses with explicit weights, evidence window, version, and a reproducible lens hash.
+2. Daily immutable snapshots with rank movement instead of a latest-only fallback.
+3. Visible multi-country evidence and a primary-country policy for profiles that appear in more than one cohort.
+4. Cohort expansion beyond the 256-account committers.top discovery list.
+5. Per-profile score explanations with sensitivity checks and missing-data warnings.
+
+Custom lenses must remain separate from the fixed defaults. They cannot silently replace Balanced or rewrite historical results.
+
 ## Operations
 
 Apply migrations through `drizzle/0012_github_ladder_seasons.sql` before enabling refreshes. The Trigger.dev task `refresh-ranking-snapshots` runs every day at 06:00 in `America/Lima` and requires `GITHUB_TOKEN`, `DATABASE_URL`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`.
