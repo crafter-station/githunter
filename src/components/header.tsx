@@ -14,21 +14,21 @@ import { useSubscription } from "@/hooks/use-subscription";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import {
+	Archive,
 	ArrowRight,
+	BarChart3,
 	Bug,
 	ChevronDown,
 	CreditCard,
 	Crown,
 	ExternalLink,
-	FileText,
-	Layers,
+	Github,
+	Menu,
 	Settings,
-	Telescope,
 	User,
 	Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { SearchBox } from "./search";
 import { UserButton } from "./user-button";
 
 interface HeaderProps {
@@ -64,24 +64,35 @@ export function Header({ noSearch = false }: HeaderProps) {
 		}
 	};
 
-	// Compact version with search bar
 	if (!noSearch) {
 		return (
 			<header className="sticky top-0 z-[49] border-border border-b border-dashed bg-background">
 				<div className="mx-auto flex h-12 w-full items-center justify-between px-4 md:h-14 md:px-10">
-					<div className="flex w-full items-center gap-2 md:gap-12">
+					<div className="flex items-center gap-2 md:gap-12">
 						<Link href="/" className="flex items-center gap-2">
 							<GitHunterLogo className="size-8 md:size-6" />
-							<span className="hidden font-medium text-lg tracking-tight md:block">
+							<span className="font-medium text-lg tracking-tight">
 								GitHunter
 							</span>
 						</Link>
-
-						<div className="relative max-w-2xl flex-1">
-							<SearchBox initialQuery="" variant="compact" />
-						</div>
 					</div>
 					<div className="flex items-center gap-2 sm:gap-3">
+						<Button variant="ghost" size="icon" asChild className="sm:hidden">
+							<Link href="/peru" aria-label="Peru record">
+								<BarChart3 className="size-4" />
+							</Link>
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							asChild
+							className="hidden sm:flex"
+						>
+							<Link href="/peru" className="flex items-center gap-2">
+								<BarChart3 className="size-4" />
+								<span>Peru record</span>
+							</Link>
+						</Button>
 						{user && (
 							<>
 								{/* Bug Report Button - visible only on desktop */}
@@ -188,33 +199,9 @@ export function Header({ noSearch = false }: HeaderProps) {
 											asChild
 											className="flex cursor-pointer items-center gap-2 px-3 py-2"
 										>
-											<Link
-												href="/search/advanced"
-												className="flex w-full items-center"
-											>
-												<Telescope className="mr-2 size-4" />
-												<span>Advanced Search</span>
-											</Link>
-										</DropdownMenuItem>
-										<DropdownMenuItem
-											asChild
-											className="flex cursor-pointer items-center gap-2 px-3 py-2"
-										>
-											<Link href="/new" className="flex w-full items-center">
-												<Layers className="mr-2 size-4" />
-												<span>Indexer</span>
-											</Link>
-										</DropdownMenuItem>
-										<DropdownMenuItem
-											asChild
-											className="flex cursor-pointer items-center gap-2 px-3 py-2"
-										>
-											<Link
-												href="/cv/edit"
-												className="flex w-full items-center"
-											>
-												<FileText className="mr-2 size-4" />
-												<span>CV Editor</span>
+											<Link href="/legacy" className="flex w-full items-center">
+												<Archive className="mr-2 size-4" />
+												<span>Legacy tools</span>
 											</Link>
 										</DropdownMenuItem>
 										<DropdownMenuSeparator />
@@ -259,10 +246,9 @@ export function Header({ noSearch = false }: HeaderProps) {
 		);
 	}
 
-	// Expanded version without search bar
 	return (
-		<header className="sticky top-0 z-[49] border-border border-b border-dashed bg-background">
-			<div className="mx-auto flex h-12 w-full items-center justify-between px-4 md:h-14 md:px-10">
+		<header className="sticky top-0 z-[49] border-border border-b bg-background">
+			<div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 				<div className="flex items-center gap-8">
 					<Link href="/" className="flex items-center gap-2">
 						<GitHunterLogo className="size-6" />
@@ -271,45 +257,73 @@ export function Header({ noSearch = false }: HeaderProps) {
 						</span>
 					</Link>
 
-					<div className="hidden items-center gap-4 lg:flex">
-						{/* All features as direct buttons */}
+					<div className="hidden items-center gap-1 lg:flex">
 						<Button variant="ghost" size="sm" asChild>
-							<Link href="/search/advanced" className="flex items-center gap-2">
-								<Telescope className="size-4" />
-								<span>Advanced Search</span>
-							</Link>
+							<Link href="/peru">Peru</Link>
 						</Button>
-
 						<Button variant="ghost" size="sm" asChild>
-							<Link href="/new" className="flex items-center gap-2">
-								<Layers className="size-4" />
-								<span>Indexer</span>
-							</Link>
+							<Link href="/peru">Rankings</Link>
 						</Button>
-
 						<Button variant="ghost" size="sm" asChild>
-							<Link href="/cv/edit" className="flex items-center gap-2">
-								<FileText className="size-4" />
-								<span>CV Editor</span>
-							</Link>
-						</Button>
-
-						<Button variant="ghost" size="sm" asChild>
-							<Link
-								href="https://github.com/crafter-station/githunter/issues/new?template=feature---issue-request.md"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="flex items-center gap-2"
-							>
-								<Bug className="size-4" />
-								<span>Report Bug</span>
-								<ExternalLink className="size-3 opacity-60" />
-							</Link>
+							<Link href="/peru#methodology">Methodology</Link>
 						</Button>
 					</div>
 				</div>
 
 				<div className="flex items-center gap-2 sm:gap-3">
+					<Button
+						variant="outline"
+						size="sm"
+						asChild
+						className="hidden lg:flex"
+					>
+						<Link
+							href="https://github.com/crafter-station/githunter"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="gap-2"
+						>
+							<Github className="size-4" />
+							GitHub
+						</Link>
+					</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild className="lg:!hidden">
+							<Button variant="ghost" size="icon" aria-label="Open navigation">
+								<Menu className="size-5" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-56 lg:hidden">
+							<DropdownMenuItem asChild>
+								<Link href="/peru">Peru</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link href="/peru">Rankings</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link href="/peru#methodology">Methodology</Link>
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem asChild>
+								<Link
+									href="https://github.com/crafter-station/githunter"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									GitHub
+								</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link
+									href="https://github.com/crafter-station/githunter/issues/new?template=feature---issue-request.md"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Report Bug
+								</Link>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 					{user && (
 						<>
 							{/* Plan Badge with upgrade CTA */}

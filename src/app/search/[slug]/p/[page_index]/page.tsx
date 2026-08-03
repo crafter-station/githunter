@@ -25,12 +25,8 @@ import { getQueryParams } from "../../get-query-params";
 import { queryUsers } from "../../query-users";
 
 export const revalidate = 300;
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-	return [];
-}
 
 export default async function SearchPagePaginated({
 	params,

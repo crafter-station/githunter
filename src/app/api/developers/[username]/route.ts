@@ -1,4 +1,5 @@
 import { getUserByUsername } from "@/db/query/user";
+import { getBundledRankingProfile } from "@/rankings/profile";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -14,6 +15,27 @@ export async function GET(
 				{ error: "Username is required" },
 				{ status: 400 },
 			);
+		}
+
+		const rankingProfile = getBundledRankingProfile(username);
+
+		if (rankingProfile) {
+			return NextResponse.json({
+				source: "bundled-ranking-snapshot",
+				generatedAt: rankingProfile.generatedAt,
+				period: rankingProfile.period,
+				profile: rankingProfile.profile,
+				rankings: rankingProfile.rankings.map(({ lens, entry }) => ({
+					lens: {
+						id: lens.id,
+						version: lens.version,
+						name: lens.name,
+					},
+					rank: entry.rank,
+					score: entry.score,
+					confidence: entry.confidence,
+				})),
+			});
 		}
 
 		const userData = await getUserByUsername(username);

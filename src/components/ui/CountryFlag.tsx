@@ -4,6 +4,7 @@ interface CountryFlagProps {
 	countryCode: string;
 	className?: string;
 	size?: "sm" | "md" | "lg";
+	decorative?: boolean;
 }
 
 const sizeMap = {
@@ -16,14 +17,16 @@ export function CountryFlag({
 	countryCode,
 	className = "",
 	size = "sm",
+	decorative = false,
 }: CountryFlagProps) {
 	const code = countryCode.toLowerCase();
 
 	return (
 		<span
 			className={`fi fi-${code} ${sizeMap[size]} ${className}`}
-			role="img"
-			aria-label={`Flag of ${countryCode}`}
+			role={decorative ? undefined : "img"}
+			aria-hidden={decorative || undefined}
+			aria-label={decorative ? undefined : `Flag of ${countryCode}`}
 		/>
 	);
 }

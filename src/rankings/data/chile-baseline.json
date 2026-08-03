@@ -1,0 +1,6637 @@
+{
+	"scope": "chile",
+	"generatedAt": "2026-08-03T05:50:24.361Z",
+	"period": {
+		"from": "2026-07-01T00:00:00.000Z",
+		"to": "2026-08-03T23:59:59.999Z"
+	},
+	"previousPeriod": {
+		"from": "2026-04-01T00:00:00.000Z",
+		"to": "2026-05-04T23:59:59.999Z"
+	},
+	"cohort": {
+		"definition": "Public GitHub users mapped to Chile from the 256-account committers.top country cohort, scored from GitHub public evidence.",
+		"candidates": 254,
+		"scored": 254
+	},
+	"sources": [
+		"GitHub GraphQL API",
+		"GitHub Search API",
+		"committers.top Chile"
+	],
+	"limitations": [
+		"GitHub location is self-reported.",
+		"Stars, forks, followers, and external repositories are cumulative.",
+		"Activity and collaboration reset at the start of each calendar quarter.",
+		"Rising compares quarter-to-date activity with the same elapsed window in the preceding quarter.",
+		"Stars and forks cover the 100 most-starred public, non-fork repositories owned by each user.",
+		"Private activity and contribution size are excluded for comparability."
+	],
+	"profiles": [
+		{
+			"login": "sebavidal10",
+			"name": "Sebastian Vidal Aedo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/16826204?u=f53114669730786db6c1549ecc6c83fbbe1c0540&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 24,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 18,
+				"forks": 7,
+				"followers": 98,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 62,
+				"publicContributions": 64,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "appwebd",
+			"name": "Patricio Rojas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20527169?u=9f1046cc22eeb0f5c11e524940e7f156d5bee0c5&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 24,
+				"forks": 2,
+				"followers": 130,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 3383,
+				"publicContributions": 3383,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "montoyamoraga",
+			"name": "aarón montoya-moraga",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3926350?u=61008a459c83651f8c87be0f8b33c96eb992d683&v=4",
+			"metrics": {
+				"commits": 383,
+				"publicContributions": 538,
+				"mergedPullRequests": 133,
+				"pullRequests": 132,
+				"reviews": 3,
+				"issues": 11,
+				"stars": 214,
+				"forks": 74,
+				"followers": 562,
+				"externalRepos": 87
+			},
+			"previousMetrics": {
+				"commits": 972,
+				"publicContributions": 1539,
+				"mergedPullRequests": 562,
+				"pullRequests": 553,
+				"reviews": 7,
+				"issues": 2
+			}
+		},
+		{
+			"login": "wajahat-ali-mir-dev",
+			"name": "Wajahat Ali Mir",
+			"location": "uk mx ksa drc cog togo cuba peru  pk mali oman usa rsa rok uae mk cod macau laos iraq qatar gabon kosovo haiti benin syria chile niger yemen ghana nepal sudan kenya japan china india egypt italy spain france russia ukraine germany norway sweden finland",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/156110102?u=c407c0684339b08ac2d9c5bc14cd4bc8658c1ec6&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 40,
+				"forks": 2,
+				"followers": 193,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "lnds",
+			"name": "Eduardo Díaz",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/515492?u=715514c30d9fc7196999df4f4e22f907635db48a&v=4",
+			"metrics": {
+				"commits": 472,
+				"publicContributions": 1016,
+				"mergedPullRequests": 282,
+				"pullRequests": 285,
+				"reviews": 0,
+				"issues": 256,
+				"stars": 98,
+				"forks": 595,
+				"followers": 106,
+				"externalRepos": 16
+			},
+			"previousMetrics": {
+				"commits": 2079,
+				"publicContributions": 2399,
+				"mergedPullRequests": 187,
+				"pullRequests": 201,
+				"reviews": 17,
+				"issues": 100
+			}
+		},
+		{
+			"login": "madkoding",
+			"name": "madKoding",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/333442?u=cb170ec61a03f1d53147b67240e02a8f2b140ea3&v=4",
+			"metrics": {
+				"commits": 788,
+				"publicContributions": 816,
+				"mergedPullRequests": 5,
+				"pullRequests": 5,
+				"reviews": 9,
+				"issues": 6,
+				"stars": 56,
+				"forks": 5,
+				"followers": 62,
+				"externalRepos": 36
+			},
+			"previousMetrics": {
+				"commits": 461,
+				"publicContributions": 489,
+				"mergedPullRequests": 7,
+				"pullRequests": 10,
+				"reviews": 2,
+				"issues": 0
+			}
+		},
+		{
+			"login": "richonguzman",
+			"name": "Ricardo Guzman",
+			"location": "Viña del Mar, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/69999130?u=10ba3cfbdee95de8792a0f98183d2dbcaa114c36&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1100,
+				"forks": 312,
+				"followers": 316,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 389,
+				"publicContributions": 390,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jsgrrchg",
+			"name": "José Gurruchaga",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/25624391?u=5c5c02a18a9539f7ffe5345c86f23d712123c57d&v=4",
+			"metrics": {
+				"commits": 238,
+				"publicContributions": 436,
+				"mergedPullRequests": 158,
+				"pullRequests": 165,
+				"reviews": 0,
+				"issues": 28,
+				"stars": 796,
+				"forks": 75,
+				"followers": 35,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 1177,
+				"publicContributions": 1194,
+				"mergedPullRequests": 10,
+				"pullRequests": 12,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "sito8943",
+			"name": "Sito",
+			"location": "Santiago de Cuba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/40501794?u=4a8e5e0c3cd4c312ea66817ac156f93f79863849&v=4",
+			"metrics": {
+				"commits": 327,
+				"publicContributions": 378,
+				"mergedPullRequests": 47,
+				"pullRequests": 47,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 140,
+				"forks": 6,
+				"followers": 91,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 307,
+				"publicContributions": 362,
+				"mergedPullRequests": 31,
+				"pullRequests": 31,
+				"reviews": 1,
+				"issues": 20
+			}
+		},
+		{
+			"login": "rodyherrera",
+			"name": "Rodolfo Herrera Hernandez",
+			"location": "Chile, Talca",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/69746956?u=d201d36af050f079f6a5bcc45a8618fbd26d40df&v=4",
+			"metrics": {
+				"commits": 87,
+				"publicContributions": 87,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 621,
+				"forks": 52,
+				"followers": 232,
+				"externalRepos": 40
+			},
+			"previousMetrics": {
+				"commits": 324,
+				"publicContributions": 324,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "NachoOFC",
+			"name": "Nacho",
+			"location": "Puerto Montt, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/105531940?u=2e76e3fe80f5ed9accf7889e26d8791f2a17d17c&v=4",
+			"metrics": {
+				"commits": 183,
+				"publicContributions": 199,
+				"mergedPullRequests": 5,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 294,
+				"forks": 0,
+				"followers": 1370,
+				"externalRepos": 24
+			},
+			"previousMetrics": {
+				"commits": 193,
+				"publicContributions": 197,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "dfbustosus",
+			"name": "David Bustos Usta",
+			"location": "Concepcion, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/66847915?u=32cb7b5d55cf4d7d08703b73d23d9bc203fc044a&v=4",
+			"metrics": {
+				"commits": 206,
+				"publicContributions": 212,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 218,
+				"forks": 94,
+				"followers": 353,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 175,
+				"publicContributions": 179,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "felipealfonsog",
+			"name": "Felipe Alfonso González",
+			"location": "Santiago, Metropolitan Region, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7793517?u=69bd9da66d20be738c0144400096730f874d5869&v=4",
+			"metrics": {
+				"commits": 64,
+				"publicContributions": 64,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 97,
+				"forks": 9,
+				"followers": 107,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 267,
+				"publicContributions": 291,
+				"mergedPullRequests": 14,
+				"pullRequests": 14,
+				"reviews": 0,
+				"issues": 8
+			}
+		},
+		{
+			"login": "grisuno",
+			"name": "Grisuno",
+			"location": "Santiago de chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1097185?u=4337166dec782aa1312084b6fb92cc4e0f78865b&v=4",
+			"metrics": {
+				"commits": 597,
+				"publicContributions": 5908,
+				"mergedPullRequests": 13,
+				"pullRequests": 5288,
+				"reviews": 2,
+				"issues": 0,
+				"stars": 580,
+				"forks": 103,
+				"followers": 74,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 33,
+				"publicContributions": 47,
+				"mergedPullRequests": 9,
+				"pullRequests": 10,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "terabytesoftw",
+			"name": "Wilmer Arambula",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/42547589?u=08c9a99d6cd35490466b2d4cfd30f2fa296b8b6b&v=4",
+			"metrics": {
+				"commits": 180,
+				"publicContributions": 336,
+				"mergedPullRequests": 151,
+				"pullRequests": 149,
+				"reviews": 7,
+				"issues": 0,
+				"stars": 9,
+				"forks": 4,
+				"followers": 67,
+				"externalRepos": 89
+			},
+			"previousMetrics": {
+				"commits": 176,
+				"publicContributions": 393,
+				"mergedPullRequests": 181,
+				"pullRequests": 188,
+				"reviews": 6,
+				"issues": 20
+			}
+		},
+		{
+			"login": "Strocs",
+			"name": "Ignacio Andrés Molina",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/71996940?u=9cdf58927951fa596a86d79ed5862d128181ebcb&v=4",
+			"metrics": {
+				"commits": 137,
+				"publicContributions": 260,
+				"mergedPullRequests": 87,
+				"pullRequests": 95,
+				"reviews": 0,
+				"issues": 28,
+				"stars": 8,
+				"forks": 0,
+				"followers": 95,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 64,
+				"publicContributions": 68,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fnmendez",
+			"name": "Franco Mendez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20799436?u=f166154ae3cb38c068474b9a3606d46cd467c3a2&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 3,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 61,
+				"forks": 2,
+				"followers": 78,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "dialvarezs",
+			"name": "Diego Alvarez S.",
+			"location": "Punta Arenas, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/13831919?u=9eab4e7df85e565f3928b8b2d9b052d32ea331cb&v=4",
+			"metrics": {
+				"commits": 244,
+				"publicContributions": 316,
+				"mergedPullRequests": 38,
+				"pullRequests": 39,
+				"reviews": 28,
+				"issues": 1,
+				"stars": 74,
+				"forks": 28,
+				"followers": 62,
+				"externalRepos": 51
+			},
+			"previousMetrics": {
+				"commits": 208,
+				"publicContributions": 255,
+				"mergedPullRequests": 27,
+				"pullRequests": 28,
+				"reviews": 14,
+				"issues": 4
+			}
+		},
+		{
+			"login": "CamilaJaviera91",
+			"name": "Camila Javiera Muñoz Navarro",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/184698841?u=676b2edff387ddf4f4890d461206bd1c5b59d325&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 58,
+				"forks": 3,
+				"followers": 302,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cmartinezs",
+			"name": "Carlos F. Martínez Sánchez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8823837?u=d2f8db85fb1da35f10033026f98042d1a8e10ef7&v=4",
+			"metrics": {
+				"commits": 833,
+				"publicContributions": 945,
+				"mergedPullRequests": 106,
+				"pullRequests": 108,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 41,
+				"forks": 9,
+				"followers": 181,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 121,
+				"publicContributions": 129,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fcarvajalbrown",
+			"name": "Felipe Carvajal Brown",
+			"location": "Santiago de Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/110441487?u=0a3db562dc9f84e96471a7b1ba7a9400780c780f&v=4",
+			"metrics": {
+				"commits": 736,
+				"publicContributions": 785,
+				"mergedPullRequests": 16,
+				"pullRequests": 24,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 28,
+				"forks": 1,
+				"followers": 38,
+				"externalRepos": 33
+			},
+			"previousMetrics": {
+				"commits": 166,
+				"publicContributions": 177,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "franciellevargas",
+			"name": "Francielle Vargas",
+			"location": "Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19657817?u=3a57fe96a414ded0834130179af8733f96cd10a5&v=4",
+			"metrics": {
+				"commits": 57,
+				"publicContributions": 57,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 100,
+				"forks": 16,
+				"followers": 40,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 133,
+				"publicContributions": 133,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MARSFOREVER472",
+			"name": "Marcelo Andrés ॐ",
+			"location": "Antofagasta",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/69094327?u=099e421f33abdad3dcec2b2dee81e2a7727ef1b6&v=4",
+			"metrics": {
+				"commits": 81,
+				"publicContributions": 81,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 181,
+				"forks": 1,
+				"followers": 531,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 123,
+				"publicContributions": 123,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "bastianolea",
+			"name": "Bastián Olea Herera",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3477437?u=8f1d5315a436de767788f719603730d5425bcb0f&v=4",
+			"metrics": {
+				"commits": 216,
+				"publicContributions": 222,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 277,
+				"forks": 36,
+				"followers": 349,
+				"externalRepos": 15
+			},
+			"previousMetrics": {
+				"commits": 119,
+				"publicContributions": 122,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jbkunst",
+			"name": "Joshua Kunst",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/56481?u=1d71bf2f7744313929cd0ad18936065c2a06286e&v=4",
+			"metrics": {
+				"commits": 726,
+				"publicContributions": 800,
+				"mergedPullRequests": 50,
+				"pullRequests": 65,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 1423,
+				"forks": 405,
+				"followers": 516,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 87,
+				"publicContributions": 88,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "bidah",
+			"name": "Rodrigo Figueroa",
+			"location": "Maitencillo, Valparaiso, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1574028?u=cab88e9a4ee661edbec29d2fecf052210a73dabc&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1285,
+				"forks": 101,
+				"followers": 193,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 32,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JonDotsoy",
+			"name": "Jonathan Delgado",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3086539?u=60e97af68dd7524a14dd8638374fd1d1b93c318d&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 12,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 122,
+				"forks": 21,
+				"followers": 58,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 36,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hspencer",
+			"name": "Herbert Spencer González",
+			"location": "Viña del Mar, Valparaíso, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/896632?u=5957e9910877f01b3ae2bb7bd83cd5a06a90556a&v=4",
+			"metrics": {
+				"commits": 162,
+				"publicContributions": 164,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 32,
+				"forks": 37,
+				"followers": 60,
+				"externalRepos": 13
+			},
+			"previousMetrics": {
+				"commits": 107,
+				"publicContributions": 111,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "manuelurenah",
+			"name": "Manuel Emilio Urena",
+			"location": "Santiago, D.R.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12631159?u=d9b05908ac468d1382a39b3c059bb91323ef128d&v=4",
+			"metrics": {
+				"commits": 70,
+				"publicContributions": 124,
+				"mergedPullRequests": 52,
+				"pullRequests": 54,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 34,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 147,
+				"publicContributions": 174,
+				"mergedPullRequests": 25,
+				"pullRequests": 23,
+				"reviews": 4,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JuanDuran85",
+			"name": "Juan Duran",
+			"location": "Santiago de Chile, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15115270?u=2722fa54c6f94839030427fef6f085a0ca7ccc22&v=4",
+			"metrics": {
+				"commits": 18,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 28,
+				"forks": 53,
+				"followers": 75,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 91,
+				"publicContributions": 100,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "aledbf",
+			"name": "Manuel Alejandro de Brito Fontes",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/161571?u=b4ab095656b3619fd4221d7fd94e2040757dade9&v=4",
+			"metrics": {
+				"commits": 225,
+				"publicContributions": 227,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 324,
+				"forks": 120,
+				"followers": 521,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 9,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CleoMenezesJr",
+			"name": "Cleo Menezes Jr.",
+			"location": "Viña del mar - Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/54215258?u=e9889b8aee28742eabdee92d8976eadb240e6cd6&v=4",
+			"metrics": {
+				"commits": 153,
+				"publicContributions": 157,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1168,
+				"forks": 72,
+				"followers": 190,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 154,
+				"publicContributions": 161,
+				"mergedPullRequests": 1,
+				"pullRequests": 3,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "maria-rcks",
+			"name": "maria",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/254055478?u=b724319f4d810d4ae14799199bec43056940cdc7&v=4",
+			"metrics": {
+				"commits": 48,
+				"publicContributions": 81,
+				"mergedPullRequests": 16,
+				"pullRequests": 27,
+				"reviews": 3,
+				"issues": 0,
+				"stars": 1404,
+				"forks": 99,
+				"followers": 328,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 63,
+				"mergedPullRequests": 2,
+				"pullRequests": 4,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "sebastian-aranda",
+			"name": "Sebastian Aranda Sanchez",
+			"location": "La Serena, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5626266?u=c8335d8efa5b6dfdefb3a784740293668191f4eb&v=4",
+			"metrics": {
+				"commits": 20,
+				"publicContributions": 41,
+				"mergedPullRequests": 7,
+				"pullRequests": 8,
+				"reviews": 13,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 65,
+				"externalRepos": 53
+			},
+			"previousMetrics": {
+				"commits": 79,
+				"publicContributions": 133,
+				"mergedPullRequests": 21,
+				"pullRequests": 22,
+				"reviews": 32,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Blandskron",
+			"name": "Bastian Landskron",
+			"location": "Santiago Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/93203724?u=396f478da06451ec3dbaaeddfe308e8b2e19a3c5&v=4",
+			"metrics": {
+				"commits": 37,
+				"publicContributions": 39,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 144,
+				"forks": 81,
+				"followers": 478,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 55,
+				"publicContributions": 57,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MiguelAngelRamos",
+			"name": "Miguel Ramos",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/35831405?u=6e1c652dce811f84afd421796397acbb22ddbff1&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 66,
+				"forks": 72,
+				"followers": 136,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 31,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mfuentesg",
+			"name": "Marcelo Fuentes",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8986996?u=2eb970fce903a5aff9021160db12b08c43ce319f&v=4",
+			"metrics": {
+				"commits": 128,
+				"publicContributions": 186,
+				"mergedPullRequests": 57,
+				"pullRequests": 58,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 425,
+				"forks": 59,
+				"followers": 65,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 199,
+				"publicContributions": 238,
+				"mergedPullRequests": 35,
+				"pullRequests": 39,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Proskynete",
+			"name": "Eduardo Esteban Álvarez Castañeda",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11874455?u=7c5bd3c083ca65c093f26ed0509d3ce120023947&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 31,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 77,
+				"forks": 27,
+				"followers": 71,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jfvenegasg",
+			"name": "Juan Venegas Gutiérrez",
+			"location": "Santiago,Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6494089?u=f8eaf39ef34b515f8fada9876f915f5ec664be1f&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 70,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 102,
+				"publicContributions": 102,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nilehmann",
+			"name": "Nico Lehmann",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2400776?u=5a9d3547957e0fc9846b29efcaa1caea33854513&v=4",
+			"metrics": {
+				"commits": 125,
+				"publicContributions": 154,
+				"mergedPullRequests": 12,
+				"pullRequests": 14,
+				"reviews": 13,
+				"issues": 1,
+				"stars": 127,
+				"forks": 23,
+				"followers": 72,
+				"externalRepos": 22
+			},
+			"previousMetrics": {
+				"commits": 49,
+				"publicContributions": 78,
+				"mergedPullRequests": 12,
+				"pullRequests": 1,
+				"reviews": 23,
+				"issues": 4
+			}
+		},
+		{
+			"login": "furendyna",
+			"name": "Furen",
+			"location": "Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/30909898?u=6a22c93d1a87490b96f3e4df8bac96afa8e93b0e&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 285,
+				"forks": 3,
+				"followers": 1084,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "geronimoarteaga",
+			"name": "Manuel G. Araujo A.",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11145475?u=2b46cdcbedadb86bf9910204bf00b6ad655e6ef5&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 12,
+				"forks": 3,
+				"followers": 37,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 81,
+				"publicContributions": 81,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "puntorigen",
+			"name": "Pablo Schaffner",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/57605485?v=4",
+			"metrics": {
+				"commits": 69,
+				"publicContributions": 80,
+				"mergedPullRequests": 0,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 288,
+				"forks": 59,
+				"followers": 57,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "arcaela",
+			"name": "Miguel A Guevara R",
+			"location": "San Antonio, Valparaiso - Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15781453?u=b06393d05bc47892aa440297978555b6e892b53f&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 33,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 0,
+				"followers": 43,
+				"externalRepos": 15
+			},
+			"previousMetrics": {
+				"commits": 53,
+				"publicContributions": 58,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "DarkGhostHunter",
+			"name": "Italo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5141911?v=4",
+			"metrics": {
+				"commits": 11,
+				"publicContributions": 42,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 24,
+				"stars": 2248,
+				"forks": 235,
+				"followers": 271,
+				"externalRepos": 60
+			},
+			"previousMetrics": {
+				"commits": 101,
+				"publicContributions": 114,
+				"mergedPullRequests": 3,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 6
+			}
+		},
+		{
+			"login": "MrRevillod",
+			"name": "Luciano Revillod",
+			"location": "Temuco, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/104238144?u=5f9ba2b51894089d89e6a5dad0424ee9e0f26cbb&v=4",
+			"metrics": {
+				"commits": 81,
+				"publicContributions": 87,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 12,
+				"forks": 5,
+				"followers": 33,
+				"externalRepos": 15
+			},
+			"previousMetrics": {
+				"commits": 101,
+				"publicContributions": 109,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "felipecalderon",
+			"name": "Felipe Calderón",
+			"location": "Temuco",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7612826?u=b43529d9160cf31b9c78c330279cbf5bbf898c99&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 18,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 5,
+				"followers": 33,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 76,
+				"publicContributions": 83,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rafafdz",
+			"name": "Rafael Fernández",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/35550309?u=d3c5f4148773334ebae0e058a2d2ae3520912241&v=4",
+			"metrics": {
+				"commits": 63,
+				"publicContributions": 63,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 61,
+				"forks": 14,
+				"followers": 72,
+				"externalRepos": 199
+			},
+			"previousMetrics": {
+				"commits": 41,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jarodsmdev",
+			"name": "Leonel Briones Palacios",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/69602952?u=dedcfe7fa7adbaa433c84af96686da36530a1df8&v=4",
+			"metrics": {
+				"commits": 44,
+				"publicContributions": 51,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 30,
+				"followers": 33,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 29,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "guillemontecinos",
+			"name": "Guillermo Montecinos",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19594257?u=438c66f8c2f3fe741c896801bff783b9f4bd43a0&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 30,
+				"forks": 11,
+				"followers": 46,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "caverav",
+			"name": "Camilo Vera Vidales",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/66751764?u=fca68e8fcf1430c9a4acac4ece5a9b6b20ad76cd&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 166,
+				"forks": 10,
+				"followers": 66,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 146,
+				"publicContributions": 172,
+				"mergedPullRequests": 9,
+				"pullRequests": 12,
+				"reviews": 7,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Deivid21",
+			"name": "Deivid Ignacio Parra",
+			"location": "Pudahuel, Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/31148871?u=16037b1a700f456101cb0017d7bc3b06c32bdf95&v=4",
+			"metrics": {
+				"commits": 13,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 31,
+				"followers": 76,
+				"externalRepos": 95
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ppizarror",
+			"name": "Pablo Pizarro R.",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12925256?u=3e1c12be03f79c13045388a3f271477b769f586a&v=4",
+			"metrics": {
+				"commits": 372,
+				"publicContributions": 374,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 876,
+				"forks": 241,
+				"followers": 202,
+				"externalRepos": 18
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mallendeo",
+			"name": "Mauricio Allende",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1578018?u=030b6ec8ae35b72e0367fd9535e916fdd0905faf&v=4",
+			"metrics": {
+				"commits": 87,
+				"publicContributions": 87,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 58,
+				"forks": 4,
+				"followers": 45,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 193,
+				"publicContributions": 194,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "prezdev88",
+			"name": "Pato Pérez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11466548?u=2f01494a5e289ee16dd4a3d1e8ee9191d662efc7&v=4",
+			"metrics": {
+				"commits": 114,
+				"publicContributions": 117,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 2,
+				"followers": 77,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hectrhcc",
+			"name": "Hector",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/95552068?u=7dd4d4ee73d0b1f94f64dd300c00539bd6fc17cd&v=4",
+			"metrics": {
+				"commits": 97,
+				"publicContributions": 98,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 284,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 73,
+				"publicContributions": 73,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cjbaezilla",
+			"name": "Carlos Baeza",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1175322?u=d847e6440a304a478a8a4ee5eaf14b091541ba11&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 32,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "longemen3000",
+			"name": "Andrés Riedemann",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/38795484?u=ea770af0e0444bd799a45ebc6a79087e8fed290b&v=4",
+			"metrics": {
+				"commits": 36,
+				"publicContributions": 54,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 6,
+				"issues": 3,
+				"stars": 117,
+				"forks": 10,
+				"followers": 153,
+				"externalRepos": 28
+			},
+			"previousMetrics": {
+				"commits": 88,
+				"publicContributions": 106,
+				"mergedPullRequests": 7,
+				"pullRequests": 9,
+				"reviews": 2,
+				"issues": 3
+			}
+		},
+		{
+			"login": "ericmartinezr",
+			"name": "Eric Martinez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/13039652?u=36c9d6a385332e0478603afffedffd56ad9989a4&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 53,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 27,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Hancapo",
+			"name": "MrVicho13",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20731612?u=5c32991e138a54f3e188e559584b1eadfeb08ed4&v=4",
+			"metrics": {
+				"commits": 192,
+				"publicContributions": 262,
+				"mergedPullRequests": 68,
+				"pullRequests": 68,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 167,
+				"forks": 40,
+				"followers": 51,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 278,
+				"publicContributions": 281,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "sebastianbreguel",
+			"name": "Seba Breguel",
+			"location": " Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/62109266?u=f447386d83d416d51e7892a3d103ced3d356a192&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 22,
+				"forks": 0,
+				"followers": 159,
+				"externalRepos": 35
+			},
+			"previousMetrics": {
+				"commits": 378,
+				"publicContributions": 521,
+				"mergedPullRequests": 76,
+				"pullRequests": 135,
+				"reviews": 0,
+				"issues": 4
+			}
+		},
+		{
+			"login": "hzambran",
+			"name": "Mauricio Zambrano-Bigiarini",
+			"location": "Temuco, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2619297?u=3224a462b155b84299a9cbc6991e18a32a3fcc75&v=4",
+			"metrics": {
+				"commits": 39,
+				"publicContributions": 40,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 171,
+				"forks": 64,
+				"followers": 110,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 294,
+				"publicContributions": 294,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "irydacea",
+			"name": "Iris Morelle",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/489895?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 16,
+				"forks": 7,
+				"followers": 41,
+				"externalRepos": 16
+			},
+			"previousMetrics": {
+				"commits": 32,
+				"publicContributions": 40,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 6
+			}
+		},
+		{
+			"login": "vicenteconejerosdelacruz",
+			"name": "Vicente Conejeros de la Cruz",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10147674?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 18,
+				"forks": 8,
+				"followers": 209,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 139,
+				"publicContributions": 139,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Lostovayne",
+			"name": "Deus lo Vult",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/92962731?u=d4766db122fd050556646107a9283db4ca068a46&v=4",
+			"metrics": {
+				"commits": 49,
+				"publicContributions": 57,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 6,
+				"stars": 265,
+				"forks": 42,
+				"followers": 88,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 46,
+				"publicContributions": 49,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Giocrisrai",
+			"name": "Giocrisrai",
+			"location": "Puerto Montt, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/58716675?u=71dc85a3fcfefbfb537d3662019313f9d457cec5&v=4",
+			"metrics": {
+				"commits": 81,
+				"publicContributions": 81,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 30,
+				"followers": 37,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 114,
+				"publicContributions": 117,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "blackjid",
+			"name": "Juan Ignacio Donoso",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/228037?v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 27,
+				"mergedPullRequests": 7,
+				"pullRequests": 11,
+				"reviews": 6,
+				"issues": 1,
+				"stars": 249,
+				"forks": 33,
+				"followers": 119,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 30,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "highercomve",
+			"name": "Sergio Marin",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1034621?u=5cb2c9a7b291c6e5d6789d6c812859b2e6c5e1d3&v=4",
+			"metrics": {
+				"commits": 22,
+				"publicContributions": 24,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 181,
+				"forks": 42,
+				"followers": 152,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 55,
+				"publicContributions": 58,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fralfaro",
+			"name": "Francisco Alfaro Medina",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/18752583?u=12239e660c82d4bdb06a219f41a2aba15f59f9fb&v=4",
+			"metrics": {
+				"commits": 42,
+				"publicContributions": 45,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 207,
+				"forks": 35,
+				"followers": 89,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 69,
+				"publicContributions": 76,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ignaciocastro",
+			"name": "Ignacio Castro",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7141944?u=91234eb9def713e656cb2b9c7ed339f2b5e18f3d&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 50,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 17,
+				"stars": 1720,
+				"forks": 63,
+				"followers": 88,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ws-garcia",
+			"name": "W. García",
+			"location": "Olegario Fernández #45, Los Cocos, Puñal, Santiago, Dominican Republic",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/70865364?u=dc55d3cd94dff0a6cf0cb37e79b5cd1af772edeb&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 6,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 102,
+				"forks": 15,
+				"followers": 50,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "crinavar",
+			"name": "Cristobal",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/9825319?u=3f3a974edc8d1c0f42598a68f9ea567f4ecf9ff4&v=4",
+			"metrics": {
+				"commits": 303,
+				"publicContributions": 303,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 18,
+				"forks": 7,
+				"followers": 33,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gperdomor",
+			"name": "Gustavo Perdomo",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/371939?u=4eb2b49690f574e0e59b94245d30f5b602ab8b9b&v=4",
+			"metrics": {
+				"commits": 29,
+				"publicContributions": 33,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 473,
+				"forks": 74,
+				"followers": 33,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 45,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "estebandelaf",
+			"name": "Esteban Delaf",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1381888?v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 47,
+				"forks": 28,
+				"followers": 103,
+				"externalRepos": 53
+			},
+			"previousMetrics": {
+				"commits": 118,
+				"publicContributions": 118,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "zenbaku",
+			"name": "Jonathan Urzua",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/529110?v=4",
+			"metrics": {
+				"commits": 243,
+				"publicContributions": 248,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 38,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 343,
+				"publicContributions": 345,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mebucca",
+			"name": "Mauricio Bucca",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/16000779?u=a62e8c2ef2c298760b47427004e01e0ef483735d&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 29,
+				"forks": 11,
+				"followers": 56,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JoseGermanx",
+			"name": "Jose Germán Martínez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/471118?u=a9cdd1e718bdcbf18710a789fd98e4f5e13a8a1c&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 13,
+				"forks": 6,
+				"followers": 82,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 92,
+				"publicContributions": 98,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fbecerra",
+			"name": "Fernando Becerra",
+			"location": "Aysén, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7333874?u=eb42554e0b4849e78214089f9676a772a36927bf&v=4",
+			"metrics": {
+				"commits": 51,
+				"publicContributions": 57,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 31,
+				"forks": 19,
+				"followers": 60,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 20,
+				"mergedPullRequests": 12,
+				"pullRequests": 12,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CaldeCrack",
+			"name": "Andrés Calderón",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/65932888?u=bccc62e5815fc374c1ab5e1c700e3db5838aa6f2&v=4",
+			"metrics": {
+				"commits": 132,
+				"publicContributions": 132,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "michelson",
+			"name": "Miguel Michelson Martinez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11976?v=4",
+			"metrics": {
+				"commits": 96,
+				"publicContributions": 100,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4598,
+				"forks": 619,
+				"followers": 385,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 43,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Im-Fran",
+			"name": "Francisco Solis",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/30329003?u=617837aeb790d7183c5f8353c3e6ac5effbbe878&v=4",
+			"metrics": {
+				"commits": 140,
+				"publicContributions": 183,
+				"mergedPullRequests": 35,
+				"pullRequests": 37,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 22,
+				"forks": 7,
+				"followers": 41,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "misaaaaaa",
+			"name": "Matías Serrano",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/88412501?u=f15aef80563a87ed317e94be58c65d95d39a2a29&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 22,
+				"mergedPullRequests": 1,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 16,
+				"forks": 10,
+				"followers": 49,
+				"externalRepos": 15
+			},
+			"previousMetrics": {
+				"commits": 83,
+				"publicContributions": 95,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cagodoy",
+			"name": "Camilo Acuña Godoy",
+			"location": "Santiago de Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8485620?u=4327a8d889924be3652b94e9cb5adddccb487359&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 6,
+				"followers": 71,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 40,
+				"publicContributions": 54,
+				"mergedPullRequests": 11,
+				"pullRequests": 12,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "peligro",
+			"name": "César Cancino",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1911878?u=e1033e4f47ba9f00b3bfdc219fce1702cb1bce51&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 10,
+				"followers": 52,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 18,
+				"publicContributions": 20,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "PabloB07",
+			"name": "Pablo Blanco",
+			"location": "Chile, los lagos, Frutillar",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/36685434?u=8f518ea4af6f810143ff3af98c207394a8ae1c5a&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 34,
+				"forks": 1,
+				"followers": 67,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 224,
+				"publicContributions": 226,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "dachafra",
+			"name": "David Chaves",
+			"location": "Santiago de Compostela, Spain",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12400271?u=9d1697c353e651bf0b5933d2b272ce09731089e1&v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 15,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 18,
+				"forks": 10,
+				"followers": 56,
+				"externalRepos": 34
+			},
+			"previousMetrics": {
+				"commits": 40,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "paskuvan",
+			"name": "Majo Paskuvan",
+			"location": "Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5359079?u=cd715750e24aad8bcad52db95762d2dc23deb01f&v=4",
+			"metrics": {
+				"commits": 57,
+				"publicContributions": 62,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 1,
+				"followers": 101,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 54,
+				"publicContributions": 72,
+				"mergedPullRequests": 13,
+				"pullRequests": 13,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "david-lafontant",
+			"name": "David Lafontant",
+			"location": "Santiago De Los Caballeros, Dominican Republic",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39683557?u=7e63574837908cf168c3087907c544cbd09c4f73&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 57,
+				"forks": 1,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Victorsitou",
+			"name": "Victor",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/67214928?u=ba8db76f4f58d20c75e0ac77a055f44de5265830&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 6,
+				"forks": 2,
+				"followers": 33,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 136,
+				"publicContributions": 152,
+				"mergedPullRequests": 7,
+				"pullRequests": 8,
+				"reviews": 0,
+				"issues": 3
+			}
+		},
+		{
+			"login": "ivmirx",
+			"name": "Ivan Mir",
+			"location": "Valdivia, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10554114?u=4496bf01499eac471d1ab99ac52ec770b248c2fe&v=4",
+			"metrics": {
+				"commits": 121,
+				"publicContributions": 127,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 83,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "ricardoalfaro",
+			"name": "Ricardo Alfaro",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/711705?u=ac8c4c88204000fdc3bc6cdb0d5a4f3f0fb7765c&v=4",
+			"metrics": {
+				"commits": 180,
+				"publicContributions": 202,
+				"mergedPullRequests": 17,
+				"pullRequests": 17,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 35,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "s3codecL",
+			"name": "Gustavo Andrade",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/131801400?u=719483a97c65ddfee55c422548cca1f0aa29de1a&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 27,
+				"forks": 4,
+				"followers": 39,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JDConejeros",
+			"name": "José Daniel Conejeros",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/43749364?u=4c2c318c87c24fa5714e5619d1c0cd2a3b3883f7&v=4",
+			"metrics": {
+				"commits": 49,
+				"publicContributions": 50,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 23,
+				"forks": 74,
+				"followers": 108,
+				"externalRepos": 17
+			},
+			"previousMetrics": {
+				"commits": 62,
+				"publicContributions": 70,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "davidlealo",
+			"name": "David Leal",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10031100?u=bdb249e948d4cd0aa17fab9765d99c456097a8b9&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 30,
+				"forks": 90,
+				"followers": 62,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 60,
+				"publicContributions": 63,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "enBonnet",
+			"name": "Ender Bonnet",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/13243693?u=19359e7f504fd1ce67f874589c72596c4a7528b7&v=4",
+			"metrics": {
+				"commits": 160,
+				"publicContributions": 189,
+				"mergedPullRequests": 27,
+				"pullRequests": 28,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 169,
+				"forks": 29,
+				"followers": 130,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 18,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ViktorJJF",
+			"name": "Victor Juan Jimenez Flores",
+			"location": "Santiago de Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/40786566?u=4a1163d35c0912694f8db9143477de3a514842d1&v=4",
+			"metrics": {
+				"commits": 44,
+				"publicContributions": 60,
+				"mergedPullRequests": 15,
+				"pullRequests": 16,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 36,
+				"forks": 38,
+				"followers": 32,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 86,
+				"publicContributions": 86,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "juanbrujo",
+			"name": "Jorge Epuñan",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/362186?u=4052131634180f584e7d3c3b156a7bc2d507b8fc&v=4",
+			"metrics": {
+				"commits": 150,
+				"publicContributions": 170,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 6,
+				"issues": 2,
+				"stars": 1555,
+				"forks": 363,
+				"followers": 267,
+				"externalRepos": 23
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 41,
+				"mergedPullRequests": 3,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jwcastillo",
+			"name": "Wen Castillo",
+			"location": "Santiago de Chile, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/443948?u=4656a49a15d04f88b7bb234da44b8e863fa45f21&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 31,
+				"forks": 49,
+				"followers": 183,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 22,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DanSepulveda",
+			"name": "Daniel Sepúlveda",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/85970706?u=dcdd54dbdd7dd671ca24d5fe2519a4b850004bb9&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 36,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 97,
+				"publicContributions": 100,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "breadsk",
+			"name": "Nicolas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/38256427?u=5d19d5201b896eccb421735fd037ff8f8e768dfd&v=4",
+			"metrics": {
+				"commits": 66,
+				"publicContributions": 82,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 85,
+				"forks": 7,
+				"followers": 503,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 46,
+				"publicContributions": 61,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "aochagavia",
+			"name": "Adolfo Ochagavía",
+			"location": "Amsterdam (The Netherlands) / Santiago (Chile)",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5196584?u=f400c91165d6f2cdf6463abe05beca51731744a8&v=4",
+			"metrics": {
+				"commits": 24,
+				"publicContributions": 25,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 957,
+				"forks": 91,
+				"followers": 227,
+				"externalRepos": 19
+			},
+			"previousMetrics": {
+				"commits": 19,
+				"publicContributions": 28,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "cTapiaDev",
+			"name": "Carlos Tapia",
+			"location": "Talca, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/164972226?u=0a202eebc634f135117eddbdfec4c7d398a0c000&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 32,
+				"followers": 42,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "faosorios",
+			"name": "Felipe Osorio",
+			"location": "Viña del Mar, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2903348?u=716dbc433192599cb91d2dfb2ab830b873ea5d37&v=4",
+			"metrics": {
+				"commits": 38,
+				"publicContributions": 38,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 78,
+				"forks": 16,
+				"followers": 59,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Dieg0Code",
+			"name": "Diego",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/44902635?u=3024526e4f795d97721279e050fdbb7bdafd21c8&v=4",
+			"metrics": {
+				"commits": 70,
+				"publicContributions": 78,
+				"mergedPullRequests": 8,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 61,
+				"forks": 8,
+				"followers": 393,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 30,
+				"publicContributions": 30,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "apuromafo",
+			"name": "Apuromafo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/23161917?u=bae3f67e314b16452a2a06659aa625bfd4886190&v=4",
+			"metrics": {
+				"commits": 11,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 4,
+				"stars": 83,
+				"forks": 26,
+				"followers": 58,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "felipeDev303",
+			"name": "Felipe Morales",
+			"location": "Temuco, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/154853067?u=cf164a8851423278dcbdf4bf8477cb17ed461967&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 2,
+				"followers": 52,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Doc94",
+			"name": "Pedro",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3602279?u=d8ad6831864c2419b95272e155a503ea9f3b6158&v=4",
+			"metrics": {
+				"commits": 41,
+				"publicContributions": 104,
+				"mergedPullRequests": 23,
+				"pullRequests": 23,
+				"reviews": 35,
+				"issues": 4,
+				"stars": 18,
+				"forks": 4,
+				"followers": 144,
+				"externalRepos": 45
+			},
+			"previousMetrics": {
+				"commits": 38,
+				"publicContributions": 100,
+				"mergedPullRequests": 26,
+				"pullRequests": 25,
+				"reviews": 29,
+				"issues": 8
+			}
+		},
+		{
+			"login": "andrewcooke",
+			"name": "andrew cooke",
+			"location": "santiago, chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1429281?v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 733,
+				"forks": 160,
+				"followers": 63,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Mjrovai",
+			"name": "Marcelo Rovai",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/17109416?u=ef0b226c4108eff0b35124985efef67d93ee2b4e&v=4",
+			"metrics": {
+				"commits": 49,
+				"publicContributions": 49,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3686,
+				"forks": 2221,
+				"followers": 1186,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 18,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "v4rgas",
+			"name": "Juan Vargas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/66626747?u=9b1f440fa3b14f3047fe9f345a7537fd231c79b4&v=4",
+			"metrics": {
+				"commits": 67,
+				"publicContributions": 71,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 66,
+				"forks": 8,
+				"followers": 68,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 25,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "asomoza",
+			"name": "Álvaro Somoza",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5442875?u=003f6a851e4325ae638551ac00a1b01877b176ba&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 25,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 83,
+				"forks": 14,
+				"followers": 145,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 24,
+				"publicContributions": 31,
+				"mergedPullRequests": 1,
+				"pullRequests": 3,
+				"reviews": 4,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jgmontoya",
+			"name": "Javier G. Montoya S.",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11434422?u=906e37b34c7178b221a8fe9ee8530e170252dfa4&v=4",
+			"metrics": {
+				"commits": 79,
+				"publicContributions": 125,
+				"mergedPullRequests": 27,
+				"pullRequests": 35,
+				"reviews": 9,
+				"issues": 0,
+				"stars": 58,
+				"forks": 14,
+				"followers": 151,
+				"externalRepos": 24
+			},
+			"previousMetrics": {
+				"commits": 51,
+				"publicContributions": 104,
+				"mergedPullRequests": 25,
+				"pullRequests": 25,
+				"reviews": 25,
+				"issues": 2
+			}
+		},
+		{
+			"login": "LautaroParada",
+			"name": "Lautaro Parada",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/52385097?u=76e552260deef52f9c41944ec8cb403f2f140e96&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 160,
+				"forks": 40,
+				"followers": 48,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 20,
+				"publicContributions": 26,
+				"mergedPullRequests": 5,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pipetboy2001",
+			"name": "Pipetboy",
+			"location": "Santiago,Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/33585474?u=82300d05a87e05bd15b72096e4a8b297673ff974&v=4",
+			"metrics": {
+				"commits": 20,
+				"publicContributions": 23,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 0,
+				"followers": 56,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 25,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "tdewolff",
+			"name": "Taco de Wolff",
+			"location": "Netherlands / Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5563166?u=ed6834f98e5f864d731ec9b20c04bc1d33e1f604&v=4",
+			"metrics": {
+				"commits": 38,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 2,
+				"stars": 7116,
+				"forks": 494,
+				"followers": 437,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 71,
+				"publicContributions": 71,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nescampos",
+			"name": "Néstor Nicolás Campos Rojas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7274106?u=ef0fddfd51dea03ad35636e8dc2325ccce473ba2&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 34,
+				"forks": 14,
+				"followers": 44,
+				"externalRepos": 24
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nicolaslopezj",
+			"name": "Nicolás López Jullian",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2042567?u=c47133ab706328f23ad5ec8e0b45d210620ae6f6&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2943,
+				"forks": 482,
+				"followers": 284,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 42,
+				"publicContributions": 44,
+				"mergedPullRequests": 2,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "felipeinf",
+			"name": "",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/40743806?u=151436162c467aedb732022b329776d0eefcc896&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 114,
+				"forks": 15,
+				"followers": 42,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 165,
+				"publicContributions": 188,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 5
+			}
+		},
+		{
+			"login": "gdespirito",
+			"name": "Gonzalo De Spírito",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1103494?v=4",
+			"metrics": {
+				"commits": 295,
+				"publicContributions": 362,
+				"mergedPullRequests": 63,
+				"pullRequests": 66,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 4,
+				"forks": 6,
+				"followers": 81,
+				"externalRepos": 26
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 13,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "IgnacioPalma",
+			"name": "Ignacio Palma",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/81819758?u=df0eff9ef8ed6c9022fe1406108b8a7b983a2ee7&v=4",
+			"metrics": {
+				"commits": 25,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 27,
+				"forks": 2,
+				"followers": 149,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "A6GibKm",
+			"name": "Maximiliano",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11528996?u=5222896fe0f5e535a961616cbf52dfced9591da1&v=4",
+			"metrics": {
+				"commits": 15,
+				"publicContributions": 34,
+				"mergedPullRequests": 10,
+				"pullRequests": 13,
+				"reviews": 1,
+				"issues": 5,
+				"stars": 89,
+				"forks": 17,
+				"followers": 42,
+				"externalRepos": 64
+			},
+			"previousMetrics": {
+				"commits": 30,
+				"publicContributions": 68,
+				"mergedPullRequests": 16,
+				"pullRequests": 17,
+				"reviews": 1,
+				"issues": 19
+			}
+		},
+		{
+			"login": "tyronejosee",
+			"name": "Tyrone José",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/132106425?u=9a71bac0207d446d8efbb62b3682dcdde99efbf7&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 201,
+				"forks": 12,
+				"followers": 539,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "TesslaRay",
+			"name": "Cristian Valdivia",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11906937?u=4147394b29c500ba4360c01c86dc73386e5ffc86&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 33,
+				"forks": 8,
+				"followers": 69,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cris-achiardi",
+			"name": "Cristian Morales",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/220779572?u=d58c0bc6d5e12129d8467631b00415c7f8935796&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 65,
+				"forks": 10,
+				"followers": 54,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "agucova",
+			"name": "Agustín Covarrubias",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4694408?u=be8965d3804213365821f977c93cee34b81fdeee&v=4",
+			"metrics": {
+				"commits": 23,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2690,
+				"forks": 165,
+				"followers": 407,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "rivaquiroga",
+			"name": "Riva Quiroga",
+			"location": "Valparaíso, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/31421616?u=1c259777bec94b7c226bcfb87152d2414b2e74b7&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 31,
+				"mergedPullRequests": 2,
+				"pullRequests": 1,
+				"reviews": 6,
+				"issues": 6,
+				"stars": 202,
+				"forks": 65,
+				"followers": 430,
+				"externalRepos": 20
+			},
+			"previousMetrics": {
+				"commits": 68,
+				"publicContributions": 80,
+				"mergedPullRequests": 6,
+				"pullRequests": 4,
+				"reviews": 7,
+				"issues": 1
+			}
+		},
+		{
+			"login": "mathiasdonoso",
+			"name": "Mathias Donoso",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2658267?u=d40dc8f9ea72deaee43cf21fb0076f4aa19a2a4a&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 2,
+				"followers": 35,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 60,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jcrucesdeveloper",
+			"name": "Jorge Cruces",
+			"location": "Santiago,Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/60014656?u=a87318dc14110877f7c4e0e1f1b4acb355b8fe60&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 40,
+				"forks": 1,
+				"followers": 59,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 38,
+				"publicContributions": 38,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MiguelHigueraDev",
+			"name": "Miguel Higuera",
+			"location": "Los Ángeles, Biobío, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/133175356?u=13ee588e878380927dcf278ac215138fdbee0fb8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 39,
+				"forks": 7,
+				"followers": 106,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gonzakayunawel",
+			"name": "Gonzalo Cayunao Erices",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/83557389?u=0a6343b25a4c5ba2f1e1ed91dd08d54bb983e143&v=4",
+			"metrics": {
+				"commits": 40,
+				"publicContributions": 42,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 32,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 171,
+				"publicContributions": 191,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nicolascine",
+			"name": "Nicolás Silva",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2984968?u=68b3eefc92e60ff058e9a741c66b499046f7a44d&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 54,
+				"forks": 12,
+				"followers": 86,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 12,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JorgeRiveraMancilla",
+			"name": "Jorge Ignacio Rivera Mancilla",
+			"location": "Antofagasta, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/84692366?u=d60e69d4385f67c73c028787759853f6fa868d13&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 47,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "devjaime",
+			"name": "Jaime Hernández",
+			"location": "Santiago de Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/26843824?u=b4bf4b5ced78535a3efc375d9f045633d9c91ddb&v=4",
+			"metrics": {
+				"commits": 18,
+				"publicContributions": 40,
+				"mergedPullRequests": 18,
+				"pullRequests": 19,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 47,
+				"forks": 21,
+				"followers": 77,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 27,
+				"publicContributions": 30,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "lcgodoy",
+			"name": "Lucas da Cunha Godoy",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/24809942?u=afcfd715106dfe7b9ad5b2ea38dc1b9e3aa233a2&v=4",
+			"metrics": {
+				"commits": 11,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 9,
+				"followers": 42,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "basiclines",
+			"name": "Ismael Canal",
+			"location": "Santiago de Compostela, Spain",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/532028?u=08e88b899c2832e30a5666d93b26fe01e07594bf&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 153,
+				"forks": 35,
+				"followers": 82,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 26,
+				"publicContributions": 32,
+				"mergedPullRequests": 5,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "gnapse",
+			"name": "Ernesto García",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15199?u=24ec4e7e35fd6346a2c7f312228e038916ddb95d&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 12,
+				"mergedPullRequests": 2,
+				"pullRequests": 4,
+				"reviews": 3,
+				"issues": 0,
+				"stars": 121,
+				"forks": 17,
+				"followers": 167,
+				"externalRepos": 25
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 34,
+				"mergedPullRequests": 12,
+				"pullRequests": 14,
+				"reviews": 8,
+				"issues": 0
+			}
+		},
+		{
+			"login": "geekhadev",
+			"name": "Irwing",
+			"location": "Chile, San Pedro de la Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/499907?u=7521e34d00ab3970ffdc0adb95a1ed847525a149&v=4",
+			"metrics": {
+				"commits": 99,
+				"publicContributions": 99,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 24,
+				"forks": 12,
+				"followers": 42,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 17,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fguinez",
+			"name": "Francisco Guíñez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/26127246?u=4063e02643a04d4b5559d7cf2b03bd8ad6c49d5c&v=4",
+			"metrics": {
+				"commits": 268,
+				"publicContributions": 323,
+				"mergedPullRequests": 15,
+				"pullRequests": 16,
+				"reviews": 0,
+				"issues": 37,
+				"stars": 13,
+				"forks": 1,
+				"followers": 44,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MasterKrab",
+			"name": "Enzo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/47456460?u=be1dd0962911982f07699774100cd9c1a5479065&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 28,
+				"forks": 10,
+				"followers": 46,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 39,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "a-maccormack",
+			"name": "Alister MacCormack",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/78695941?u=74789e37e0f14d30cbac5f96f223c29f84a5d794&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 20,
+				"forks": 1,
+				"followers": 40,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "figonzal1",
+			"name": "Felipe González Alarcón",
+			"location": "Valparaiso,Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/46515974?u=b073f712d3d3123399e2ef8002a44d4f42ee4454&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 28,
+				"forks": 5,
+				"followers": 252,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "adrianql5",
+			"name": "Adrián Quiroga Linares ",
+			"location": "Santiago de Compostela, Galicia, España",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/157507338?u=33fa3c8b224ef7418a1c03c422c30eaf20c5209f&v=4",
+			"metrics": {
+				"commits": 46,
+				"publicContributions": 54,
+				"mergedPullRequests": 3,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 35,
+				"forks": 2,
+				"followers": 65,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 53,
+				"publicContributions": 59,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 3
+			}
+		},
+		{
+			"login": "gonzafg2",
+			"name": "Gonzalo Fleming",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5702027?u=7af088e1e00bc1ff9966e83d29303622da8f3882&v=4",
+			"metrics": {
+				"commits": 48,
+				"publicContributions": 91,
+				"mergedPullRequests": 38,
+				"pullRequests": 38,
+				"reviews": 1,
+				"issues": 3,
+				"stars": 117,
+				"forks": 17,
+				"followers": 197,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 20,
+				"publicContributions": 27,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ehopperdietzel",
+			"name": "Eduardo Hopperdietzel",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/14140144?u=2050fc8a048b60701860a7ba7ed5b7333d37229b&v=4",
+			"metrics": {
+				"commits": 70,
+				"publicContributions": 70,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 4,
+				"followers": 48,
+				"externalRepos": 12
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "wachunei",
+			"name": "Pedro Pablo Aste Kompen",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1024246?u=77044417db8b737334a7af2d04c4315d70883b21&v=4",
+			"metrics": {
+				"commits": 18,
+				"publicContributions": 61,
+				"mergedPullRequests": 18,
+				"pullRequests": 16,
+				"reviews": 26,
+				"issues": 1,
+				"stars": 74,
+				"forks": 14,
+				"followers": 250,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 26,
+				"publicContributions": 74,
+				"mergedPullRequests": 15,
+				"pullRequests": 18,
+				"reviews": 30,
+				"issues": 0
+			}
+		},
+		{
+			"login": "juancarloscastillo",
+			"name": "Juan Carlos Castillo",
+			"location": "Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/29175922?u=21f4e24c42078f91ea0ee5ae02240c957f3f0fe6&v=4",
+			"metrics": {
+				"commits": 24,
+				"publicContributions": 24,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 33,
+				"followers": 79,
+				"externalRepos": 24
+			},
+			"previousMetrics": {
+				"commits": 39,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "hxcCoder",
+			"name": "Lucky",
+			"location": "Puerto montt, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/205866683?u=64472129429f03ed06aae39554b2263e75ebeebb&v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 57,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rarce",
+			"name": "Roberto Arce",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/48420?v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 18,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 24,
+				"forks": 68,
+				"followers": 46,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 78,
+				"publicContributions": 125,
+				"mergedPullRequests": 24,
+				"pullRequests": 24,
+				"reviews": 1,
+				"issues": 20
+			}
+		},
+		{
+			"login": "hollowstrawberry",
+			"name": "Samuel",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/33796679?u=5d122134fd15d1982d876fa018628e6b0de968e6&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 877,
+				"forks": 159,
+				"followers": 125,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 24,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pisanvs",
+			"name": "pisanvs",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19354162?u=8ef8850a42dfd46c6a6bdaa8276e922bcc03ec85&v=4",
+			"metrics": {
+				"commits": 47,
+				"publicContributions": 51,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 43,
+				"forks": 0,
+				"followers": 35,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "tiagofabian",
+			"name": "Tiago Alcázar",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/76975965?u=1a952fc230b36b6c202d1e87f11b258976d6b290&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 7,
+				"followers": 45,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 33,
+				"publicContributions": 33,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "vcrolack",
+			"name": "Víctor Rolack",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/38675140?u=f90a8b340533b3e1326cf4ef1ccfa0b5006f7005&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 33,
+				"forks": 0,
+				"followers": 44,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "juandiii",
+			"name": "Juan Diego López",
+			"location": "Dominican Republic, Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15571425?u=f145c5958c1ee8cd971c66f8e7dea40800ee570e&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 8,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 71,
+				"forks": 7,
+				"followers": 54,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 36,
+				"publicContributions": 63,
+				"mergedPullRequests": 25,
+				"pullRequests": 26,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Martin-Venegas-M",
+			"name": "Martín Venegas M",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/64295294?u=046fbf7f654fa95345c36ae4eab44bd60b90aa67&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 2,
+				"followers": 34,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "bguzmanm",
+			"name": "Brian Guzmán",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20340523?u=b35e4488a6fc75bb617b478e8d038fce87ff2f3a&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 1,
+				"followers": 60,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 32,
+				"publicContributions": 45,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "vinjatovix",
+			"name": "Vinjatovix Imanub",
+			"location": "Santiago de Compostela",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/63653916?u=55017a7a4eb6481233221d2af6496356b3523860&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 3,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 35,
+				"forks": 1,
+				"followers": 40,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 128,
+				"publicContributions": 130,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "frzambra",
+			"name": "Francisco Zambrano ",
+			"location": "Santiago, Chle",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4713428?u=3a6000597be82740157048e5fb8f3603f0078b24&v=4",
+			"metrics": {
+				"commits": 29,
+				"publicContributions": 30,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 38,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cuervolu",
+			"name": "Cuervolu",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/44347477?u=8297f8696e31c37ff80d0abe47968961012c2e33&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 73,
+				"forks": 3,
+				"followers": 47,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 20,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "FarDust",
+			"name": "Gabriel Faundez",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/26115793?u=612823d8eb9b534c9f750b7a7f745656be485bf0&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 33,
+				"forks": 3,
+				"followers": 82,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "michifeli",
+			"name": "Mitchel Rojas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/108637663?u=0adae5e6b1d080b69e85b047523ad9b2664cb27c&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 33,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 20,
+				"forks": 17,
+				"followers": 43,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 27,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 7,
+				"issues": 3
+			}
+		},
+		{
+			"login": "peopleworks",
+			"name": "Pedro Hernández",
+			"location": "Santiago, Dominican Republic",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/13633911?u=e8d73c3816dc2f58069800feeb908ac1b68ccf3a&v=4",
+			"metrics": {
+				"commits": 126,
+				"publicContributions": 184,
+				"mergedPullRequests": 26,
+				"pullRequests": 35,
+				"reviews": 0,
+				"issues": 6,
+				"stars": 85,
+				"forks": 9,
+				"followers": 45,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 32,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hernandw",
+			"name": "Williams Hernández",
+			"location": "Arica, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/43607368?u=ca7fbc507c91039065ad3515e92c37a93cdf4a7f&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 17,
+				"followers": 69,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 31,
+				"publicContributions": 38,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "daniopitz",
+			"name": "Daniela Opitz",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/9430513?v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 12,
+				"forks": 10,
+				"followers": 38,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 60,
+				"publicContributions": 60,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fceruti",
+			"name": "Francisco Ceruti",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/250665?u=10cb54a7e6dc20558ae27a81e629c8bcc22308f8&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 121,
+				"forks": 29,
+				"followers": 48,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 222,
+				"publicContributions": 222,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "griffero",
+			"name": "Cristóbal  Griffero",
+			"location": "Santiago",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5199826?u=4c5691602e24d8f55a9b60c8d3a7d6181dde51ff&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 52,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "luc-mo",
+			"name": "Luciano Morales",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/53484686?u=1a1cf60541584f43bbad6a85aafc93a2b9793ae1&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 31,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 24,
+				"forks": 2,
+				"followers": 48,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 112,
+				"publicContributions": 114,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ljavierrodriguez",
+			"name": "Luis J. Rodriguez O.",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3824619?u=915e90dde3b8f1cfaa66507258e6df4dbefbe464&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 134,
+				"forks": 75,
+				"followers": 151,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 54,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Andreas-Lafferte",
+			"name": "Andreas Laffert",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/64297783?u=2ace22a292fb45fbd769048da5cfd3e0029cd219&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 6,
+				"forks": 4,
+				"followers": 41,
+				"externalRepos": 21
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "sergiolucero",
+			"name": "Sergio Lucero",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7134649?u=7b7637d3acccc58e0b5d68fb8c55b51a13c07764&v=4",
+			"metrics": {
+				"commits": 200,
+				"publicContributions": 202,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 25,
+				"forks": 9,
+				"followers": 48,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fabricix",
+			"name": "Fabricio Fernández",
+			"location": "Antofagasta, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/22794916?u=8f4946476e9eeb799e3abaf10702fc0b5d7ca58c&v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 20,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 127,
+				"forks": 19,
+				"followers": 60,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "zeluizr",
+			"name": "Jose Luiz Rodrigues",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1095908?u=c4a62c99b07e2ba42dc8a19c3a1e028e7587bf33&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 61,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "aastroza",
+			"name": "Alonso Astroza Tagle",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8590877?u=e1af1b2c3c29e896b19d3018d47b753545563945&v=4",
+			"metrics": {
+				"commits": 89,
+				"publicContributions": 98,
+				"mergedPullRequests": 5,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 217,
+				"forks": 99,
+				"followers": 226,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jvines",
+			"name": "Jose Vines",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20781020?u=428fcaa2b599e5eb6ad2e940a15625a10f1bd9e4&v=4",
+			"metrics": {
+				"commits": 27,
+				"publicContributions": 31,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 96,
+				"forks": 29,
+				"followers": 39,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 101,
+				"publicContributions": 105,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fforster",
+			"name": "Francisco Forster",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5090828?u=47852aa6a9cd32986001f49ede66dbeba48aa89f&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 34,
+				"mergedPullRequests": 14,
+				"pullRequests": 14,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 48,
+				"forks": 12,
+				"followers": 45,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 101,
+				"publicContributions": 106,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "SebastianRed",
+			"name": "Sebastián Rojo",
+			"location": "La Calera, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/46249341?u=225e737d2ca72985be8729468d0cfd0ee8243543&v=4",
+			"metrics": {
+				"commits": 25,
+				"publicContributions": 26,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 43,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "clsource",
+			"name": "Camilo",
+			"location": "BEAM, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/292738?u=1f3edaeddc87d0a8e86e98066cd2c3238d7b3b64&v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 19,
+				"forks": 1,
+				"followers": 414,
+				"externalRepos": 28
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CodeMochi-dev",
+			"name": "valentina llanten robles ",
+			"location": "santiago ",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/249322998?u=ef4ee11b8ba46b153b5008132d5433b79135f9e9&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 4,
+				"followers": 34,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 30,
+				"publicContributions": 41,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "emersonxinay",
+			"name": "Emerson Espinoza",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/51926375?u=90077248ea940508f115bd3dcb583dfb69b1aceb&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 94,
+				"forks": 50,
+				"followers": 240,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Vctorqui",
+			"name": "Víctor Quiñones",
+			"location": "Antofagasta, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/108197038?u=f61505419b443487bff25a4a7cd5f496ba17bc54&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 3,
+				"followers": 47,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 62,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mrGoonies",
+			"name": "Gabriel Muñoz Castro",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/93497614?u=643f2f158993071a663ea2bd98ab643d800d2d5b&v=4",
+			"metrics": {
+				"commits": 34,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 5,
+				"followers": 34,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "VanessaPellegrini",
+			"name": "Van",
+			"location": "Santiago Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15188611?u=6a480a6270e428f4ec5a5bc804bb423337872523&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 2,
+				"followers": 41,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gantunesr",
+			"name": "Gustavo Antunes",
+			"location": "Stgo - Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/17601467?u=6726ca361a9c68e65b9e0e5f678bd52d93d0efdc&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 82,
+				"mergedPullRequests": 15,
+				"pullRequests": 16,
+				"reviews": 45,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 89,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 27,
+				"publicContributions": 127,
+				"mergedPullRequests": 19,
+				"pullRequests": 31,
+				"reviews": 66,
+				"issues": 3
+			}
+		},
+		{
+			"login": "fredpena",
+			"name": "Fred Peña",
+			"location": "Santiago, Rep. Dom.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5680906?u=57d45b98c7080c5ce39f38c9bffba77ed0fa56ef&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 57,
+				"forks": 43,
+				"followers": 104,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 24,
+				"publicContributions": 38,
+				"mergedPullRequests": 11,
+				"pullRequests": 11,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "borisbelmar",
+			"name": "Boris Belmar",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/35373302?u=ebe5b63f8c68abf6f01b776a378c74c29ca47b3e&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 59,
+				"forks": 13,
+				"followers": 43,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 27,
+				"publicContributions": 33,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "felipebravom",
+			"name": "Felipe Bravo-Marquez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3768963?u=19179a7cb72dfd10d2fd8f0ddfd78c14879b9b92&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 144,
+				"forks": 56,
+				"followers": 145,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "b1quint",
+			"name": "Bruno Quint",
+			"location": "La Serena, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4368088?u=4e534bf34b984810aa5a91218aa59ce3c72d7b40&v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 16,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 2,
+				"issues": 0,
+				"stars": 19,
+				"forks": 1,
+				"followers": 56,
+				"externalRepos": 18
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 11,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "kddlb",
+			"name": "Kevin López Brante",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/115702?v=4",
+			"metrics": {
+				"commits": 107,
+				"publicContributions": 109,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 3,
+				"followers": 62,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 54,
+				"publicContributions": 54,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CxrlosKenobi",
+			"name": "Carlos",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/65223024?u=76aa212e3ce66f9de0fc935484e30d1cce03b549&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 41,
+				"forks": 10,
+				"followers": 97,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "lopezjurip",
+			"name": "Patricio López Juri",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7570744?u=34b2ce51519912549016a1a94c694b494378e3a3&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 572,
+				"forks": 121,
+				"followers": 227,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "erasmoh",
+			"name": "Erasmo Hernández",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12125288?u=a04702a12cb94a30c222358cea08839591dd2210&v=4",
+			"metrics": {
+				"commits": 37,
+				"publicContributions": 50,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 4,
+				"followers": 74,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "justalemon",
+			"name": "Hannele Ruiz",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11861253?u=c4e8212015d93c9f2ca0cf6838827ed0d8bddb03&v=4",
+			"metrics": {
+				"commits": 84,
+				"publicContributions": 87,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 118,
+				"forks": 50,
+				"followers": 90,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 35,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "aamatte",
+			"name": "Andrés Matte",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7615277?u=9a795e561a86370313b1a57a4f1b2a921a851c97&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 20,
+				"mergedPullRequests": 3,
+				"pullRequests": 7,
+				"reviews": 5,
+				"issues": 0,
+				"stars": 23,
+				"forks": 10,
+				"followers": 181,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 24,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gmoqa",
+			"name": "Guillermo Quinteros",
+			"location": "Santiago - Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1767051?u=233d2dc640a811cfda74306ec545dd477a2e4d90&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 45,
+				"forks": 7,
+				"followers": 43,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "maxfindel",
+			"name": "Max F. Findel",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/888004?u=0317a427482d202f8b4a6094fdec4c0df3cc0cea&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 4,
+				"stars": 10,
+				"forks": 0,
+				"followers": 52,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 109,
+				"publicContributions": 221,
+				"mergedPullRequests": 53,
+				"pullRequests": 52,
+				"reviews": 7,
+				"issues": 52
+			}
+		},
+		{
+			"login": "JavFuentes",
+			"name": "Javier Fuentes",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/122236197?u=f899d591de18360e9ed5112c07dde1694eca0545&v=4",
+			"metrics": {
+				"commits": 52,
+				"publicContributions": 52,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 9,
+				"followers": 109,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gepd",
+			"name": "gepd",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7091609?u=0c9fad16be4a2bfb47e1666e62603f73258df983&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 393,
+				"forks": 79,
+				"followers": 50,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "byron-villegas",
+			"name": "Byron Villegas Moya",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/96267011?u=4a03b01fa35095208d22bbc6e3275ae906886a51&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 12,
+				"forks": 0,
+				"followers": 370,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "daleal",
+			"name": "Daniel Leal",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/37158127?u=1fcd5f154e765e68ef785b12d07739d886289896&v=4",
+			"metrics": {
+				"commits": 66,
+				"publicContributions": 69,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 332,
+				"forks": 20,
+				"followers": 108,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fernandosmither",
+			"name": "Fernando",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/66154723?u=f79753eb207d01cca5bbb91ac62db6123e7622d1&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 4,
+				"followers": 89,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 32,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "heismauri",
+			"name": "Mauricio Villa",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/47569205?u=ad585ff33198325d4fc098357a034b7c25cf5871&v=4",
+			"metrics": {
+				"commits": 23,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 279,
+				"forks": 14,
+				"followers": 107,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 43,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "a-chacon",
+			"name": "Andrés",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39093711?u=60837a7248c8b21d6a84e4d64b9ac81f05ce1cf7&v=4",
+			"metrics": {
+				"commits": 54,
+				"publicContributions": 96,
+				"mergedPullRequests": 22,
+				"pullRequests": 22,
+				"reviews": 0,
+				"issues": 18,
+				"stars": 506,
+				"forks": 77,
+				"followers": 43,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 14,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "bm0x",
+			"name": "Rafael Méndez Pacheco",
+			"location": "Los Ángeles, Bio-Bio, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/16091640?u=d6fc9ea2aedce5c10797b2dff2149ae465f74540&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 45,
+				"forks": 25,
+				"followers": 65,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 1,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "german-rs",
+			"name": "Germán Riveros S.",
+			"location": "Santiago ",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/18427568?u=2624631863f92aba2145e24554c1fa2911007732&v=4",
+			"metrics": {
+				"commits": 37,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 90,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 13,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "paulovillarroel",
+			"name": "Paulo Villarroel",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/52899164?u=ab58cb3e7c3ff15ffe8b0e18af2a480bd8b1f5cf&v=4",
+			"metrics": {
+				"commits": 59,
+				"publicContributions": 67,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 156,
+				"forks": 36,
+				"followers": 174,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MakerTobey",
+			"name": "Tobias Wenzel",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/14097042?u=5168b0c56dd0057e9355eeff8510eeebbe66c447&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 61,
+				"forks": 7,
+				"followers": 85,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "shaka0241",
+			"name": "Alberto Rojas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/25334358?u=a6aa6d5352b75f49eff5c404ffa453849a3e204f&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 11,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 2,
+				"followers": 38,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 40,
+				"publicContributions": 75,
+				"mergedPullRequests": 18,
+				"pullRequests": 33,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nicolasparada",
+			"name": "Nicolás Parada",
+			"location": "Los Ángeles, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7969166?u=ef3d8eb3ae9585192ba08834430fc2440ba4c47c&v=4",
+			"metrics": {
+				"commits": 61,
+				"publicContributions": 75,
+				"mergedPullRequests": 6,
+				"pullRequests": 8,
+				"reviews": 4,
+				"issues": 0,
+				"stars": 393,
+				"forks": 45,
+				"followers": 105,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 25,
+				"mergedPullRequests": 1,
+				"pullRequests": 0,
+				"reviews": 2,
+				"issues": 0
+			}
+		},
+		{
+			"login": "f13o",
+			"name": "francis",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4674672?u=1ca26e551c1ecc427de67da51eabb98a051d9b50&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 3,
+				"followers": 33,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 54,
+				"publicContributions": 55,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "prulloac",
+			"name": "Pablo Ulloa",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10354398?u=fb025dfb58f78153d120d369ecc8f281ee2734d7&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 6,
+				"followers": 33,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "alejaranda",
+			"name": "Alejandro Arancibia",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/209288425?u=2efbb8a37479f4cb3a570696cf502e5447b36086&v=4",
+			"metrics": {
+				"commits": 31,
+				"publicContributions": 34,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 0,
+				"followers": 1061,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "domingomery",
+			"name": "Domingo Mery",
+			"location": "Santiago - Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/504010?u=03c26da69d8594ae47c9f5d753d023dc810fb00b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 612,
+				"forks": 212,
+				"followers": 298,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 26,
+				"publicContributions": 26,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Alejandrehl",
+			"name": "Alejandro Exequiel Hernández Lara",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/18683071?u=01487cce471b9f2042ee08015092f7dffb43c0ee&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 38,
+				"forks": 15,
+				"followers": 117,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "diegocaro",
+			"name": "Diego Caro",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/421146?u=627d05f1a56555444db79a99cc5813f657ce0d39&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 16,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 157,
+				"forks": 70,
+				"followers": 78,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 35,
+				"publicContributions": 36,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fonturbel",
+			"name": "Francisco E. Fonturbel",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/25533231?u=42136fa185bdf39120241980e47b5cdd4dbffd1e&v=4",
+			"metrics": {
+				"commits": 34,
+				"publicContributions": 34,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 41,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ernestoacevedo",
+			"name": "Ernesto Acevedo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2821732?u=e7b608a5a02a723846a39e464653eb12f7ecca0d&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 6,
+				"followers": 46,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Baelfire18",
+			"name": "Jose Antonio Castro",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/50716449?u=49697b3530d24d68e3beb441e5bd46f4c25800aa&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 68,
+				"forks": 6,
+				"followers": 124,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hectorpalmatellez",
+			"name": "Héctor Palma Téllez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1266785?u=1c2f92249682f59308905de60342da756780020e&v=4",
+			"metrics": {
+				"commits": 147,
+				"publicContributions": 156,
+				"mergedPullRequests": 7,
+				"pullRequests": 6,
+				"reviews": 2,
+				"issues": 0,
+				"stars": 30,
+				"forks": 7,
+				"followers": 65,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "KrlitosForever",
+			"name": "Carlos Carrasco Varas",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7423579?u=496e9da4fb97baff7519b3f4a788d41bcd97c0b5&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 2,
+				"followers": 162,
+				"externalRepos": 21
+			},
+			"previousMetrics": {
+				"commits": 14,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "vinavfx",
+			"name": "Francisco Contreras",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/40272695?u=482a29983624ca739c61247b55785ded18f49b13&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 481,
+				"forks": 41,
+				"followers": 188,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "sudachen",
+			"name": "Alexey Sudachen",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1428?u=2fca2bb7eb61d25a9f71daa2e49cccd55acc43bf&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 259,
+				"forks": 90,
+				"followers": 183,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "satelerd",
+			"name": "Daniel Sateler",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/62968964?u=541debf6ebf78b4a3374f79f23740030389d4532&v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 16,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 24,
+				"forks": 4,
+				"followers": 55,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 13,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "toridoriv",
+			"name": "Victoria Rodriguez",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/32281542?u=39011a8931c349be852c90e62ff61e93971a54a7&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 7,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 43,
+				"forks": 9,
+				"followers": 42,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Umbingelelo",
+			"name": "Cristian Calderón Sanchez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/54289754?u=b71cf42f90a4ca77530ed1abcf6783a51284fa36&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 32,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 332,
+				"followers": 33,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 42,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Nandem1",
+			"name": "Vicente Aguirre",
+			"location": "Coquimbo, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/103139553?u=f0df2a8d3ee3779a3175e978c256fbc3a6887e49&v=4",
+			"metrics": {
+				"commits": 27,
+				"publicContributions": 31,
+				"mergedPullRequests": 3,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 12,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 33,
+				"publicContributions": 33,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gsanchezd",
+			"name": "Gonzalo Sánchez D",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/539503?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 79,
+				"forks": 3168,
+				"followers": 204,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "marcelomendoza",
+			"name": "Marcelo Mendoza",
+			"location": "Campus San Joaquín, Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10616742?u=8cbb87d4ce67dd075486783d00fb08867c781677&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 162,
+				"forks": 15,
+				"followers": 44,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "barbarasagredo",
+			"name": "Bárbara Sagredo",
+			"location": "Santiago de Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/78361600?u=ae44e67f4a45d648f571cbe7747a759cbcab8a84&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 6,
+				"followers": 36,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "carlhidalgo",
+			"name": "Carlos Hidalgo",
+			"location": "chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/106288856?u=0ed3933db2cb3c72c3e96998cff0e932dad38e24&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 40,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "robertoalvarezm",
+			"name": "Roberto Álvarez",
+			"location": "Santiago de Querétaro",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12945669?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 31,
+				"followers": 62,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 41,
+				"publicContributions": 48,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "sergioazoc",
+			"name": "Sergio Azócar",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6147546?u=2f447d905d7778517a94b7900e7f4a70fb6b2e23&v=4",
+			"metrics": {
+				"commits": 13,
+				"publicContributions": 25,
+				"mergedPullRequests": 10,
+				"pullRequests": 9,
+				"reviews": 3,
+				"issues": 0,
+				"stars": 77,
+				"forks": 10,
+				"followers": 49,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "elarayax",
+			"name": "",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/37583319?v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 5,
+				"followers": 48,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 7,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "miguelcarcamov",
+			"name": "Miguel Cárcamo",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5432126?u=fec4f05e6598cb8d8e0b969e86c9ef9a36e6d5d8&v=4",
+			"metrics": {
+				"commits": 22,
+				"publicContributions": 54,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 28,
+				"stars": 49,
+				"forks": 16,
+				"followers": 47,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 36,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Happyuky7",
+			"name": "Happy7",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/58347721?u=4eeb9d5d1c880d6152c297b2eea254d6ff48cfae&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 35,
+				"forks": 19,
+				"followers": 42,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AlexanderManriquez",
+			"name": "Alexander Manriquez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/157619134?u=54d051f3aa00dc2ff73feb4bd72d9a440f00a897&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 32,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "galenzo17",
+			"name": "Agustin Bereciartua Castillo",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/9113159?u=87ef3bb551c6092479c41a5756654c4a138e1804&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 2,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 12,
+				"forks": 4,
+				"followers": 121,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "adigenova",
+			"name": "adigenova",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7844296?u=6d96c5a0473321e6f3fa534b532d7b46f7e58b86&v=4",
+			"metrics": {
+				"commits": 13,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 137,
+				"forks": 37,
+				"followers": 58,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 46,
+				"publicContributions": 47,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "chepo92",
+			"name": "Axel Sepúlveda",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/26207806?u=c2cc45119a7d60333fd3933b7921d6ebfaf3f967&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 6,
+				"mergedPullRequests": 2,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 31,
+				"forks": 13,
+				"followers": 42,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 9,
+				"mergedPullRequests": 3,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "niba291",
+			"name": "Niba",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/63934510?u=d42b5fabd606d5e5d55e76c921f8fb4d17b0c372&v=4",
+			"metrics": {
+				"commits": 59,
+				"publicContributions": 61,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 5,
+				"followers": 112,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 17,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "amaurelia",
+			"name": "Alvaro Maurelia",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/77645288?u=dac9acb5a8fbd39599964dc8bce5d6bc849db3d9&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 2,
+				"followers": 80,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 35,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "crishernandezmaps",
+			"name": "Cris Hernandez",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5718347?u=611f477307e1d61074b243696d3caac3d573cebb&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 71,
+				"forks": 52,
+				"followers": 51,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CoffeSiberian",
+			"name": "Fernando Garrido",
+			"location": "Chile, Villa Alegre",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/61036343?u=696ca37ac1899279dac7a8e293a51753be1c7b4c&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 375,
+				"forks": 30,
+				"followers": 45,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 28,
+				"publicContributions": 31,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "maaferna",
+			"name": "MarcoAntonioParra",
+			"location": "Chillan, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/55238942?u=67886127d4934839764f938b4d3ac5fcbcaadfd8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 60,
+				"forks": 2,
+				"followers": 505,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 26,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DiegoBan",
+			"name": "Diego:p",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128759027?u=f2074b6406f63d4331a07e19f3c2ca34e0fcedb4&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 18,
+				"forks": 0,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 7,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "WilldiazRaM",
+			"name": "🇨🇱 ",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/107010216?u=db8cfe188bacc112699f909642029a6bb7c4baa1&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 96,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hugo-araya",
+			"name": "Hugo Araya Carrasco",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/42989121?u=24aed29884ba9cac0d325dda63a15db7f2d426b8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 47,
+				"forks": 11,
+				"followers": 119,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AlejandraConB",
+			"name": "Alejandra Contreras",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/154462336?u=c61b1618b8de3cec2f0f7c357967dbe63a4f3c9d&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 40,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rieg-ec",
+			"name": "",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/58893812?u=49e113996b7f2023053e56bcae06c7884504e01c&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 8,
+				"followers": 62,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 37,
+				"mergedPullRequests": 7,
+				"pullRequests": 10,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "felixalguzman",
+			"name": "Félix Alejandro Guzmán",
+			"location": "Santiago De Los Caballeros, Dominican Republic",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/17243615?u=f73908c742b3d6e4ef60fe541816aa16e1e45903&v=4",
+			"metrics": {
+				"commits": 81,
+				"publicContributions": 169,
+				"mergedPullRequests": 68,
+				"pullRequests": 68,
+				"reviews": 0,
+				"issues": 19,
+				"stars": 7,
+				"forks": 10,
+				"followers": 93,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fabulias",
+			"name": "Farid Abulias",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10964484?u=fee865d60052b0625b68f1b9f550543930cdaf50&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 58,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 126,
+				"publicContributions": 134,
+				"mergedPullRequests": 3,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Gaonuk",
+			"name": "Rodrigo Gaona",
+			"location": "Santiago, Chile.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/43006704?u=03da0c180d557e883351a8bddd6fa8922c1e2216&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 1,
+				"followers": 77,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 68,
+				"publicContributions": 88,
+				"mergedPullRequests": 16,
+				"pullRequests": 18,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "FxxMorgan",
+			"name": "Feer",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/33134843?u=8ca2a9c39cbbfde9ce68bcf32c54ab128be39991&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 322,
+				"forks": 54,
+				"followers": 44,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 13,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mvargas33",
+			"name": "Maximiliano Vargas",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/43217761?u=6b1beaed092bbf176dc09cc138ee76c61094b456&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 2,
+				"followers": 47,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ngeorger",
+			"name": "Nicolás Georger",
+			"location": "Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/34670018?u=20cd0f8727f6327e8b2a186f631ff9f27172c5c9&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 75,
+				"mergedPullRequests": 15,
+				"pullRequests": 17,
+				"reviews": 37,
+				"issues": 0,
+				"stars": 8,
+				"forks": 3,
+				"followers": 124,
+				"externalRepos": 16
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 51,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 31,
+				"issues": 0
+			}
+		},
+		{
+			"login": "roymacdonald",
+			"name": "Roy Macdonald",
+			"location": "Santiago, Chile",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/974878?v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 6,
+				"mergedPullRequests": 2,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 571,
+				"forks": 149,
+				"followers": 309,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 14,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		}
+	],
+	"reconstructed": false
+}

@@ -10,7 +10,11 @@
 		"biome:check": "biome check --write --unsafe --config-path=biome.json",
 		"prepare": "husky",
 		"test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"index-users": "ts-node --transpile-only scripts/index-users.ts"
+		"index-users": "ts-node --transpile-only scripts/index-users.ts",
+		"rankings:bundle": "bun scripts/build-ranking-bundle.ts",
+		"rankings:seasons:backfill": "bun scripts/backfill-ranking-season.ts",
+		"rankings:seasons:backfill:2026": "bun scripts/backfill-2026-seasons.ts",
+		"rankings:refresh": "bun scripts/refresh-rankings.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/elevenlabs": "^0.0.3",
@@ -71,6 +75,7 @@
 		"next": "15.5.18",
 		"next-themes": "^0.4.6",
 		"nuqs": "^2.4.3",
+		"radix-ui": "^1.6.7",
 		"react": "^19.0.0",
 		"react-day-picker": "^9.7.0",
 		"react-dom": "^19.0.0",

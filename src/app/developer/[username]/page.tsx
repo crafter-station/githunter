@@ -4,6 +4,7 @@ import { Github } from "@/components/icons/github";
 import { Linkedin } from "@/components/icons/linkedin";
 import { Twitter } from "@/components/icons/twitter";
 import { RepoCardSection } from "@/components/profile/RepoCardSection";
+import { RankedDeveloperProfile } from "@/components/rankings/ranked-developer-profile";
 import { CountryFlag } from "@/components/ui/CountryFlag";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import UserSkillsRadar from "@/components/user-skills-radar";
 import { getSimilarUsers, getUserByUsername } from "@/db/query/user";
 import type { UserSelect } from "@/db/schema";
 import { getCountryCode } from "@/lib/country-codes";
+import { getRankingProfile } from "@/rankings/profile";
 import { redis } from "@/redis";
 import {
 	BarChart,
@@ -67,6 +69,11 @@ export async function generateStaticParams() {
 
 export default async function DeveloperPage({ params }: DeveloperPageProps) {
 	const { username } = await params;
+	const rankingProfile = await getRankingProfile(username);
+
+	if (rankingProfile) {
+		return <RankedDeveloperProfile data={rankingProfile} />;
+	}
 
 	const userData = await getUserByUsername(username);
 
@@ -544,6 +551,33 @@ export async function generateMetadata({
 	params,
 }: DeveloperPageProps): Promise<Metadata> {
 	const { username } = await params;
+	const rankingProfile = await getRankingProfile(username);
+
+	if (rankingProfile) {
+		const profile = rankingProfile.profile;
+		const title = `${profile.name || profile.login} GitHub Ranking in ${rankingProfile.scopeName} | GitHunter`;
+		const description = `See ${profile.name || profile.login}'s position across ${rankingProfile.scopeName}'s GitHub rankings, with transparent scores for public work, collaboration, momentum, and open source impact.`;
+		return {
+			title: { absolute: title },
+			description,
+			alternates: { canonical: `/developer/${profile.login}` },
+			openGraph: {
+				title,
+				description,
+				url: `/developer/${profile.login}`,
+				type: "profile",
+				images: [
+					{ url: profile.avatarUrl, alt: profile.name || profile.login },
+				],
+			},
+			twitter: {
+				card: "summary",
+				title,
+				description,
+				images: [profile.avatarUrl],
+			},
+		};
+	}
 
 	const userData = await getUserByUsername(username);
 
@@ -554,21 +588,23 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
+		title: {
+			absolute: `${userData.fullname || userData.username} | Open Source Developer | GitHunter`,
+		},
 		description: `View ${userData.fullname || userData.username}'s GitHub profile, repositories, tech stack and more on GitHunter.`,
 		openGraph: {
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
 			images: [`/api/og/users/${username}`],
-			url: `https://githunter.dev/api/og/users/${username}`,
+			url: `/developer/${username}`,
 			siteName: "GitHunter",
-			type: "website",
+			type: "profile",
 		},
 		twitter: {
 			card: "summary_large_image",
 			title: `${userData.fullname || userData.username} | GitHunter`,
 			description: `Open source developer with ${userData.stars}+ stars and ${userData.contributions}+ contributions.`,
-			images: [`/developer/${username}/opengraph-image`],
+			images: [`/api/og/users/${username}`],
 		},
 		keywords: ["dev", "user", "github", "githunter"],
 	};

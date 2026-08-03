@@ -1,11 +1,12 @@
-import { createRouteHandler } from "uploadthing/next";
+function retired() {
+	return Response.json(
+		{
+			error: "The GitHunter CV workflow has moved out of this product.",
+			replacement: "/peru",
+		},
+		{ status: 410 },
+	);
+}
 
-import { ourFileRouter } from "./core";
-
-// Export routes for Next App Router
-export const { GET, POST } = createRouteHandler({
-	router: ourFileRouter,
-
-	// Apply an (optional) custom config:
-	// config: { ... },
-});
+export const GET = retired;
+export const POST = retired;

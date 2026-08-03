@@ -1,0 +1,6377 @@
+{
+	"scope": "bolivia",
+	"generatedAt": "2026-08-03T05:46:57.664Z",
+	"period": {
+		"from": "2026-07-01T00:00:00.000Z",
+		"to": "2026-08-03T23:59:59.999Z"
+	},
+	"previousPeriod": {
+		"from": "2026-04-01T00:00:00.000Z",
+		"to": "2026-05-04T23:59:59.999Z"
+	},
+	"cohort": {
+		"definition": "Public GitHub users mapped to Bolivia from the 256-account committers.top country cohort, scored from GitHub public evidence.",
+		"candidates": 244,
+		"scored": 244
+	},
+	"sources": [
+		"GitHub GraphQL API",
+		"GitHub Search API",
+		"committers.top Bolivia"
+	],
+	"limitations": [
+		"GitHub location is self-reported.",
+		"Stars, forks, followers, and external repositories are cumulative.",
+		"Activity and collaboration reset at the start of each calendar quarter.",
+		"Rising compares quarter-to-date activity with the same elapsed window in the preceding quarter.",
+		"Stars and forks cover the 100 most-starred public, non-fork repositories owned by each user.",
+		"Private activity and contribution size are excluded for comparability."
+	],
+	"profiles": [
+		{
+			"login": "AndyIbanez",
+			"name": "Andy Ibanez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/892112?u=6e70269bfd55cbfd3805bff15d41c4709ebd91a4&v=4",
+			"metrics": {
+				"commits": 2367,
+				"publicContributions": 2367,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 90,
+				"forks": 20,
+				"followers": 135,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 2430,
+				"publicContributions": 2431,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "OscarGauss",
+			"name": "Oscar Gauss Carvajal Yucra",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6438307?u=24daa4f05406277f4ec757c8f5ba97e1689e17dc&v=4",
+			"metrics": {
+				"commits": 163,
+				"publicContributions": 172,
+				"mergedPullRequests": 5,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 0,
+				"followers": 25,
+				"externalRepos": 29
+			},
+			"previousMetrics": {
+				"commits": 195,
+				"publicContributions": 200,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "adimerpaul",
+			"name": "",
+			"location": "Oruro Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/22999010?u=636701807b0dbcea83057d27a96140a6e13b188a&v=4",
+			"metrics": {
+				"commits": 200,
+				"publicContributions": 205,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 19,
+				"forks": 2,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 267,
+				"publicContributions": 278,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Walsen",
+			"name": "Sergio D. Rodríguez Inclán",
+			"location": "Cochabamba - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10902?v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 28,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 3,
+				"followers": 37,
+				"externalRepos": 20
+			},
+			"previousMetrics": {
+				"commits": 45,
+				"publicContributions": 81,
+				"mergedPullRequests": 28,
+				"pullRequests": 31,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DanielTorres1",
+			"name": "Daniel Torres Sandi",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/22946964?u=e8cbdccfdc3fa2f5d76d96a5d804f3242646fd8e&v=4",
+			"metrics": {
+				"commits": 244,
+				"publicContributions": 249,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 23,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 147,
+				"publicContributions": 147,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jassielof",
+			"name": "Jassiel Ovando",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/110270993?v=4",
+			"metrics": {
+				"commits": 334,
+				"publicContributions": 359,
+				"mergedPullRequests": 0,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 13,
+				"stars": 86,
+				"forks": 16,
+				"followers": 26,
+				"externalRepos": 34
+			},
+			"previousMetrics": {
+				"commits": 273,
+				"publicContributions": 277,
+				"mergedPullRequests": 3,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "DaleneyRuben",
+			"name": "Fernando Daleney",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/44655268?u=bdca9dc39ca7f0cf6d733d5027301e5fbe6d3cca&v=4",
+			"metrics": {
+				"commits": 1144,
+				"publicContributions": 1329,
+				"mergedPullRequests": 183,
+				"pullRequests": 184,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 4,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "SergioRibera",
+			"name": "Sergio Alejandro Ribera Costa",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/56278796?u=9e3dac947b4fd3ca2f1a05024e083c64e4c69cfe&v=4",
+			"metrics": {
+				"commits": 215,
+				"publicContributions": 224,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 6,
+				"issues": 1,
+				"stars": 715,
+				"forks": 80,
+				"followers": 259,
+				"externalRepos": 38
+			},
+			"previousMetrics": {
+				"commits": 57,
+				"publicContributions": 71,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 9,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Lotiel-Dev",
+			"name": "Carlos Antonio Gutierrez Copara",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/180131103?u=41c220c1ce92b803950919c685f09bee9d3dba32&v=4",
+			"metrics": {
+				"commits": 96,
+				"publicContributions": 96,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 3,
+				"followers": 169,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 101,
+				"publicContributions": 101,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "arkgast",
+			"name": "Arnold Gandarillas Castillo",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5279327?u=1f74b29c9b872b3776376807615f6f1bce79d923&v=4",
+			"metrics": {
+				"commits": 514,
+				"publicContributions": 627,
+				"mergedPullRequests": 102,
+				"pullRequests": 102,
+				"reviews": 11,
+				"issues": 0,
+				"stars": 18,
+				"forks": 11,
+				"followers": 13,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "igidio",
+			"name": "Salvador Cáceres C.",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/61283392?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 2,
+				"followers": 63,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Luiss2080",
+			"name": "LuisRocha",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/149401326?u=f9af17bf8b317dc6939d4af566da77d748c70c0c&v=4",
+			"metrics": {
+				"commits": 41,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "alphaonex86",
+			"name": "BRULE Herman Jacques Roger",
+			"location": "Santa cruz de la sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/778581?v=4",
+			"metrics": {
+				"commits": 144,
+				"publicContributions": 151,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 634,
+				"forks": 145,
+				"followers": 65,
+				"externalRepos": 13
+			},
+			"previousMetrics": {
+				"commits": 144,
+				"publicContributions": 150,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "alexalcon",
+			"name": "Alex Alcón",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/83939543?u=7d2cfa8f419ac7fc56cfa12ba92a9d2a2cb42405&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 4,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 87,
+				"publicContributions": 87,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nataly-33",
+			"name": "Nataly Vanessa Martinez Martinez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/204836063?u=5949e1ffd27480b7aec4fd6e796780f282bc336f&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 200,
+				"publicContributions": 204,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ggonzalez94",
+			"name": "Gustavo Gonzalez",
+			"location": "Santa Cruz de la SIerra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/17907743?u=16fb3e3b73be3bdcd31a6df31c037fef27bf04a4&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 28,
+				"mergedPullRequests": 8,
+				"pullRequests": 9,
+				"reviews": 9,
+				"issues": 0,
+				"stars": 77,
+				"forks": 19,
+				"followers": 63,
+				"externalRepos": 25
+			},
+			"previousMetrics": {
+				"commits": 120,
+				"publicContributions": 209,
+				"mergedPullRequests": 57,
+				"pullRequests": 64,
+				"reviews": 20,
+				"issues": 4
+			}
+		},
+		{
+			"login": "Johan-py",
+			"name": "Johan Marcelo Beltrán Montaño",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/207353700?u=69e386b7e66d40c8cc4e8d9a4d86ff50198a61e6&v=4",
+			"metrics": {
+				"commits": 26,
+				"publicContributions": 28,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 12,
+				"followers": 23,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 71,
+				"publicContributions": 128,
+				"mergedPullRequests": 12,
+				"pullRequests": 18,
+				"reviews": 35,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Frosmin",
+			"name": "Simon Abasto Martinis",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/97764798?u=b8ce5645299ac4ede222728178b3bf258e974c17&v=4",
+			"metrics": {
+				"commits": 75,
+				"publicContributions": 89,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 8,
+				"stars": 495,
+				"forks": 16,
+				"followers": 2310,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 42,
+				"publicContributions": 49,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 4
+			}
+		},
+		{
+			"login": "FernandoVCG33",
+			"name": "Fernando Vidal Catacora Gonzales",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/197964541?u=dacb4d3cc6e13a2cb5b230a6fed08650ff1af47c&v=4",
+			"metrics": {
+				"commits": 27,
+				"publicContributions": 27,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 73,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 35,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "abdair-coca",
+			"name": "Abdair Coca",
+			"location": "Potosi - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/166029486?v=4",
+			"metrics": {
+				"commits": 402,
+				"publicContributions": 407,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "asosab",
+			"name": "Alejandro Sosa Briceño",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/491253?u=cc45576148914ae9a143cc7290eaa2b876c39f37&v=4",
+			"metrics": {
+				"commits": 202,
+				"publicContributions": 202,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 40,
+				"forks": 4,
+				"followers": 21,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "srllamadev",
+			"name": "Sr LLama Dev",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/192006049?u=ad7b6119e08fae605829c1402e07aa27c7c77bb2&v=4",
+			"metrics": {
+				"commits": 76,
+				"publicContributions": 81,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 33,
+				"externalRepos": 29
+			},
+			"previousMetrics": {
+				"commits": 14,
+				"publicContributions": 15,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "link200309",
+			"name": "John Henry Chavarria Zurita",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/133817555?u=92660e6d059e104c1de879e5cb391a82deb1e74c&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 2,
+				"followers": 32,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 49,
+				"publicContributions": 55,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 2
+			}
+		},
+		{
+			"login": "villcabo",
+			"name": "Bismarck Villca",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7145004?u=c8bd13a8362612e0af2b339032b3feec73df48f0&v=4",
+			"metrics": {
+				"commits": 64,
+				"publicContributions": 70,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 6,
+				"forks": 4,
+				"followers": 6,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 120,
+				"publicContributions": 123,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cesarszv",
+			"name": "Sebastian Zambrana",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/205967966?u=17af68e73ad1968821411fa242b7595151ebf60e&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 0,
+				"followers": 17,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Richixs",
+			"name": "Ricardo Ramirez",
+			"location": "Bolivia, Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/124272385?u=8960a453cf233ed2da2c7e66bf1528f5aad924b4&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 2,
+				"followers": 23,
+				"externalRepos": 16
+			},
+			"previousMetrics": {
+				"commits": 74,
+				"publicContributions": 96,
+				"mergedPullRequests": 15,
+				"pullRequests": 15,
+				"reviews": 4,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DanielGuzmanV",
+			"name": "Guz",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/109259673?u=6f00b3d6e0fd570bd5bd45905cc6eb3afd49d60d&v=4",
+			"metrics": {
+				"commits": 38,
+				"publicContributions": 40,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 24,
+				"forks": 0,
+				"followers": 13,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 132,
+				"publicContributions": 132,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Grillo26",
+			"name": "Carlos Enrique Mamani Torrez",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/45028931?u=3f7d3037cfca8e6d7fd8b3cf5b701c05890b9a22&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 23,
+				"mergedPullRequests": 5,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 12,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "cchura94",
+			"name": "Cristian Chura Poma",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15663327?u=71ef4468da62a3a5349a8c04c859c2c9d789ceee&v=4",
+			"metrics": {
+				"commits": 58,
+				"publicContributions": 67,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 35,
+				"forks": 26,
+				"followers": 59,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 51,
+				"publicContributions": 63,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jpfernandezl",
+			"name": "Juan Pablo Fernandez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/9676674?u=8a722b9e2b0d6243bb13f78893b8d768ceb23bdf&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 163,
+				"publicContributions": 164,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "SidnyTech",
+			"name": "Sidney A. Sahonero Garrado",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/162159155?u=4733adb5fb7d23b9bb541d7c6097d85203eaf412&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 34,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 3,
+				"followers": 8,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 39,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "alvarohurtadobo",
+			"name": "Álvaro Rubén Hurtado Maldonado",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5840011?u=f95126a5ef38be24759ac6615acef4f3b3df2b6b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 9,
+				"forks": 3,
+				"followers": 9,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pachonjcl",
+			"name": "Jose Carlos Laura Ramirez",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/26514574?v=4",
+			"metrics": {
+				"commits": 33,
+				"publicContributions": 110,
+				"mergedPullRequests": 18,
+				"pullRequests": 18,
+				"reviews": 59,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 5,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 78,
+				"mergedPullRequests": 18,
+				"pullRequests": 17,
+				"reviews": 32,
+				"issues": 0
+			}
+		},
+		{
+			"login": "andrecuellar",
+			"name": "PUENTE_Andre Cuellar",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7474035?v=4",
+			"metrics": {
+				"commits": 132,
+				"publicContributions": 196,
+				"mergedPullRequests": 54,
+				"pullRequests": 61,
+				"reviews": 0,
+				"issues": 3,
+				"stars": 0,
+				"forks": 0,
+				"followers": 9,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 18,
+				"publicContributions": 22,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "andres-chirinos",
+			"name": "Andrés Chirinos",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/70867410?u=f5ee10196ecbe914461f1e4b2749ee5db1ae9ad3&v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 17,
+				"mergedPullRequests": 5,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 4,
+				"followers": 19,
+				"externalRepos": 12
+			},
+			"previousMetrics": {
+				"commits": 47,
+				"publicContributions": 48,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Dauphinsss",
+			"name": "Marko<3",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/163332677?u=af9041a67624e3d0880958f00b4f9eb56b75217e&v=4",
+			"metrics": {
+				"commits": 15,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 5,
+				"followers": 10,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 63,
+				"publicContributions": 70,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "skillparty",
+			"name": "joseAlejandro",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/83247348?u=7c4aab6c14040d1e14ed2ec62b4db0741c2f7780&v=4",
+			"metrics": {
+				"commits": 93,
+				"publicContributions": 94,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 50,
+				"publicContributions": 51,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nahimterrazas",
+			"name": "Nahim Terrazas",
+			"location": "SCZ - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/189661284?u=51e3277b4393ded9184f9f5b210168a0c32b5baa&v=4",
+			"metrics": {
+				"commits": 266,
+				"publicContributions": 297,
+				"mergedPullRequests": 20,
+				"pullRequests": 25,
+				"reviews": 3,
+				"issues": 3,
+				"stars": 0,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 13
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 24,
+				"mergedPullRequests": 7,
+				"pullRequests": 12,
+				"reviews": 1,
+				"issues": 2
+			}
+		},
+		{
+			"login": "mauforonda",
+			"name": "Mau Foronda",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4010711?u=80ee2153c2608e602dc9ec7153bc54beeb86c6a0&v=4",
+			"metrics": {
+				"commits": 24,
+				"publicContributions": 26,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 173,
+				"forks": 45,
+				"followers": 116,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 42,
+				"publicContributions": 43,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pazteddy",
+			"name": "Teddy Paz Muñoz",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2751139?u=9262ba4b2b3e32c04d23942fc041542b7ce223c7&v=4",
+			"metrics": {
+				"commits": 73,
+				"publicContributions": 73,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 4,
+				"followers": 128,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 45,
+				"publicContributions": 45,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gitchaell",
+			"name": "Michaell Alavedra",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/37460957?u=5113e7a7ba23d7c6a882c386eb1d43502be1d1c7&v=4",
+			"metrics": {
+				"commits": 125,
+				"publicContributions": 169,
+				"mergedPullRequests": 42,
+				"pullRequests": 42,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 30,
+				"forks": 2,
+				"followers": 14,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "antonionatusch",
+			"name": "Antonio Miguel Natusch Zarco",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/153565587?u=c6e98d2b26a20f3715610aa632602016c70b84dc&v=4",
+			"metrics": {
+				"commits": 141,
+				"publicContributions": 145,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 2,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "dylanzeballos",
+			"name": "Dylan Amin Zeballos Peredo",
+			"location": "Cochabamba,  Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/164448335?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 23,
+				"publicContributions": 26,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AnahiSU",
+			"name": "Anahí Sanabria Ugarte",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/81058245?u=0469a46925a57bdd9b34cca0b3960f2a32e3fa3c&v=4",
+			"metrics": {
+				"commits": 49,
+				"publicContributions": 57,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 2,
+				"issues": 0,
+				"stars": 28,
+				"forks": 3,
+				"followers": 33,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 107,
+				"publicContributions": 139,
+				"mergedPullRequests": 20,
+				"pullRequests": 21,
+				"reviews": 9,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Franci-343",
+			"name": "Franci",
+			"location": "La paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/153700812?u=ee307276f7b146026124903723966397300671a8&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 19
+			},
+			"previousMetrics": {
+				"commits": 70,
+				"publicContributions": 74,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "samuelloza",
+			"name": "Samuel Loza Ramirez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4775012?u=349a8295bd4cf372429f3fa90f3257770c4ef306&v=4",
+			"metrics": {
+				"commits": 127,
+				"publicContributions": 133,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 12,
+				"followers": 47,
+				"externalRepos": 12
+			},
+			"previousMetrics": {
+				"commits": 25,
+				"publicContributions": 27,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "TheArrick",
+			"name": "Ignacio Jaldin",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/109319538?u=6a168e1055506b14288d873969e002577d098fa0&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 4,
+				"followers": 7,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 104,
+				"publicContributions": 178,
+				"mergedPullRequests": 24,
+				"pullRequests": 31,
+				"reviews": 40,
+				"issues": 1
+			}
+		},
+		{
+			"login": "SamuelRioTz",
+			"name": "Samuel Rioja",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/43000324?u=c95c909ac40d98c31f1377b7bdafff20dba08174&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 14,
+				"mergedPullRequests": 1,
+				"pullRequests": 0,
+				"reviews": 11,
+				"issues": 0,
+				"stars": 24,
+				"forks": 4,
+				"followers": 11,
+				"externalRepos": 18
+			},
+			"previousMetrics": {
+				"commits": 28,
+				"publicContributions": 38,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 6,
+				"issues": 0
+			}
+		},
+		{
+			"login": "franco148",
+			"name": "Franco Arratia Lopez",
+			"location": "Cochabamba - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10811329?u=3ef0fee5c082fb189c106981323d4be1f182734d&v=4",
+			"metrics": {
+				"commits": 11,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 9,
+				"forks": 8,
+				"followers": 15,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 81,
+				"publicContributions": 83,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "KRocioCC",
+			"name": "Karen Rocio Catari Calderon",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/173510651?u=875b79c66e29aecc47bf7d2ae947a55a6b1443bb&v=4",
+			"metrics": {
+				"commits": 73,
+				"publicContributions": 84,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 5,
+				"stars": 2,
+				"forks": 0,
+				"followers": 18,
+				"externalRepos": 20
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "thinmanj",
+			"name": "Julio Oña",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/670320?u=b43228cbd521c9347559990d7a29245b5cb4b8d5&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 25,
+				"forks": 4,
+				"followers": 5,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ron86i",
+			"name": "Ronaldo Rua",
+			"location": "Tarija, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/111312783?u=2ed6ec425af44a49ff8f96da3aaa1505f439ed48&v=4",
+			"metrics": {
+				"commits": 44,
+				"publicContributions": 53,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 2,
+				"issues": 0,
+				"stars": 61,
+				"forks": 22,
+				"followers": 8,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 131,
+				"publicContributions": 160,
+				"mergedPullRequests": 22,
+				"pullRequests": 23,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Catriel42",
+			"name": "Catriel Pereira",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/165046705?u=3089f6d099f5068107e2877cad54df8dd77a5a52&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 0,
+				"followers": 23,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 69,
+				"publicContributions": 87,
+				"mergedPullRequests": 3,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 6
+			}
+		},
+		{
+			"login": "DrewSC13",
+			"name": "Claudio Andres Sanjines Cuellar",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/70583595?u=dbe90f71bfcb55c3ab6d154202a2e0e748612c98&v=4",
+			"metrics": {
+				"commits": 99,
+				"publicContributions": 110,
+				"mergedPullRequests": 10,
+				"pullRequests": 10,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 31,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Odig0",
+			"name": "Diego Guzman",
+			"location": "Santa Cruz Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/78091956?u=84e7a5ca0cd50ce6059a385c8b2cb9fa805e42a2&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 17,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 150,
+				"publicContributions": 157,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "linuxenthusiastic",
+			"name": "Santiago Abuawad",
+			"location": "Santa Cruz , Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/85538772?u=77e73a7ff4ec2f240d5db80fc75a967e6cbfaae1&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 2,
+				"followers": 8,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 19,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "emmi-lili",
+			"name": "Emmi ",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19696305?u=1ba7ba846fb90aad4afcf8e3814cca9038b5d6cc&v=4",
+			"metrics": {
+				"commits": 158,
+				"publicContributions": 160,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 20,
+				"externalRepos": 13
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JuanJoseMirandaM",
+			"name": "Juan Jose Miranda",
+			"location": "La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39716343?u=3038299a411728ea451d2fe78018467e57a8c7a6&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 6,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "devferx",
+			"name": "Fernando Quinteros Gutierrez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/37563836?u=baa4685a2375f5aea1da55b22361f8d14a42355f&v=4",
+			"metrics": {
+				"commits": 28,
+				"publicContributions": 37,
+				"mergedPullRequests": 7,
+				"pullRequests": 8,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 25,
+				"forks": 5,
+				"followers": 63,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 92,
+				"publicContributions": 101,
+				"mergedPullRequests": 8,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "diegodev-01",
+			"name": "Diego Perez",
+			"location": "Cochabamba/Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/85521499?u=6927aaf39f4ee8f062c2a46bc6a86b701a4d4952&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 4,
+				"followers": 17,
+				"externalRepos": 17
+			},
+			"previousMetrics": {
+				"commits": 32,
+				"publicContributions": 75,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 12,
+				"issues": 25
+			}
+		},
+		{
+			"login": "omarhuanca",
+			"name": "",
+			"location": "Cercado - Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/13002587?u=3cc22aee987805c3b9dd718034770cc0a8c71385&v=4",
+			"metrics": {
+				"commits": 24,
+				"publicContributions": 33,
+				"mergedPullRequests": 6,
+				"pullRequests": 5,
+				"reviews": 4,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 9,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 60,
+				"publicContributions": 65,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 3,
+				"issues": 0
+			}
+		},
+		{
+			"login": "paulpreibisch",
+			"name": "Paul Preibisch",
+			"location": "la paz, bcs",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19810611?u=2fd4e6db22fa4891d7f37cebd373e916156cf8b5&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 12,
+				"mergedPullRequests": 1,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 2,
+				"stars": 155,
+				"forks": 29,
+				"followers": 14,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 13,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 9
+			}
+		},
+		{
+			"login": "nubol23",
+			"name": "Rafael Villca Poggian",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/28498396?u=60ef9aa65bafe47db53f0bcf6095649cc31aafb2&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 14,
+				"followers": 19,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "arielscc",
+			"name": "Ariel Chura",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12211109?u=90c51051e865fc0d56a218591d3b6528b9aff966&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 16,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Mats2208",
+			"name": "Mateo Andres Soto Gareca",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/197782816?u=1679e7b22f450b4dc17fc6b6be20b50c453f7ca9&v=4",
+			"metrics": {
+				"commits": 196,
+				"publicContributions": 213,
+				"mergedPullRequests": 5,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 6,
+				"stars": 114,
+				"forks": 8,
+				"followers": 6,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 16,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nicobytes",
+			"name": "Nicolas Molina Monroy",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7611944?u=f0790cc34a3b62cf4e179475f644b3ba0ad99e93&v=4",
+			"metrics": {
+				"commits": 33,
+				"publicContributions": 94,
+				"mergedPullRequests": 16,
+				"pullRequests": 21,
+				"reviews": 10,
+				"issues": 27,
+				"stars": 408,
+				"forks": 206,
+				"followers": 1400,
+				"externalRepos": 17
+			},
+			"previousMetrics": {
+				"commits": 28,
+				"publicContributions": 54,
+				"mergedPullRequests": 10,
+				"pullRequests": 10,
+				"reviews": 10,
+				"issues": 4
+			}
+		},
+		{
+			"login": "kev-torrico",
+			"name": "Kevin Cristhian Villca Torrico",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/170702398?u=c285cdf893538befc0222511b4c61de3b302a295&v=4",
+			"metrics": {
+				"commits": 90,
+				"publicContributions": 103,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "caleeli",
+			"name": "David Callizaya",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8028650?u=0ce55b231eba62418532e8795f99b6f892492637&v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 25,
+				"mergedPullRequests": 3,
+				"pullRequests": 9,
+				"reviews": 4,
+				"issues": 0,
+				"stars": 106,
+				"forks": 11,
+				"followers": 21,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 18,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 2,
+				"reviews": 5,
+				"issues": 11
+			}
+		},
+		{
+			"login": "SaulChoque",
+			"name": "BaluChop",
+			"location": "Bolivia 🇧🇴",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/85711498?u=89a6f69b0a29a7d90a77903b1149d2e4d28e4b09&v=4",
+			"metrics": {
+				"commits": 41,
+				"publicContributions": 46,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 18
+			},
+			"previousMetrics": {
+				"commits": 17,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "IdenTiclla",
+			"name": "Iden Ticlla",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20525059?u=febe5a8a5d205ddaca603edc9d53a09067a9ff7f&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 27,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 6,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 56,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "miguel-124C",
+			"name": "Miguel Angel Cuellar Serrudo",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/121363772?u=d4c1a68589a0f99a541237c5ff571fb993c490ca&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 1,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 93,
+				"publicContributions": 96,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "erozas",
+			"name": "Exequiel Rozas",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10351995?u=dbe4d55c789b1f057737cf605254a5198d180d49&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 6,
+				"followers": 8,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Troy8203",
+			"name": "Roy Ayala",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/61430237?u=0fdffb8dd0616b7cfe50379796aa944a946417cc&v=4",
+			"metrics": {
+				"commits": 23,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 2,
+				"followers": 8,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Aliaga23",
+			"name": "Arturo Aliaga",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/138465246?u=66c8180d54281337799af24d6ba8a213c5e7b6ec&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 15,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jhasmany-fernandez",
+			"name": "jhasmany jhunnior fernandez ortega",
+			"location": "Santa Cruz de la Sierra ",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/36086876?u=947eb3d15b1c6690eaacc13d22d7b80c725d94b1&v=4",
+			"metrics": {
+				"commits": 28,
+				"publicContributions": 31,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 14,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 30,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 7
+			}
+		},
+		{
+			"login": "zzebnell",
+			"name": "Leonel Zeballos Aldunate",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/127797568?v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 16,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 16,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 52,
+				"publicContributions": 84,
+				"mergedPullRequests": 13,
+				"pullRequests": 14,
+				"reviews": 18,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MetaDandy",
+			"name": "Joseph Benitez Arroyo",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128628774?u=8ef3e462d5a40671076850f19ed9b42dc33b5ca6&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 7,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 25,
+				"publicContributions": 30,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Stevenjoelrs",
+			"name": "Steven Joel Ramos Salazar",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/146046072?u=144cc3ef38be7e1ef1c7989e9f12aaec8350d5da&v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 38,
+				"mergedPullRequests": 7,
+				"pullRequests": 9,
+				"reviews": 4,
+				"issues": 17,
+				"stars": 7,
+				"forks": 2,
+				"followers": 11,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 13,
+				"mergedPullRequests": 6,
+				"pullRequests": 6,
+				"reviews": 1,
+				"issues": 1
+			}
+		},
+		{
+			"login": "Kira2602",
+			"name": "Rosario Calisaya Calderon",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/125493619?u=6f0036aca8cd89541479dfe09d70f45caeebd823&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "henrytaby",
+			"name": "Henry Taby",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/410918?u=4fb64d10a8183a788a81c95262dd87c33d781eec&v=4",
+			"metrics": {
+				"commits": 126,
+				"publicContributions": 129,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 33,
+				"followers": 11,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "alex-roc",
+			"name": "Alex Ojeda Copa",
+			"location": "Cochabamba, Bolivia.",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/10243925?u=1c52db3f5a2cf6e78b19711731a54582b872517b&v=4",
+			"metrics": {
+				"commits": 124,
+				"publicContributions": 130,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 29,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "joelalejsanchez",
+			"name": "Joel Alejandro Sanchez Valdez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/91491222?u=f6bce89014fb6105e5655fcd5f13f8bb291bc9bf&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 5,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ivancidev",
+			"name": "Ivan Herlan Herbas Zubieta",
+			"location": "Bolivia, Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/79385821?u=ec0fe82dbc7d3e161655870adabb080520e2a11f&v=4",
+			"metrics": {
+				"commits": 52,
+				"publicContributions": 66,
+				"mergedPullRequests": 11,
+				"pullRequests": 11,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 26,
+				"forks": 6,
+				"followers": 25,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 42,
+				"publicContributions": 53,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Andross3",
+			"name": "Andres Chavez",
+			"location": "Cochabamba-Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128936023?u=775c7238abea95339187c4fbcd649962e2ea8db2&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 38,
+				"publicContributions": 43,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Wimpi18",
+			"name": "Winsor",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/102839000?u=f419f2fa983263c69dcf6e6840e15689a742a481&v=4",
+			"metrics": {
+				"commits": 141,
+				"publicContributions": 145,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 11,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 38,
+				"publicContributions": 40,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Glfrancodev",
+			"name": "Gabriel Andrés López Franco",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/187966171?u=d1a75d62dcd8fca3686afd983adfac6c4db6ea6f&v=4",
+			"metrics": {
+				"commits": 26,
+				"publicContributions": 39,
+				"mergedPullRequests": 11,
+				"pullRequests": 11,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 10,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ruddypazd",
+			"name": "Roy Ruddy Paz Demiquel",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7370358?u=7a12b62497e79fbae3662d5bb677c10083629c37&v=4",
+			"metrics": {
+				"commits": 57,
+				"publicContributions": 58,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 31,
+				"externalRepos": 24
+			},
+			"previousMetrics": {
+				"commits": 25,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 10
+			}
+		},
+		{
+			"login": "marceloquispeortega",
+			"name": "Marcelo Quispe Ortega",
+			"location": "Sucre",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15899528?u=6b8ceeb4158dfaf95c930d71b841cf7fed553a82&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 62,
+				"followers": 17,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nahuelXZV",
+			"name": "Nahuel Zalazar",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/80172547?u=e6f75e0f1136b202ded9155b7e88da49990e0dec&v=4",
+			"metrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 1,
+				"followers": 19,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 37,
+				"publicContributions": 43,
+				"mergedPullRequests": 4,
+				"pullRequests": 5,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "kapit4n",
+			"name": "Luis Arce",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/277572?u=3810d552be76fe598b9ce99991a923b42e09b895&v=4",
+			"metrics": {
+				"commits": 105,
+				"publicContributions": 110,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 129,
+				"forks": 24,
+				"followers": 284,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 71,
+				"publicContributions": 71,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pedroanze",
+			"name": "Pedro Anze",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/96597151?u=9fa9fe64c1299ea7990fe578fff057dc24bef356&v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 2,
+				"followers": 19,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 47,
+				"publicContributions": 50,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "briandevcontrol",
+			"name": "Amanda Reed",
+			"location": "Michelleville, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/9508094?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "BorisAngulo",
+			"name": "Boris Anthony Angulo Urquieta",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/81875983?u=14c021bc021910a721c81ff67c25ffb9c70fec34&v=4",
+			"metrics": {
+				"commits": 63,
+				"publicContributions": 81,
+				"mergedPullRequests": 15,
+				"pullRequests": 17,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 3,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Sergio-Al",
+			"name": "Sergio Alejandro",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/54541807?u=815361a975ffcadbc0c4b2cc73efa0e72b6181e4&v=4",
+			"metrics": {
+				"commits": 13,
+				"publicContributions": 17,
+				"mergedPullRequests": 3,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "danelerr",
+			"name": "Daniel Cueto",
+			"location": "Bolivia ",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/62757813?u=f15a94f94716feac2174afccf91c8bf2c80dc0f6&v=4",
+			"metrics": {
+				"commits": 20,
+				"publicContributions": 23,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 4,
+				"followers": 6,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "profetaRecursivo",
+			"name": "Jaime Sebastian Chavarria Fuertes",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128869999?u=431e146c41a3569a6eaf865c52790a298752b1a0&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 5,
+				"followers": 13,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 96,
+				"publicContributions": 110,
+				"mergedPullRequests": 11,
+				"pullRequests": 12,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "KievAndres",
+			"name": "Kiev Andres Mendoza Rojas",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/28435811?u=d18fe790c76532d9eae14690bbe326278baf92c6&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 21,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "srodrigo23",
+			"name": "Sergio Rodrigo",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7539078?u=a0a314e9fa01bb584f7d05912233cb21f4864e37&v=4",
+			"metrics": {
+				"commits": 52,
+				"publicContributions": 54,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 18,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Gabriel-Pacheco-Martinez",
+			"name": "Gabriel Pacheco",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/113046608?u=53d18928fb361b7bd42d20c23d87fb5c45e55381&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Erickgiber",
+			"name": "Erick Ramirez",
+			"location": "Sucre, Carúpano",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/77713259?u=1c8aec809267407ce1f9e443c03ad8f8308b7ae7&v=4",
+			"metrics": {
+				"commits": 28,
+				"publicContributions": 29,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 52,
+				"forks": 2,
+				"followers": 25,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fabinnerself",
+			"name": "Favian Medina",
+			"location": "La Paz Bolivia South America",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8484799?u=1495ed1c8a9582225385487718c37175dff1a778&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 1,
+				"followers": 19,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Victoroide",
+			"name": "Victor Cuéllar ",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/111157887?u=3251dca5a09dab0c6a1c2c0b97355c22dcb6d2c5&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AlejandroCalzadilla",
+			"name": "Jose_ALejandro_Calzadilla_Nogales",
+			"location": "Santa Cruz Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/118866799?v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "goku673",
+			"name": "Freddy Amin Zapata ",
+			"location": "Cochabamba-Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/83481744?u=7001c2bcf6a9904605f84d7954c95393e973790c&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 5,
+				"followers": 11,
+				"externalRepos": 26
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 9,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "willmanduran",
+			"name": "Willman R. Durán Saldías",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/89213345?u=e42ff85246f7b4679888f256ee565a6b4b3764d8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 48,
+				"forks": 4,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 193,
+				"publicContributions": 196,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "OmarRMC",
+			"name": "Omar R Mamani",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/76457439?u=f376eb075a778dbe5aafd499eaea64e5767d39a7&v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 1,
+				"followers": 72,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Davp94",
+			"name": "",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/22361322?u=cfb3415528ee7af3fe5db080eb34c452920432b5&v=4",
+			"metrics": {
+				"commits": 20,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 8,
+				"followers": 10,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fjsuarez",
+			"name": "Francisco Suarez",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3099648?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 1,
+				"followers": 28,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 30,
+				"publicContributions": 32,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 2,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Feliverse",
+			"name": "Felipe Haybar Valenzuela",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/114632980?u=1c26aa72a5e4556c1e772e9d03358b34cb225f5b&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 84,
+				"forks": 2,
+				"followers": 92,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 20,
+				"publicContributions": 20,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "olartgabo",
+			"name": "José Gabriel Olarte Medrano",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/68618969?u=12779a39c25bf556b7737838b859817b6fe1d8ff&v=4",
+			"metrics": {
+				"commits": 79,
+				"publicContributions": 126,
+				"mergedPullRequests": 34,
+				"pullRequests": 43,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 17,
+				"publicContributions": 26,
+				"mergedPullRequests": 4,
+				"pullRequests": 3,
+				"reviews": 2,
+				"issues": 0
+			}
+		},
+		{
+			"login": "LuchoNoPrograma",
+			"name": "Luis Alberto Morales Villaca",
+			"location": "Cobija, Pando, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/105525189?u=0ee8a7d7244dfc52b73fa997842221ca9e7df1f4&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 33,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "TOMOKI977",
+			"name": "Julio Cesar Severiche Orellana",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39506930?u=d7e5a1cf63658fd38794f4bde7fbc08cc1ed24d4&v=4",
+			"metrics": {
+				"commits": 42,
+				"publicContributions": 42,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 15
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "sae0-3",
+			"name": "Eddy Sejas Arze",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/100965991?u=55f7cdc97bab1832a8e6cd346c44ba6518469459&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 11,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 83,
+				"publicContributions": 86,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jhordyess",
+			"name": "Jhordy Gavinchu",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/65508346?u=4bc2f1ad4f9a739337b1f81393eb245a11012d2f&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 32,
+				"forks": 19,
+				"followers": 62,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Amiddala",
+			"name": "Candy Ordoñez Pinto",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/168691418?u=5c5e1a99bf54812e2a7a6f54e063ea114de5e5f7&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 29,
+				"mergedPullRequests": 6,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 4,
+				"stars": 3,
+				"forks": 1,
+				"followers": 23,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 79,
+				"publicContributions": 124,
+				"mergedPullRequests": 9,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 32
+			}
+		},
+		{
+			"login": "ItzRodri",
+			"name": "Rodrigo Gutierrez Cruz",
+			"location": "Bolivia,Sanra Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/134517998?u=4e1bbc613f8d7ff1390646e6887ac8f04b7a731c&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 41,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "HazaFG",
+			"name": "",
+			"location": "La Paz BCS",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/127232657?u=bcc01ca22692e07d4e29e943ab428eb181687e6f&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 9,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DrunkOldDog",
+			"name": "Juan Ignacio Reyes",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/21226219?u=31c4614b0bc985f32b3aa424bb7b9af90853ccf8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 17,
+				"forks": 6,
+				"followers": 11,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "FershoUno",
+			"name": "Fernando",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/50505848?u=3390627d3e0ad979e894e87a360adb606faf6f62&v=4",
+			"metrics": {
+				"commits": 32,
+				"publicContributions": 35,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 9,
+				"followers": 18,
+				"externalRepos": 14
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Pericena",
+			"name": "Luishiño",
+			"location": "Bolivia, Santa Cruz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/24308878?u=88ddc91f39d3d7456269e6a5e88433dad79aebe4&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 276,
+				"forks": 85,
+				"followers": 193,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "danielquisbert",
+			"name": "DaNi",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2903100?u=b49cd8afeef935a58ba68ac1de094dbf77105dd2&v=4",
+			"metrics": {
+				"commits": 23,
+				"publicContributions": 24,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 7,
+				"followers": 5,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 19,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "tokidev-ai",
+			"name": "Rodrigo Torrico Del Castillo",
+			"location": "Bolivia, Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11529293?u=8330000a59e738a7e2e349044ff918fbc6bcb652&v=4",
+			"metrics": {
+				"commits": 18,
+				"publicContributions": 83,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 61,
+				"stars": 11,
+				"forks": 2,
+				"followers": 31,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 71,
+				"publicContributions": 137,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 2,
+				"issues": 55
+			}
+		},
+		{
+			"login": "Programmercito",
+			"name": "Programmercito",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4504287?u=fc41a3d194e91ca87c49505109d2921b10e858be&v=4",
+			"metrics": {
+				"commits": 33,
+				"publicContributions": 57,
+				"mergedPullRequests": 23,
+				"pullRequests": 23,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 2,
+				"followers": 9,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 36,
+				"mergedPullRequests": 8,
+				"pullRequests": 8,
+				"reviews": 1,
+				"issues": 2
+			}
+		},
+		{
+			"login": "Jalgoz",
+			"name": "José Lozada Gómez",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/71052601?u=2edfd8e268800355215c1536e6f5e164ba50209d&v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 1,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "oscarcortez",
+			"name": "Oscar Cortez",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/48032479?u=3312c26f80cd9b75c9f19df9b423c0906f555271&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 2,
+				"followers": 8,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "J0CIR0",
+			"name": "JociroPy",
+			"location": "Santa Cruz de la Sierra - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/125481940?u=3e570ad6d8cfed334988f59f74a6db6b80456c74&v=4",
+			"metrics": {
+				"commits": 62,
+				"publicContributions": 73,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Huarachi2002",
+			"name": "Yeferson Adrian Huarachi Aleman",
+			"location": "Bolivia, Santa Cruz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/115509693?u=3f561202e9ebb8cd51363c4cbefcfc7307f72308&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 4,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "David-H-L",
+			"name": "David Huanca Ledezma",
+			"location": "Bolivia, Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/81874354?u=8577206745e4fec6912bbac3441394510ec59753&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pablonoya",
+			"name": "Pablo Noya",
+			"location": "Sucre, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/31524852?u=ad27fb0901bfca27b7fbf2846483aafbf05946b1&v=4",
+			"metrics": {
+				"commits": 34,
+				"publicContributions": 35,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 157,
+				"forks": 10,
+				"followers": 18,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 35,
+				"mergedPullRequests": 7,
+				"pullRequests": 8,
+				"reviews": 10,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rodriQuelali",
+			"name": "rodriquelali",
+			"location": "Bolivia-La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/94028016?u=cfb10c0ef17ef745a9aa441e8c61c9e376e628f1&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 22,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Antonmarchitec",
+			"name": "Antonio Ponce",
+			"location": "Santa Cruz (Bolivia) ",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/70084380?u=c3c0bb54714bb97be2bf6ee9451afc2b52c9c2d0&v=4",
+			"metrics": {
+				"commits": 37,
+				"publicContributions": 38,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 8,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "0xmapachex",
+			"name": "Raccoon",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/25932297?u=49c8ba1f914f040d10cb41526b4f396ed9009148&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 21,
+				"mergedPullRequests": 4,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 7,
+				"forks": 3,
+				"followers": 16,
+				"externalRepos": 12
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 4,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jevillanueva",
+			"name": "Jonathan Villanueva",
+			"location": "La Paz Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7273659?u=d78e47e5934e1d9a1068b9e784946c1a6c98f281&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 19,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 12,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "richardparra99",
+			"name": "Richard Parra Zegarra",
+			"location": "Santa Cruz de la Sierra (Bolivia)",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/110671604?u=26427d192880e3e2cf6b67b02fe8e44f2f61a506&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 11,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Israel-Almanza",
+			"name": "Israel",
+			"location": "Cochabamba-Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/60950503?u=69fd57312c8c6d2657486086421164b597f02bba&v=4",
+			"metrics": {
+				"commits": 33,
+				"publicContributions": 33,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 43,
+				"forks": 36,
+				"followers": 12,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 45,
+				"publicContributions": 46,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AlvaroLimber",
+			"name": "Alvaro Limber Chirino Gutierrez",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/8467833?u=af0cedd1824d3e5fc4bb340cda86fa01efde5702&v=4",
+			"metrics": {
+				"commits": 21,
+				"publicContributions": 22,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 8,
+				"followers": 33,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 35,
+				"publicContributions": 35,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Joregesosa",
+			"name": "Jorge Sosa",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/73912460?u=b0876246b34c3e9764c0875679c58bddaa54e41a&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 1,
+				"followers": 9,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 31,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "adhes14",
+			"name": "Adhemar Duran",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/66705273?u=7ba9dc5fb46e9f80c01e7893802bd9532110df41&v=4",
+			"metrics": {
+				"commits": 20,
+				"publicContributions": 20,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "andru1236",
+			"name": "Andres",
+			"location": "Cochabamba - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/18579701?u=501b80f72423d05a5e67fb54fe14d6ad4d3e0aed&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 1,
+				"followers": 9,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 6,
+				"publicContributions": 14,
+				"mergedPullRequests": 6,
+				"pullRequests": 4,
+				"reviews": 2,
+				"issues": 2
+			}
+		},
+		{
+			"login": "cristianiniguez",
+			"name": "Cristian Felix Iñiguez Porcel",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/64929919?u=de8a785d43bb774c4c7ef8e80fd4e8f91d80b50e&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 7,
+				"followers": 9,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 44,
+				"publicContributions": 46,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "alfredoT7",
+			"name": "Alfredo Ernesto Torrico Garcia",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/154649217?u=7c756b9c8b619447d47d3198f1047bd4e92f03ef&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 4,
+				"followers": 6,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 91,
+				"publicContributions": 116,
+				"mergedPullRequests": 23,
+				"pullRequests": 24,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "lizarragadev",
+			"name": "Gustavo Lizárraga",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1924390?u=8295115e0ac9361a3222143dfd4255bf7845c0fa&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 208,
+				"forks": 210,
+				"followers": 431,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 16,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "benjiCastillo",
+			"name": "Benjamin Castillo Eguez",
+			"location": "Sucre, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/18648920?u=1ced2fefc51141e1a077e63669eb864612a81fb1&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 4,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "KatzuneStarky",
+			"name": "KatzuneStarky",
+			"location": "La paz, BCS",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/79546969?u=d8213f2cb30dbfad7ea1eb64227ae99e03c33534&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "diegorojasj",
+			"name": "Diego Rojas Justiniano",
+			"location": "Bolivia, Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/69219863?u=7ce4c21c250d52b5e5e29f21b3ae7e3f5c9c5667&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 59,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "xcharag",
+			"name": "Oscar Denes Aguilar Soliz",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/106485083?u=7f45df81de24cd5382e43bd7c40353cf802d7702&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 11,
+				"forks": 0,
+				"followers": 13,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 29,
+				"publicContributions": 32,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "antonelladev",
+			"name": "Linda Antonella",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/118008601?u=3b30fe99625f8e9643e0ea2a8cec1c5a40e2525d&v=4",
+			"metrics": {
+				"commits": 82,
+				"publicContributions": 96,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 1,
+				"stars": 38,
+				"forks": 0,
+				"followers": 203,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "imertetsu",
+			"name": "Imer Coaguila",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/52182312?u=24dbebb3e2d4514b0b3ccc4cb1aa8bdf30850503&v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 5,
+				"followers": 8,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Alba070503",
+			"name": "Alba070503",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/97574964?u=d6c9023e7c532b7ecaad38a6d2d72d438d9a8afa&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 28,
+				"forks": 22,
+				"followers": 46,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "iguii",
+			"name": "Ignacio Andrés Illanes Bequer",
+			"location": "La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/22847626?u=9a926a83cead2827a02087a3f41bf06f070fff7c&v=4",
+			"metrics": {
+				"commits": 70,
+				"publicContributions": 96,
+				"mergedPullRequests": 19,
+				"pullRequests": 22,
+				"reviews": 3,
+				"issues": 0,
+				"stars": 4,
+				"forks": 5,
+				"followers": 16,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 71,
+				"publicContributions": 78,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Chambeador",
+			"name": "Miguel Angel Condori",
+			"location": "Cochabamba-Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/132324218?u=14c6823ed3bd3df6791c68819237a71a1d43dffb&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 11,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 24,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ManuelElias1999",
+			"name": "Juan Manuel Elias Soria",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/64552997?u=baa46715e64e5e2129041cd34d72f1667c3efb0e&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 14,
+				"forks": 3,
+				"followers": 11,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "obed-tc",
+			"name": "Obed",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/67854304?u=6abab8a63d8ad73a20e100c9c0995abd6daef4cf&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 31,
+				"mergedPullRequests": 15,
+				"pullRequests": 15,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 40,
+				"forks": 4,
+				"followers": 18,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 10,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "vagner-merlin",
+			"name": "Byvagner",
+			"location": "bolivia / scz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/189437954?u=ac0244fc24f60cc8d4a3ee2feec76a7038da3546&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 2,
+				"followers": 7,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "runinbk",
+			"name": "Kevin B. Gomez Rocha",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/112770098?u=82d3c0ffbf730c1917c3c0f42219ddf8f366de68&v=4",
+			"metrics": {
+				"commits": 15,
+				"publicContributions": 17,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 9,
+				"forks": 1,
+				"followers": 18,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 21,
+				"publicContributions": 29,
+				"mergedPullRequests": 7,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "taicoding",
+			"name": "Tatiana Delgadillo",
+			"location": "La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6510765?u=9d63ae5acf3ed08c90f56c470efce0c8a7117a78&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 28,
+				"forks": 38,
+				"followers": 93,
+				"externalRepos": 50
+			},
+			"previousMetrics": {
+				"commits": 24,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "davidmanueldev",
+			"name": "David Manuel",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/129340427?u=c552dd86ed7d03cb4a4e76cd35f49f0680db3ad5&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 0,
+				"followers": 16,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "borispacex",
+			"name": "Boris Vargas",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/40006498?u=356213925d9859b08a4efb8690b968ebde893d1e&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 4,
+				"followers": 23,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 50,
+				"publicContributions": 56,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Mirandaaca",
+			"name": "Cristopher Miranda Aramayo",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/113213195?u=41f8eb890afc211bb0b3b4ec361b3c971bf47911&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 37,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 38,
+				"publicContributions": 54,
+				"mergedPullRequests": 8,
+				"pullRequests": 13,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "paolojoaquinp",
+			"name": "Paolo Joaquin Pinto",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/70081671?u=7fb00bc256f5774e96ddb5cfe9aff9357ef40d60&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 81,
+				"forks": 12,
+				"followers": 27,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "camtordev",
+			"name": "Humberto Alejandro Campos Torrejon",
+			"location": "Cochabamba - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/139392199?u=6daba316b0b0dcf26220ecc31887b99eccddf3b3&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "AlexandroCamacho1000",
+			"name": "Alejandro Camacho",
+			"location": "Cochabamba",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/101161175?u=807db0e10c44175fd37a3ad3b01c45247a022ebf&v=4",
+			"metrics": {
+				"commits": 15,
+				"publicContributions": 17,
+				"mergedPullRequests": 1,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 6,
+				"forks": 0,
+				"followers": 9,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "adancondori",
+			"name": "Adan Condori C.",
+			"location": "Bolivia - Santa cruz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6661588?u=4a822e7126af0a5820fffd98b5c25c6a30472996&v=4",
+			"metrics": {
+				"commits": 88,
+				"publicContributions": 88,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 4,
+				"followers": 19,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Vargm-b",
+			"name": "Brenda Vargas M.",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/183957425?u=900fccb0661f9aba593447f31559814fef31b04f&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 11,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 45,
+				"publicContributions": 78,
+				"mergedPullRequests": 5,
+				"pullRequests": 6,
+				"reviews": 2,
+				"issues": 22
+			}
+		},
+		{
+			"login": "stoledolarrain",
+			"name": "Samir Toledo",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/114009203?u=1b004ef469277be138082f58466bcc089e277c8c&v=4",
+			"metrics": {
+				"commits": 14,
+				"publicContributions": 15,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 62,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "FrancoJTA",
+			"name": "Franco Torrez",
+			"location": "Santa Cruz de la Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/153335505?u=951c8949167ca682acce320bb0c31c16d2d2c922&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 0,
+				"followers": 13,
+				"externalRepos": 20
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 7,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "carlos-olivera",
+			"name": "Carlos Olivera Terrazas",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1182541?u=40635834d6597ec0645303fa2f0deb598f876a80&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 39,
+				"forks": 19,
+				"followers": 46,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gabriel-pantojab",
+			"name": "Gabriel Pantoja Bustamante",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/81129980?u=314e3bc4a6a722083d14795dc9421b948b13b6b9&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 12,
+				"mergedPullRequests": 2,
+				"pullRequests": 9,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "timoteoponce",
+			"name": "Timoteo Ponce",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/248934?u=c12598cebb9c137a5a1b4f1bcf0c6d96967ca82b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 18,
+				"forks": 11,
+				"followers": 13,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 24,
+				"publicContributions": 32,
+				"mergedPullRequests": 8,
+				"pullRequests": 8,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "stanlee321",
+			"name": "Stanley Salvatierra",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/7696948?u=e5ba795af0d9d285c7762c266a9ffccfedb890cf&v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 62,
+				"forks": 56,
+				"followers": 54,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 27,
+				"publicContributions": 31,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "toitolucho",
+			"name": "Luis Antonio Molina Yampa",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/1872880?u=d98922fbf5db235d7add73a308d59a4da1573116&v=4",
+			"metrics": {
+				"commits": 23,
+				"publicContributions": 24,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 31,
+				"forks": 15,
+				"followers": 50,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Mario-pereyra",
+			"name": "Mario Alberto Pereyra J.",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/152916171?u=869d12888df094725e1d030e5a136250a462b0e5&v=4",
+			"metrics": {
+				"commits": 2,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 4,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 8,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 5
+			}
+		},
+		{
+			"login": "LuisCalleLazo",
+			"name": "LuisCalleLazo",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/94710794?u=53c0df954b4d99c4ab983a041cfe2a735fc00bf8&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 27,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hiygabo",
+			"name": "Gabriel Omar Andia Alave",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128774412?v=4",
+			"metrics": {
+				"commits": 17,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 36,
+				"publicContributions": 40,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mavesc",
+			"name": "Mauricio Vargas Escobar",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/65517229?u=a9bce6736dd336002a09f8dc3fcb7e5058c26582&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "vacho",
+			"name": "Osvaldo Villarroel Marañon",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/3926391?u=81a5ef26514652e821e6afb8e8f8fa91d8bd6511&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 21,
+				"forks": 12,
+				"followers": 12,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Jose20025",
+			"name": "Jose Carlos Gutiérrez",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/91438144?u=074edbe47178588aea8ea8bbeb277c6820f75962&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 0,
+				"followers": 20,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gmendozah",
+			"name": "Geovani Mendoza",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20589494?u=dbc7d194769e5cacbd34452e29a55ddafade6d46&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 77,
+				"forks": 43,
+				"followers": 46,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 48,
+				"publicContributions": 50,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "drkpkg",
+			"name": "Felix Daniel Coca Calvimontes",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/972555?u=285352ba16d6e52ecc5d23caa858dbd1be889f09&v=4",
+			"metrics": {
+				"commits": 19,
+				"publicContributions": 22,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 33,
+				"forks": 3,
+				"followers": 29,
+				"externalRepos": 5
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "CrisisTecno",
+			"name": "Cristhian Lucio Quispe Nina",
+			"location": "Cochbamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/143370345?u=e185ad133adb1983b29e77ac36a45cca968ff595&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "FreddyMachaca",
+			"name": "Freddy Machaca",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/110005596?u=67861e8768fd33353d86828e2678d58b809a8477&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 0,
+				"followers": 10,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 17,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DarkWinD1437",
+			"name": "DarkWinD",
+			"location": "Santa Cruz De La Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/102001158?u=cc7f4d7ec08bb2b9fedff1e07c36536e99b931f8&v=4",
+			"metrics": {
+				"commits": 10,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 13,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ikanadev",
+			"name": "Kevv",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/63680173?u=3f05c02ef63b7408114f0263f654b1445a4ee32a&v=4",
+			"metrics": {
+				"commits": 31,
+				"publicContributions": 32,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 3,
+				"followers": 9,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ProfessorByte",
+			"name": "Pabloux Darkmind",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/37822461?u=1084d0cefea8123ef702f2f3d0940da6632e134d&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 19,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jesulim",
+			"name": "Ivan Martinez",
+			"location": "Sucre - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/27868712?u=21ec2a81d1ee4da1681abf134f0b1df5cca81272&v=4",
+			"metrics": {
+				"commits": 15,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 6,
+				"followers": 5,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 7,
+				"publicContributions": 9,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "romero102",
+			"name": "Ilsen",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/23480448?u=fec59e78e476897c460c6591c50a76b97d5e2a69&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "0xsissN",
+			"name": "Nicolas Sivila",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/100359738?u=8c55dabec728e32586c0eb289d2b8aa47ace57e8&v=4",
+			"metrics": {
+				"commits": 31,
+				"publicContributions": 39,
+				"mergedPullRequests": 10,
+				"pullRequests": 8,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 1,
+				"followers": 10,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rodravknight9",
+			"name": "Rodrigo R. Alarcón V.",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/71949125?u=0ca6dff4d5226f1630b6a741c563c918dd73e897&v=4",
+			"metrics": {
+				"commits": 26,
+				"publicContributions": 27,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 13,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "rsoft-latam",
+			"name": "Ricardo Pari",
+			"location": "La Paz (Bolivia)",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/21285250?u=e6f5a50a7ef5814b66390272d39cd22adf2791e0&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 31,
+				"followers": 27,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 5,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "RaulOrtiz99",
+			"name": "RaulOrtiz99",
+			"location": "santa cruz-bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/36978009?u=2c2aa3f325cc7644c14db72d8ccfdbbae7c4b83b&v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 17,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 39,
+				"publicContributions": 41,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "lalomax",
+			"name": "Orlando",
+			"location": "La Paz Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/95863162?u=58451942c7a9655be842a16224f6c6303c9171a1&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 3,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "moonhuntercode",
+			"name": "victor code",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/53928868?u=69b8710e2b923192e5e9a95872c4a79b2fb9ed4d&v=4",
+			"metrics": {
+				"commits": 13,
+				"publicContributions": 16,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0,
+				"stars": 7,
+				"forks": 1,
+				"followers": 50,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "sebastianmlz",
+			"name": "Sebastián Méndez",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/176963258?u=961a2633491129fbb0db19c67289d3228152ae9d&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 2,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Valls017",
+			"name": "Marcelo Vallejos Tinta",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128014986?u=30e1fef52e6f36f1d106ddfcb54466f52f64a187&v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 36,
+				"publicContributions": 38,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fabricio136900",
+			"name": "José Fabricio",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/35009729?u=7f17b1e90bca417d7ce5f6c1a1231693848739f7&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 8,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "xixay",
+			"name": "Richard Teran",
+			"location": "Villa Armonía La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/52841270?u=3bb9da2929abeddeea6f24b2d6777ed989610446&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "WildeRojas",
+			"name": "Wilder Ario Rojas Mamani",
+			"location": "Santa Cruz De La Sierra",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/182025592?v=4",
+			"metrics": {
+				"commits": 5,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 10,
+				"externalRepos": 9
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "electricpants01",
+			"name": "Christian Torrico Avila",
+			"location": "Santa Cruz de la Sierra - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20894460?u=d3dab68a2ae85617865e0025c400e47bb42b37ca&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 38,
+				"mergedPullRequests": 8,
+				"pullRequests": 7,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 0,
+				"followers": 10,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Riju-vo",
+			"name": "Richard J. Vargas Osinaga",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/133923704?v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 7,
+				"externalRepos": 6
+			},
+			"previousMetrics": {
+				"commits": 13,
+				"publicContributions": 19,
+				"mergedPullRequests": 4,
+				"pullRequests": 4,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Nicolascresposu",
+			"name": "",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/91248750?u=ac11894ac7427780ed058f7ddea0452f8070aec6&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 1,
+				"followers": 9,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "BetzabeG",
+			"name": "Betzabe Gutierrez",
+			"location": "La Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/133925916?u=4b5c5b6ddf26b4daca3c67ad733dc31ef5a985b4&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 19,
+				"followers": 9,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "KendCode",
+			"name": "",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/178251682?u=86ed257bbc0e832021416ddc59b1eb2c9dce8c9e&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 5,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 0,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "GatoJustiniano",
+			"name": "",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/27466057?u=8f0e1dee8729fb6479366e3072c736ea31ff6a7a&v=4",
+			"metrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 7,
+				"followers": 4,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "delsycuellarchung",
+			"name": "Delsy Noelia Cuellar Chung",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/127460341?u=6202b6a82acb5eaeada89cae3100161477c9b634&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 17,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 14,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Miguel-Ike",
+			"name": "Miguel Ángel Martinez",
+			"location": "Santa Cruz de la Sierra - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12467993?u=2f97473fc2a6263e971360959a7513ddd2c17e40&v=4",
+			"metrics": {
+				"commits": 51,
+				"publicContributions": 52,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "profjcp",
+			"name": "Juan Carlos Peinado Pereira",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/128756539?u=94373415907d0c3f188e3b61ce3a7e1c3e83935b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 13,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 25,
+				"publicContributions": 25,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DevLatBo",
+			"name": "Oscar Rolando Gamboa A.",
+			"location": "Cochabamba Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5255678?u=fd264fd5db1735b8418d83bcc78a756baa1356a2&v=4",
+			"metrics": {
+				"commits": 6,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 10,
+				"followers": 35,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 11,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 1
+			}
+		},
+		{
+			"login": "franzamd",
+			"name": "Franz Medrano",
+			"location": "Bolivia - Tarija",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/29902876?u=1bf1e1280c5ec3398e3ec09dbdd0a3a75d2680b1&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 8,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "erikfva",
+			"name": "Erik F. Vargas Agreda",
+			"location": "Santa Cruz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/24607160?v=4",
+			"metrics": {
+				"commits": 1,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 18,
+				"forks": 8,
+				"followers": 7,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 22,
+				"publicContributions": 26,
+				"mergedPullRequests": 1,
+				"pullRequests": 2,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "combimauri",
+			"name": "Mauricio Arce Torrez",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11466673?u=3a44243664a8c56e60f1cd6caa6407b3ecf71e27&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 17,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 31,
+				"followers": 28,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "arielgos",
+			"name": "Ariel Ortuño Solis",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/5615798?u=ba04e35b7cf10680898807eb3a7114f4404984a1&v=4",
+			"metrics": {
+				"commits": 29,
+				"publicContributions": 33,
+				"mergedPullRequests": 2,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 12,
+				"forks": 5,
+				"followers": 30,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nomikugg",
+			"name": "Luis Fernando Rojas Arroyo",
+			"location": "Sucre, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39710090?u=c8453a3721b7b5e13b50ca13df4ab405ebbf1ad9&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 15,
+				"forks": 44,
+				"followers": 8,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 34,
+				"publicContributions": 37,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "igmarco",
+			"name": "Ignacio Marco-Pérez",
+			"location": "Av. de la Paz, 93-103, 26006 Logroño, La Rioja, España",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/60967855?u=5216b87df2b54c47834103fae608ed415f2eca30&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 17,
+				"forks": 1,
+				"followers": 6,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "crisdux",
+			"name": "Cristian Fernando Villca Gutierrez ",
+			"location": "La Paz-Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/41398104?u=bfaba822fa47b5d97f78f45e9f304e6136a9cf88&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 35,
+				"forks": 10,
+				"followers": 15,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 1,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mamanipatricia",
+			"name": "patty",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/19600504?u=9d128c90797f931c781e6db0c77f0a4e9847fec3&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 11,
+				"followers": 15,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mariocesar",
+			"name": "Mario-César",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/25034?u=840a9be26f20c88523ac9353bc043ee5990ae94b&v=4",
+			"metrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 192,
+				"forks": 35,
+				"followers": 171,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "LuwuVelasco",
+			"name": "Luciana Velasco",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/105027435?u=10ee5d79043db2b9051188b232fb9f84a220986d&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "doctsystems",
+			"name": "Diego Osvaldo",
+			"location": "Bermejo, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4739434?u=08b88335dd9429e7bb6d26b26a403a7051ea3288&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 1,
+				"followers": 14,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "MrBl4ck04",
+			"name": "Franz Carvajal",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/78627210?u=73836f8785d35e6d12a8cc09a92963b30d891be7&v=4",
+			"metrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 21,
+				"followers": 10,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 15,
+				"publicContributions": 17,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "fabiosantiagopaixao",
+			"name": "Fábio Santiago da Paixão",
+			"location": "Potosí - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20490835?u=37e2ed981d6dca1df08814397aafa482de430564&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 17,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ElJoamy",
+			"name": "Joseph Anthony Meneses Salguero",
+			"location": "La Paz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/68487005?u=280c171914d4f3ad5e8f696af4d13caebfbf68ee&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 13,
+				"forks": 4,
+				"followers": 16,
+				"externalRepos": 2
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "mariagarciaflores",
+			"name": "Maria Griselda Garcia Flores",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/11466678?u=6cb5323020669c3db3e7280c9f14688ec036488b&v=4",
+			"metrics": {
+				"commits": 18,
+				"publicContributions": 18,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 16,
+				"externalRepos": 4
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "luucamay",
+			"name": "luucamay",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/15850514?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 48,
+				"forks": 6,
+				"followers": 142,
+				"externalRepos": 7
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 10,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "enevaca",
+			"name": "Noel Vaca",
+			"location": "Sucre",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/12105692?u=fc533b6cc0bc72461abda3b8ed134b8afae23646&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 8,
+				"forks": 6,
+				"followers": 9,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 13,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "maborak",
+			"name": "Wilmer A.",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2009948?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 12,
+				"forks": 1,
+				"followers": 23,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "gaspar200309",
+			"name": "Armando Gaspar ",
+			"location": "Cochabamba/Bolvia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/133708167?u=6c12b4f07371c8c6a69103a20e9b0869ebcae8a4&v=4",
+			"metrics": {
+				"commits": 9,
+				"publicContributions": 13,
+				"mergedPullRequests": 3,
+				"pullRequests": 3,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 23,
+				"forks": 3,
+				"followers": 7,
+				"externalRepos": 8
+			},
+			"previousMetrics": {
+				"commits": 10,
+				"publicContributions": 13,
+				"mergedPullRequests": 2,
+				"pullRequests": 2,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "chelobotix",
+			"name": "Marcelo Alarcon",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/65084923?u=061a0a262b0f27ecf0d9ded24b16fe541c6db91b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 41,
+				"forks": 4,
+				"followers": 33,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 2,
+				"publicContributions": 3,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "jhonacs2",
+			"name": "Jhonatan Soto",
+			"location": "La Paz , Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/75391330?u=2d82bf4ab38c118dcbcf28c30eaa0667b2ba202f&v=4",
+			"metrics": {
+				"commits": 30,
+				"publicContributions": 31,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 7,
+				"followers": 25,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "NahuelTG",
+			"name": "Nahuel Torrez Guzman",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/82225217?u=9ea8c42f4051b44b5a7cad86b7d4e1e1c4b28b1c&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 1,
+				"followers": 8,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "pr0nstar",
+			"name": "",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/64463227?v=4",
+			"metrics": {
+				"commits": 7,
+				"publicContributions": 7,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 5,
+				"forks": 4,
+				"followers": 8,
+				"externalRepos": 11
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Lucascserrate",
+			"name": "Lucas Camacho",
+			"location": "Santa Cruz - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/98147833?u=f92eb591269e930498f9184d924336df963a848d&v=4",
+			"metrics": {
+				"commits": 39,
+				"publicContributions": 40,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 2,
+				"followers": 12,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 11,
+				"publicContributions": 12,
+				"mergedPullRequests": 0,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "ynvYauneEnovore",
+			"name": "Yovan R. Enovore",
+			"location": "Sucre Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/88410835?u=81f5b7edd0254d910fedfb7c49546afb2861071a&v=4",
+			"metrics": {
+				"commits": 16,
+				"publicContributions": 21,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 7,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "estevooliveira111",
+			"name": "Estevão Nascimento",
+			"location": "Santa Cruz de La Sierra - Bolívia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/63885372?u=67ca197871a4bc6b404799d5b4c010aaffcf8033&v=4",
+			"metrics": {
+				"commits": 79,
+				"publicContributions": 81,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 12,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 3,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "Abdiel49",
+			"name": "Abdiel Orellana",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/31661147?u=d4c6616a04cbe3c2d0a35ec0104a726477d4b886&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 9,
+				"forks": 6,
+				"followers": 5,
+				"externalRepos": 3
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "paulgrimaldo",
+			"name": "Paul Fernando Grimaldo Bravo",
+			"location": "Santa Cruz de la Siera - Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/20879838?u=34c642a87df4547207839556eee9bf68e8bfa52f&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 10,
+				"forks": 4,
+				"followers": 24,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "DennGuez",
+			"name": "DennGuez",
+			"location": "Bolivia / Spain",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/104109926?u=8a9974445f2b166d7f7061cac109e2d2e1796675&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 1,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 1,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 56,
+				"publicContributions": 59,
+				"mergedPullRequests": 1,
+				"pullRequests": 1,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "yalonso7",
+			"name": "Yulian Alonso",
+			"location": "Santa Cruz De La Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/39344295?u=fa3ad3dac979fbf0d5a74f3f97d07f5b6c364f34&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 2,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 1,
+				"forks": 17,
+				"followers": 10,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 6,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "hcvcastro",
+			"name": "Henry Castro",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/6153911?u=24de300d0b0108637ac6a8c022ab31e209463b2b&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 29,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 9,
+				"mergedPullRequests": 5,
+				"pullRequests": 7,
+				"reviews": 2,
+				"issues": 0
+			}
+		},
+		{
+			"login": "nex23",
+			"name": "Hugo Acosta",
+			"location": "Santa Cruz de la Sierra, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/2569577?v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 16,
+				"forks": 4,
+				"followers": 19,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 19,
+				"publicContributions": 19,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "notluquis",
+			"name": "Lucas Pulgar-Escobar",
+			"location": "San Pedro de la Paz",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/51384279?u=cc5962aef52b4ced1493cd4c7bfb691c0fee88c5&v=4",
+			"metrics": {
+				"commits": 170,
+				"publicContributions": 249,
+				"mergedPullRequests": 22,
+				"pullRequests": 28,
+				"reviews": 3,
+				"issues": 46,
+				"stars": 8,
+				"forks": 2,
+				"followers": 7,
+				"externalRepos": 10
+			},
+			"previousMetrics": {
+				"commits": 4,
+				"publicContributions": 4,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "miguel-atencio-vargas",
+			"name": "Miguel Atencio Vargas",
+			"location": "La Paz, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/33062530?u=400a8abb272f067f867ba2ce94bf933508bfd078&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 2,
+				"forks": 0,
+				"followers": 8,
+				"externalRepos": 1
+			},
+			"previousMetrics": {
+				"commits": 12,
+				"publicContributions": 13,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "surionah",
+			"name": "Sergio Uriona Herbas",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/4296658?u=7688835b5fc0408c32e04fe4fa6d814621125dbb&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 3,
+				"forks": 0,
+				"followers": 5,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		},
+		{
+			"login": "tiveor",
+			"name": "Alvaro Orellana",
+			"location": "Cochabamba, Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/982787?u=c0402d89e3f39b28cd7a6f41c4ff97af64f56167&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 4,
+				"forks": 3,
+				"followers": 11,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 42,
+				"publicContributions": 44,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 1,
+				"issues": 0
+			}
+		},
+		{
+			"login": "JJLizarazu",
+			"name": "Juan José Lizarazu",
+			"location": "Bolivia",
+			"avatarUrl": "https://avatars.githubusercontent.com/u/159208781?u=448a17e6e419018e1343a924901f540fdf14740c&v=4",
+			"metrics": {
+				"commits": 0,
+				"publicContributions": 0,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0,
+				"stars": 0,
+				"forks": 0,
+				"followers": 7,
+				"externalRepos": 0
+			},
+			"previousMetrics": {
+				"commits": 9,
+				"publicContributions": 14,
+				"mergedPullRequests": 0,
+				"pullRequests": 0,
+				"reviews": 0,
+				"issues": 0
+			}
+		}
+	],
+	"reconstructed": false
+}

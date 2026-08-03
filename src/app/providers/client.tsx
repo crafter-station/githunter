@@ -4,17 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
-import { useEffect, useState } from "react";
-
-const ThemeSuppressor = ({ children }: { children: React.ReactNode }) => {
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
-
-	return mounted ? <>{children}</> : null;
-};
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const queryClient = new QueryClient();
@@ -62,15 +51,13 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 			}}
 		>
 			<QueryClientProvider client={queryClient}>
-				<ThemeSuppressor>
-					<ThemeProvider
-						attribute="class"
-						disableTransitionOnChange
-						defaultTheme="system"
-					>
-						<TooltipProvider delayDuration={0}>{children}</TooltipProvider>
-					</ThemeProvider>
-				</ThemeSuppressor>
+				<ThemeProvider
+					attribute="class"
+					disableTransitionOnChange
+					defaultTheme="system"
+				>
+					<TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+				</ThemeProvider>
 			</QueryClientProvider>
 		</ClerkProvider>
 	);

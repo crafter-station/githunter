@@ -31,7 +31,7 @@ import { parseAdvancedSearchParams } from "./parse-advanced-search-params";
 import { queryUsersAdvanced } from "./query-users";
 
 export const revalidate = 300;
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export default async function AdvancedSearchResultsPage({
