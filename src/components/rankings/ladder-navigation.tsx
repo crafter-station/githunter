@@ -11,7 +11,7 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { rankingLenses } from "@/rankings/lenses";
 import { type RankingView, rankingFilterParsers } from "@/rankings/query-state";
 import type { LensId, RankingSeason } from "@/rankings/types";
@@ -102,6 +102,7 @@ export function LadderNavigation({
 	};
 
 	const changeView = (view: RankingView) => {
+		if (!view) return;
 		const nextView = view === "season" ? "current" : view;
 		setOptimisticView(nextView);
 		void setFilters({
@@ -117,12 +118,17 @@ export function LadderNavigation({
 	};
 
 	const changeLens = (value: string) => {
+		if (!value) return;
 		const nextLens = value as LensId;
 		setOptimisticLens(nextLens);
-		void setFilters({
-			lens: nextLens,
-			season: isSeasonal ? undefined : null,
-		});
+		void setFilters(
+			isSeasonal
+				? { lens: nextLens }
+				: {
+						lens: nextLens,
+						season: null,
+					},
+		);
 	};
 
 	return (
@@ -132,24 +138,29 @@ export function LadderNavigation({
 					<span>Ranking lens</span>
 					<span>v{selectedLens.version}</span>
 				</div>
-				<Tabs value={optimisticLens} onValueChange={changeLens}>
-					<TabsList
-						aria-label="Ranking lens"
-						className={styles.lensTabsList}
-						onPointerEnter={prefetchLenses}
-						onFocus={prefetchLenses}
-					>
-						{Object.values(rankingLenses).map((lens) => (
-							<TabsTrigger
-								key={lens.id}
-								value={lens.id}
-								className={styles.lensTab}
-							>
-								{lens.shortName}
-							</TabsTrigger>
-						))}
-					</TabsList>
-				</Tabs>
+				<ToggleGroup
+					type="single"
+					variant="outline"
+					spacing={0}
+					value={optimisticLens}
+					onValueChange={changeLens}
+					aria-label="Ranking lens"
+					className={styles.lensToggleGroup}
+					onPointerEnter={prefetchLenses}
+					onFocus={prefetchLenses}
+				>
+					{Object.values(rankingLenses).map((lens) => (
+						<ToggleGroupItem
+							key={lens.id}
+							value={lens.id}
+							data-selected={optimisticLens === lens.id ? "true" : undefined}
+							aria-label={lens.name}
+							className={styles.lensToggle}
+						>
+							{lens.shortName}
+						</ToggleGroupItem>
+					))}
+				</ToggleGroup>
 			</div>
 
 			<div className={styles.timeControl}>
@@ -157,48 +168,54 @@ export function LadderNavigation({
 					<span>Time range</span>
 				</div>
 				<div className={styles.timeControlRow}>
-					<Tabs
+					<ToggleGroup
+						type="single"
+						variant="outline"
+						spacing={0}
 						value={isSeasonal ? "season" : optimisticView}
 						onValueChange={(value) => changeView(value as RankingView)}
+						aria-label="Ranking time range"
+						className={styles.timeToggleGroup}
 					>
-						<TabsList aria-label="Ranking time view">
-							<TabsTrigger
-								value="season"
-								onPointerEnter={() => prefetchView("current")}
-								onFocus={() => prefetchView("current")}
-							>
-								Season
-							</TabsTrigger>
-							<TabsTrigger
-								value="form"
-								disabled={!formAvailable}
-								title={
-									formAvailable
-										? undefined
-										: "Form needs at least two available seasons"
-								}
-								onPointerEnter={() => formAvailable && prefetchView("form")}
-								onFocus={() => formAvailable && prefetchView("form")}
-							>
-								Form
-							</TabsTrigger>
-							<TabsTrigger
-								value="all-time"
-								disabled={!allTimeAvailable}
-								title={
-									allTimeAvailable
-										? undefined
-										: "All-time opens after the first official season closes"
-								}
-								onPointerEnter={() =>
-									allTimeAvailable && prefetchView("all-time")
-								}
-								onFocus={() => allTimeAvailable && prefetchView("all-time")}
-							>
-								All-time
-							</TabsTrigger>
-						</TabsList>
-					</Tabs>
+						<ToggleGroupItem
+							value="season"
+							data-selected={isSeasonal ? "true" : undefined}
+							onPointerEnter={() => prefetchView("current")}
+							onFocus={() => prefetchView("current")}
+						>
+							Season
+						</ToggleGroupItem>
+						<ToggleGroupItem
+							value="form"
+							data-selected={optimisticView === "form" ? "true" : undefined}
+							disabled={!formAvailable}
+							title={
+								formAvailable
+									? undefined
+									: "Form needs at least two available seasons"
+							}
+							onPointerEnter={() => formAvailable && prefetchView("form")}
+							onFocus={() => formAvailable && prefetchView("form")}
+						>
+							Form
+						</ToggleGroupItem>
+						<ToggleGroupItem
+							value="all-time"
+							data-selected={optimisticView === "all-time" ? "true" : undefined}
+							disabled={!allTimeAvailable}
+							title={
+								allTimeAvailable
+									? undefined
+									: "All-time opens after the first official season closes"
+							}
+							onPointerEnter={() =>
+								allTimeAvailable && prefetchView("all-time")
+							}
+							onFocus={() => allTimeAvailable && prefetchView("all-time")}
+						>
+							All-time
+						</ToggleGroupItem>
+					</ToggleGroup>
 
 					{isSeasonal ? (
 						<DropdownMenu
