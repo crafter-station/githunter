@@ -131,6 +131,18 @@ describe("ranking lenses", () => {
 		expect(entry?.score).toBe(0);
 	});
 
+	it("excludes cumulative signals from reconstructed scores", () => {
+		const reconstructed = profile("archive", { stars: 1000 });
+		reconstructed.unavailableMetrics = ["stars"];
+		const [entry] = scoreProfiles([reconstructed], {
+			...rankingLenses["oss-impact"],
+			weights: { stars: 1 },
+		});
+		expect(entry?.score).toBe(0);
+		expect(entry?.confidence).toBe(0);
+		expect(entry?.breakdown).toEqual([]);
+	});
+
 	it("reports movement against the preceding persisted rank order", () => {
 		const lens: LensDefinition = {
 			id: "oss-impact",

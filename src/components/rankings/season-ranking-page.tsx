@@ -5,10 +5,12 @@ import { LadderNavigation } from "@/components/rankings/ladder-navigation";
 import { RankingTable } from "@/components/rankings/ranking-table";
 import { isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
-import { getSeasonLeaderboard } from "@/rankings/season-store";
+import {
+	getRankingSeasons,
+	getSeasonLeaderboard,
+} from "@/rankings/season-store";
 import type { LensId } from "@/rankings/types";
 import { CalendarDays, ShieldCheck, Trophy } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function SeasonRankingPage({
@@ -21,7 +23,10 @@ export async function SeasonRankingPage({
 	lensId: LensId;
 }) {
 	if (!isRankingScope(scope)) notFound();
-	const leaderboard = await getSeasonLeaderboard({ scope, seasonId, lensId });
+	const [leaderboard, seasons] = await Promise.all([
+		getSeasonLeaderboard({ scope, seasonId, lensId }),
+		getRankingSeasons(scope),
+	]);
 	if (!leaderboard) notFound();
 	const { season, results } = leaderboard;
 	const lens = rankingLenses[lensId];
@@ -46,11 +51,14 @@ export async function SeasonRankingPage({
 								<span aria-hidden="true" />
 								Peru / {season.label}
 							</div>
-							<h1>{season.label} season standings.</h1>
+							<h1>
+								{season.status === "reconstructed" ? "Reconstructed " : ""}
+								{season.label} standings.
+							</h1>
 							<p className={styles.heroCopy}>
-								The complete {lens.shortName} record for this quarter. Closed
-								seasons are immutable; active and preseason standings remain
-								provisional.
+								{season.status === "reconstructed"
+									? "Public activity was rebuilt from GitHub's dated contribution record. Historical adoption signals were excluded, and this quarter does not award an official championship."
+									: `The complete ${lens.shortName} record for this quarter. Closed seasons are immutable; active and preseason standings remain provisional.`}
 							</p>
 						</div>
 						<div className={styles.heroMeta}>
@@ -77,27 +85,34 @@ export async function SeasonRankingPage({
 					</div>
 				</section>
 				<div className={`${styles.content} ${styles.body}`}>
-					<LadderNavigation scope={scope} active="season" season={season} />
-					<nav aria-label="Season lenses" className={styles.lensNav}>
-						{Object.values(rankingLenses).map((definition) => (
-							<Link
-								key={definition.id}
-								href={`/${scope}/seasons/${season.id.toLowerCase()}?lens=${definition.id}`}
-								aria-current={definition.id === lensId ? "page" : undefined}
-							>
-								{definition.shortName}
-							</Link>
-						))}
-					</nav>
-					<RankingTable
-						initialEntries={results.map((result) => result.entry)}
-						lensId={lensId}
-						lensName={lens.shortName}
+					<LadderNavigation
 						scope={scope}
-						scopeName="Peru"
-						total={results.length}
+						active="season"
 						season={season}
+						seasons={seasons}
+						lensId={lensId}
 					/>
+					{results.length > 0 ? (
+						<RankingTable
+							initialEntries={results.map((result) => result.entry)}
+							lensId={lensId}
+							lensName={lens.shortName}
+							scope={scope}
+							scopeName="Peru"
+							total={results.length}
+							season={season}
+						/>
+					) : (
+						<section className={styles.unavailableState}>
+							<p className={styles.sectionLabel}>Unavailable evidence</p>
+							<h2>{lens.shortName} cannot be reconstructed objectively.</h2>
+							<p>
+								This lens depends on historical stars, forks, and followers.
+								GitHub exposes their current totals, not their values at the end
+								of {season.label}.
+							</p>
+						</section>
+					)}
 				</div>
 			</main>
 			<Footer />

@@ -1,6 +1,7 @@
 import GitHunterLogo from "@/components/githunter-logo";
 import { Github, Menu } from "lucide-react";
 import Link from "next/link";
+import shellStyles from "./public-shell.module.css";
 
 const links = [
 	{ href: "/peru", label: "Current season" },
@@ -12,7 +13,9 @@ const links = [
 export function PublicHeader() {
 	return (
 		<header className="sticky top-0 z-[49] border-border border-b bg-background">
-			<div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+			<div
+				className={`${shellStyles.shell} flex h-14 items-center justify-between`}
+			>
 				<div className="flex items-center gap-8">
 					<Link href="/" className="flex items-center gap-2">
 						<GitHunterLogo className="size-6" />

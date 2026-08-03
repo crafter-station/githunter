@@ -9,7 +9,6 @@ import { getLadderStandings } from "@/rankings/season-store";
 import { getSeason } from "@/rankings/seasons";
 import type { LensId } from "@/rankings/types";
 import { Activity, History, Trophy } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export async function CareerRankingPage({
@@ -86,18 +85,13 @@ export async function CareerRankingPage({
 				</section>
 
 				<div className={`${styles.content} ${styles.body}`}>
-					<LadderNavigation scope={scope} active={mode} season={season} />
-					<nav aria-label="Career lenses" className={styles.lensNav}>
-						{Object.values(rankingLenses).map((lens) => (
-							<Link
-								key={lens.id}
-								href={`/${scope}/${mode === "form" ? "form" : "overall"}?lens=${lens.id}`}
-								aria-current={lens.id === lensId ? "page" : undefined}
-							>
-								{lens.shortName}
-							</Link>
-						))}
-					</nav>
+					<LadderNavigation
+						scope={scope}
+						active={mode}
+						season={season}
+						seasons={seasons}
+						lensId={lensId}
+					/>
 					<CareerTable standings={standings} mode={mode} />
 					<section className={styles.evidenceGrid}>
 						<div>

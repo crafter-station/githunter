@@ -32,6 +32,7 @@ export interface RankingProfile {
 	avatarUrl: string;
 	metrics: RankingMetrics;
 	previousMetrics?: Partial<RankingMetrics>;
+	unavailableMetrics?: RankingMetric[];
 }
 
 export interface RankingDataset {
@@ -53,6 +54,7 @@ export interface RankingDataset {
 	sources: string[];
 	limitations: string[];
 	profiles: RankingProfile[];
+	reconstructed?: boolean;
 }
 
 export interface LensDefinition {
@@ -101,7 +103,11 @@ export interface RankingSnapshot {
 	cache: "database" | "redis" | "bundled";
 }
 
-export type RankingSeasonStatus = "preseason" | "active" | "closed";
+export type RankingSeasonStatus =
+	| "preseason"
+	| "reconstructed"
+	| "active"
+	| "closed";
 
 export interface RankingSeason {
 	id: string;

@@ -1,5 +1,6 @@
 import {
 	createEvidenceWindows,
+	createHistoricalSeasonEvidenceWindows,
 	createSeasonEvidenceWindows,
 	readBatchProfiles,
 } from "./github";
@@ -32,6 +33,21 @@ describe("GitHub ranking evidence windows", () => {
 		expect(windows.previousPeriod).toEqual({
 			from: "2026-04-01T00:00:00.000Z",
 			to: "2026-05-03T23:59:59.999Z",
+		});
+	});
+
+	it("creates complete historical quarter windows", () => {
+		const windows = createHistoricalSeasonEvidenceWindows("2026-Q2");
+		expect(windows).toEqual({
+			generatedAt: "2026-06-30T23:59:59.999Z",
+			period: {
+				from: "2026-04-01T00:00:00.000Z",
+				to: "2026-06-30T23:59:59.999Z",
+			},
+			previousPeriod: {
+				from: "2026-01-01T00:00:00.000Z",
+				to: "2026-03-31T23:59:59.999Z",
+			},
 		});
 	});
 

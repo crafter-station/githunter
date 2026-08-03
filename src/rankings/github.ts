@@ -33,6 +33,12 @@ export interface CollectionProgress {
 	total: number;
 }
 
+export interface EvidenceWindows {
+	generatedAt: string;
+	period: RankingDataset["period"];
+	previousPeriod: NonNullable<RankingDataset["previousPeriod"]>;
+}
+
 function isoDate(date: Date) {
 	return date.toISOString();
 }
@@ -83,6 +89,27 @@ export function createSeasonEvidenceWindows(now: Date) {
 		period: { from: isoDate(currentFrom), to: isoDate(currentTo) },
 		previousPeriod: { from: isoDate(previousFrom), to: isoDate(previousTo) },
 	};
+}
+
+export function createHistoricalSeasonEvidenceWindows(seasonId: string) {
+	const match = /^(\d{4})-Q([1-4])$/.exec(seasonId);
+	if (!match) throw new Error(`Invalid season ID: ${seasonId}`);
+	const year = Number(match[1]);
+	const quarter = Number(match[2]);
+	const startsAt = new Date(Date.UTC(year, (quarter - 1) * 3, 1));
+	const endsAt = new Date(Date.UTC(year, quarter * 3, 0, 23, 59, 59, 999));
+	const previousStartsAt = new Date(Date.UTC(year, (quarter - 2) * 3, 1));
+	const previousEndsAt = new Date(
+		Date.UTC(year, (quarter - 1) * 3, 0, 23, 59, 59, 999),
+	);
+	return {
+		generatedAt: isoDate(endsAt),
+		period: { from: isoDate(startsAt), to: isoDate(endsAt) },
+		previousPeriod: {
+			from: isoDate(previousStartsAt),
+			to: isoDate(previousEndsAt),
+		},
+	} satisfies EvidenceWindows;
 }
 
 function publicContributions(collection: ContributionCollection) {
@@ -246,6 +273,8 @@ export async function collectRankingDataset({
 	cohortDefinition,
 	onProgress,
 	now = new Date(),
+	windows,
+	reconstructed = false,
 }: {
 	scope: string;
 	logins: string[];
@@ -253,9 +282,11 @@ export async function collectRankingDataset({
 	cohortDefinition: string;
 	onProgress?: (progress: CollectionProgress) => void;
 	now?: Date;
+	windows?: EvidenceWindows;
+	reconstructed?: boolean;
 }): Promise<RankingDataset> {
 	const { generatedAt, period, previousPeriod } =
-		createSeasonEvidenceWindows(now);
+		windows ?? createSeasonEvidenceWindows(now);
 	const currentFrom = period.from;
 	const currentTo = period.to;
 	const previousFrom = previousPeriod.from;
@@ -281,6 +312,12 @@ export async function collectRankingDataset({
 		});
 	}
 
+	const unavailableMetrics = [
+		"stars",
+		"forks",
+		"followers",
+		"externalRepos",
+	] as const;
 	return {
 		scope,
 		generatedAt,
@@ -299,7 +336,19 @@ export async function collectRankingDataset({
 			"Rising compares quarter-to-date activity with the same elapsed window in the preceding quarter.",
 			"Stars and forks cover the 100 most-starred public, non-fork repositories owned by each user.",
 			"Private activity and contribution size are excluded for comparability.",
+			...(reconstructed
+				? [
+						"This season was reconstructed after the quarter closed from GitHub's dated public activity record.",
+						"Stars, forks, followers, and repository reach cannot be recovered at their historical values and are excluded from reconstructed scores.",
+					]
+				: []),
 		],
-		profiles,
+		profiles: reconstructed
+			? profiles.map((profile) => ({
+					...profile,
+					unavailableMetrics: [...unavailableMetrics],
+				}))
+			: profiles,
+		reconstructed,
 	};
 }

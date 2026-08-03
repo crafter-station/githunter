@@ -4,7 +4,8 @@ import { PublicHeader } from "@/components/public-header";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
 import { RankingTable } from "@/components/rankings/ranking-table";
 import { isRankingScope } from "@/rankings/data";
-import { metricLabels, rankingLenses } from "@/rankings/lenses";
+import { metricLabels } from "@/rankings/lenses";
+import { getRankingSeasons } from "@/rankings/season-store";
 import { getSeason } from "@/rankings/seasons";
 import { getRankingCanonical, getRankingSeo, siteUrl } from "@/rankings/seo";
 import { getRankingSnapshot } from "@/rankings/store";
@@ -17,7 +18,6 @@ import {
 	Info,
 	ShieldCheck,
 } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 function formatDate(value: string) {
@@ -37,7 +37,10 @@ export async function RankingReportPage({
 	lens: LensId;
 }) {
 	if (!isRankingScope(scope)) notFound();
-	const snapshot = await getRankingSnapshot(scope, lens);
+	const [snapshot, seasons] = await Promise.all([
+		getRankingSnapshot(scope, lens),
+		getRankingSeasons(scope),
+	]);
 	const season = getSeason(new Date(snapshot.generatedAt));
 	const seo = getRankingSeo(lens);
 	const canonicalPath = getRankingCanonical(scope, lens);
@@ -160,18 +163,13 @@ export async function RankingReportPage({
 				</section>
 
 				<div className={`${styles.content} ${styles.body}`}>
-					<LadderNavigation scope={scope} active="current" season={season} />
-					<nav aria-label="Ranking lenses" className={styles.lensNav}>
-						{Object.values(rankingLenses).map((definition) => (
-							<Link
-								key={definition.id}
-								href={getRankingCanonical(scope, definition.id)}
-								aria-current={definition.id === lens ? "page" : undefined}
-							>
-								{definition.shortName}
-							</Link>
-						))}
-					</nav>
+					<LadderNavigation
+						scope={scope}
+						active="current"
+						season={season}
+						seasons={seasons}
+						lensId={lens}
+					/>
 
 					<RankingTable
 						initialEntries={snapshot.entries.slice(0, 50)}

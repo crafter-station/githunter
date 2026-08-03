@@ -24,6 +24,8 @@ Raw volume is capped through percentile normalization, so extreme totals cannot 
 
 Activity lenses reset at the beginning of each calendar quarter. Durable adoption metrics use the current public state, captured in the same dated snapshot. Rising compares quarter-to-date activity against the same elapsed window in the preceding quarter.
 
+Historical 2026 Q1 and Q2 activity is reconstructed from GitHub's dated contribution record. Stars, forks, followers, and repository reach cannot be recovered at their past values, so they are excluded from reconstructed scores. Reconstructed quarters contribute to Form but never award championships, podiums, or official All-Time points.
+
 ### What happens when data is incomplete?
 
 Collection only admits profiles with a complete current evidence window. Rising can retain a profile without a prior comparison window, scores only the available comparable facts, and lowers confidence explicitly.
@@ -67,9 +69,11 @@ The first release supports Peru and the five fixed lenses. It uses the latest ve
 
 ## Operations
 
-Apply `drizzle/0011_ranking_snapshots.sql` before enabling refreshes. The Trigger.dev task `refresh-ranking-snapshots` runs every day at 06:00 in `America/Lima` and requires `GITHUB_TOKEN`, `DATABASE_URL`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`.
+Apply migrations through `drizzle/0012_github_ladder_seasons.sql` before enabling refreshes. The Trigger.dev task `refresh-ranking-snapshots` runs every day at 06:00 in `America/Lima` and requires `GITHUB_TOKEN`, `DATABASE_URL`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`.
 
 The same refresh can be run manually with `bun run rankings:refresh`. `bun run rankings:bundle` regenerates the audited fallback dataset and should only be committed after checking cohort membership and the resulting top ranks. Explicit source errors are recorded with evidence in `src/rankings/data/peru-exclusions.json` and removed before collection.
+
+Run `bun run rankings:seasons:backfill:2026` to reconstruct 2026 Q1 and Q2 from dated public activity. The command is idempotent and deliberately omits OSS Impact because GitHub does not expose historical adoption totals.
 
 Public pages choose the freshest version-compatible snapshot from:
 

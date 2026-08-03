@@ -151,7 +151,9 @@ export async function getRankingSnapshot(scope: RankingScope, lensId: LensId) {
 export async function persistRankingDataset(dataset: RankingDataset) {
 	const { db, rankingMetricSnapshot, rankingSnapshot } = await import("@/db");
 	const snapshotDate = dataset.generatedAt.slice(0, 10);
-	const lenses = Object.values(rankingLenses);
+	const lenses = Object.values(rankingLenses).filter(
+		(lens) => !dataset.reconstructed || lens.id !== "oss-impact",
+	);
 	const previousEntries = await Promise.all(
 		lenses.map(async (lens) => {
 			const [row] = await db
@@ -234,7 +236,9 @@ export async function persistRankingDataset(dataset: RankingDataset) {
 	}
 
 	const { persistSeasonResults } = await import("./season-store");
-	await persistSeasonResults(snapshots);
+	await persistSeasonResults(snapshots, {
+		status: dataset.reconstructed ? "reconstructed" : undefined,
+	});
 
 	const redis = getRedis();
 	if (redis) {

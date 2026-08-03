@@ -123,108 +123,207 @@
 
 .ladderBar {
 	display: flex;
-	min-height: 64px;
+	min-height: 72px;
 	align-items: center;
 	justify-content: space-between;
-	gap: var(--vbg-space-5);
+	gap: var(--vbg-space-4);
 	border-bottom: 1px solid var(--vbg-border-subtle);
 }
 
 .ladderNav {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
-	gap: var(--vbg-space-6);
+	gap: 2px;
+	padding: 3px;
+	border: 1px solid var(--vbg-border-subtle);
+	border-radius: 8px;
+	background: var(--vbg-surface-secondary);
 }
 
 .ladderNav a {
-	position: relative;
 	display: inline-flex;
-	height: 64px;
+	height: 34px;
 	align-items: center;
+	padding-inline: 12px;
+	border-radius: 6px;
 	color: var(--vbg-text-secondary);
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 500;
 	text-decoration: none;
 }
 
-.ladderNav a[aria-current="page"] {
+.ladderNav a:hover {
 	color: var(--vbg-text-primary);
 }
 
-.ladderNav a[aria-current="page"]::after {
-	position: absolute;
-	right: 0;
-	bottom: -1px;
-	left: 0;
-	height: 2px;
-	background: #1d4eff;
-	content: "";
+.ladderNav a:focus-visible,
+.filterMenu summary:focus-visible,
+.filterMenu nav a:focus-visible {
+	outline: 2px solid #1d4eff;
+	outline-offset: 2px;
 }
 
-.seasonPill {
-	display: inline-flex;
+.ladderNav a[aria-current="page"] {
+	background: var(--vbg-surface-primary);
+	box-shadow: 0 0 0 1px var(--vbg-border-subtle);
+	color: var(--vbg-text-primary);
+}
+
+.ladderTools {
+	display: flex;
 	align-items: center;
-	padding: 6px 9px;
+	gap: 8px;
+}
+
+.filterMenu {
+	position: relative;
+	min-width: 0;
+}
+
+.filterMenu summary {
+	box-sizing: border-box;
+	display: flex;
+	height: 42px;
+	cursor: pointer;
+	align-items: center;
+	gap: 8px;
+	padding-inline: 12px;
+	border: 1px solid var(--vbg-border-subtle);
+	border-radius: 8px;
+	color: var(--vbg-text-secondary);
+	font-size: 11px;
+	list-style: none;
+	white-space: nowrap;
+}
+
+.filterValue {
+	display: inline-flex;
+	min-width: 0;
+	align-items: center;
+	gap: 4px;
+}
+
+.filterMenu summary::-webkit-details-marker {
+	display: none;
+}
+
+.filterMenu summary:hover,
+.filterMenu summary[data-active="true"] {
+	border-color: var(--vbg-border-strong);
+	color: var(--vbg-text-primary);
+}
+
+.filterMenu summary strong {
+	margin-left: 4px;
+	color: var(--vbg-text-primary);
+	font-weight: 500;
+}
+
+.filterMenu summary > svg {
+	width: 13px;
+	height: 13px;
+	transition: rotate 160ms ease;
+}
+
+.filterMenu[open] summary > svg {
+	rotate: 180deg;
+}
+
+.filterMenu nav {
+	position: absolute;
+	top: calc(100% + 8px);
+	right: 0;
+	z-index: 20;
+	display: grid;
+	min-width: 190px;
+	padding: 6px;
+	border: 1px solid var(--vbg-border-subtle);
+	border-radius: 10px;
+	background: var(--vbg-surface-primary);
+	box-shadow: 0 18px 48px rgb(0 0 0 / 35%);
+}
+
+.filterMenu nav a {
+	display: flex;
+	min-height: 38px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 7px 9px;
+	border-radius: 6px;
+	color: var(--vbg-text-secondary);
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.filterMenu nav a:hover,
+.filterMenu nav a[aria-current="page"] {
+	background: var(--vbg-surface-secondary);
+	color: var(--vbg-text-primary);
+}
+
+.filterMenu nav a svg {
+	width: 13px;
+	height: 13px;
+	color: #1d4eff;
+}
+
+.filterMenu nav a span {
+	display: grid;
+	gap: 2px;
+}
+
+.filterMenu nav a small {
+	color: var(--vbg-text-tertiary);
+	font-family: var(--font-geist-mono), monospace;
+	font-size: 8px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.seasonStatus {
+	padding: 3px 5px;
 	border: 1px solid color-mix(in srgb, #1d4eff 35%, transparent);
 	border-radius: 999px;
 	color: #1d4eff;
 	font-family: var(--font-geist-mono), monospace;
-	font-size: 9px;
-	letter-spacing: 0.08em;
+	font-size: 8px;
+	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	white-space: nowrap;
 }
 
-.seasonPill[data-status="closed"] {
+.seasonStatus[data-status="closed"],
+.seasonStatus[data-status="reconstructed"] {
 	border-color: var(--vbg-border-default);
 	color: var(--vbg-text-secondary);
-}
-
-.lensNav {
-	display: flex;
-	overflow-x: auto;
-	border-block: 1px solid var(--vbg-border-subtle);
-}
-
-.lensNav a {
-	position: relative;
-	display: inline-flex;
-	min-width: max-content;
-	height: 52px;
-	align-items: center;
-	padding-inline: var(--vbg-space-5);
-	color: var(--vbg-text-secondary);
-	font-size: var(--vbg-type-label);
-	font-weight: 500;
-	text-decoration: none;
-}
-
-.lensNav a:first-child {
-	padding-left: 0;
-}
-
-.lensNav a[aria-current="page"] {
-	color: var(--vbg-text-primary);
-}
-
-.lensNav a[aria-current="page"]::after {
-	position: absolute;
-	right: var(--vbg-space-5);
-	bottom: -1px;
-	left: var(--vbg-space-5);
-	height: 2px;
-	background: #1d4eff;
-	content: "";
-}
-
-.lensNav a:first-child[aria-current="page"]::after {
-	left: 0;
 }
 
 .lensIntro {
 	display: grid;
 	grid-template-columns: minmax(0, 7fr) minmax(360px, 5fr);
 	gap: clamp(3rem, 8vw, 8rem);
+}
+
+.unavailableState {
+	max-width: 720px;
+	padding-block: clamp(4rem, 10vw, 8rem);
+}
+
+.unavailableState h2 {
+	margin: var(--vbg-space-3) 0 0;
+	font-size: clamp(2rem, 4vw, 3.5rem);
+	font-weight: 500;
+	letter-spacing: -0.05em;
+	line-height: 1;
+	text-wrap: balance;
+}
+
+.unavailableState > p:last-child {
+	max-width: 620px;
+	margin: var(--vbg-space-5) 0 0;
+	color: var(--vbg-text-secondary);
+	font-size: var(--vbg-type-body);
+	line-height: var(--vbg-leading-body);
 }
 
 .reading {
@@ -927,48 +1026,48 @@
 
 	.ladderBar {
 		align-items: stretch;
-		flex-direction: column-reverse;
-		gap: 0;
-		padding-top: var(--vbg-space-4);
+		flex-direction: column;
+		gap: 10px;
+		padding-block: var(--vbg-space-4);
 	}
 
 	.ladderNav {
-		overflow-x: auto;
-		gap: var(--vbg-space-5);
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
 	}
 
 	.ladderNav a {
-		height: 48px;
+		height: 36px;
+		justify-content: center;
+		padding-inline: 8px;
 		font-size: 12px;
 		white-space: nowrap;
 	}
 
-	.seasonPill {
-		align-self: flex-start;
+	.ladderTools {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	}
 
-	.lensNav {
-		margin-inline: -1rem;
-		padding-inline: 1rem;
+	.filterMenu summary {
+		width: 100%;
+		justify-content: space-between;
+		padding-inline: 10px;
 	}
 
-	.lensNav a:first-child {
-		padding-left: var(--vbg-space-2);
+	.filterPrefix {
+		display: none;
 	}
 
-	.lensNav a:first-child[aria-current="page"]::after {
-		left: var(--vbg-space-2);
+	.filterMenu nav {
+		right: auto;
+		left: 0;
+		min-width: 100%;
 	}
 
-	.lensNav a {
-		height: 44px;
-		padding-inline: var(--vbg-space-2);
-		font-size: 11px;
-	}
-
-	.lensNav a[aria-current="page"]::after {
-		right: var(--vbg-space-2);
-		left: var(--vbg-space-2);
+	.filterMenu:last-child nav {
+		right: 0;
+		left: auto;
 	}
 
 	.weightRow {

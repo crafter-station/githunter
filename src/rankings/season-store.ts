@@ -35,9 +35,11 @@ function mapSeason(row: {
 		status:
 			row.status === "closed"
 				? "closed"
-				: row.status === "preseason"
-					? "preseason"
-					: "active",
+				: row.status === "reconstructed"
+					? "reconstructed"
+					: row.status === "preseason"
+						? "preseason"
+						: "active",
 		rulesetVersion: row.rulesetVersion,
 		closedAt: row.closedAt?.toISOString() ?? null,
 	};
@@ -66,11 +68,17 @@ export function resultsFromSnapshots(snapshots: RankingSnapshot[]) {
 	return { seasons: [season], results };
 }
 
-export async function persistSeasonResults(snapshots: RankingSnapshot[]) {
+export async function persistSeasonResults(
+	snapshots: RankingSnapshot[],
+	options: { status?: RankingSeason["status"] } = {},
+) {
 	if (snapshots.length === 0 || !process.env.DATABASE_URL) return;
 	const { db, rankingSeason, rankingSeasonResult } = await import("@/db");
 	const generatedAt = new Date(snapshots[0].generatedAt);
-	const season = getSeason(generatedAt);
+	const season = {
+		...getSeason(generatedAt),
+		status: options.status ?? getSeason(generatedAt).status,
+	};
 	const today = generatedAt.toISOString().slice(0, 10);
 
 	await db
@@ -97,6 +105,7 @@ export async function persistSeasonResults(snapshots: RankingSnapshot[]) {
 				startsAt: season.startsAt,
 				endsAt: season.endsAt,
 				rulesetVersion: season.rulesetVersion,
+				status: season.status,
 			},
 		});
 
@@ -136,6 +145,35 @@ export async function persistSeasonResults(snapshots: RankingSnapshot[]) {
 				},
 			});
 	}
+}
+
+export async function getRankingSeasons(scope: string) {
+	if (process.env.DATABASE_URL) {
+		try {
+			const { db, rankingSeason, rankingSeasonResult } = await import("@/db");
+			const rows = await db
+				.selectDistinct({
+					id: rankingSeason.id,
+					label: rankingSeason.label,
+					startsAt: rankingSeason.startsAt,
+					endsAt: rankingSeason.endsAt,
+					status: rankingSeason.status,
+					rulesetVersion: rankingSeason.rulesetVersion,
+					closedAt: rankingSeason.closedAt,
+				})
+				.from(rankingSeason)
+				.innerJoin(
+					rankingSeasonResult,
+					eq(rankingSeasonResult.seasonId, rankingSeason.id),
+				)
+				.where(eq(rankingSeasonResult.scope, scope))
+				.orderBy(desc(rankingSeason.startsAt));
+			return rows.map(mapSeason);
+		} catch {
+			return [getSeason()];
+		}
+	}
+	return [getSeason()];
 }
 
 async function getPersistedLadder(scope: string, lensId: LensId) {

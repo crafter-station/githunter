@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { CrafterIcon } from "../icons/crafter";
+import shellStyles from "../public-shell.module.css";
 
 interface FooterProps {
 	className?: string;
@@ -8,16 +10,16 @@ interface FooterProps {
 export function Footer({ className }: FooterProps) {
 	return (
 		<footer className={cn("mt-auto py-10", className)}>
-			<div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+			<div
+				className={`${shellStyles.shell} flex flex-col gap-6 md:flex-row md:items-center md:justify-between`}
+			>
 				<a
 					href="https://crafter-station.com"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="flex items-center gap-3 text-muted-foreground text-sm hover:text-foreground"
 				>
-					<span className="grid size-8 place-items-center rounded-full border border-dashed font-mono text-[9px] text-foreground">
-						CS
-					</span>
+					<CrafterIcon size={32} className="shrink-0" />
 					<span>An initiative by Crafter Station</span>
 				</a>
 				<div className="flex flex-wrap items-center gap-x-6 gap-y-3">

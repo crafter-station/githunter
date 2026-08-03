@@ -20,10 +20,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		priority: 0.7,
 	}));
 	const season = getSeason(lastModified);
+	const seasonPages = ["2026-q1", "2026-q2", season.id.toLowerCase()].map(
+		(seasonId) => ({
+			url: new URL(`/peru/seasons/${seasonId}`, siteUrl).toString(),
+			lastModified,
+			changeFrequency:
+				seasonId === season.id.toLowerCase()
+					? ("daily" as const)
+					: ("monthly" as const),
+			priority: 0.8,
+		}),
+	);
 	const ladderPages = [
 		{ path: "/peru/form", priority: 0.85 },
 		{ path: "/peru/overall", priority: 0.85 },
-		{ path: `/peru/seasons/${season.id.toLowerCase()}`, priority: 0.8 },
 	].map(({ path, priority }) => ({
 		url: new URL(path, siteUrl).toString(),
 		lastModified,
@@ -40,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		},
 		...rankingPages,
 		...ladderPages,
+		...seasonPages,
 		...profilePages,
 	];
 }

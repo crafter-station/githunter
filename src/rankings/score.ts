@@ -53,6 +53,7 @@ function metricValue(
 	metric: RankingMetric,
 	lens: LensDefinition,
 ) {
+	if (profile.unavailableMetrics?.includes(metric)) return null;
 	return lens.mode === "momentum"
 		? momentumValue(profile, metric)
 		: profile.metrics[metric];

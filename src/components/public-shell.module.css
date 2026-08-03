@@ -1,0 +1,10 @@
+.shell {
+	width: min(100% - 3rem, 1312px);
+	margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+	.shell {
+		width: min(100% - 2rem, 1312px);
+	}
+}
