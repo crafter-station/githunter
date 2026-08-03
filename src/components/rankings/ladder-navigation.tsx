@@ -129,10 +129,7 @@ export function LadderNavigation({
 		<div className={styles.rankingControls} aria-busy={isPending}>
 			<div className={styles.lensControl}>
 				<div className={styles.controlHeading}>
-					<div>
-						<span>Scoring lens</span>
-						<strong>{selectedLens.question}</strong>
-					</div>
+					<span>Ranking lens</span>
 					<span>v{selectedLens.version}</span>
 				</div>
 				<Tabs value={optimisticLens} onValueChange={changeLens}>
@@ -157,16 +154,7 @@ export function LadderNavigation({
 
 			<div className={styles.timeControl}>
 				<div className={styles.controlHeading}>
-					<div>
-						<span>Time view</span>
-						<strong>
-							{isSeasonal
-								? "One quarter at a time"
-								: optimisticView === "form"
-									? "Latest four available seasons"
-									: "Official closed seasons"}
-						</strong>
-					</div>
+					<span>Time range</span>
 				</div>
 				<div className={styles.timeControlRow}>
 					<Tabs
