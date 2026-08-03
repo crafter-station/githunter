@@ -1,6 +1,7 @@
 import { getCandidateEvaluation } from "./candidates";
 import { bundledDatasets, getBundledDataset, getRankingScope } from "./data";
 import { rankingLenses } from "./lenses";
+import type { RankingScope } from "./scopes";
 import { buildRankingSnapshot } from "./score";
 import { getLadderStandings } from "./season-store";
 import { getSeason } from "./seasons";
@@ -13,7 +14,7 @@ export interface BundledProfileRanking {
 }
 
 export interface BundledRankingProfile {
-	scope: string;
+	scope: RankingScope;
 	scopeName: string;
 	profile: RankingProfile;
 	rankings: BundledProfileRanking[];

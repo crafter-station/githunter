@@ -11,13 +11,18 @@ const nextConfig: NextConfig = {
 	async redirects() {
 		return [
 			{
-				source: "/rankings/peru/balanced",
-				destination: "/peru",
+				source: "/rankings/:scope/balanced",
+				destination: "/:scope",
 				permanent: true,
 			},
 			{
-				source: "/rankings/peru",
-				destination: "/peru",
+				source: "/rankings/:scope/:lens",
+				destination: "/:scope?lens=:lens",
+				permanent: true,
+			},
+			{
+				source: "/rankings/:scope",
+				destination: "/:scope",
 				permanent: true,
 			},
 			{

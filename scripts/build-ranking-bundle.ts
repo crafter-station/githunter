@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import "dotenv/config";
 import { collectRankingDataset } from "../src/rankings/github";
+import { getRankingScope, isRankingScope } from "../src/rankings/scopes";
 import type { RankingDataset, RankingProfile } from "../src/rankings/types";
 
 const token = process.env.GITHUB_TOKEN;
@@ -11,21 +12,10 @@ if (!token) throw new Error("GITHUB_TOKEN is not set");
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const scope = process.argv[2]?.toLowerCase() ?? "peru";
-const configs = {
-	peru: {
-		name: "Peru",
-		cohortDefinition:
-			"Public GitHub users mapped to Peru from follower discovery and public activity rankings, after location review and cross-country exclusions.",
-	},
-	colombia: {
-		name: "Colombia",
-		cohortDefinition:
-			"Public GitHub users mapped to Colombia from the 256-account committers.top country cohort, scored from GitHub public evidence.",
-	},
-} as const;
-
-if (!(scope in configs)) throw new Error(`Unsupported ranking scope: ${scope}`);
-const config = configs[scope as keyof typeof configs];
+if (!isRankingScope(scope)) {
+	throw new Error(`Unsupported ranking scope: ${scope}`);
+}
+const config = getRankingScope(scope);
 const baselinePath = resolve(root, `src/rankings/data/${scope}-baseline.json`);
 const exclusionsPath = resolve(
 	root,
@@ -66,7 +56,9 @@ const dataset = await collectRankingDataset({
 	scope,
 	logins: remainingLogins,
 	token,
-	cohortDefinition: current?.cohort.definition ?? config.cohortDefinition,
+	cohortDefinition:
+		current?.cohort.definition ??
+		`Public GitHub users mapped to ${config.name} from the 256-account committers.top country cohort, scored from GitHub public evidence.`,
 	initialProfiles: checkpoint,
 	candidateCount: logins.length,
 	onCheckpoint: (profiles) =>

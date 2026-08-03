@@ -39,6 +39,11 @@ const views = [
 
 const evidence = [
 	{
+		name: "Declared cohort",
+		description:
+			"Country snapshots begin from committers.top's public 256-account index. It is a reproducible discovery cohort, not a complete census of every GitHub user in a country.",
+	},
+	{
 		name: "Public evidence",
 		description:
 			"GitHub contributions, merged pull requests, reviews, issues, repository adoption, followers, and external collaboration.",
@@ -51,7 +56,7 @@ const evidence = [
 	{
 		name: "Known limits",
 		description:
-			"Private work and code quality are not inferred. Location is self-reported, and historical adoption totals cannot be reconstructed.",
+			"Private work and code quality are not inferred. Location is self-reported, source errors can be excluded with evidence, and historical adoption totals cannot be reconstructed.",
 	},
 ];
 

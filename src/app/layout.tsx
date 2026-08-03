@@ -33,6 +33,9 @@ export const metadata: Metadata = {
 		"GitHub rankings",
 		"Latin America developers",
 		"Peru developers",
+		"Brazil developers",
+		"Mexico developers",
+		"Argentina developers",
 		"open source rankings",
 		"GitHub contributors",
 	],
@@ -43,13 +46,13 @@ export const metadata: Metadata = {
 		siteName: "GitHunter",
 		title: "GitHunter | GitHub Rankings Across Latin America",
 		description:
-			"Transparent, versioned GitHub rankings for developers across Latin America, starting with Peru.",
+			"Transparent, versioned GitHub rankings across nine Latin American countries.",
 	},
 	twitter: {
 		card: "summary",
 		title: "GitHunter | GitHub Rankings Across Latin America",
 		description:
-			"Transparent, versioned GitHub rankings for developers across Latin America, starting with Peru.",
+			"Transparent, versioned GitHub rankings across nine Latin American countries.",
 	},
 	robots: {
 		index: true,

@@ -1,10 +1,11 @@
 import { CountrySwitcher } from "@/components/country-switcher";
 import GitHunterLogo from "@/components/githunter-logo";
+import type { RankingScope } from "@/rankings/scopes";
 import { Github, Menu } from "lucide-react";
 import Link from "next/link";
 import shellStyles from "./public-shell.module.css";
 
-export function PublicHeader({ scope = "peru" }: { scope?: string }) {
+export function PublicHeader({ scope = "peru" }: { scope?: RankingScope }) {
 	const links = [
 		{ href: `/${scope}`, label: "Rankings" },
 		{ href: "/methodology", label: "Methodology" },
@@ -37,7 +38,7 @@ export function PublicHeader({ scope = "peru" }: { scope?: string }) {
 					</nav>
 				</div>
 				<div className="flex items-center gap-2">
-					<CountrySwitcher />
+					<CountrySwitcher scope={scope} />
 					<a
 						href="https://github.com/crafter-station/githunter"
 						target="_blank"

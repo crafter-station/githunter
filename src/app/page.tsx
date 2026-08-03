@@ -1,5 +1,6 @@
 import { LatamSignalField } from "@/components/home/latam-signal-field";
 import { PublicHeader } from "@/components/public-header";
+import { type RankingScope, rankingScopes } from "@/rankings/scopes";
 import { buildSignalProfiles } from "@/rankings/signals";
 import { getRankingSnapshot } from "@/rankings/store";
 import { ArrowRight } from "lucide-react";
@@ -19,21 +20,20 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "GitHunter | GitHub Rankings Across Latin America",
 		description:
-			"Explore transparent, versioned GitHub rankings for developers across Latin America, starting with Peru.",
+			"Explore transparent, versioned GitHub rankings across nine Latin American countries.",
 		url: "/",
 		type: "website",
 	},
 };
 
 export default async function Home() {
-	const [peru, colombia] = await Promise.all([
-		getRankingSnapshot("peru", "balanced"),
-		getRankingSnapshot("colombia", "balanced"),
-	]);
-	const profiles = [
-		...buildSignalProfiles(peru.entries, 6),
-		...buildSignalProfiles(colombia.entries, 6),
-	];
+	const scopes = Object.keys(rankingScopes) as RankingScope[];
+	const snapshots = await Promise.all(
+		scopes.map((scope) => getRankingSnapshot(scope, "balanced")),
+	);
+	const profiles = snapshots.flatMap((snapshot) =>
+		buildSignalProfiles(snapshot.entries, 1),
+	);
 
 	return (
 		<div className={`vbg-report ${styles.page}`}>
@@ -56,7 +56,7 @@ export default async function Home() {
 						<h1>A public record of GitHub work across Latin America.</h1>
 						<p>
 							Transparent, versioned rankings for the people building Latin
-							America in public. Launching with Peru and Colombia.
+							America in public. Live across nine countries.
 						</p>
 						<Link href="/peru" className={styles.cta}>
 							Explore rankings <ArrowRight aria-hidden="true" />
@@ -82,7 +82,7 @@ export default async function Home() {
 					</a>
 					<div className={styles.coordinates} aria-label="Project attributes">
 						<span>LATAM / 01</span>
-						<span>Peru + Colombia</span>
+						<span>9 countries</span>
 						<span>Open data</span>
 					</div>
 				</footer>

@@ -555,8 +555,8 @@ export async function generateMetadata({
 
 	if (rankingProfile) {
 		const profile = rankingProfile.profile;
-		const title = `${profile.name || profile.login} GitHub Ranking in Peru | GitHunter`;
-		const description = `See ${profile.name || profile.login}'s position across Peru's GitHub rankings, with transparent scores for public work, collaboration, momentum, and open source impact.`;
+		const title = `${profile.name || profile.login} GitHub Ranking in ${rankingProfile.scopeName} | GitHunter`;
+		const description = `See ${profile.name || profile.login}'s position across ${rankingProfile.scopeName}'s GitHub rankings, with transparent scores for public work, collaboration, momentum, and open source impact.`;
 		return {
 			title: { absolute: title },
 			description,

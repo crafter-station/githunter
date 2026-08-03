@@ -1,3 +1,4 @@
+import { getRankingScope, isRankingScope } from "./scopes";
 import type { RankingDataset, RankingMetrics, RankingProfile } from "./types";
 
 interface ContributionCollection {
@@ -291,8 +292,7 @@ export async function collectRankingDataset({
 	candidateCount?: number;
 	onCheckpoint?: (profiles: RankingProfile[]) => void | Promise<void>;
 }): Promise<RankingDataset> {
-	const scopeName =
-		scope === "peru" ? "Peru" : scope === "colombia" ? "Colombia" : scope;
+	const scopeName = isRankingScope(scope) ? getRankingScope(scope).name : scope;
 	const { generatedAt, period, previousPeriod } =
 		windows ?? createSeasonEvidenceWindows(now);
 	const currentFrom = period.from;

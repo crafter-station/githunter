@@ -1,6 +1,11 @@
-import { permanentRedirect } from "next/navigation";
+import { isRankingScope, rankingScopes } from "@/rankings/scopes";
+import { notFound, permanentRedirect } from "next/navigation";
 
 export const revalidate = 3600;
+
+export function generateStaticParams() {
+	return Object.keys(rankingScopes).map((scope) => ({ scope }));
+}
 
 export default async function ScopeRankingPage({
 	params,
@@ -8,5 +13,6 @@ export default async function ScopeRankingPage({
 	params: Promise<{ scope: string }>;
 }) {
 	const { scope } = await params;
-	permanentRedirect(`/${scope}/overall`);
+	if (!isRankingScope(scope)) notFound();
+	permanentRedirect(`/${scope}`);
 }

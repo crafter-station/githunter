@@ -6,7 +6,7 @@ The product questions below were answered by default because the build was expli
 
 ### What is being ranked?
 
-Public GitHub developer identities within a declared geographic scope. The launch scopes are Peru and Colombia. Country membership comes from a declared public cohort and is never inferred from nationality.
+Public GitHub developer identities within a declared geographic scope. The launch scopes are Peru, Colombia, Venezuela, Bolivia, Chile, Ecuador, Argentina, Brazil, and Mexico. Country membership comes from a declared public cohort and is never inferred from nationality.
 
 ### Is there one objective best developer?
 
@@ -18,7 +18,7 @@ Every result exposes the cohort, evidence window, data timestamp, lens version, 
 
 ### How is gaming controlled?
 
-Raw volume is capped through percentile normalization, so extreme totals cannot dominate by magnitude. Private activity is excluded. The cohort excludes identities found across four or more country rankings, and repository adoption ignores forks owned by the developer. GitHub does not expose commit substance through contribution totals, so empty, generated, or tiny commits are not silently treated as quality. Commit volume is one signal inside broader lenses and this limitation remains visible.
+Raw volume is capped through percentile normalization, so extreme totals cannot dominate by magnitude. Private activity is excluded. Known source errors can be excluded with published evidence, and repository adoption ignores forks owned by the developer. GitHub does not expose commit substance through contribution totals, so empty, generated, or tiny commits are not silently treated as quality. Commit volume is one signal inside broader lenses and this limitation remains visible.
 
 ### How should time work?
 
@@ -65,13 +65,13 @@ Each public snapshot contains:
 
 ## Initial production boundary
 
-The first release supports Peru, Colombia, and the five fixed lenses. It uses the latest verified public datasets as bundled baselines, a versioned scoring engine, a cache-ready snapshot store, a public JSON API, an indexable ranking interface, and a daily refresh task. LATAM aggregation and custom lenses follow through the same contracts without changing existing historical snapshots.
+The first release supports nine Latin American countries and five fixed lenses. It uses the latest verified public datasets as bundled baselines, a versioned scoring engine, a cache-ready snapshot store, a public JSON API, an indexable ranking interface, and a daily refresh task. LATAM aggregation and custom lenses follow through the same contracts without changing existing historical snapshots.
 
 ## Operations
 
 Apply migrations through `drizzle/0012_github_ladder_seasons.sql` before enabling refreshes. The Trigger.dev task `refresh-ranking-snapshots` runs every day at 06:00 in `America/Lima` and requires `GITHUB_TOKEN`, `DATABASE_URL`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`.
 
-The same refresh can be run manually with `bun run rankings:refresh` for every launch country or `bun run rankings:refresh peru` for one scope. `bun run rankings:bundle colombia` regenerates an audited fallback dataset and should only be committed after checking cohort membership and the resulting top ranks. Explicit source errors are recorded with evidence in a country exclusions file and removed before collection.
+The same refresh can be run manually with `bun run rankings:refresh` for every launch country or `bun run rankings:refresh peru` for one scope. `bun run rankings:bundle <country>` regenerates an audited fallback dataset and should only be committed after checking cohort membership and the resulting top ranks. Explicit source errors are recorded with evidence in a country exclusions file and removed before collection.
 
 Run `bun run rankings:seasons:backfill:2026` to reconstruct 2026 Q1 and Q2 from dated public activity. The command is idempotent and deliberately omits OSS Impact because GitHub does not expose historical adoption totals.
 

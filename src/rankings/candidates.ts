@@ -7,10 +7,36 @@ import { getRankingSnapshot } from "./store";
 import type { RankingCandidateEvaluation, RankingProfile } from "./types";
 
 const loginPattern = /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i;
-const peruLocationPattern =
-	/\b(peru|perú|lima|arequipa|cusco|cuzco|trujillo|piura|chiclayo|huancayo|tacna|iquitos)\b/i;
-const colombiaLocationPattern =
-	/\b(colombia|bogot[aá]|medell[ií]n|cali|barranquilla|cartagena|manizales|pereira|bucaramanga|c[uú]cuta|antioquia)\b/i;
+const countryNamePatterns: Record<RankingScope, RegExp> = {
+	peru: /(?<![\p{L}\p{N}])per[uú](?![\p{L}\p{N}])/iu,
+	colombia: /(?<![\p{L}\p{N}])colombia(?![\p{L}\p{N}])/iu,
+	venezuela: /(?<![\p{L}\p{N}])venezuela(?![\p{L}\p{N}])/iu,
+	bolivia: /(?<![\p{L}\p{N}])bolivia(?![\p{L}\p{N}])/iu,
+	chile: /(?<![\p{L}\p{N}])chile(?![\p{L}\p{N}])/iu,
+	ecuador: /(?<![\p{L}\p{N}])ecuador(?![\p{L}\p{N}])/iu,
+	argentina: /(?<![\p{L}\p{N}])argentina(?![\p{L}\p{N}])/iu,
+	brazil: /(?<![\p{L}\p{N}])(brazil|brasil)(?![\p{L}\p{N}])/iu,
+	mexico: /(?<![\p{L}\p{N}])(m[eé]xico|mx)(?![\p{L}\p{N}])/iu,
+};
+const locationPatterns: Record<RankingScope, RegExp> = {
+	peru: /(?<![\p{L}\p{N}])(peru|perú|lima|arequipa|cusco|cuzco|trujillo|piura|chiclayo|huancayo|tacna|iquitos|cajamarca)(?![\p{L}\p{N}])/iu,
+	colombia:
+		/(?<![\p{L}\p{N}])(colombia|bogot[aá]|medell[ií]n|cali|barranquilla|cartagena|manizales|pereira|bucaramanga|c[uú]cuta|antioquia)(?![\p{L}\p{N}])/iu,
+	venezuela:
+		/(?<![\p{L}\p{N}])(venezuela|caracas|maracaibo|barquisimeto|maracay|m[eé]rida|puerto ordaz|san crist[oó]bal)(?![\p{L}\p{N}])/iu,
+	bolivia:
+		/(?<![\p{L}\p{N}])(bolivia|la paz|santa cruz|cochabamba|sucre|oruro|potos[ií]|tarija)(?![\p{L}\p{N}])/iu,
+	chile:
+		/(?<![\p{L}\p{N}])(chile|santiago|valpara[ií]so|concepci[oó]n|vi[nñ]a del mar|temuco|antofagasta)(?![\p{L}\p{N}])/iu,
+	ecuador:
+		/(?<![\p{L}\p{N}])(ecuador|quito|guayaquil|cuenca|loja|manta|machala|ambato)(?![\p{L}\p{N}])/iu,
+	argentina:
+		/(?<![\p{L}\p{N}])(argentina|buenos aires|c[oó]rdoba|rosario|mendoza|la plata|mar del plata|salta)(?![\p{L}\p{N}])/iu,
+	brazil:
+		/(?<![\p{L}\p{N}])(brazil|brasil|s[aã]o paulo|rio de janeiro|belo horizonte|curitiba|porto alegre|bras[ií]lia|recife|salvador|florian[oó]polis|jaragu[aá] do sul|santa catarina)(?![\p{L}\p{N}])/iu,
+	mexico:
+		/(?<![\p{L}\p{N}])(mexico|m[eé]xico|mx|cdmx|ciudad de m[eé]xico|monterrey|guadalajara|gdl|quer[eé]taro|puebla|tijuana|m[eé]rida|saltillo|veracruz|hermosillo|sonora|zapopan|mexicali|baja california|canc[uú]n)(?![\p{L}\p{N}])/iu,
+};
 
 export function normalizeGithubLogin(value: string) {
 	return value.trim().replace(/^@/, "").toLowerCase();
@@ -20,10 +46,21 @@ export function isGithubLogin(value: string) {
 	return loginPattern.test(normalizeGithubLogin(value));
 }
 
+export function matchesRankingScopeLocation(
+	location: string,
+	scope: RankingScope,
+) {
+	const explicitCountries = Object.entries(countryNamePatterns)
+		.filter(([, pattern]) => pattern.test(location))
+		.map(([country]) => country as RankingScope);
+	if (explicitCountries.length > 0) {
+		return explicitCountries.includes(scope);
+	}
+	return locationPatterns[scope].test(location);
+}
+
 function profileMatchesScope(profile: RankingProfile, scope: RankingScope) {
-	const pattern =
-		scope === "peru" ? peruLocationPattern : colombiaLocationPattern;
-	return pattern.test(profile.location);
+	return matchesRankingScopeLocation(profile.location, scope);
 }
 
 async function findRankedProfile(scope: RankingScope, username: string) {
