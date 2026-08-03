@@ -1,21 +1,14 @@
 "use client";
 
+import { RankingTableToolbar } from "@/components/rankings/ranking-table-toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	Empty,
 	EmptyDescription,
 	EmptyHeader,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { Input } from "@/components/ui/input";
 import {
 	Table,
 	TableBody,
@@ -25,7 +18,6 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import type { CareerStanding } from "@/rankings/types";
-import { ArrowUpRight, Trophy } from "lucide-react";
 import Link from "next/link";
 import { parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
@@ -62,49 +54,50 @@ export function CareerTable({
 				.includes(normalized),
 		);
 	}, [query, standings]);
+	const projected = standings.some((standing) => standing.provisional);
 
 	return (
 		<section
 			id="ranking"
-			aria-labelledby="career-ranking-title"
-			className="min-w-0 max-w-full py-8"
+			aria-labelledby="career-ranking-filter-title"
+			className="min-w-0 max-w-full py-6"
 		>
-			<Card className="min-w-0 max-w-full overflow-hidden">
-				<CardHeader>
-					<div className="flex flex-col gap-3">
-						<Badge variant="outline">{standings.length} ladder careers</Badge>
-						<CardTitle id="career-ranking-title">
-							{mode === "form" ? "Four-quarter form" : "Career standings"}
-						</CardTitle>
-						<CardDescription>
-							{mode === "form"
-								? "Average score across the latest four available seasons."
-								: "Career points are the sum of official season scores. Before the first official close, standings remain projected."}
-						</CardDescription>
-					</div>
-					<label htmlFor="career-filter" className="w-full max-w-sm">
-						<span className="sr-only">Search ladder careers</span>
-						<Input
-							id="career-filter"
-							value={query}
-							onChange={(event) => void setQuery(event.target.value)}
-							placeholder="Search GitHub career"
-						/>
-					</label>
-				</CardHeader>
+			<Card className="min-w-0 max-w-full gap-0 overflow-hidden py-0">
+				<RankingTableToolbar
+					id="career-ranking-filter"
+					status={mode === "form" ? "Form" : "All-time"}
+					meta={`${standings.length} developers${projected ? " · projected" : ""}`}
+					title={mode === "form" ? "Four-quarter form" : "Career standings"}
+					description={
+						mode === "form"
+							? "Average score across the latest four available seasons."
+							: "Official season points, titles, and current standing."
+					}
+					query={query}
+					placeholder="Search developer"
+					onQueryChange={(value) => void setQuery(value)}
+				/>
 				<CardContent className="p-0">
 					{filtered.length > 0 ? (
-						<Table>
+						<Table className="table-fixed lg:table-auto">
 							<TableHeader>
 								<TableRow>
-									<TableHead>Rank</TableHead>
+									<TableHead className="w-14 lg:w-16">Rank</TableHead>
 									<TableHead>Developer</TableHead>
-									<TableHead>
-										{mode === "form" ? "Form" : "Career points"}
+									<TableHead className="w-24 text-right lg:w-36 lg:text-left">
+										{mode === "form" ? "Form score" : "Career points"}
 									</TableHead>
-									<TableHead>Official seasons</TableHead>
-									<TableHead>Titles</TableHead>
-									<TableHead className="text-right">Current</TableHead>
+									<TableHead className="hidden w-32 lg:table-cell">
+										Seasons
+									</TableHead>
+									<TableHead className="hidden w-24 lg:table-cell">
+										Titles
+									</TableHead>
+									{mode === "all-time" ? (
+										<TableHead className="hidden w-24 text-right lg:table-cell">
+											Current
+										</TableHead>
+									) : null}
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -115,15 +108,15 @@ export function CareerTable({
 										<TableRow key={standing.profile.login}>
 											<TableCell>
 												<strong className="tabular-nums">
-													{standing.rank}
+													#{standing.rank}
 												</strong>
 											</TableCell>
-											<TableCell>
+											<TableCell className="overflow-hidden">
 												<Link
 													href={`/developer/${standing.profile.login}`}
-													className="flex items-center gap-3"
+													className="flex min-w-0 items-center gap-3"
 												>
-													<Avatar className="size-10 rounded-md">
+													<Avatar className="size-9 rounded-md">
 														<AvatarImage
 															src={standing.profile.avatarUrl}
 															alt=""
@@ -132,10 +125,9 @@ export function CareerTable({
 															{initials(displayName)}
 														</AvatarFallback>
 													</Avatar>
-													<span className="flex min-w-0 flex-col gap-1">
-														<span className="flex items-center gap-1 font-medium">
+													<span className="flex min-w-0 flex-col">
+														<span className="truncate font-medium">
 															{displayName}
-															<ArrowUpRight aria-hidden="true" />
 														</span>
 														<span className="truncate text-muted-foreground text-xs">
 															@{standing.profile.login}
@@ -143,32 +135,26 @@ export function CareerTable({
 													</span>
 												</Link>
 											</TableCell>
-											<TableCell>
-												<div className="flex items-center gap-2">
-													<strong className="tabular-nums">
-														{mode === "form"
-															? standing.formScore.toFixed(2)
-															: standing.careerPoints.toFixed(2)}
-													</strong>
-													{standing.provisional ? (
-														<Badge variant="secondary">Projected</Badge>
-													) : null}
-												</div>
+											<TableCell className="text-right lg:text-left">
+												<strong className="tabular-nums">
+													{mode === "form"
+														? standing.formScore.toFixed(2)
+														: standing.careerPoints.toFixed(2)}
+												</strong>
 											</TableCell>
-											<TableCell className="tabular-nums">
+											<TableCell className="hidden tabular-nums lg:table-cell">
 												{standing.seasons}
 											</TableCell>
-											<TableCell>
-												<Badge variant="outline">
-													<Trophy data-icon="inline-start" aria-hidden="true" />
-													{standing.championships}
-												</Badge>
+											<TableCell className="hidden tabular-nums lg:table-cell">
+												{standing.championships}
 											</TableCell>
-											<TableCell className="text-right tabular-nums">
-												{standing.currentRank
-													? `#${standing.currentRank}`
-													: "—"}
-											</TableCell>
+											{mode === "all-time" ? (
+												<TableCell className="hidden text-right tabular-nums lg:table-cell">
+													{standing.currentRank
+														? `#${standing.currentRank}`
+														: "—"}
+												</TableCell>
+											) : null}
 										</TableRow>
 									);
 								})}
@@ -177,9 +163,9 @@ export function CareerTable({
 					) : (
 						<Empty>
 							<EmptyHeader>
-								<EmptyTitle>No matching GitHub career</EmptyTitle>
+								<EmptyTitle>No matching developer</EmptyTitle>
 								<EmptyDescription>
-									No ladder career matches “{query}”.
+									No ladder entry matches “{query}”.
 								</EmptyDescription>
 							</EmptyHeader>
 						</Empty>

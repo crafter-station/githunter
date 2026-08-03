@@ -1,5 +1,6 @@
 import { Redis } from "@upstash/redis";
 import { and, desc, eq, lt, sql } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 import { type RankingScope, bundledDatasets, getBundledDataset } from "./data";
 import { getLens, rankingLenses } from "./lenses";
 import { buildRankingSnapshot } from "./score";
@@ -134,18 +135,27 @@ export function selectFreshestSnapshot(snapshots: RankingSnapshot[]) {
 	);
 }
 
-export async function getRankingSnapshot(scope: RankingScope, lensId: LensId) {
+async function readRankingSnapshot(scope: RankingScope, lensId: LensId) {
 	const fallback = bundledSnapshot(scope, lensId);
-	const [redisSnapshot, databaseSnapshot] = await Promise.all([
-		getRedisSnapshot(scope, lensId),
-		getDatabaseSnapshot(scope, lensId),
-	]);
-	const candidates = [fallback, redisSnapshot, databaseSnapshot].filter(
+	const redisSnapshot = await getRedisSnapshot(scope, lensId);
+	if (redisSnapshot) return selectFreshestSnapshot([fallback, redisSnapshot]);
+	const databaseSnapshot = await getDatabaseSnapshot(scope, lensId);
+	const candidates = [fallback, databaseSnapshot].filter(
 		(snapshot): snapshot is RankingSnapshot => snapshot !== null,
 	);
 	const freshest = selectFreshestSnapshot(candidates);
-	if (freshest.cache !== "redis") await cacheSnapshot(freshest);
+	await cacheSnapshot(freshest);
 	return freshest;
+}
+
+const getCachedRankingSnapshot = unstable_cache(
+	readRankingSnapshot,
+	["ranking-snapshot-v2"],
+	{ revalidate: 3600, tags: ["ranking-snapshots"] },
+);
+
+export async function getRankingSnapshot(scope: RankingScope, lensId: LensId) {
+	return getCachedRankingSnapshot(scope, lensId);
 }
 
 export async function persistRankingDataset(dataset: RankingDataset) {

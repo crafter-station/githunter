@@ -1,4 +1,5 @@
 import { and, asc, desc, eq, lt, sql } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 import type { RankingScope } from "./data";
 import { buildCareerStandings, getSeason } from "./seasons";
 import type {
@@ -147,7 +148,7 @@ export async function persistSeasonResults(
 	}
 }
 
-export async function getRankingSeasons(scope: string) {
+async function readRankingSeasons(scope: string) {
 	if (process.env.DATABASE_URL) {
 		try {
 			const { db, rankingSeason, rankingSeasonResult } = await import("@/db");
@@ -176,7 +177,17 @@ export async function getRankingSeasons(scope: string) {
 	return [getSeason()];
 }
 
-async function getPersistedLadder(scope: string, lensId: LensId) {
+const getCachedRankingSeasons = unstable_cache(
+	readRankingSeasons,
+	["ranking-seasons-v1"],
+	{ revalidate: 3600, tags: ["ranking-seasons"] },
+);
+
+export async function getRankingSeasons(scope: string) {
+	return getCachedRankingSeasons(scope);
+}
+
+async function readPersistedLadder(scope: string, lensId: LensId) {
 	if (!process.env.DATABASE_URL) return null;
 	try {
 		const { db, rankingSeason, rankingSeasonResult } = await import("@/db");
@@ -216,6 +227,12 @@ async function getPersistedLadder(scope: string, lensId: LensId) {
 		return null;
 	}
 }
+
+const getPersistedLadder = unstable_cache(
+	readPersistedLadder,
+	["ranking-ladder-v1"],
+	{ revalidate: 3600, tags: ["ranking-ladders"] },
+);
 
 export async function getLadderStandings({
 	scope,

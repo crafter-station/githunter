@@ -1,5 +1,6 @@
 "use client";
 
+import { RankingTableToolbar } from "@/components/rankings/ranking-table-toolbar";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,6 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { Input } from "@/components/ui/input";
 import {
 	Table,
 	TableBody,
@@ -165,47 +165,40 @@ export function RankingTable({
 	return (
 		<section
 			id="ranking"
-			aria-labelledby="full-ranking"
-			className="flex min-w-0 max-w-full flex-col gap-4 py-8"
+			aria-labelledby="ranking-filter-title"
+			className="flex min-w-0 max-w-full flex-col gap-4 py-6"
 		>
-			<Card className="min-w-0 max-w-full overflow-hidden">
-				<CardHeader>
-					<div className="flex flex-col gap-3">
-						<Badge variant="outline">
-							{season.label} · {season.status} · {total} profiles
-						</Badge>
-						<CardTitle id="full-ranking">
-							Find your position in the {scopeName} ladder
-						</CardTitle>
-						<CardDescription>
-							Search the complete indexed cohort. Accounts outside the index can
-							receive a transparent provisional evaluation.
-						</CardDescription>
-					</div>
-					<label htmlFor="ranking-filter" className="w-full max-w-sm">
-						<span className="sr-only">Filter developers</span>
-						<Input
-							id="ranking-filter"
-							value={query}
-							onChange={(event) => {
-								void setQuery(event.target.value);
-								setEvaluation(null);
-								setVisible(50);
-							}}
-							placeholder="Search GitHub username"
-						/>
-					</label>
-				</CardHeader>
+			<Card className="min-w-0 max-w-full gap-0 overflow-hidden py-0">
+				<RankingTableToolbar
+					id="ranking-filter"
+					status={season.label}
+					meta={`${season.status} · ${total} developers`}
+					title={`${scopeName} ranking`}
+					description="Search the indexed cohort or evaluate an account that is not listed."
+					query={query}
+					placeholder="Search GitHub username"
+					onQueryChange={(value) => {
+						void setQuery(value);
+						setEvaluation(null);
+						setVisible(50);
+					}}
+				/>
 				<CardContent className="p-0">
 					{shown.length > 0 ? (
-						<Table>
+						<Table className="table-fixed lg:table-auto">
 							<TableHeader>
 								<TableRow>
-									<TableHead>Rank</TableHead>
+									<TableHead className="w-14 lg:w-20">Rank</TableHead>
 									<TableHead>Developer</TableHead>
-									<TableHead>Strongest signals</TableHead>
-									<TableHead>Confidence</TableHead>
-									<TableHead className="text-right">Score</TableHead>
+									<TableHead className="hidden lg:table-cell">
+										Strongest signals
+									</TableHead>
+									<TableHead className="hidden w-36 lg:table-cell">
+										Confidence
+									</TableHead>
+									<TableHead className="w-20 text-right lg:w-24">
+										Score
+									</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -216,15 +209,17 @@ export function RankingTable({
 									const displayName = entry.profile.name || entry.profile.login;
 									return (
 										<TableRow key={`${lensId}-${entry.profile.login}`}>
-											<TableCell>
-												<div className="flex items-center gap-2">
-													<strong className="tabular-nums">{entry.rank}</strong>
+											<TableCell className="overflow-hidden">
+												<div className="flex items-baseline gap-2">
+													<strong className="tabular-nums">
+														#{entry.rank}
+													</strong>
 													{entry.rankChange !== null &&
 														entry.rankChange !== 0 && (
-															<Badge variant="outline">
+															<span className="text-muted-foreground text-xs tabular-nums">
 																{entry.rankChange > 0 ? "↑" : "↓"}
 																{Math.abs(entry.rankChange)}
-															</Badge>
+															</span>
 														)}
 												</div>
 											</TableCell>
@@ -232,18 +227,17 @@ export function RankingTable({
 												<Link
 													href={`/developer/${entry.profile.login}`}
 													aria-label={`View ${displayName} ranking profile`}
-													className="flex items-center gap-3"
+													className="flex min-w-0 items-center gap-3"
 												>
-													<Avatar className="size-10 rounded-md">
+													<Avatar className="size-9 rounded-md">
 														<AvatarImage src={entry.profile.avatarUrl} alt="" />
 														<AvatarFallback className="rounded-md">
 															{initials(displayName)}
 														</AvatarFallback>
 													</Avatar>
-													<span className="flex min-w-0 flex-col gap-1">
-														<span className="flex items-center gap-1 font-medium">
+													<span className="flex min-w-0 flex-col">
+														<span className="truncate font-medium">
 															{displayName}
-															<ArrowUpRight aria-hidden="true" />
 														</span>
 														<span className="truncate text-muted-foreground text-xs">
 															@{entry.profile.login}
@@ -254,10 +248,10 @@ export function RankingTable({
 													</span>
 												</Link>
 											</TableCell>
-											<TableCell>
+											<TableCell className="hidden lg:table-cell">
 												<div className="flex flex-wrap gap-2">
 													{strongest.map((metric) => (
-														<Badge key={metric.metric} variant="secondary">
+														<Badge key={metric.metric} variant="outline">
 															{metricLabels[metric.metric]}{" "}
 															{compactNumber(metric.raw)}
 															{lensId === "rising" &&
@@ -268,10 +262,10 @@ export function RankingTable({
 													))}
 												</div>
 											</TableCell>
-											<TableCell>
-												<Badge variant="outline">
+											<TableCell className="hidden lg:table-cell">
+												<span className="text-muted-foreground text-xs">
 													{confidenceLabel(entry.confidence)}
-												</Badge>
+												</span>
 											</TableCell>
 											<TableCell className="text-right">
 												<strong className="tabular-nums">
@@ -313,8 +307,9 @@ export function RankingTable({
 					) : null}
 				</CardContent>
 				{showMore ? (
-					<CardFooter className="justify-center border-t pt-6">
+					<CardFooter className="justify-center py-3">
 						<Button
+							size="sm"
 							variant="outline"
 							disabled={loading}
 							onClick={async () => {
