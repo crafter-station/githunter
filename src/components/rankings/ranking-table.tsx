@@ -1,5 +1,6 @@
 "use client";
 
+import { RankBadge, podiumRowClass } from "@/components/rankings/rank-badge";
 import { RankingTableToolbar } from "@/components/rankings/ranking-table-toolbar";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -213,9 +214,12 @@ export function RankingTable({
 										.slice(0, lensId === "rising" ? 2 : 3);
 									const displayName = entry.profile.name || entry.profile.login;
 									return (
-										<TableRow key={`${lensId}-${entry.profile.login}`}>
+										<TableRow
+											key={`${lensId}-${entry.profile.login}`}
+											className={podiumRowClass(entry.rank)}
+										>
 											<TableCell className="overflow-hidden pr-2 pl-4!">
-												<strong className="tabular-nums">#{entry.rank}</strong>
+												<RankBadge rank={entry.rank} />
 											</TableCell>
 											<TableCell className="overflow-hidden px-2">
 												<Link
@@ -289,7 +293,7 @@ export function RankingTable({
 								</EmptyTitle>
 								<EmptyDescription>
 									Calculate a provisional position against the same cohort and
-									ruleset used by the public ladder.
+									ruleset used by the public ranking.
 								</EmptyDescription>
 							</EmptyHeader>
 							<EmptyContent>
@@ -339,7 +343,7 @@ export function RankingTable({
 						{evaluation.profile && evaluation.rankings ? (
 							<Button asChild variant="outline">
 								<Link href={`/developer/${evaluation.profile.login}`}>
-									Open ladder profile
+									Open ranking profile
 									<ArrowUpRight data-icon="inline-end" aria-hidden="true" />
 								</Link>
 							</Button>

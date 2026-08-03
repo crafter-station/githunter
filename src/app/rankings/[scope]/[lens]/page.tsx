@@ -22,7 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { scope, lens } = await params;
 	if (!isRankingScope(scope) || !isLensId(lens)) return {};
-	const seo = getRankingSeo(lens);
+	const seo = getRankingSeo(lens, scope);
 	return {
 		title: { absolute: seo.title },
 		description: seo.description,

@@ -275,6 +275,9 @@ export async function collectRankingDataset({
 	now = new Date(),
 	windows,
 	reconstructed = false,
+	initialProfiles = [],
+	candidateCount = logins.length + initialProfiles.length,
+	onCheckpoint,
 }: {
 	scope: string;
 	logins: string[];
@@ -284,32 +287,53 @@ export async function collectRankingDataset({
 	now?: Date;
 	windows?: EvidenceWindows;
 	reconstructed?: boolean;
+	initialProfiles?: RankingProfile[];
+	candidateCount?: number;
+	onCheckpoint?: (profiles: RankingProfile[]) => void | Promise<void>;
 }): Promise<RankingDataset> {
+	const scopeName =
+		scope === "peru" ? "Peru" : scope === "colombia" ? "Colombia" : scope;
 	const { generatedAt, period, previousPeriod } =
 		windows ?? createSeasonEvidenceWindows(now);
 	const currentFrom = period.from;
 	const currentTo = period.to;
 	const previousFrom = previousPeriod.from;
 	const previousTo = previousPeriod.to;
-	const profiles: RankingProfile[] = [];
+	const profiles: RankingProfile[] = [...initialProfiles];
 	const batchSize = 3;
+	const concurrency = Math.min(
+		4,
+		Math.max(
+			1,
+			Number.parseInt(process.env.RANKING_COLLECTION_CONCURRENCY ?? "2", 10) ||
+				2,
+		),
+	);
+	const batches = Array.from(
+		{ length: Math.ceil(logins.length / batchSize) },
+		(_, index) => logins.slice(index * batchSize, (index + 1) * batchSize),
+	);
+	let completed = initialProfiles.length;
 
-	for (let offset = 0; offset < logins.length; offset += batchSize) {
-		const batch = logins.slice(offset, offset + batchSize);
-		const query = createBatchQuery(
-			batch,
-			currentFrom,
-			currentTo,
-			previousFrom,
-			previousTo,
+	for (let offset = 0; offset < batches.length; offset += concurrency) {
+		const group = batches.slice(offset, offset + concurrency);
+		const collected = await Promise.all(
+			group.map(async (batch) => {
+				const query = createBatchQuery(
+					batch,
+					currentFrom,
+					currentTo,
+					previousFrom,
+					previousTo,
+				);
+				const response = await fetchBatch(token, query);
+				return readBatchProfiles(response, batch);
+			}),
 		);
-		const response = await fetchBatch(token, query);
-		profiles.push(...readBatchProfiles(response, batch));
-
-		onProgress?.({
-			completed: Math.min(offset + batch.length, logins.length),
-			total: logins.length,
-		});
+		profiles.push(...collected.flat());
+		completed += group.reduce((total, batch) => total + batch.length, 0);
+		await onCheckpoint?.(profiles);
+		onProgress?.({ completed, total: candidateCount });
 	}
 
 	const unavailableMetrics = [
@@ -325,10 +349,14 @@ export async function collectRankingDataset({
 		previousPeriod,
 		cohort: {
 			definition: cohortDefinition,
-			candidates: logins.length,
+			candidates: candidateCount,
 			scored: profiles.length,
 		},
-		sources: ["GitHub GraphQL API", "GitHub Search API", "committers.top Peru"],
+		sources: [
+			"GitHub GraphQL API",
+			"GitHub Search API",
+			`committers.top ${scopeName}`,
+		],
 		limitations: [
 			"GitHub location is self-reported.",
 			"Stars, forks, followers, and external repositories are cumulative.",

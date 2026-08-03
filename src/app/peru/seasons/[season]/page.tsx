@@ -17,7 +17,7 @@ export async function generateMetadata({
 	if (!isSeasonId(normalized)) return {};
 	return {
 		title: { absolute: `${normalized} Peru GitHub Season | GitHunter` },
-		description: `Explore the complete ${normalized} GitHub Ladder standings for Peru.`,
+		description: `Explore the complete ${normalized} GitHub season standings for Peru.`,
 		alternates: {
 			canonical: serializeRankingFilters("/peru", {
 				view: "season",

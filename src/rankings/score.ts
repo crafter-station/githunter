@@ -1,3 +1,4 @@
+import { getRankingScope } from "./data";
 import { getLensMetricEntries } from "./lenses";
 import type {
 	LensDefinition,
@@ -149,7 +150,7 @@ export function buildRankingSnapshot(
 	return {
 		id: `${dataset.scope}:${lens.id}:${lens.version}:${snapshotDate}`,
 		scope: dataset.scope,
-		scopeName: dataset.scope === "peru" ? "Peru" : dataset.scope,
+		scopeName: getRankingScope(dataset.scope as "colombia" | "peru").name,
 		lens,
 		generatedAt: dataset.generatedAt,
 		period: dataset.period,

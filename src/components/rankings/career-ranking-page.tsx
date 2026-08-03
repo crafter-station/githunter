@@ -4,12 +4,11 @@ import { PublicHeader } from "@/components/public-header";
 import { CareerTable } from "@/components/rankings/career-table";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
 import { RankingHeroStats } from "@/components/rankings/ranking-hero-stats";
-import { isRankingScope } from "@/rankings/data";
+import { getRankingScope, isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
 import { getLadderStandings } from "@/rankings/season-store";
 import { getSeason } from "@/rankings/seasons";
 import type { LensId } from "@/rankings/types";
-import { History, Trophy } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function CareerRankingPage({
@@ -22,6 +21,7 @@ export async function CareerRankingPage({
 	mode: "all-time" | "form";
 }) {
 	if (!isRankingScope(scope)) notFound();
+	const scopeInfo = getRankingScope(scope);
 	const { seasons, standings } = await getLadderStandings({
 		scope,
 		lensId,
@@ -35,11 +35,11 @@ export async function CareerRankingPage({
 	const title =
 		mode === "form"
 			? "Who is in form right now?"
-			: "The GitHub careers of Peru.";
+			: `GitHub careers in ${scopeInfo.name}.`;
 	const description =
 		mode === "form"
 			? "A rolling four-season view that rewards sustained momentum without erasing new challengers."
-			: "Season points, championships, podiums, and the permanent public record of GitHub builders in Peru.";
+			: `Season points, championships, podiums, and the permanent public record of GitHub builders in ${scopeInfo.name}.`;
 
 	return (
 		<div className={`vbg-report ${styles.report}`}>
@@ -51,14 +51,14 @@ export async function CareerRankingPage({
 			<a className="vbg-skip-link" href="#ranking">
 				Skip to standings
 			</a>
-			<PublicHeader />
+			<PublicHeader scope={scope} />
 			<main>
 				<section className={styles.hero}>
 					<div className={`${styles.content} ${styles.heroGrid}`}>
 						<div>
 							<div className={styles.signalLabel}>
 								<span aria-hidden="true" />
-								Peru / {mode === "form" ? "form" : "all-time"}
+								{scopeInfo.name} / {mode === "form" ? "form" : "all-time"}
 							</div>
 							<h1>{title}</h1>
 							<p className={styles.heroCopy}>{description}</p>
@@ -82,31 +82,12 @@ export async function CareerRankingPage({
 						season={season}
 						seasons={seasons}
 						lensId={lensId}
+						scope={scope}
 					/>
 					<CareerTable standings={standings} mode={mode} />
-					<section className={styles.evidenceGrid}>
-						<div>
-							<Trophy aria-hidden="true" />
-							<h2>Championship record</h2>
-							<p>
-								Every closed quarter preserves its cohort, ruleset, score,
-								winner, and full standings. A later methodology change never
-								rewrites a past champion.
-							</p>
-						</div>
-						<div>
-							<History aria-hidden="true" />
-							<h2>Career versus form</h2>
-							<p>
-								All-time rewards accumulated official season scores. Form uses
-								the latest four available seasons so newer builders can compete
-								without fabricated historical points.
-							</p>
-						</div>
-					</section>
 				</div>
 			</main>
-			<Footer />
+			<Footer scope={scope} />
 		</div>
 	);
 }

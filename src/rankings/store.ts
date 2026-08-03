@@ -1,7 +1,12 @@
 import { Redis } from "@upstash/redis";
 import { and, desc, eq, lt, sql } from "drizzle-orm";
 import { unstable_cache } from "next/cache";
-import { type RankingScope, bundledDatasets, getBundledDataset } from "./data";
+import {
+	type RankingScope,
+	bundledDatasets,
+	getBundledDataset,
+	getRankingScope,
+} from "./data";
 import { getLens, rankingLenses } from "./lenses";
 import { buildRankingSnapshot } from "./score";
 import type { LensId, RankingDataset, RankingSnapshot } from "./types";
@@ -89,7 +94,7 @@ async function getDatabaseSnapshot(scope: RankingScope, lensId: LensId) {
 		const snapshot = {
 			id: row.id,
 			scope: row.scope,
-			scopeName: row.scope === "peru" ? "Peru" : row.scope,
+			scopeName: getRankingScope(scope).name,
 			lens: row.lens,
 			generatedAt: row.generatedAt.toISOString(),
 			period: row.period,

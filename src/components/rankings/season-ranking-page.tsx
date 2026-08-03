@@ -11,7 +11,7 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { isRankingScope } from "@/rankings/data";
+import { getRankingScope, isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
 import {
 	getRankingSeasons,
@@ -31,6 +31,7 @@ export async function SeasonRankingPage({
 	lensId: LensId;
 }) {
 	if (!isRankingScope(scope)) notFound();
+	const scopeInfo = getRankingScope(scope);
 	const [leaderboard, seasons] = await Promise.all([
 		getSeasonLeaderboard({ scope, seasonId, lensId }),
 		getRankingSeasons(scope),
@@ -50,14 +51,14 @@ export async function SeasonRankingPage({
 			<a className="vbg-skip-link" href="#ranking">
 				Skip to season ranking
 			</a>
-			<PublicHeader />
+			<PublicHeader scope={scope} />
 			<main>
 				<section className={styles.hero}>
 					<div className={`${styles.content} ${styles.heroGrid}`}>
 						<div>
 							<div className={styles.signalLabel}>
 								<span aria-hidden="true" />
-								Peru / {season.label}
+								{scopeInfo.name} / {season.label}
 							</div>
 							<h1>
 								{season.status === "reconstructed" ? "Reconstructed " : ""}
@@ -90,6 +91,7 @@ export async function SeasonRankingPage({
 						season={season}
 						seasons={seasons}
 						lensId={lensId}
+						scope={scope}
 					/>
 					{results.length > 0 ? (
 						<RankingTable
@@ -98,7 +100,7 @@ export async function SeasonRankingPage({
 							lensId={lensId}
 							lensName={lens.shortName}
 							scope={scope}
-							scopeName="Peru"
+							scopeName={scopeInfo.name}
 							total={results.length}
 							season={season}
 						/>
@@ -121,7 +123,7 @@ export async function SeasonRankingPage({
 					)}
 				</div>
 			</main>
-			<Footer />
+			<Footer scope={scope} />
 		</div>
 	);
 }

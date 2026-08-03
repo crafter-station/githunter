@@ -421,16 +421,9 @@
 	color: var(--vbg-text-primary);
 }
 
-.monogram {
-	display: grid;
-	width: 38px;
-	height: 38px;
-	place-items: center;
-	border: 1px dashed var(--vbg-border-strong);
-	border-radius: 50%;
-	color: var(--vbg-text-primary);
-	font-family: var(--font-geist-mono), monospace;
-	font-size: 10px;
+.crafterWordmark {
+	width: auto;
+	height: 24px;
 }
 
 .coordinates {
@@ -607,9 +600,8 @@
 		font-size: 11px;
 	}
 
-	.monogram {
-		width: 32px;
-		height: 32px;
+	.crafterWordmark {
+		height: 20px;
 	}
 
 	.coordinates {

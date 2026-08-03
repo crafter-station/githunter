@@ -47,7 +47,7 @@ function result({
 	};
 }
 
-describe("GitHub Ladder seasons", () => {
+describe("GitHub ranking seasons", () => {
 	it("marks the launch quarter as preseason and Q4 as official", () => {
 		expect(getSeason(new Date("2026-08-02T00:00:00.000Z")).status).toBe(
 			"preseason",

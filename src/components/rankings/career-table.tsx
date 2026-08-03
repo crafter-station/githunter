@@ -1,5 +1,6 @@
 "use client";
 
+import { RankBadge, podiumRowClass } from "@/components/rankings/rank-badge";
 import { RankingTableToolbar } from "@/components/rankings/ranking-table-toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -118,11 +119,12 @@ export function CareerTable({
 									const displayName =
 										standing.profile.name || standing.profile.login;
 									return (
-										<TableRow key={standing.profile.login}>
+										<TableRow
+											key={standing.profile.login}
+											className={podiumRowClass(standing.rank)}
+										>
 											<TableCell className="pr-2 pl-4!">
-												<strong className="tabular-nums">
-													#{standing.rank}
-												</strong>
+												<RankBadge rank={standing.rank} />
 											</TableCell>
 											<TableCell className="overflow-hidden px-2">
 												<Link
@@ -176,7 +178,7 @@ export function CareerTable({
 							<EmptyHeader>
 								<EmptyTitle>No matching developer</EmptyTitle>
 								<EmptyDescription>
-									No ladder entry matches “{query}”.
+									No ranking entry matches “{query}”.
 								</EmptyDescription>
 							</EmptyHeader>
 						</Empty>

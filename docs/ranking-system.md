@@ -6,7 +6,7 @@ The product questions below were answered by default because the build was expli
 
 ### What is being ranked?
 
-Public GitHub developer identities within a declared geographic scope. The first production scope is Peru. Country membership is evidence-backed and never inferred from nationality.
+Public GitHub developer identities within a declared geographic scope. The launch scopes are Peru and Colombia. Country membership comes from a declared public cohort and is never inferred from nationality.
 
 ### Is there one objective best developer?
 
@@ -34,9 +34,9 @@ Collection only admits profiles with a complete current evidence window. Rising 
 
 Live standings refresh daily. Public pages are served from versioned daily snapshots and normalized season results. A successful retry on the same day replaces that day's provisional result. Quarter close freezes the cohort, ruleset, champion, and complete standings. A verified bundled snapshot keeps the product available before the first database migration or during an infrastructure outage.
 
-### How does the ladder work?
+### How do seasons and the historical record work?
 
-Current Season is provisional until quarter close. Form averages the latest four available season scores. All-Time sums official closed-season scores, while championships and podiums remain separate honors. The public table may show a bounded leaderboard, but the index persists every eligible result so a developer can retrieve an exact position within the declared cohort.
+The current season is provisional until quarter close. Form averages the latest four available season scores. All-Time sums official closed-season scores, while championships and podiums remain separate honors. The public table may show a bounded ranking, but the index persists every eligible result so a developer can retrieve an exact position within the declared cohort.
 
 ### Can users create arbitrary rankings?
 
@@ -65,13 +65,13 @@ Each public snapshot contains:
 
 ## Initial production boundary
 
-The first release supports Peru and the five fixed lenses. It uses the latest verified public dataset as a bundled baseline, a versioned scoring engine, a cache-ready snapshot store, a public JSON API, an indexable ranking interface, and a daily refresh task. LATAM aggregation and custom lenses follow through the same contracts without changing existing historical snapshots.
+The first release supports Peru, Colombia, and the five fixed lenses. It uses the latest verified public datasets as bundled baselines, a versioned scoring engine, a cache-ready snapshot store, a public JSON API, an indexable ranking interface, and a daily refresh task. LATAM aggregation and custom lenses follow through the same contracts without changing existing historical snapshots.
 
 ## Operations
 
 Apply migrations through `drizzle/0012_github_ladder_seasons.sql` before enabling refreshes. The Trigger.dev task `refresh-ranking-snapshots` runs every day at 06:00 in `America/Lima` and requires `GITHUB_TOKEN`, `DATABASE_URL`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN`.
 
-The same refresh can be run manually with `bun run rankings:refresh`. `bun run rankings:bundle` regenerates the audited fallback dataset and should only be committed after checking cohort membership and the resulting top ranks. Explicit source errors are recorded with evidence in `src/rankings/data/peru-exclusions.json` and removed before collection.
+The same refresh can be run manually with `bun run rankings:refresh` for every launch country or `bun run rankings:refresh peru` for one scope. `bun run rankings:bundle colombia` regenerates an audited fallback dataset and should only be committed after checking cohort membership and the resulting top ranks. Explicit source errors are recorded with evidence in a country exclusions file and removed before collection.
 
 Run `bun run rankings:seasons:backfill:2026` to reconstruct 2026 Q1 and Q2 from dated public activity. The command is idempotent and deliberately omits OSS Impact because GitHub does not expose historical adoption totals.
 

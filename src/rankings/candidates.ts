@@ -1,4 +1,5 @@
 import { and, eq } from "drizzle-orm";
+import { type RankingScope, getRankingScope } from "./data";
 import { collectRankingDataset } from "./github";
 import { rankingLenses } from "./lenses";
 import { scoreProfiles } from "./score";
@@ -8,6 +9,8 @@ import type { RankingCandidateEvaluation, RankingProfile } from "./types";
 const loginPattern = /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i;
 const peruLocationPattern =
 	/\b(peru|perú|lima|arequipa|cusco|cuzco|trujillo|piura|chiclayo|huancayo|tacna|iquitos)\b/i;
+const colombiaLocationPattern =
+	/\b(colombia|bogot[aá]|medell[ií]n|cali|barranquilla|cartagena|manizales|pereira|bucaramanga|c[uú]cuta|antioquia)\b/i;
 
 export function normalizeGithubLogin(value: string) {
 	return value.trim().replace(/^@/, "").toLowerCase();
@@ -17,11 +20,13 @@ export function isGithubLogin(value: string) {
 	return loginPattern.test(normalizeGithubLogin(value));
 }
 
-function profileMatchesScope(profile: RankingProfile, scope: string) {
-	return scope !== "peru" || peruLocationPattern.test(profile.location);
+function profileMatchesScope(profile: RankingProfile, scope: RankingScope) {
+	const pattern =
+		scope === "peru" ? peruLocationPattern : colombiaLocationPattern;
+	return pattern.test(profile.location);
 }
 
-async function findRankedProfile(scope: "peru", username: string) {
+async function findRankedProfile(scope: RankingScope, username: string) {
 	const snapshots = await Promise.all(
 		Object.values(rankingLenses).map((lens) =>
 			getRankingSnapshot(scope, lens.id),
@@ -98,7 +103,7 @@ export async function evaluateRankingCandidate({
 	scope,
 	value,
 }: {
-	scope: "peru";
+	scope: RankingScope;
 	value: string;
 }) {
 	const username = normalizeGithubLogin(value);
@@ -150,12 +155,12 @@ export async function evaluateRankingCandidate({
 		return missing;
 	}
 	if (!profileMatchesScope(profile, scope)) {
+		const scopeName = getRankingScope(scope).name;
 		const location = {
 			status: "ineligible",
 			scope,
 			username: profile.login,
-			message:
-				"The public GitHub location does not currently provide enough evidence for the Peru cohort.",
+			message: `The public GitHub location does not currently provide enough evidence for the ${scopeName} cohort.`,
 			profile,
 		} satisfies RankingCandidateEvaluation;
 		await saveEvaluation(location);

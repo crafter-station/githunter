@@ -1,15 +1,20 @@
+import colombiaDataset from "./data/colombia-baseline.json";
 import peruDataset from "./data/peru-baseline.json";
+import {
+	type RankingScope,
+	getRankingScope,
+	isRankingScope,
+	rankingScopes,
+} from "./scopes";
 import type { RankingDataset } from "./types";
 
 export const bundledDatasets = {
 	peru: peruDataset as RankingDataset,
+	colombia: colombiaDataset as RankingDataset,
 };
 
-export type RankingScope = keyof typeof bundledDatasets;
-
-export function isRankingScope(value: string): value is RankingScope {
-	return value in bundledDatasets;
-}
+export { getRankingScope, isRankingScope, rankingScopes };
+export type { RankingScope };
 
 export function getBundledDataset(scope: RankingScope) {
 	return bundledDatasets[scope];

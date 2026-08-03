@@ -1,10 +1,10 @@
 import { getCandidateEvaluation } from "./candidates";
-import { getBundledDataset } from "./data";
+import { bundledDatasets, getBundledDataset, getRankingScope } from "./data";
 import { rankingLenses } from "./lenses";
 import { buildRankingSnapshot } from "./score";
 import { getLadderStandings } from "./season-store";
 import { getSeason } from "./seasons";
-import { getRankingSnapshot } from "./store";
+import { getAvailableScopes, getRankingSnapshot } from "./store";
 import type { LensDefinition, RankingEntry, RankingProfile } from "./types";
 
 export interface BundledProfileRanking {
@@ -13,6 +13,8 @@ export interface BundledProfileRanking {
 }
 
 export interface BundledRankingProfile {
+	scope: string;
+	scopeName: string;
 	profile: RankingProfile;
 	rankings: BundledProfileRanking[];
 	generatedAt: string;
@@ -33,35 +35,42 @@ export interface BundledRankingProfile {
 	};
 }
 
-const bundledDataset = getBundledDataset("peru");
-const bundledRankings = Object.values(rankingLenses).map((lens) => {
-	const snapshot = buildRankingSnapshot(bundledDataset, lens);
+const bundledScopeRankings = Object.keys(bundledDatasets).map((scope) => {
+	const rankingScope = scope as keyof typeof bundledDatasets;
+	const dataset = getBundledDataset(rankingScope);
 	return {
-		lens,
-		entries: new Map(
-			snapshot.entries.map((entry) => [
-				entry.profile.login.toLowerCase(),
-				entry,
-			]),
+		scope: rankingScope,
+		dataset,
+		profiles: new Map(
+			dataset.profiles.map((profile) => [profile.login.toLowerCase(), profile]),
 		),
+		rankings: Object.values(rankingLenses).map((lens) => {
+			const snapshot = buildRankingSnapshot(dataset, lens);
+			return {
+				lens,
+				entries: new Map(
+					snapshot.entries.map((entry) => [
+						entry.profile.login.toLowerCase(),
+						entry,
+					]),
+				),
+			};
+		}),
 	};
 });
-const bundledProfiles = new Map(
-	bundledDataset.profiles.map((profile) => [
-		profile.login.toLowerCase(),
-		profile,
-	]),
-);
 
 export function getBundledRankingProfile(
 	username: string,
 ): BundledRankingProfile | null {
 	const normalized = username.trim().toLowerCase();
-	const profile = bundledProfiles.get(normalized);
+	const bundled = bundledScopeRankings.find((item) =>
+		item.profiles.has(normalized),
+	);
+	const profile = bundled?.profiles.get(normalized);
 
-	if (!profile) return null;
+	if (!profile || !bundled) return null;
 
-	const rankings = bundledRankings.map(({ lens, entries }) => {
+	const rankings = bundled.rankings.map(({ lens, entries }) => {
 		const entry = entries.get(normalized);
 
 		if (!entry) throw new Error(`Ranking entry not found for ${profile.login}`);
@@ -70,20 +79,37 @@ export function getBundledRankingProfile(
 	});
 
 	return {
+		scope: bundled.scope,
+		scopeName: getRankingScope(bundled.scope).name,
 		profile,
 		rankings,
-		generatedAt: bundledDataset.generatedAt,
-		period: bundledDataset.period,
+		generatedAt: bundled.dataset.generatedAt,
+		period: bundled.dataset.period,
 	};
 }
 
 export async function getRankingProfile(username: string) {
 	const normalized = username.trim().toLowerCase();
-	const snapshots = await Promise.all(
-		Object.values(rankingLenses).map((lens) =>
-			getRankingSnapshot("peru", lens.id),
-		),
+	const snapshotsByScope = await Promise.all(
+		getAvailableScopes().map(async (scope) => ({
+			scope,
+			snapshots: await Promise.all(
+				Object.values(rankingLenses).map((lens) =>
+					getRankingSnapshot(scope, lens.id),
+				),
+			),
+		})),
 	);
+	const matchedScope =
+		snapshotsByScope.find(({ snapshots }) =>
+			snapshots.some((snapshot) =>
+				snapshot.entries.some(
+					(item) => item.profile.login.toLowerCase() === normalized,
+				),
+			),
+		) ?? snapshotsByScope.find(({ scope }) => scope === "peru");
+	if (!matchedScope) return getBundledRankingProfile(username);
+	const { scope, snapshots } = matchedScope;
 	const rankings = snapshots.flatMap((snapshot) => {
 		const entry = snapshot.entries.find(
 			(item) => item.profile.login.toLowerCase() === normalized,
@@ -92,15 +118,15 @@ export async function getRankingProfile(username: string) {
 	});
 	const candidate =
 		rankings.length === 0
-			? await getCandidateEvaluation("peru", normalized)
+			? await getCandidateEvaluation(scope, normalized)
 			: null;
 	const resolvedRankings = rankings.length > 0 ? rankings : candidate?.rankings;
 	const profile = resolvedRankings?.[0]?.entry.profile ?? candidate?.profile;
 	if (!profile || !resolvedRankings) return getBundledRankingProfile(username);
 
 	const [allTime, form] = await Promise.all([
-		getLadderStandings({ scope: "peru", mode: "all-time" }),
-		getLadderStandings({ scope: "peru", mode: "form" }),
+		getLadderStandings({ scope, mode: "all-time" }),
+		getLadderStandings({ scope, mode: "form" }),
 	]);
 	const allTimeStanding = allTime.standings.find(
 		(standing) => standing.profile.login.toLowerCase() === normalized,
@@ -112,6 +138,8 @@ export async function getRankingProfile(username: string) {
 	const season = allTime.seasons[0] ?? getSeason(new Date(latest.generatedAt));
 
 	return {
+		scope,
+		scopeName: getRankingScope(scope).name,
 		profile,
 		rankings: resolvedRankings,
 		generatedAt: candidate?.evaluatedAt ?? latest.generatedAt,

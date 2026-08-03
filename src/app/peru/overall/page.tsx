@@ -8,7 +8,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
 	title: { absolute: "Peru GitHub All-Time Ranking | GitHunter" },
 	description:
-		"Explore career points, championships, podiums, and the historical GitHub ladder for Peru.",
+		"Explore career points, championships, podiums, and the historical GitHub record for Peru.",
 	alternates: { canonical: "/peru?view=all-time" },
 };
 

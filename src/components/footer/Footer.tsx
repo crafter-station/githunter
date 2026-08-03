@@ -1,13 +1,14 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
-import { CrafterIcon } from "../icons/crafter";
 import shellStyles from "../public-shell.module.css";
 
 interface FooterProps {
 	className?: string;
+	scope?: string;
 }
 
-export function Footer({ className }: FooterProps) {
+export function Footer({ className, scope = "peru" }: FooterProps) {
 	return (
 		<footer className={cn("mt-auto py-10", className)}>
 			<div
@@ -19,24 +20,31 @@ export function Footer({ className }: FooterProps) {
 					rel="noopener noreferrer"
 					className="flex items-center gap-3 text-muted-foreground text-sm hover:text-foreground"
 				>
-					<CrafterIcon size={32} className="shrink-0" />
-					<span>An initiative by Crafter Station</span>
+					<span>An initiative by</span>
+					<Image
+						src="/crafter-station-wordmark.svg"
+						alt="Crafter Station"
+						width={150}
+						height={24}
+						className="h-6 w-auto"
+						style={{ width: 150, height: 24 }}
+					/>
 				</a>
 				<div className="flex flex-wrap items-center gap-x-6 gap-y-3">
 					<Link
-						href="/peru#methodology"
+						href="/methodology"
 						className="text-muted-foreground text-sm hover:text-primary"
 					>
 						Methodology
 					</Link>
 					<a
-						href="/api/rankings/peru/balanced"
+						href={`/api/rankings/${scope}/balanced`}
 						className="text-muted-foreground text-sm hover:text-primary"
 					>
 						Reproducible JSON
 					</a>
 					<Link
-						href="/rankings/peru/rising"
+						href={`/${scope}?lens=rising`}
 						className="text-muted-foreground text-sm hover:text-primary"
 					>
 						Rising ranking

@@ -912,6 +912,10 @@
 		grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
 	}
 
+	.rankingFilters:not([data-seasonal]) {
+		grid-template-columns: 1fr;
+	}
+
 	.rankingFilters > button,
 	.rankingFilters > button:nth-of-type(2) {
 		min-width: 0;

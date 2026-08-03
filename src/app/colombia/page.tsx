@@ -10,13 +10,13 @@ export async function generateMetadata({
 }: {
 	searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-	return getCountryRankingMetadata("peru", searchParams);
+	return getCountryRankingMetadata("colombia", searchParams);
 }
 
-export default async function PeruPage({
+export default async function ColombiaPage({
 	searchParams,
 }: {
 	searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-	return <CountryRankingRoute scope="peru" searchParams={searchParams} />;
+	return <CountryRankingRoute scope="colombia" searchParams={searchParams} />;
 }

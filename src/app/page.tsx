@@ -4,6 +4,7 @@ import { buildSignalProfiles } from "@/rankings/signals";
 import { getRankingSnapshot } from "@/rankings/store";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./home.module.css";
 
@@ -25,8 +26,14 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-	const snapshot = await getRankingSnapshot("peru", "balanced");
-	const profiles = buildSignalProfiles(snapshot.entries);
+	const [peru, colombia] = await Promise.all([
+		getRankingSnapshot("peru", "balanced"),
+		getRankingSnapshot("colombia", "balanced"),
+	]);
+	const profiles = [
+		...buildSignalProfiles(peru.entries, 6),
+		...buildSignalProfiles(colombia.entries, 6),
+	];
 
 	return (
 		<div className={`vbg-report ${styles.page}`}>
@@ -49,10 +56,10 @@ export default async function Home() {
 						<h1>A public record of GitHub work across Latin America.</h1>
 						<p>
 							Transparent, versioned rankings for the people building Latin
-							America in public. Starting with Peru.
+							America in public. Launching with Peru and Colombia.
 						</p>
 						<Link href="/peru" className={styles.cta}>
-							Explore Peru <ArrowRight aria-hidden="true" />
+							Explore rankings <ArrowRight aria-hidden="true" />
 						</Link>
 					</div>
 					<LatamSignalField profiles={profiles} />
@@ -64,12 +71,18 @@ export default async function Home() {
 						rel="noopener noreferrer"
 						className={styles.initiative}
 					>
-						<span className={styles.monogram}>CS</span>
-						<span>An initiative by Crafter Station</span>
+						<span>An initiative by</span>
+						<Image
+							src="/crafter-station-wordmark.svg"
+							alt="Crafter Station"
+							width={150}
+							height={24}
+							className={styles.crafterWordmark}
+						/>
 					</a>
 					<div className={styles.coordinates} aria-label="Project attributes">
 						<span>LATAM / 01</span>
-						<span>Peru first</span>
+						<span>Peru + Colombia</span>
 						<span>Open data</span>
 					</div>
 				</footer>

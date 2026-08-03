@@ -41,6 +41,7 @@ export function RankedDeveloperProfile({
 	data: BundledRankingProfile;
 }) {
 	const { profile, rankings } = data;
+	const rankingPath = `/${data.scope}`;
 	const metrics = Object.entries(profile.metrics) as [RankingMetric, number][];
 	const personSchema = {
 		"@context": "https://schema.org",
@@ -59,17 +60,17 @@ export function RankedDeveloperProfile({
 
 	return (
 		<div className="min-h-screen bg-background text-foreground">
-			<PublicHeader />
+			<PublicHeader scope={data.scope} />
 			<main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
 				<script type="application/ld+json">
 					{JSON.stringify(personSchema)}
 				</script>
 				<Link
-					href="/peru"
+					href={rankingPath}
 					className="inline-flex items-center gap-2 text-muted-foreground text-sm hover:text-foreground"
 				>
 					<ArrowLeft className="size-4" />
-					Back to Peru rankings
+					Back to {data.scopeName} rankings
 				</Link>
 
 				<section className="mt-6 overflow-hidden rounded-3xl border bg-card shadow-sm">
@@ -85,7 +86,7 @@ export function RankedDeveloperProfile({
 							/>
 							<div className="min-w-0 flex-1">
 								<Badge className="border-blue-300 bg-blue-50 text-blue-800 hover:bg-blue-50">
-									GitHub Ladder profile
+									GitHunter ranking profile
 								</Badge>
 								<h1 className="mt-3 font-semibold text-3xl tracking-tight sm:text-5xl">
 									{profile.name || profile.login}
@@ -121,11 +122,11 @@ export function RankedDeveloperProfile({
 				</section>
 
 				{data.career && (
-					<section className="mt-10" aria-labelledby="ladder-career">
+					<section className="mt-10" aria-labelledby="ranking-career">
 						<div className="flex items-center gap-2">
 							<Trophy className="size-5 text-[#1d4eff]" />
-							<h2 id="ladder-career" className="font-semibold text-2xl">
-								Ladder career
+							<h2 id="ranking-career" className="font-semibold text-2xl">
+								Ranking career
 							</h2>
 							{data.career.provisional && (
 								<Badge variant="outline">
@@ -135,7 +136,7 @@ export function RankedDeveloperProfile({
 						</div>
 						<div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 							<Link
-								href="/peru"
+								href={rankingPath}
 								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
 							>
 								<CalendarDays className="size-4 text-[#1d4eff]" />
@@ -147,7 +148,7 @@ export function RankedDeveloperProfile({
 								</p>
 							</Link>
 							<Link
-								href="/peru/overall"
+								href={`${rankingPath}?view=all-time`}
 								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
 							>
 								<Medal className="size-4 text-[#1d4eff]" />
@@ -162,7 +163,7 @@ export function RankedDeveloperProfile({
 								</p>
 							</Link>
 							<Link
-								href="/peru/form"
+								href={`${rankingPath}?view=form`}
 								className="rounded-xl border bg-card p-5 transition hover:border-[#1d4eff]/40"
 							>
 								<Activity className="size-4 text-[#1d4eff]" />
@@ -204,7 +205,9 @@ export function RankedDeveloperProfile({
 							<Link
 								key={lens.id}
 								href={
-									lens.id === "balanced" ? "/peru" : `/rankings/peru/${lens.id}`
+									lens.id === "balanced"
+										? rankingPath
+										: `${rankingPath}?lens=${lens.id}`
 								}
 								className="hover:-translate-y-0.5 rounded-2xl border bg-card p-5 transition hover:shadow-sm"
 							>
@@ -245,7 +248,7 @@ export function RankedDeveloperProfile({
 					</div>
 				</section>
 			</main>
-			<Footer />
+			<Footer scope={data.scope} />
 		</div>
 	);
 }
