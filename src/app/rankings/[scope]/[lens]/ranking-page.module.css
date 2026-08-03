@@ -121,181 +121,36 @@
 	padding-block: 0 var(--vbg-space-16);
 }
 
-.ladderBar {
+.body > * {
+	min-width: 0;
+}
+
+.rankingControls {
 	display: flex;
 	min-height: 72px;
 	align-items: center;
 	justify-content: space-between;
-	gap: var(--vbg-space-4);
-	border-bottom: 1px solid var(--vbg-border-subtle);
-}
-
-.ladderNav {
-	display: inline-flex;
-	align-items: center;
-	gap: 2px;
-	padding: 3px;
-	border: 1px solid var(--vbg-border-subtle);
-	border-radius: 8px;
-	background: var(--vbg-surface-secondary);
-}
-
-.ladderNav a {
-	display: inline-flex;
-	height: 34px;
-	align-items: center;
-	padding-inline: 12px;
-	border-radius: 6px;
-	color: var(--vbg-text-secondary);
-	font-size: 12px;
-	font-weight: 500;
-	text-decoration: none;
-}
-
-.ladderNav a:hover {
-	color: var(--vbg-text-primary);
-}
-
-.ladderNav a:focus-visible,
-.filterMenu summary:focus-visible,
-.filterMenu nav a:focus-visible {
-	outline: 2px solid #1d4eff;
-	outline-offset: 2px;
-}
-
-.ladderNav a[aria-current="page"] {
-	background: var(--vbg-surface-primary);
-	box-shadow: 0 0 0 1px var(--vbg-border-subtle);
-	color: var(--vbg-text-primary);
-}
-
-.ladderTools {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.filterMenu {
-	position: relative;
-	min-width: 0;
-}
-
-.filterMenu summary {
-	box-sizing: border-box;
-	display: flex;
-	height: 42px;
-	cursor: pointer;
-	align-items: center;
-	gap: 8px;
-	padding-inline: 12px;
-	border: 1px solid var(--vbg-border-subtle);
-	border-radius: 8px;
-	color: var(--vbg-text-secondary);
-	font-size: 11px;
-	list-style: none;
-	white-space: nowrap;
-}
-
-.filterValue {
-	display: inline-flex;
-	min-width: 0;
-	align-items: center;
-	gap: 4px;
-}
-
-.filterMenu summary::-webkit-details-marker {
-	display: none;
-}
-
-.filterMenu summary:hover,
-.filterMenu summary[data-active="true"] {
-	border-color: var(--vbg-border-strong);
-	color: var(--vbg-text-primary);
-}
-
-.filterMenu summary strong {
-	margin-left: 4px;
-	color: var(--vbg-text-primary);
-	font-weight: 500;
-}
-
-.filterMenu summary > svg {
-	width: 13px;
-	height: 13px;
-	transition: rotate 160ms ease;
-}
-
-.filterMenu[open] summary > svg {
-	rotate: 180deg;
-}
-
-.filterMenu nav {
-	position: absolute;
-	top: calc(100% + 8px);
-	right: 0;
-	z-index: 20;
-	display: grid;
-	min-width: 190px;
-	padding: 6px;
-	border: 1px solid var(--vbg-border-subtle);
-	border-radius: 10px;
-	background: var(--vbg-surface-primary);
-	box-shadow: 0 18px 48px rgb(0 0 0 / 35%);
-}
-
-.filterMenu nav a {
-	display: flex;
-	min-height: 38px;
-	align-items: center;
-	justify-content: space-between;
 	gap: 16px;
-	padding: 7px 9px;
-	border-radius: 6px;
-	color: var(--vbg-text-secondary);
-	font-size: 12px;
-	text-decoration: none;
+	border-bottom: 1px solid var(--color-border);
 }
 
-.filterMenu nav a:hover,
-.filterMenu nav a[aria-current="page"] {
-	background: var(--vbg-surface-secondary);
-	color: var(--vbg-text-primary);
+.rankingControls[aria-busy="true"] {
+	opacity: 0.65;
 }
 
-.filterMenu nav a svg {
-	width: 13px;
-	height: 13px;
-	color: #1d4eff;
+.rankingFilters {
+	display: flex;
+	height: 40px;
+	align-items: center;
+	gap: 8px;
 }
 
-.filterMenu nav a span {
-	display: grid;
-	gap: 2px;
+.rankingFilters > button {
+	width: 176px;
 }
 
-.filterMenu nav a small {
-	color: var(--vbg-text-tertiary);
-	font-family: var(--font-geist-mono), monospace;
-	font-size: 8px;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-.seasonStatus {
-	padding: 3px 5px;
-	border: 1px solid color-mix(in srgb, #1d4eff 35%, transparent);
-	border-radius: 999px;
-	color: #1d4eff;
-	font-family: var(--font-geist-mono), monospace;
-	font-size: 8px;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-}
-
-.seasonStatus[data-status="closed"],
-.seasonStatus[data-status="reconstructed"] {
-	border-color: var(--vbg-border-default);
-	color: var(--vbg-text-secondary);
+.rankingFilters > button:nth-of-type(2) {
+	width: 152px;
 }
 
 .lensIntro {
@@ -1024,50 +879,33 @@
 		gap: 0;
 	}
 
-	.ladderBar {
+	.rankingControls {
 		align-items: stretch;
 		flex-direction: column;
-		gap: 10px;
-		padding-block: var(--vbg-space-4);
+		gap: 12px;
+		padding-block: 16px;
 	}
 
-	.ladderNav {
+	.rankingControls > div:first-child > div {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		width: 100%;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
-	.ladderNav a {
-		height: 36px;
-		justify-content: center;
-		padding-inline: 8px;
-		font-size: 12px;
-		white-space: nowrap;
-	}
-
-	.ladderTools {
+	.rankingFilters {
 		display: grid;
+		height: auto;
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	}
 
-	.filterMenu summary {
+	.rankingFilters > button,
+	.rankingFilters > button:nth-of-type(2) {
 		width: 100%;
-		justify-content: space-between;
-		padding-inline: 10px;
 	}
 
-	.filterPrefix {
+	.rankingFilters > [role="separator"],
+	.rankingFilters > div:last-child {
 		display: none;
-	}
-
-	.filterMenu nav {
-		right: auto;
-		left: 0;
-		min-width: 100%;
-	}
-
-	.filterMenu:last-child nav {
-		right: 0;
-		left: auto;
 	}
 
 	.weightRow {

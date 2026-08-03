@@ -3,12 +3,13 @@ import { Footer } from "@/components/footer";
 import { PublicHeader } from "@/components/public-header";
 import { CareerTable } from "@/components/rankings/career-table";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
+import { RankingHeroStats } from "@/components/rankings/ranking-hero-stats";
 import { isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
 import { getLadderStandings } from "@/rankings/season-store";
 import { getSeason } from "@/rankings/seasons";
 import type { LensId } from "@/rankings/types";
-import { Activity, History, Trophy } from "lucide-react";
+import { History, Trophy } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function CareerRankingPage({
@@ -62,31 +63,21 @@ export async function CareerRankingPage({
 							<h1>{title}</h1>
 							<p className={styles.heroCopy}>{description}</p>
 						</div>
-						<div className={styles.heroMeta}>
-							<div>
-								<Trophy aria-hidden="true" />
-								<span>Leader</span>
-								<strong>
-									{champion ? `@${champion.profile.login}` : "Open"}
-								</strong>
-							</div>
-							<div>
-								<History aria-hidden="true" />
-								<span>Official seasons</span>
-								<strong>{closedSeasons}</strong>
-							</div>
-							<div>
-								<Activity aria-hidden="true" />
-								<span>Lens</span>
-								<strong>{rankingLenses[lensId].shortName}</strong>
-							</div>
-						</div>
+						<RankingHeroStats
+							items={[
+								{
+									label: "Leader",
+									value: champion ? `@${champion.profile.login}` : "Open",
+								},
+								{ label: "Official seasons", value: String(closedSeasons) },
+								{ label: "Lens", value: rankingLenses[lensId].shortName },
+							]}
+						/>
 					</div>
 				</section>
 
 				<div className={`${styles.content} ${styles.body}`}>
 					<LadderNavigation
-						scope={scope}
 						active={mode}
 						season={season}
 						seasons={seasons}

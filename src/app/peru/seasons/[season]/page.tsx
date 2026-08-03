@@ -1,8 +1,8 @@
-import { SeasonRankingPage } from "@/components/rankings/season-ranking-page";
 import { isLensId } from "@/rankings/lenses";
+import { serializeRankingFilters } from "@/rankings/query-state";
 import { isSeasonId } from "@/rankings/seasons";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -16,9 +16,14 @@ export async function generateMetadata({
 	const normalized = season.toUpperCase();
 	if (!isSeasonId(normalized)) return {};
 	return {
-		title: `${normalized} Peru GitHub Season | GitHunter`,
+		title: { absolute: `${normalized} Peru GitHub Season | GitHunter` },
 		description: `Explore the complete ${normalized} GitHub Ladder standings for Peru.`,
-		alternates: { canonical: `/peru/seasons/${season.toLowerCase()}` },
+		alternates: {
+			canonical: serializeRankingFilters("/peru", {
+				view: "season",
+				season: normalized,
+			}),
+		},
 	};
 }
 
@@ -32,11 +37,11 @@ export default async function PeruSeasonPage({
 	const [{ season }, { lens }] = await Promise.all([params, searchParams]);
 	const seasonId = season.toUpperCase();
 	if (!isSeasonId(seasonId)) notFound();
-	return (
-		<SeasonRankingPage
-			scope="peru"
-			seasonId={seasonId}
-			lensId={lens && isLensId(lens) ? lens : "balanced"}
-		/>
+	redirect(
+		serializeRankingFilters("/peru", {
+			view: "season",
+			season: seasonId,
+			lens: lens && isLensId(lens) ? lens : "balanced",
+		}),
 	);
 }

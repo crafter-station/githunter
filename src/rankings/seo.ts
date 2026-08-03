@@ -47,7 +47,5 @@ export function getRankingSeo(lens: LensId) {
 }
 
 export function getRankingCanonical(scope: string, lens: LensId) {
-	return scope === "peru" && lens === "balanced"
-		? "/peru"
-		: `/rankings/${scope}/${lens}`;
+	return lens === "balanced" ? `/${scope}` : `/${scope}?lens=${lens}`;
 }

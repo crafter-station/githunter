@@ -1,5 +1,6 @@
 import { getBundledDataset } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
+import { serializeRankingFilters } from "@/rankings/query-state";
 import { getSeason } from "@/rankings/seasons";
 import { getRankingCanonical, siteUrl } from "@/rankings/seo";
 import type { MetadataRoute } from "next";
@@ -22,7 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const season = getSeason(lastModified);
 	const seasonPages = ["2026-q1", "2026-q2", season.id.toLowerCase()].map(
 		(seasonId) => ({
-			url: new URL(`/peru/seasons/${seasonId}`, siteUrl).toString(),
+			url: new URL(
+				serializeRankingFilters("/peru", {
+					view: "season",
+					season: seasonId.toUpperCase(),
+				}),
+				siteUrl,
+			).toString(),
 			lastModified,
 			changeFrequency:
 				seasonId === season.id.toLowerCase()
@@ -32,8 +39,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		}),
 	);
 	const ladderPages = [
-		{ path: "/peru/form", priority: 0.85 },
-		{ path: "/peru/overall", priority: 0.85 },
+		{
+			path: serializeRankingFilters("/peru", { view: "form" }),
+			priority: 0.85,
+		},
+		{
+			path: serializeRankingFilters("/peru", { view: "all-time" }),
+			priority: 0.85,
+		},
 	].map(({ path, priority }) => ({
 		url: new URL(path, siteUrl).toString(),
 		lastModified,

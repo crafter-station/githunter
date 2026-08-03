@@ -2,6 +2,7 @@ import styles from "@/app/rankings/[scope]/[lens]/ranking-page.module.css";
 import { Footer } from "@/components/footer";
 import { PublicHeader } from "@/components/public-header";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
+import { RankingHeroStats } from "@/components/rankings/ranking-hero-stats";
 import { RankingTable } from "@/components/rankings/ranking-table";
 import { isRankingScope } from "@/rankings/data";
 import { metricLabels } from "@/rankings/lenses";
@@ -10,14 +11,7 @@ import { getSeason } from "@/rankings/seasons";
 import { getRankingCanonical, getRankingSeo, siteUrl } from "@/rankings/seo";
 import { getRankingSnapshot } from "@/rankings/store";
 import type { LensId } from "@/rankings/types";
-import {
-	CalendarDays,
-	CheckCircle2,
-	Database,
-	Github,
-	Info,
-	ShieldCheck,
-} from "lucide-react";
+import { CheckCircle2, Github, Info } from "lucide-react";
 import { notFound } from "next/navigation";
 
 function formatDate(value: string) {
@@ -142,29 +136,21 @@ export async function RankingReportPage({
 							<h1>{heading}</h1>
 							<p className={styles.heroCopy}>{description}</p>
 						</div>
-						<div className={styles.heroMeta}>
-							<div>
-								<Database aria-hidden="true" />
-								<span>Public cohort</span>
-								<strong>{snapshot.cohort.scored} profiles</strong>
-							</div>
-							<div>
-								<CalendarDays aria-hidden="true" />
-								<span>Current season</span>
-								<strong>{season.label}</strong>
-							</div>
-							<div>
-								<ShieldCheck aria-hidden="true" />
-								<span>Method</span>
-								<strong>Lens v{snapshot.lens.version}</strong>
-							</div>
-						</div>
+						<RankingHeroStats
+							items={[
+								{
+									label: "Public cohort",
+									value: `${snapshot.cohort.scored} profiles`,
+								},
+								{ label: "Current season", value: season.label },
+								{ label: "Method", value: `Lens v${snapshot.lens.version}` },
+							]}
+						/>
 					</div>
 				</section>
 
 				<div className={`${styles.content} ${styles.body}`}>
 					<LadderNavigation
-						scope={scope}
 						active="current"
 						season={season}
 						seasons={seasons}
@@ -172,6 +158,7 @@ export async function RankingReportPage({
 					/>
 
 					<RankingTable
+						key={`${season.id}-${lens}`}
 						initialEntries={snapshot.entries.slice(0, 50)}
 						lensId={lens}
 						lensName={snapshot.lens.shortName}

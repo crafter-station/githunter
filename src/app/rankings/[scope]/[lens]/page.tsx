@@ -1,10 +1,9 @@
-import { RankingReportPage } from "@/components/rankings/ranking-report-page";
 import { isRankingScope } from "@/rankings/data";
 import { isLensId, rankingLenses } from "@/rankings/lenses";
 import { getRankingCanonical, getRankingSeo } from "@/rankings/seo";
 import { getAvailableScopes } from "@/rankings/store";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const revalidate = 3600;
 export const dynamic = "force-static";
@@ -49,5 +48,5 @@ export default async function RankingPage({
 }) {
 	const { scope, lens } = await params;
 	if (!isRankingScope(scope) || !isLensId(lens)) notFound();
-	return <RankingReportPage scope={scope} lens={lens} />;
+	redirect(getRankingCanonical(scope, lens));
 }

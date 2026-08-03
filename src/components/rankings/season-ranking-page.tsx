@@ -2,7 +2,15 @@ import styles from "@/app/rankings/[scope]/[lens]/ranking-page.module.css";
 import { Footer } from "@/components/footer";
 import { PublicHeader } from "@/components/public-header";
 import { LadderNavigation } from "@/components/rankings/ladder-navigation";
+import { RankingHeroStats } from "@/components/rankings/ranking-hero-stats";
 import { RankingTable } from "@/components/rankings/ranking-table";
+import {
+	Empty,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { isRankingScope } from "@/rankings/data";
 import { rankingLenses } from "@/rankings/lenses";
 import {
@@ -10,7 +18,7 @@ import {
 	getSeasonLeaderboard,
 } from "@/rankings/season-store";
 import type { LensId } from "@/rankings/types";
-import { CalendarDays, ShieldCheck, Trophy } from "lucide-react";
+import { DatabaseZap } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function SeasonRankingPage({
@@ -61,32 +69,23 @@ export async function SeasonRankingPage({
 									: `The complete ${lens.shortName} record for this quarter. Closed seasons are immutable; active and preseason standings remain provisional.`}
 							</p>
 						</div>
-						<div className={styles.heroMeta}>
-							<div>
-								<Trophy aria-hidden="true" />
-								<span>
-									{season.status === "closed" ? "Champion" : "Leader"}
-								</span>
-								<strong>{champion ? `@${champion.username}` : "Open"}</strong>
-							</div>
-							<div>
-								<CalendarDays aria-hidden="true" />
-								<span>Window</span>
-								<strong>
-									{season.startsAt} / {season.endsAt}
-								</strong>
-							</div>
-							<div>
-								<ShieldCheck aria-hidden="true" />
-								<span>Ruleset</span>
-								<strong>v{season.rulesetVersion}</strong>
-							</div>
-						</div>
+						<RankingHeroStats
+							items={[
+								{
+									label: season.status === "closed" ? "Champion" : "Leader",
+									value: champion ? `@${champion.username}` : "Open",
+								},
+								{
+									label: "Window",
+									value: `${season.startsAt} / ${season.endsAt}`,
+								},
+								{ label: "Ruleset", value: `v${season.rulesetVersion}` },
+							]}
+						/>
 					</div>
 				</section>
 				<div className={`${styles.content} ${styles.body}`}>
 					<LadderNavigation
-						scope={scope}
 						active="season"
 						season={season}
 						seasons={seasons}
@@ -94,6 +93,7 @@ export async function SeasonRankingPage({
 					/>
 					{results.length > 0 ? (
 						<RankingTable
+							key={`${season.id}-${lensId}`}
 							initialEntries={results.map((result) => result.entry)}
 							lensId={lensId}
 							lensName={lens.shortName}
@@ -103,15 +103,21 @@ export async function SeasonRankingPage({
 							season={season}
 						/>
 					) : (
-						<section className={styles.unavailableState}>
-							<p className={styles.sectionLabel}>Unavailable evidence</p>
-							<h2>{lens.shortName} cannot be reconstructed objectively.</h2>
-							<p>
-								This lens depends on historical stars, forks, and followers.
-								GitHub exposes their current totals, not their values at the end
-								of {season.label}.
-							</p>
-						</section>
+						<Empty className="border">
+							<EmptyHeader>
+								<EmptyMedia variant="icon">
+									<DatabaseZap aria-hidden="true" />
+								</EmptyMedia>
+								<EmptyTitle>
+									{lens.shortName} cannot be reconstructed objectively
+								</EmptyTitle>
+								<EmptyDescription>
+									This lens depends on historical stars, forks, and followers.
+									GitHub exposes their current totals, not their values at the
+									end of {season.label}.
+								</EmptyDescription>
+							</EmptyHeader>
+						</Empty>
 					)}
 				</div>
 			</main>

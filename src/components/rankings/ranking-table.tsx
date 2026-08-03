@@ -1,8 +1,34 @@
 "use client";
 
-import styles from "@/app/rankings/[scope]/[lens]/ranking-page.module.css";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { metricLabels } from "@/rankings/lenses";
 import type {
 	LensId,
@@ -10,10 +36,10 @@ import type {
 	RankingEntry,
 	RankingSeason,
 } from "@/rankings/types";
-import { ArrowRight, ArrowUpRight, Search, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { parseAsString, useQueryState } from "nuqs";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 function compactNumber(value: number) {
 	return new Intl.NumberFormat("en", {
@@ -23,9 +49,18 @@ function compactNumber(value: number) {
 }
 
 function confidenceLabel(confidence: number) {
-	if (confidence >= 95) return "High";
-	if (confidence >= 70) return "Medium";
-	return "Low";
+	if (confidence >= 95) return "High confidence";
+	if (confidence >= 70) return "Medium confidence";
+	return "Low confidence";
+}
+
+function initials(value: string) {
+	return value
+		.split(/\s+/)
+		.slice(0, 2)
+		.map((part) => part[0])
+		.join("")
+		.toUpperCase();
 }
 
 export function RankingTable({
@@ -46,7 +81,12 @@ export function RankingTable({
 	season: RankingSeason;
 }) {
 	const [entries, setEntries] = useState(initialEntries);
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useQueryState(
+		"q",
+		parseAsString
+			.withDefault("")
+			.withOptions({ history: "replace", clearOnDefault: true }),
+	);
 	const [visible, setVisible] = useState(50);
 	const [loadedAll, setLoadedAll] = useState(initialEntries.length >= total);
 	const [loading, setLoading] = useState(false);
@@ -56,7 +96,7 @@ export function RankingTable({
 	const [evaluating, setEvaluating] = useState(false);
 	const loadingPromise = useRef<Promise<void> | null>(null);
 
-	const loadAll = () => {
+	const loadAll = useCallback(() => {
 		if (loadedAll) return Promise.resolve();
 		if (loadingPromise.current) return loadingPromise.current;
 		setLoading(true);
@@ -78,7 +118,11 @@ export function RankingTable({
 				loadingPromise.current = null;
 			});
 		return loadingPromise.current;
-	};
+	}, [lensId, loadedAll, scope]);
+
+	useEffect(() => {
+		if (query.trim()) void loadAll();
+	}, [loadAll, query]);
 
 	const filtered = useMemo(() => {
 		const normalized = query.trim().toLowerCase();
@@ -116,222 +160,206 @@ export function RankingTable({
 		}
 	};
 
+	const showMore = shown.length < filtered.length || !loadedAll;
+
 	return (
 		<section
 			id="ranking"
 			aria-labelledby="full-ranking"
-			className={styles.rankingSection}
+			className="flex min-w-0 max-w-full flex-col gap-4 py-8"
 		>
-			<div className={styles.rankingHeading}>
-				<div>
-					<p className={styles.sectionLabel}>
-						{season.label} · {season.status} · {total} indexed profiles
-					</p>
-					<h2 id="full-ranking">
-						Find your position in the {scopeName} ladder
-					</h2>
-					<p className={styles.rankingCopy}>
-						Search every indexed profile, not only the visible leaders. New
-						accounts receive a transparent provisional evaluation.
-					</p>
-				</div>
-				<label htmlFor="ranking-filter" className={styles.search}>
-					<span className="sr-only">Filter developers</span>
-					<Search aria-hidden="true" />
-					<Input
-						id="ranking-filter"
-						value={query}
-						onChange={(event) => {
-							const value = event.target.value;
-							setQuery(value);
-							setEvaluation(null);
-							setVisible(50);
-							if (value.trim()) void loadAll();
-						}}
-						placeholder="GitHub username"
-						className={styles.searchInput}
-					/>
-				</label>
-			</div>
-
-			<div className={styles.rankingTableFrame}>
-				<div className={styles.rankingTableScroll}>
-					<table className={styles.rankingTable}>
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Developer</th>
-								<th>Strongest signals</th>
-								<th>Confidence</th>
-								<th>Score</th>
-							</tr>
-						</thead>
-						<tbody>
-							{shown.map((entry) => {
-								const strongest = [...entry.breakdown]
-									.sort((left, right) => right.points - left.points)
-									.slice(0, 3);
-								return (
-									<tr
-										key={`${lensId}-${entry.profile.login}`}
-										className={styles.rankingRow}
-									>
-										<td>
-											<span className={styles.rankNumber}>{entry.rank}</span>
-											{entry.rankChange !== null && entry.rankChange !== 0 && (
-												<span
-													className={
-														entry.rankChange > 0
-															? "ml-1 text-emerald-600 text-xs"
-															: "ml-1 text-rose-600 text-xs"
-													}
-													aria-label={`Moved ${entry.rankChange > 0 ? "up" : "down"} ${Math.abs(entry.rankChange)} places`}
+			<Card className="min-w-0 max-w-full overflow-hidden">
+				<CardHeader>
+					<div className="flex flex-col gap-3">
+						<Badge variant="outline">
+							{season.label} · {season.status} · {total} profiles
+						</Badge>
+						<CardTitle id="full-ranking">
+							Find your position in the {scopeName} ladder
+						</CardTitle>
+						<CardDescription>
+							Search the complete indexed cohort. Accounts outside the index can
+							receive a transparent provisional evaluation.
+						</CardDescription>
+					</div>
+					<label htmlFor="ranking-filter" className="w-full max-w-sm">
+						<span className="sr-only">Filter developers</span>
+						<Input
+							id="ranking-filter"
+							value={query}
+							onChange={(event) => {
+								void setQuery(event.target.value);
+								setEvaluation(null);
+								setVisible(50);
+							}}
+							placeholder="Search GitHub username"
+						/>
+					</label>
+				</CardHeader>
+				<CardContent className="p-0">
+					{shown.length > 0 ? (
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Rank</TableHead>
+									<TableHead>Developer</TableHead>
+									<TableHead>Strongest signals</TableHead>
+									<TableHead>Confidence</TableHead>
+									<TableHead className="text-right">Score</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{shown.map((entry) => {
+									const strongest = [...entry.breakdown]
+										.sort((left, right) => right.points - left.points)
+										.slice(0, 3);
+									const displayName = entry.profile.name || entry.profile.login;
+									return (
+										<TableRow key={`${lensId}-${entry.profile.login}`}>
+											<TableCell>
+												<div className="flex items-center gap-2">
+													<strong className="tabular-nums">{entry.rank}</strong>
+													{entry.rankChange !== null &&
+														entry.rankChange !== 0 && (
+															<Badge variant="outline">
+																{entry.rankChange > 0 ? "↑" : "↓"}
+																{Math.abs(entry.rankChange)}
+															</Badge>
+														)}
+												</div>
+											</TableCell>
+											<TableCell>
+												<Link
+													href={`/developer/${entry.profile.login}`}
+													aria-label={`View ${displayName} ranking profile`}
+													className="flex items-center gap-3"
 												>
-													{entry.rankChange > 0 ? "↑" : "↓"}
-													{Math.abs(entry.rankChange)}
-												</span>
-											)}
-										</td>
-										<td>
-											<Link
-												href={`/developer/${entry.profile.login}`}
-												aria-label={`View ${entry.profile.name || entry.profile.login} ranking profile`}
-												className={styles.developerLink}
-											>
-												<Image
-													src={entry.profile.avatarUrl}
-													alt=""
-													width={40}
-													height={40}
-													className={styles.tableAvatar}
-												/>
-												<span className={styles.developerName}>
-													<span>
-														{entry.profile.name || entry.profile.login}
-														<ArrowUpRight aria-hidden="true" />
-													</span>
-													<span>
-														@{entry.profile.login}
-														{entry.profile.location
-															? ` · ${entry.profile.location}`
-															: ""}
-													</span>
-												</span>
-											</Link>
-										</td>
-										<td>
-											<div className={styles.strongestSignals}>
-												{strongest.map((metric) => (
-													<span
-														key={metric.metric}
-														className={styles.signalMetric}
-													>
-														<span className="text-muted-foreground">
-															{metricLabels[metric.metric]}
-														</span>{" "}
-														<span className="font-medium tabular-nums">
-															{compactNumber(metric.raw)}
+													<Avatar className="size-10 rounded-md">
+														<AvatarImage src={entry.profile.avatarUrl} alt="" />
+														<AvatarFallback className="rounded-md">
+															{initials(displayName)}
+														</AvatarFallback>
+													</Avatar>
+													<span className="flex min-w-0 flex-col gap-1">
+														<span className="flex items-center gap-1 font-medium">
+															{displayName}
+															<ArrowUpRight aria-hidden="true" />
 														</span>
-														{lensId === "rising" &&
-															metric.changePercent !== null && (
-																<span
-																	className={
-																		metric.changePercent >= 0
-																			? "ml-1 text-emerald-600"
-																			: "ml-1 text-rose-600"
-																	}
-																>
-																	{metric.changePercent > 0 ? "+" : ""}
-																	{metric.changePercent}%
-																</span>
-															)}
+														<span className="truncate text-muted-foreground text-xs">
+															@{entry.profile.login}
+															{entry.profile.location
+																? ` · ${entry.profile.location}`
+																: ""}
+														</span>
 													</span>
-												))}
-											</div>
-										</td>
-										<td>
-											<span className="text-muted-foreground text-sm">
-												{confidenceLabel(entry.confidence)}
-											</span>
-										</td>
-										<td>
-											<span className={styles.scoreNumber}>
-												{entry.score.toFixed(2)}
-											</span>
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				</div>
-				{shown.length === 0 && query.trim() && (
-					<div className={styles.rankLookup}>
-						<Sparkles aria-hidden="true" />
-						<div>
-							<strong>
-								{loading
-									? "Searching the complete index…"
-									: `@${query.replace(/^@/, "")} is not in the current index`}
-							</strong>
-							<p>
-								Calculate a provisional position against the same cohort and
-								ruleset used by the public ladder.
-							</p>
-						</div>
+												</Link>
+											</TableCell>
+											<TableCell>
+												<div className="flex flex-wrap gap-2">
+													{strongest.map((metric) => (
+														<Badge key={metric.metric} variant="secondary">
+															{metricLabels[metric.metric]}{" "}
+															{compactNumber(metric.raw)}
+															{lensId === "rising" &&
+															metric.changePercent !== null
+																? ` · ${metric.changePercent > 0 ? "+" : ""}${metric.changePercent}%`
+																: ""}
+														</Badge>
+													))}
+												</div>
+											</TableCell>
+											<TableCell>
+												<Badge variant="outline">
+													{confidenceLabel(entry.confidence)}
+												</Badge>
+											</TableCell>
+											<TableCell className="text-right">
+												<strong className="tabular-nums">
+													{entry.score.toFixed(2)}
+												</strong>
+											</TableCell>
+										</TableRow>
+									);
+								})}
+							</TableBody>
+						</Table>
+					) : query.trim() ? (
+						<Empty>
+							<EmptyHeader>
+								<EmptyMedia variant="icon">
+									<Sparkles aria-hidden="true" />
+								</EmptyMedia>
+								<EmptyTitle>
+									{loading
+										? "Searching the complete index"
+										: `@${query.replace(/^@/, "")} is not indexed`}
+								</EmptyTitle>
+								<EmptyDescription>
+									Calculate a provisional position against the same cohort and
+									ruleset used by the public ladder.
+								</EmptyDescription>
+							</EmptyHeader>
+							<EmptyContent>
+								<Button
+									type="button"
+									disabled={loading || evaluating || !loadedAll}
+									onClick={evaluateCandidate}
+								>
+									{evaluating ? "Calculating" : "Calculate my rank"}
+									<ArrowRight data-icon="inline-end" aria-hidden="true" />
+								</Button>
+							</EmptyContent>
+						</Empty>
+					) : null}
+				</CardContent>
+				{showMore ? (
+					<CardFooter className="justify-center border-t pt-6">
 						<Button
-							type="button"
-							disabled={loading || evaluating || !loadedAll}
-							onClick={evaluateCandidate}
+							variant="outline"
+							disabled={loading}
+							onClick={async () => {
+								await loadAll();
+								setVisible((value) => value + 50);
+							}}
 						>
-							{evaluating ? "Calculating…" : "Calculate my rank"}
-							<ArrowRight aria-hidden="true" />
+							{loading ? "Loading ranking" : "Show 50 more"}
 						</Button>
-					</div>
-				)}
-			</div>
+					</CardFooter>
+				) : null}
+			</Card>
 
-			{evaluation && (
-				<div className={styles.evaluationCard} data-status={evaluation.status}>
-					<div>
-						<span>{evaluation.status}</span>
-						<strong>@{evaluation.username}</strong>
-						<p>{evaluation.message}</p>
-					</div>
-					{evaluatedRanking && (
-						<div className={styles.evaluationRank}>
-							<span>{lensName}</span>
-							<strong>#{evaluatedRanking.entry.rank}</strong>
-							<small>{evaluatedRanking.entry.score.toFixed(2)} score</small>
-						</div>
-					)}
-					{evaluation.profile && evaluation.rankings && (
-						<Link
-							href={`/developer/${evaluation.profile.login}`}
-							className={styles.evaluationLink}
-						>
-							Open ladder profile <ArrowUpRight aria-hidden="true" />
-						</Link>
-					)}
-				</div>
-			)}
+			{evaluation ? (
+				<Card>
+					<CardHeader>
+						<Badge variant="secondary">{evaluation.status}</Badge>
+						<CardTitle>@{evaluation.username}</CardTitle>
+						<CardDescription>{evaluation.message}</CardDescription>
+					</CardHeader>
+					<CardContent className="flex flex-wrap items-center gap-3">
+						{evaluatedRanking ? (
+							<Badge variant="outline">
+								{lensName} · #{evaluatedRanking.entry.rank} ·{" "}
+								{evaluatedRanking.entry.score.toFixed(2)}
+							</Badge>
+						) : null}
+						{evaluation.profile && evaluation.rankings ? (
+							<Button asChild variant="outline">
+								<Link href={`/developer/${evaluation.profile.login}`}>
+									Open ladder profile
+									<ArrowUpRight data-icon="inline-end" aria-hidden="true" />
+								</Link>
+							</Button>
+						) : null}
+					</CardContent>
+				</Card>
+			) : null}
 
-			{(shown.length < filtered.length || !loadedAll) && (
-				<div className={styles.showMore}>
-					<Button
-						variant="outline"
-						className={styles.showMoreButton}
-						disabled={loading}
-						onClick={async () => {
-							await loadAll();
-							setVisible((value) => value + 50);
-						}}
-					>
-						{loading ? "Loading ranking…" : "Show 50 more"}
-					</Button>
-				</div>
-			)}
-			{loadError && <output className={styles.loadError}>{loadError}</output>}
+			{loadError ? (
+				<Alert variant="destructive">
+					<AlertTitle>Ranking unavailable</AlertTitle>
+					<AlertDescription>{loadError}</AlertDescription>
+				</Alert>
+			) : null}
 		</section>
 	);
 }
