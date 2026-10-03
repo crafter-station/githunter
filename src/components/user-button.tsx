@@ -1,11 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-	UserButton as ClerkUserButton,
-	SignedIn,
-	SignedOut,
-} from "@clerk/nextjs";
+import { UserButton as ClerkUserButton, Show } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 export function UserButton() {
@@ -13,10 +9,10 @@ export function UserButton() {
 
 	return (
 		<div className="ml-2 flex items-center gap-4 lg:ml-0">
-			<SignedIn>
+			<Show when="signed-in">
 				<ClerkUserButton />
-			</SignedIn>
-			<SignedOut>
+			</Show>
+			<Show when="signed-out">
 				<Button
 					variant="outline"
 					className="text-sm"
@@ -24,7 +20,7 @@ export function UserButton() {
 				>
 					Sign In
 				</Button>
-			</SignedOut>
+			</Show>
 		</div>
 	);
 }
